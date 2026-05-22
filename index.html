@@ -230,6 +230,7 @@
             font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
+            text-align: center;
         }
 
         .gender-btns { 
@@ -297,6 +298,21 @@
             max-width: 160px;
             text-align: center;
             line-height: 1.4;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s;
+        }
+
+        .topic-btn:hover::after {
+            left: 100%;
         }
 
         .topic-btn.active {
@@ -453,6 +469,125 @@
 
         @keyframes mysticPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
+        /* ===== AD MODAL ===== */
+        #ad-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #ad-modal-overlay.active {
+            display: flex;
+        }
+
+        #ad-modal {
+            background: linear-gradient(145deg, #1a0e2a, #2a1a3a);
+            border: 3px solid var(--gold);
+            border-radius: 20px;
+            padding: 25px 20px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 
+                0 0 60px rgba(255, 215, 0, 0.4),
+                0 0 100px rgba(106, 13, 173, 0.3);
+            animation: modalPopIn 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes modalPopIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        #ad-modal::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 60%);
+            animation: rotateGlow 6s linear infinite;
+        }
+
+        #ad-modal .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: floatIcon 2s infinite ease-in-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #ad-modal h3 {
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #ad-modal p {
+            color: #d5c8e8;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #ad-modal .countdown {
+            display: inline-block;
+            background: rgba(255,215,0,0.15);
+            color: var(--gold);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            animation: pulseCountdown 1s infinite;
+        }
+
+        @keyframes pulseCountdown {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        #ad-modal .btn-continue {
+            background: linear-gradient(145deg, #2ecc71, #1e8449);
+            color: #fff;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+            display: none;
+            box-shadow: 0 0 25px rgba(46, 204, 113, 0.4);
+        }
+
+        #ad-modal .btn-continue:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(46, 204, 113, 0.6);
+        }
+
         /* ===== RESULT AREA ===== */
         #result-area {
             display: none;
@@ -488,7 +623,7 @@
         #result-text h2 { font-size: 1.2rem; margin: 15px 0 10px; color: var(--gold); }
         #result-text h3 { font-size: 1rem; margin: 10px 0 8px; color: #FFD700; }
 
-        /* ===== ΑΣΤΕΡΑΚΙΑ ΣΤΑ ΑΠΟΤΕΛΕΣΜΑΤΑ ===== */
+        /* ===== ΑΣΤΕΡΑΚΙΑ ===== */
         .result-star {
             position: absolute;
             color: #FFD700;
@@ -527,12 +662,25 @@
             .controls-row { gap: 8px; }
             .btn { padding: 10px 14px; font-size: 0.8rem; }
             #camera-wrapper { max-width: 300px; }
+            #ad-modal { padding: 20px 15px; }
+            #ad-modal h3 { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
     <canvas id="starfield"></canvas>
+
+    <!-- ===== AD MODAL ===== -->
+    <div id="ad-modal-overlay">
+        <div id="ad-modal">
+            <div class="modal-icon">📺</div>
+            <h3>Δείτε αυτή τη διαφήμιση</h3>
+            <p>Παρακαλούμε δείτε τη διαφήμιση και μετά πατήστε <strong>Continue</strong> για να επιστρέψετε στη σελίδα και να ολοκληρώσετε τη χειρομαντεία σας.</p>
+            <div class="countdown" id="countdown-display">5</div>
+            <button class="btn-continue" id="btn-continue-ad" onclick="closeAdModal()">▶ Continue</button>
+        </div>
+    </div>
 
     <!-- ===== SPLASH PAGE ===== -->
     <div id="splash-page" class="page active">
@@ -558,7 +706,7 @@
             <p>Η Aziram διαβάζει την παλάμη σου</p>
         </div>
 
-        <!-- ROW 1: Gender + Birthdate (το ζώδιο υπολογίζεται αυτόματα) -->
+        <!-- ROW 1: Gender + Birthdate -->
         <div class="selectors-row">
             <div class="selector-item">
                 <span class="selector-label">Φύλο</span>
@@ -575,11 +723,11 @@
 
         <!-- ROW 2: Topic Buttons -->
         <div class="topic-row" id="topic-row">
-            <button class="topic-btn active" onclick="setTopic('Έρωτας & Σχέσεις', this)">❤️<br>Έρωτας & Σχέσεις</button>
-            <button class="topic-btn" onclick="setTopic('Καριέρα & Οικονομικά', this)">💼<br>Καριέρα & Οικονομικά</button>
-            <button class="topic-btn" onclick="setTopic('Υγεία & Ζωτικότητα', this)">🌱<br>Υγεία & Ζωτικότητα</button>
-            <button class="topic-btn" onclick="setTopic('Κρυφά Ταλέντα & Προσωπικότητα', this)">🧠<br>Κρυφά Ταλέντα</button>
-            <button class="topic-btn" onclick="setTopic('Κάρμα & Μελλοντικές Προκλήσεις', this)">🌀<br>Κάρμα & Προκλήσεις</button>
+            <button class="topic-btn active" id="topic-love" onclick="selectTopic('Έρωτας & Σχέσεις', this)">❤️<br>Έρωτας & Σχέσεις</button>
+            <button class="topic-btn" id="topic-career" onclick="selectTopic('Καριέρα & Οικονομικά', this)">💼<br>Καριέρα & Οικονομικά</button>
+            <button class="topic-btn" id="topic-health" onclick="selectTopic('Υγεία & Ζωτικότητα', this)">🌱<br>Υγεία & Ζωτικότητα</button>
+            <button class="topic-btn" id="topic-talent" onclick="selectTopic('Κρυφά Ταλέντα & Προσωπικότητα', this)">🧠<br>Κρυφά Ταλέντα</button>
+            <button class="topic-btn" id="topic-karma" onclick="selectTopic('Κάρμα & Μελλοντικές Προκλήσεις', this)">🌀<br>Κάρμα & Προκλήσεις</button>
         </div>
 
         <!-- CAMERA -->
@@ -604,7 +752,7 @@
         </div>
 
         <!-- ANALYZE BUTTON -->
-        <button class="btn btn-green" id="analyze-btn" onclick="startAnalysisWithAd()">🔮 Αποκάλυψε το Πεπρωμένο μου</button>
+        <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()">🔮 Αποκάλυψε το Πεπρωμένο μου</button>
 
         <!-- LOADING -->
         <div id="loading-box">
@@ -674,6 +822,8 @@
         let userZodiac = 'Κριός';
         let userBirthdate = '';
         let userTopic = 'Έρωτας & Σχέσεις';
+        let adCompleted = false;
+        let adCountdown = null;
 
         function setGender(gender) {
             userGender = gender;
@@ -684,23 +834,26 @@
         function setBirthdate(date) {
             userBirthdate = date;
             userZodiac = getZodiacFromDate(date);
-            console.log('📅 Ημερομηνία:', date, '♈ Ζώδιο:', userZodiac);
         }
 
-        function setTopic(topic, btn) {
+        function setTopicOnly(topic, btn) {
             userTopic = topic;
             document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
         }
 
+        function selectTopic(topic, btn) {
+            // Πρώτα δείχνουμε τη διαφήμιση και μετά ενεργοποιούμε το θέμα
+            setTopicOnly(topic, btn);
+            showAdModal();
+        }
+
         // ===== ΑΥΤΟΜΑΤΟΣ ΥΠΟΛΟΓΙΣΜΟΣ ΖΩΔΙΟΥ =====
         function getZodiacFromDate(dateString) {
             if (!dateString) return 'Κριός';
-            
             const date = new Date(dateString);
             const day = date.getDate();
             const month = date.getMonth() + 1;
-            
             if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return 'Κριός';
             if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return 'Ταύρος';
             if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return 'Δίδυμοι';
@@ -713,17 +866,52 @@
             if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return 'Αιγόκερως';
             if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return 'Υδροχόος';
             if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return 'Ιχθείς';
-            
             return 'Κριός';
         }
 
-        // ===== ΑΣΤΕΡΑΚΙΑ ΣΤΑ ΑΠΟΤΕΛΕΣΜΑΤΑ =====
+        // ===== AD MODAL =====
+        function showAdModal() {
+            adCompleted = false;
+            const overlay = document.getElementById('ad-modal-overlay');
+            const countdownDisplay = document.getElementById('countdown-display');
+            const continueBtn = document.getElementById('btn-continue-ad');
+            
+            overlay.classList.add('active');
+            continueBtn.style.display = 'none';
+            
+            let seconds = 5;
+            countdownDisplay.textContent = seconds;
+            
+            if (adCountdown) clearInterval(adCountdown);
+            
+            adCountdown = setInterval(() => {
+                seconds--;
+                countdownDisplay.textContent = seconds;
+                
+                if (seconds <= 0) {
+                    clearInterval(adCountdown);
+                    countdownDisplay.textContent = '✓';
+                    continueBtn.style.display = 'inline-block';
+                }
+            }, 1000);
+            
+            // Εμφάνιση διαφήμισης Monetag
+            if (typeof show_11042671 === 'function') {
+                show_11042671().catch(() => {});
+            }
+        }
+
+        function closeAdModal() {
+            document.getElementById('ad-modal-overlay').classList.remove('active');
+            if (adCountdown) clearInterval(adCountdown);
+            adCompleted = true;
+        }
+
+        // ===== ΑΣΤΕΡΑΚΙΑ =====
         function addStarsToResult() {
             const resultArea = document.getElementById('result-area');
             document.querySelectorAll('.result-star').forEach(s => s.remove());
-            
             const emojis = ['✨', '⭐', '💫', '🌟', '✨', '🔮', '💖', '🌙', '☽', '✧'];
-            
             for (let i = 0; i < 18; i++) {
                 const star = document.createElement('span');
                 star.className = 'result-star';
@@ -733,19 +921,6 @@
                 star.style.animationDelay = Math.random() * 3 + 's';
                 star.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
                 resultArea.appendChild(star);
-            }
-        }
-
-        // ===== MONETAG REWARDED AD =====
-        function startAnalysisWithAd() {
-            if (typeof show_11042671 === 'function') {
-                show_11042671().then(() => {
-                    performAnalysis();
-                }).catch(() => {
-                    performAnalysis();
-                });
-            } else {
-                performAnalysis();
             }
         }
 
@@ -878,6 +1053,7 @@
             document.getElementById('camera-btn').innerText = '📷 Camera';
             capturedImage = null;
             isAnalyzing = false;
+            adCompleted = false;
         }
     </script>
 </body>
