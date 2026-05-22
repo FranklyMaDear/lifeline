@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, minimal-ui">
     <title>🧿 HandMaster Pro - Ανάλυση Χεριού</title>
     
-    <!-- ========== MONETAG SDK ========== -->
     <script src='//libtl.com/sdk.js' data-zone='10979429' data-sdk='show_10979429'></script>
     
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
@@ -57,6 +56,7 @@
         .upload-label { padding: 15px 30px; background: #333; border-radius: 30px; cursor: pointer; display: inline-block; transition: 0.3s; font-size: 16px; }
         .upload-label:hover { background: #444; }
         #upload-preview { max-width: 100%; max-height: 300px; border-radius: 10px; margin: 10px 0; display: none; }
+        #auto-status { margin: 10px 0; color: #2ecc71; font-weight: bold; display: none; }
         #upload-type { margin: 10px 0; color: #FFD700; font-weight: bold; font-size: 16px; }
 
         #age-display { margin: 15px 0; color: #FFD700; font-size: 18px; }
@@ -248,7 +248,6 @@
                 document.getElementById('auto-status').innerText = '⏳ Αυτόματη ανάλυση σε εξέλιξη...';
                 
                 setTimeout(() => {
-                    // Υποθέτουμε ότι είναι χέρι
                     const result = analyzeHand();
                     displayResult(result);
                     analysisResult = result;
@@ -294,100 +293,109 @@
             const dominantHand = isLeftHanded ? 'Αριστερό' : 'Δεξί';
             const nonDominant = isLeftHanded ? 'Δεξί' : 'Αριστερό';
 
+            // --- 1. ΚΥΡΙΕΣ ΓΡΑΜΜΕΣ (Modern & Sivartha Charts) ---
             const lifeLineTypes = [
-                { type: "Μακριά & Βαθιά", desc: "Καλή υγεία, ενεργητικότητα, ζωτικότητα, ισορροπία ψυχοσυναισθηματική." },
-                { type: "Κοντή & Βαθιά", desc: "Ικανότητα διεξόδου από ψυχικά και σωματικά προβλήματα. Οι άνθρωποι γύρω σου σε ελέγχουν." },
-                { type: "Αχνή", desc: "Χαμηλά επίπεδα ενέργειας και έλλειψη περιπέτειας / τόλμης και ρίσκου στη ζωή!" },
-                { type: "Διακεκομμένη", desc: "Αγώνες, απώλειες, απρόσμενες αλλαγές. Ξεπερνάς γρήγορα τα προβλήματα. Δύσκολη παιδική ηλικία." },
-                { type: "Αλυσιδωτή", desc: "Η ζωή σου σε οδηγεί σε πολλές κατευθύνσεις, μεγάλες αλλαγές. Πολλές ευαισθησίες." },
-                { type: "Διχαλωτή", desc: "Φήμη, δόξα, αναγνώριση, πολλά ταξίδια και ξαφνική αλλαγή ζωής!" },
-                { type: "Διπλή", desc: "Δίδυμα ή τρίδυμα αδέρφια. Γερή κράση ή 'διπλή' ζωή." }
+                { type: "Μακριά & Βαθιά", desc: "Ισχυρή ζωτικότητα, εξαιρετική φυσική κατάσταση, σταθερά επίπεδα ενέργειας και ψυχοσυναισθηματική ισορροπία." },
+                { type: "Κοντή & Βαθιά", desc: "Μεγάλη ικανότητα διεξόδου από ψυχικές και σωματικές αντιξοότητες. Τάση να επηρεάζεσαι εύκολα από το περιβάλλον σου." },
+                { type: "Αχνή / Αδύναμη", desc: "Χαμηλότερα επίπεδα ενέργειας, ανάγκη για ξεκούραση και αποφυγή περιττών ρίσκων ή ακραίων αλλαγών στη ζωή." },
+                { type: "Διακεκομμένη", desc: "Σημαντικές, απρόσμενες αλλαγές πορείας ή εσωτερικοί αγώνες. Γρήγορη ανάκαμψη και υπέρβαση των εμποδίων." },
+                { type: "Αλυσιδωτή", desc: "Η πορεία της ζωής σου περνάει από πολλές διαφορετικές κατευθύνσεις και συναισθηματικές μεταβολές." },
+                { type: "Διχαλωτή", desc: "Έντονη κοινωνική αναγνώριση, πολλά ταξίδια, πιθανότητα για ριζική αλλαγή περιβάλλοντος ή μετακόμιση στο εξωτερικό." }
             ];
             const lifeLine = lifeLineTypes[Math.floor(Math.random() * lifeLineTypes.length)];
 
             const heartLineTypes = [
-                { type: "Μακριά", desc: "Ζεστό και δοτικό άτομο. Εξιδανικεύεις τις σχέσεις. Συναισθηματική εξάρτηση από γονείς." },
-                { type: "Κοντή", desc: "Κλείνεσαι στον εαυτό σου, δεν εμπιστεύεσαι εύκολα. Εγωιστικό στις σχέσεις." },
-                { type: "Βαθιά", desc: "Μόνιμο άγχος για σχέσεις, ανασφάλειες και συναισθηματικές φοβίες." },
-                { type: "Κυματώδης", desc: "Κάνεις αρκετές ερωτικές σχέσεις, δυσκολεύεσαι να δεσμευτείς μόνιμα." },
-                { type: "Τοξωτή", desc: "Διαισθητικό άτομο με πολλές ευαισθησίες και αγάπη για τους ανθρώπους. Εκφράζεις εύκολα συναισθήματα." },
-                { type: "Διπλή", desc: "Συνδυάζεις απόλυτα τη λογική με το συναίσθημα." },
-                { type: "Τριπλή", desc: "Συνδυάζεις τις σωματικές, συναισθηματικές και πνευματικές σου ανάγκες." }
+                { type: "Μακριά & Καμπύλη", desc: "Ζεστή και δοτική φύση. Εξιδανικεύεις τις σχέσεις και δείχνεις βαθιά ενσυναίσθηση στους γύρω σου." },
+                { type: "Κοντή & Ίσια", desc: "Κλειστός συναισθηματικός κόσμος, επιλεκτική εμπιστοσύνη, έντονος ρεαλισμός και προστασία των συναισθημάτων σου." },
+                { type: "Βαθιά", desc: "Έντονα συναισθήματα, μόνιμο ενδιαφέρον για την πορεία των σχέσεων, αλλά και τάση για εσωτερική ανησυχία." },
+                { type: "Κυματώδης", desc: "Πολλές κοινωνικές επαφές και ερωτικές εμπειρίες, δυσκολία ή διστακτικότητα για μακροχρόνια δέσμευση." },
+                { type: "Τοξωτή", desc: "Διαισθητικό άτομο με εκφραστική δύναμη. Εξωτερικεύεις με μεγάλη ευκολία την αγάπη και τα συναισθήματά σου." }
             ];
             const heartLine = heartLineTypes[Math.floor(Math.random() * heartLineTypes.length)];
 
             const headLineTypes = [
-                { type: "Μακριά", desc: "Εξυπνάδα, καλή μνήμη, δεν αντιδράς υπερβολικά." },
-                { type: "Ίσια", desc: "Ρεαλιστική σκέψη, προσγειωμένος/η, λογική, καλή οργάνωση, βάση στη λεπτομέρεια." },
-                { type: "Κυματώδης", desc: "Μάχη ανάμεσα στη λογική και το συναίσθημα. Δεν πιστεύεις στις δυνάμεις σου." },
-                { type: "Αχνή", desc: "Δεν μπορείς εύκολα να συγκεντρωθείς, χάνεσαι σε φαντασίες." },
-                { type: "Σπασμένη", desc: "Διλήμματα, αναποφασιστικότητα, αδυναμία για πρωτοβουλίες." },
-                { type: "Αλυσιδωτή", desc: "Φοβάσαι να θέσεις στόχους, θέλεις πάντα καθοδήγηση." }
+                { type: "Μακριά", desc: "Υψηλή πνευματική διαύγεια, εξαιρετική μνήμη και ικανότητα διατήρησης της ψυχραιμίας σε κρίσιμες καταστάσεις." },
+                { type: "Ίσια / Οριζόντια", desc: "Προσγειωμένη και ρεαλιστική σκέψη. Δίνεις τεράστια βάση στη λεπτομέρεια, τη λογική και την οργάνωση." },
+                { type: "Κυματώδης", desc: "Διαρκής εσωτερική μάχη ανάμεσα στη λογική και το συναίσθημα. Μεταβολές στον τρόπο προσέγγισης προβλημάτων." },
+                { type: "Αχνή / Διακοπτόμενη", desc: "Τάση για διάσπαση προσοχής, έντονη φαντασία που σε παρασύρει μακριά από την καθημερινή ρουτίνα." },
+                { type: "Αλυσιδωτή", desc: "Ανάγκη για καθοδήγηση και επιβεβαίωση πριν από τη λήψη μεγάλων αποφάσεων. Επιφυλακτικότητα." }
             ];
             const headLine = headLineTypes[Math.floor(Math.random() * headLineTypes.length)];
 
-            const sunLine = Math.random() > 0.6 ? "Εμφανής (επιτυχία, φήμη, δημιουργικότητα)" : "Αμυδρή ή ανύπαρκτη";
-            const intuitionLine = Math.random() > 0.7 ? "Εμφανής (έντονη διαίσθηση, ενσυναίσθηση)" : "Αμυδρή ή ανύπαρκτη";
-            const marriageLine = Math.random() > 0.5 ? "Εμφανής (δεσμοί, σχέσεις)" : "Αμυδρή ή ανύπαρκτη";
+            // --- 2. ΔΕΥΤΕΡΕΥΟΥΣΕΣ ΓΡΑΜΜΕΣ & ΕΡΜΗΤΙΚΑ ΣΗΜΑΔΙΑ (French & Medieval Charts) ---
+            const sunLine = Math.random() > 0.5 ? "Εμφανής (Γραμμή Απόλλωνα: Καλλιτεχνική κλίση, φήμη και αναγνώριση)" : "Αμυδρή (Ήσυχη, σταθερή ζωή χωρίς ανάγκη προβολής)";
+            const intuitionLine = Math.random() > 0.5 ? "Εμφανής (Δαχτυλίδι Σολομώντα: Έντονη διορατικότητα, σοφία και πνευματικές ικανότητες)" : "Αμυδρή ή ανύπαρκτη";
+            const marriageLine = Math.random() > 0.5 ? "Καθαρή (Σημαντικοί και βαθιοί συναισθηματικοί δεσμοί στη ζωή)" : "Πολλαπλές λεπτές γραμμές (Έμφαση στην προσωπική ανεξαρτησία)";
 
-            const handTypes = ["Πρακτικό (πλατύ, δάχτυλα κοντά)", "Ιδεαλιστικό (μακρύ, λεπτό)", "Ενεργητικό (κόκκινο δέρμα, ψηλά δάχτυλα)", "Μικτό"];
+            // --- 3. ΤΥΠΟΙ ΧΕΡΙΩΝ & ΑΣΤΡΟΛΟΓΙΚΟΙ ΟΡΟΙ ---
+            const handTypes = [
+                "Πρακτικό / Γήινο (Πλατύ, τετράγωνο με κοντά δάχτυλα — Σταθερότητα)",
+                "Ιδεαλιστικό / Πνευματικό (Μακρύ, λεπτό με οξύληκτα δάχτυλα — Διαίσθηση)",
+                "Ενεργητικό / Πύρινο (Έντονη παλάμη, μακριά δάχτυλα — Φιλοδοξία & Δράση)",
+                "Μικτό (Συνδυασμός χαρακτηριστικών — Ευελιξία και προσαρμοστικότητα)"
+            ];
             const handType = handTypes[Math.floor(Math.random() * handTypes.length)];
 
             const signs = [];
-            if (Math.random() > 0.7) signs.push("Σταυρός στη γραμμή Ζωής: Σημαντική αλλαγή ή γεγονός.");
-            if (Math.random() > 0.8) signs.push("Νησί στη γραμμή Καρδιάς: Περίοδος συναισθηματικής έντασης.");
-            if (Math.random() > 0.6) signs.push("Αλυσίδα στη γραμμή Κεφαλής: Δυσκολία συγκέντρωσης.");
-            if (signs.length === 0) signs.push("Δεν εντοπίστηκαν ιδιαίτερα σημεία.");
+            if (Math.random() > 0.5) signs.push("Μυστικιστικός Σταυρός (Mystic Cross) ανάμεσα σε Καρδιά και Κεφάλι: Έφεση στον αποκρυφισμό.");
+            if (Math.random() > 0.6) signs.push("Ζώνη της Αφροδίτης (Girdle of Venus): Ιδιαίτερη συναισθηματική ευαισθησία.");
+            if (Math.random() > 0.7) signs.push("Γραμμές Βραχιολιών (Bracelets): Ένδειξη μακροζωίας με βάση την ηλικιακή χαρτογράφηση.");
+            if (signs.length === 0) signs.push("Κλασικά γραμμικά μοτίβα χωρίς ξένα σώματα.");
 
+            // --- 4. ΠΑΡΑΔΟΣΙΑΚΗ ΚΙΝΕΖΙΚΗ ΙΑΤΡΙΚΗ & ΜΕΣΗΜΒΡΙΝΟΙ (Reflexology Map) ---
+            const reflexologyData = [
+                { focus: "Μεσημβρινός Πνεύμονα & Παχέος Εντέρου", desc: "Εντοπίζεται στον Αντίχειρα και τον Δείκτη. Δείχνει καλή διαχείριση της ζωτικής ενέργειας (Qi)." },
+                { focus: "Μεσημβρινός Περικαρδίου & Καρδιάς", desc: "Στον Μεσαίο και το Μικρό δάχτυλο. Συνδέεται άμεσα με την κυκλοφορία του αίματος και την πνευματική ηρεμία." },
+                { focus: "Ζώνη Πεπτικού Συστήματος (Κέντρο Παλάμης)", desc: "Αντανακλά τη λειτουργία του στομάχου και του ήπατος. Η καθαρότητα της περιοχής δείχνει σωματική αντοχή." }
+            ];
+            const reflexology = reflexologyData[Math.floor(Math.random() * reflexologyData.length)];
+
+            // --- 5. ΦΥΛΟ & ΚΥΡΙΑΡΧΟ ΧΕΡΙ ---
             let genderAnalysis = "";
             if (gender === 'male') {
                 genderAnalysis = `
-                    <strong>👤 Ανάλυση για Άντρα:</strong><br>
-                    • Η γραμμή Ζωής είναι συνήθως πιο μακριά και βαθιά, συνδεδεμένη με αντοχή, αθλητικότητα και υγεία.<br>
-                    • Η γραμμή Καρδιάς είναι συχνά πιο μικρή και ίσια, υποδηλώνοντας δυσκολία έκφρασης συναισθήματος και σκεπτικισμό.<br>
-                    • Η γραμμή Κεφαλής είναι συχνά ευθεία και μακριά, με έμφαση στη λογική και την ανάλυση.<br>
-                    • Αν έχει έντονη γραμμή Καρδιάς χωρίς σπάσιμο, μπορεί να είναι εκφραστικός συναισθηματικά (σπάνιο).
+                    <strong>👤 Ανάλυση Φύλου (Άντρας):</strong><br>
+                    • Η γραμμή Ζωής παρουσιάζει έντονο βάθος, δείχνοντας σωματική ανθεκτικότητα.<br>
+                    • Η γραμμή Κεφαλής εστιάζει στη λογική, την ανάλυση και τη στρατηγική λήψη αποφάσεων.<br>
+                    • Οι Αστρολογικοί Όροι του Άρη και του Κρόνου είναι πιο ανεπτυγμένοι, ενισχύοντας την πειθαρχία.
                 `;
             } else {
                 genderAnalysis = `
-                    <strong>👤 Ανάλυση για Γυναίκα:</strong><br>
-                    • Η γραμμή Ζωής έχει συχνά μικρές αλυσίδες (συναισθηματικές φάσεις) ή διακοπές που σχετίζονται με τοκετό ή αλλαγή ζωής.<br>
-                    • Η γραμμή Καρδιάς είναι μακριά και καμπύλη, δείχνοντας ρομαντισμό, ευαισθησία και εκφραστική δύναμη.<br>
-                    • Η γραμμή Κεφαλής είναι πιο καμπύλη, με έμφαση στη διαίσθηση και την επικοινωνία.<br>
-                    • Αν έχει βαθιά, ίσια γραμμή Κεφαλής, συχνά έχει αναλυτικό μυαλό παρά το στερεότυπο.
+                    <strong>👤 Ανάλυση Φύλου (Γυναίκα):</strong><br>
+                    • Η γραμμή Καρδιάς είναι εξαιρετικά εκφραστική και καμπύλη, δείχνοντας πλούσιο συναισθηματικό υπόβαθρο.<br>
+                    • Η γραμμή Κεφαλής συνδυάζει τη λογική με τη διαίσθηση.<br>
+                    • Οι Όροι της Αφροδίτης και της Σελήνης είναι έντονοι, προσφέροντας δημιουργικότητα και ενσυναίσθηση.
                 `;
             }
 
             const dominantAnalysis = `
-                <strong>🖐️ Ανάλυση Χεριών:</strong><br>
-                • <strong>Κυρίαρχο χέρι (${dominantHand}):</strong> Δείχνει την εξέλιξη, την προσωπικότητα που έχετε αναπτύξει και τις επιλογές σας.<br>
-                • <strong>Μη κυρίαρχο χέρι (${nonDominant}):</strong> Δείχνει τη «γέννηση», τα ταλέντα, την κληρονομιά, τις δυνατότητες.
+                <strong>🖐️ Δυναμική Χεριών:</strong><br>
+                • <strong>Κυρίαρχο (${dominantHand}):</strong> Αντιπροσωπεύει τα επίκτητα χαρακτηριστικά, τις επιλογές σου και την τρέχουσα κατεύθυνση στη ζωή.<br>
+                • <strong>Μη Κυρίαρχο (${nonDominant}):</strong> Αντιπροσωπεύει το πεπρωμένο, τις γενετικές προδιαθέσεις, τα κρυμμένα ταλέντα και το παρελθόν.
             `;
 
             let ageAnalysis = "";
             if (age < 25) {
-                ageAnalysis = `Στα ${age} σας χρόνια, η γραμμή ζωής δείχνει μια περίοδο δυναμικής εξέλιξης και αλλαγών. Νέες ευκαιρίες σας περιμένουν.`;
+                ageAnalysis = `Στα ${age} σας χρόνια, οι γραμμές δείχνουν μια φάση έντονης διαμόρφωσης χαρακτήρα, αναζήτησης και νέων ξεκινημάτων.`;
             } else if (age < 40) {
-                ageAnalysis = `Στα ${age} σας χρόνια, η γραμμή ζωής δείχνει ωριμότητα και σταθερότητα. Οι αποφάσεις σας έχουν μακροπρόθεσμες συνέπειες.`;
-            } else if (age < 60) {
-                ageAnalysis = `Στα ${age} σας χρόνια, η γραμμή ζωής δείχνει σοφία και εμπειρία. Έμφαση στην οικογένεια και την πνευματική ανάπτυξη.`;
+                ageAnalysis = `Στα ${age} σας χρόνια, η παλάμη μαρτυρά σταθεροποίηση των στόχων, επαγγελματική ωριμότητα και σημαντικές αποφάσεις ζωής.`;
             } else {
-                ageAnalysis = `Στα ${age} σας χρόνια, η γραμμή ζωής δείχνει μια πλούσια διαδρομή. Η εμπειρία σας είναι το μεγαλύτερο πλεονέκτημα.`;
+                ageAnalysis = `Στα ${age} σας χρόνια, οι γραμμές δείχνουν συσσωρευμένη σοφία, πνευματική ανάπτυξη και την ανάγκη για προσφορά.`;
             }
 
             const zodiacMap = {
-                "Κριός": "Παρορμητική φύση, ενέργεια. Συνδεδεμένος με τον Λόφο του Άρη.",
-                "Ταύρος": "Σταθερότητα & αντοχή. Συνδεδεμένος με τον Λόφο της Αφροδίτης.",
-                "Δίδυμοι": "Ευελιξία, αλλαγή γνώμης. Συνδεδεμένος με τον Λόφο του Ερμή.",
-                "Καρκίνος": "Συναισθηματική ευαισθησία. Συνδεδεμένος με τον Λόφο της Σελήνης.",
-                "Λέων": "Ηγέτης, θέλει δράση. Συνδεδεμένος με τον Λόφο του Απόλλωνα.",
-                "Παρθένος": "Αναλυτικό μυαλό. Συνδεδεμένος με τον Λόφο του Ερμή.",
-                "Ζυγός": "Διπλωματία & ισορροπία. Συνδεδεμένος με τον Λόφο της Αφροδίτης.",
-                "Σκορπιός": "Πάθος & μυστήριο. Συνδεδεμένος με τον Λόφο του Άρη.",
-                "Τοξότης": "Περιπέτεια & ενθουσιασμός. Συνδεδεμένος με τον Λόφο του Δία.",
-                "Αιγόκερως": "Υπομονή & στόχοι. Συνδεδεμένος με τον Λόφο του Κρόνου.",
-                "Υδροχόος": "Μοναδικότητα & καινοτομία. Συνδεδεμένος με τον Λόφο του Κρόνου.",
-                "Ιχθείς": "Ενσυναίσθηση & φαντασία. Συνδεδεμένος με τον Λόφο της Σελήνης."
+                "Κριός": "Συνδέεται με τον Όρο του Άρη. Παρορμητική φύση, θάρρος και ηγετικές τάσεις.",
+                "Ταύρος": "Συνδέεται με τον Όρο της Αφροδίτης. Σταθερότητα, αγάπη για την άνεση και αντοχή.",
+                "Δίδυμοι": "Συνδέεται με τον Όρο του Ερμή. Εξαιρετική επικοινωνία, προσαρμοστικότητα και πνευματική εγρήγορση.",
+                "Καρκίνος": "Συνδέεται με τον Όρο της Σελήνης. Υψηλή συναισθηματική νοημοσύνη, φαντασία και κυκλοθυμία.",
+                "Λέων": "Συνδέεται με τον Όρο του Απόλλωνα. Γενναιοδωρία, ανάγκη για προβολή, δημιουργικότητα.",
+                "Παρθένος": "Συνδέεται με τον Όρο του Ερμή. Αναλυτικό πνεύμα, τελειομανία και έμφαση στην οργάνωση.",
+                "Ζυγός": "Συνδέεται με τον Όρο της Αφροδίτης. Αναζήτηση αρμονίας, καλλιτεχνική φύση και διπλωματία.",
+                "Σκορπιός": "Συνδέεται με τον Όρο του Άρη. Μαγνητική προσωπικότητα, μυστήριο και τεράστια ψυχική δύναμη.",
+                "Τοξότης": "Συνδέεται με τον Όρο του Δία. Φιλοσοφημένη στάση ζωής, αγάπη για τα ταξίδια και την ελευθερία.",
+                "Αιγόκερως": "Συνδέεται με τον Όρο του Κρόνου. Φιλοδοξία, υπομονή, εργατικότητα και σοβαρότητα.",
+                "Υδροχόος": "Συνδέεται με τον Όρο του Κρόνου/Ουρανού. Πρωτοποριακή σκέψη, ανεξαρτησία και αντισυμβατικότητα.",
+                "Ιχθείς": "Συνδέεται με τον Όρο της Σελήνης. Έντονος ιδεαλισμός, ρομαντισμός και πνευματικές αναζητήσεις."
             };
             const zodiacMatch = zodiacMap[zodiac] || "Συνδυασμός με το ζώδιο σου.";
 
@@ -401,6 +409,7 @@
                 marriageLine: marriageLine,
                 handType: handType,
                 signs: signs,
+                reflexology: reflexology,
                 genderAnalysis: genderAnalysis,
                 dominantAnalysis: dominantAnalysis,
                 ageAnalysis: ageAnalysis,
@@ -413,14 +422,14 @@
                     "Γραμμή Ζωής": lifeLine.type,
                     "Γραμμή Καρδιάς": heartLine.type,
                     "Γραμμή Νου": headLine.type,
-                    "Τύπος Χεριού": handType,
-                    "Ηλιακού": sunLine,
-                    "Διαίσθησης": intuitionLine,
-                    "Γάμου/Σχέσεων": marriageLine,
+                    "Τύπος Χεριού": handType.split(' ')[0],
+                    "Ενεργειακή Ζώνη": reflexology.focus.split(' ')[1],
+                    "Σημάδια": signs[0].split(' ')[0],
+                    "Ζώδιο": zodiac,
                     "Κυρίαρχο Χέρι": dominantHand
                 },
                 date: new Date().toISOString(),
-                source: 'camera'
+                source: uploadedImage ? 'upload' : 'camera'
             };
         }
 
@@ -439,38 +448,42 @@
 
             area.style.display = 'block';
 
-            elementDisplay.innerHTML = `<strong>✋ Πλήρης Ανάλυση Χεριού</strong> (${r.gender})`;
+            elementDisplay.innerHTML = `<strong>✋ Πλήρης Εσωτερική Ανάλυση Παλάμης</strong> (${r.gender})`;
             elementDisplay.style.color = "#FFD700";
             
             ageDisplay.innerHTML = `📅 ${r.ageAnalysis}`;
             
             text.innerHTML = `
-                <strong>🧬 Γραμμή Ζωής (${r.lifeLine.type}):</strong> ${r.lifeLine.desc}<br>
-                <strong>❤️ Γραμμή Καρδιάς (${r.heartLine.type}):</strong> ${r.heartLine.desc}<br>
-                <strong>🧠 Γραμμή Νου (${r.headLine.type}):</strong> ${r.headLine.desc}<br>
+                <strong>🧬 Γραμμή Ζωής (${r.lifeLine.type}):</strong> ${r.lifeLine.desc}<br><br>
+                <strong>❤️ Γραμμή Καρδιάς (${r.heartLine.type}):</strong> ${r.heartLine.desc}<br><br>
+                <strong>🧠 Γραμμή Νου / Κεφαλιού (${r.headLine.type}):</strong> ${r.headLine.desc}<br>
                 <hr style="border-color:#444;">
-                <strong>☀️ Γραμμή Ηλιακού:</strong> ${r.sunLine}<br>
-                <strong>🌙 Γραμμή Διαίσθησης:</strong> ${r.intuitionLine}<br>
-                <strong>💍 Γραμμή Γάμου/Σχέσεων:</strong> ${r.marriageLine}<br>
+                <strong>☀️ Γραμμή Απόλλωνα (Επιτυχία):</strong> ${r.sunLine}<br>
+                <strong>🔮 Εσωτερισμός / Διορατικότητα:</strong> ${r.intuitionLine}<br>
+                <strong>💍 Σχέσεις & Γάμος:</strong> ${r.marriageLine}<br>
                 <hr style="border-color:#444;">
-                <strong>🖐️ Τύπος Χεριού:</strong> ${r.handType}<br>
-                <strong>🔖 Σημεία:</strong> ${r.signs.join(' ')}<br>
+                <strong>🌿 Κινεζική Ιατρική & Ρεφλεξολογία:</strong><br>
+                • <em>Εστίαση:</em> ${r.reflexology.focus}<br>
+                • <em>Ερμηνεία:</em> ${r.reflexology.desc}<br>
+                <hr style="border-color:#444;">
+                <strong>🖐️ Μορφολογία:</strong> ${r.handType}<br>
+                <strong>🔖 Ιστορικά Σημάδια:</strong> ${r.signs.join(' ')}<br>
                 <hr style="border-color:#444;">
                 ${r.genderAnalysis}<br>
                 <hr style="border-color:#444;">
                 ${r.dominantAnalysis}<br>
                 <hr style="border-color:#444;">
-                <strong>♈ ${r.zodiac}:</strong> ${r.zodiacMatch}
+                <strong>♈ Αστρολογική Σύνδεση (${r.zodiac}):</strong> ${r.zodiacMatch}
             `;
             
             grid.innerHTML = `
                 <div class="stat-item"><span class="badge">Γραμμή Ζωής</span><br>${r.lifeLine.type}</div>
                 <div class="stat-item"><span class="badge">Γραμμή Καρδιάς</span><br>${r.heartLine.type}</div>
                 <div class="stat-item"><span class="badge">Γραμμή Νου</span><br>${r.headLine.type}</div>
-                <div class="stat-item"><span class="badge">Τύπος Χεριού</span><br>${r.handType}</div>
-                <div class="stat-item"><span class="badge">Ηλιακού</span><br>${r.sunLine}</div>
-                <div class="stat-item"><span class="badge">Διαίσθησης</span><br>${r.intuitionLine}</div>
-                <div class="stat-item"><span class="badge">Γάμου/Σχέσεων</span><br>${r.marriageLine}</div>
+                <div class="stat-item"><span class="badge">Μορφολογία</span><br>${r.handType.split(' ')[0]}</div>
+                <div class="stat-item"><span class="badge">Ρεφλεξολογία</span><br>Ενεργό Qi</div>
+                <div class="stat-item"><span class="badge">Ζώδιο</span><br>${r.zodiac}</div>
+                <div class="stat-item"><span class="badge">Σημάδια</span><br>Εντοπίστηκαν</div>
                 <div class="stat-item"><span class="badge">Κυρίαρχο Χέρι</span><br>${r.dominantHand}</div>
             `;
         }
@@ -511,6 +524,7 @@
             document.getElementById('upload-preview').style.display = 'none';
             document.getElementById('auto-status').style.display = 'none';
             document.getElementById('upload-type').innerText = '';
+            uploadedImage = null;
         }
 
         function saveToHistory() {
@@ -523,20 +537,20 @@
             });
             localStorage.setItem('history', JSON.stringify(h));
             renderHistory();
-            alert("✅ Αποθηκεύτηκε!");
+            alert("✅ Η ανάλυση αποθηκεύτηκε επιτυχώς στο ιστορικό!");
         }
 
         function renderHistory() {
             const list = document.getElementById('history-list');
             const h = JSON.parse(localStorage.getItem('history') || '[]');
             if (!h.length) {
-                list.innerHTML = "<p style='color:#888;'>Δεν υπάρχουν αναλύσεις.</p>";
+                list.innerHTML = "<p style='color:#888;'>Δεν υπάρχουν αποθηκευμένες αναλύσεις.</p>";
                 return;
             }
             list.innerHTML = h.map((item, i) => `
                 <div class="history-item">
-                    <strong>#${i+1}</strong> <small>${item.dateStr}</small> (${item.source})<br>
-                    ✋ ${item.lifeLine.type} | ♈ ${item.zodiac} | 📅 ${item.userAge} ετών
+                    <strong>#${i+1}</strong> <small>${item.dateStr}</small> (${item.source === 'upload' ? '📁 Φωτογραφία' : '📷 Κάμερα'})<br>
+                    ✋ Ζωή: ${item.lifeLine.type} | Καρδιά: ${item.heartLine.type} | ♈ ${item.zodiac} | 📅 ${item.userAge} ετών
                     <div class="history-actions">
                         <button onclick="deleteHistoryItem(${i})" style="background:#e74c3c;color:#fff;">Διαγραφή</button>
                         <button onclick="exportHistoryItemAsPDF(${i})" style="background:#3498db;color:#fff;">PDF</button>
@@ -554,10 +568,10 @@
         }
 
         function clearHistory() {
-            if (confirm("Διαγραφή όλου του ιστορικού;")) {
+            if (confirm("Θέλετε σίγουρα να διαγράψετε όλο το ιστορικό αναλύσεων;")) {
                 localStorage.removeItem('history');
                 renderHistory();
-                alert("Ιστορικό διαγράφηκε.");
+                alert("Το ιστορικό εκκαθαρίστηκε.");
             }
         }
 
@@ -565,55 +579,46 @@
             const h = JSON.parse(localStorage.getItem('history') || '[]');
             const item = h[i];
             if (!item) return;
-            const content = document.createElement('div');
-            content.innerHTML = `
-                <div style="font-family:Arial; padding:20px; color:#111; background:white; max-width:500px; margin:auto; border-radius:15px;">
-                    <h2 style="text-align:center; color:#B8860B;">🧿 HandMaster Pro</h2>
-                    <p style="text-align:center; color:#555;">${item.dateStr}</p>
-                    <hr>
-                    <p><strong>🧬 Γραμμή Ζωής:</strong> ${item.lifeLine.type} — ${item.lifeLine.desc}</p>
-                    <p><strong>❤️ Γραμμή Καρδιάς:</strong> ${item.heartLine.type} — ${item.heartLine.desc}</p>
-                    <p><strong>🧠 Γραμμή Νου:</strong> ${item.headLine.type} — ${item.headLine.desc}</p>
-                    <p><strong>☀️ Ηλιακού:</strong> ${item.sunLine}</p>
-                    <p><strong>♈ Ζώδιο:</strong> ${item.zodiac} — ${item.zodiacMatch}</p>
-                    <p><strong>🖐️ Τύπος Χεριού:</strong> ${item.handType}</p>
-                    <hr>
-                    <p style="text-align:center; font-size:12px; color:#999;">HandMaster Pro AI</p>
-                </div>
-            `;
-            const { jsPDF } = window.jspdf;
-            const canvas = await html2canvas(content, { scale:2, backgroundColor:'#ffffff' });
-            const pdf = new jsPDF('p','mm','a4');
-            const w = pdf.internal.pageSize.getWidth();
-            pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, w, (canvas.height * w) / canvas.width);
-            pdf.save(`HandMaster_${item.dateStr}.pdf`);
+            generatePDFFile(item, item.dateStr);
         }
 
         async function exportPDF() {
             if (!analysisResult) { alert("Κάνε ανάλυση πρώτα!"); return; }
-            const content = document.createElement('div');
             const now = new Date();
+            generatePDFFile(analysisResult, now.toLocaleDateString('el-GR'));
+        }
+
+        async function generatePDFFile(data, dateLabel) {
+            const content = document.createElement('div');
             content.innerHTML = `
-                <div style="font-family:Arial; padding:20px; color:#111; background:white; max-width:500px; margin:auto; border-radius:15px;">
-                    <h2 style="text-align:center; color:#B8860B;">🧿 HandMaster Pro</h2>
-                    <p style="text-align:center; color:#555;">${now.toLocaleDateString('el-GR')}</p>
-                    <hr>
-                    <p><strong>🧬 Γραμμή Ζωής:</strong> ${analysisResult.lifeLine.type} — ${analysisResult.lifeLine.desc}</p>
-                    <p><strong>❤️ Γραμμή Καρδιάς:</strong> ${analysisResult.heartLine.type} — ${analysisResult.heartLine.desc}</p>
-                    <p><strong>🧠 Γραμμή Νου:</strong> ${analysisResult.headLine.type} — ${analysisResult.headLine.desc}</p>
-                    <p><strong>☀️ Ηλιακού:</strong> ${analysisResult.sunLine}</p>
-                    <p><strong>♈ Ζώδιο:</strong> ${analysisResult.zodiac} — ${analysisResult.zodiacMatch}</p>
-                    <p><strong>🖐️ Τύπος Χεριού:</strong> ${analysisResult.handType}</p>
-                    <hr>
-                    <p style="text-align:center; font-size:12px; color:#999;">HandMaster Pro AI</p>
+                <div style="font-family:Arial, sans-serif; padding:30px; color:#111; background:white; max-width:600px; margin:auto; border: 2px solid #B8860B; border-radius:15px;">
+                    <h2 style="text-align:center; color:#B8860B; margin-bottom:5px;">🧿 HandMaster Pro</h2>
+                    <p style="text-align:center; color:#666; font-size:12px; margin-top:0;">Προηγμένη Αναφορά Χειρομαντείας AI</p>
+                    <p style="text-align:right; color:#444; font-size:12px;"><strong>Ημερομηνία:</strong> ${dateLabel}</p>
+                    <hr style="border-color:#B8860B;">
+                    <p><strong>👤 Προφίλ:</strong> ${data.gender} | ${data.userAge} ετών | Ζώδιο: ${data.zodiac}</p>
+                    <p><strong>🖐️ Κυρίαρχο Χέρι:</strong> ${data.dominantHand}</p>
+                    <p><strong>📐 Μορφολογία Παλάμης:</strong> ${data.handType}</p>
+                    <hr style="border-color:#eee;">
+                    <p><strong>🧬 Γραμμή Ζωής:</strong> ${data.lifeLine.type} — ${data.lifeLine.desc}</p>
+                    <p><strong>❤️ Γραμμή Καρδιάς:</strong> ${data.heartLine.type} — ${data.heartLine.desc}</p>
+                    <p><strong>🧠 Γραμμή Νου:</strong> ${data.headLine.type} — ${data.headLine.desc}</p>
+                    <p><strong>☀️ Γραμμή Απόλλωνα (Ήλιου):</strong> ${data.sunLine}</p>
+                    <p><strong>🌿 Ρεφλεξολογία (Κινεζική Ιατρική):</strong> ${data.reflexology.focus} — ${data.reflexology.desc}</p>
+                    <p><strong>🔖 Ειδικά Σημάδια:</strong> ${data.signs.join(' ')}</p>
+                    <hr style="border-color:#B8860B;">
+                    <p style="text-align:center; font-size:11px; color:#999; font-style:italic;">Ευχαριστούμε που χρησιμοποιήσατε το HandMaster Pro AI</p>
                 </div>
             `;
+            document.body.appendChild(content); // Προσωρινή προσθήκη για σωστό rendering
             const { jsPDF } = window.jspdf;
             const canvas = await html2canvas(content, { scale:2, backgroundColor:'#ffffff' });
+            document.body.removeChild(content);
+            
             const pdf = new jsPDF('p','mm','a4');
             const w = pdf.internal.pageSize.getWidth();
             pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, w, (canvas.height * w) / canvas.width);
-            pdf.save(`HandMaster_${now.toISOString().slice(0,10)}.pdf`);
+            pdf.save(`HandMaster_Report_${dateLabel.replace(/\//g, '-')}.pdf`);
         }
 
         function drawConnectors(ctx, lm, conn, style) {
