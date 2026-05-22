@@ -92,6 +92,106 @@
         }
         .page.active { display: flex; }
 
+        /* ===== CONSENT MODAL ===== */
+        #consent-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        #consent-overlay.hidden { display: none; }
+
+        #consent-modal {
+            background: linear-gradient(145deg, #1a0e2a, #2a1a3a);
+            border: 3px solid var(--gold);
+            border-radius: 25px;
+            padding: 35px 25px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 
+                0 0 60px rgba(255, 215, 0, 0.4),
+                0 0 100px rgba(106, 13, 173, 0.3);
+            animation: modalFadeIn 0.5s ease;
+        }
+
+        @keyframes modalFadeIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        #consent-modal .consent-icon {
+            font-size: 3.5rem;
+            margin-bottom: 12px;
+            animation: floatIcon 2s infinite ease-in-out;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #consent-modal h2 {
+            color: var(--gold);
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        #consent-modal p {
+            color: #d5c8e8;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        #consent-modal .consent-links {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        #consent-modal .consent-link {
+            color: var(--gold);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        #consent-modal .consent-link:hover {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+
+        #consent-btn {
+            background: linear-gradient(145deg, #FFD700, #B8860B);
+            color: #1a0033;
+            padding: 15px 28px;
+            border: none;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            transition: all 0.4s;
+            letter-spacing: 1px;
+            width: 100%;
+        }
+
+        #consent-btn:hover {
+            transform: scale(1.04) translateY(-3px);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.6);
+        }
+
         /* ===== SPLASH PAGE ===== */
         #splash-page {
             text-align: center;
@@ -129,9 +229,6 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 4.5rem;
             position: relative; overflow: hidden;
-            background-image: url('lifeline.png');
-            background-size: cover;
-            background-position: center;
         }
 
         .logo-circle::before {
@@ -505,7 +602,7 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.85);
-            z-index: 9999;
+            z-index: 9998;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -549,11 +646,6 @@
             animation: floatIcon 2s infinite ease-in-out;
             position: relative;
             z-index: 1;
-        }
-
-        @keyframes floatIcon {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
         }
 
         #ad-modal h3 {
@@ -731,12 +823,33 @@
             #camera-wrapper { max-width: 300px; }
             #ad-modal { padding: 20px 15px; }
             #ad-modal h3 { font-size: 1rem; }
+            #consent-modal { padding: 25px 18px; }
+            #consent-modal h2 { font-size: 1.2rem; }
+            #consent-modal p { font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
 
     <canvas id="starfield"></canvas>
+
+    <!-- ===== CONSENT OVERLAY ===== -->
+    <div id="consent-overlay">
+        <div id="consent-modal">
+            <div class="consent-icon">🖐️</div>
+            <h2>Καλώς ήρθατε στο LiFe LiNe!</h2>
+            <p>
+                Για να συνεχίσετε, πρέπει να επιβεβαιώσετε ότι είστε <strong>άνω των 18 ετών</strong> 
+                και ότι αποδέχεστε πως η εφαρμογή χρησιμοποιεί Τεχνητή Νοημοσύνη για να παράγει 
+                αποτελέσματα με καθαρά <strong>ψυχαγωγικό και μη κατευθυντικό χαρακτήρα</strong>.
+            </p>
+            <div class="consent-links">
+                <a href="terms.html" class="consent-link" target="_blank">📜 Όροι Χρήσης</a>
+                <a href="privacy.html" class="consent-link" target="_blank">🔒 Πολιτική Απορρήτου</a>
+            </div>
+            <button id="consent-btn" onclick="acceptConsent()">Αποδέχομαι & Είμαι άνω των 18 ετών</button>
+        </div>
+    </div>
 
     <!-- ===== AD MODAL ===== -->
     <div id="ad-modal-overlay">
@@ -854,6 +967,23 @@
     </div>
 
     <script>
+        // ===== CONSENT =====
+        function checkConsent() {
+            const consent = localStorage.getItem('lifeline_consent');
+            if (consent === 'true') {
+                document.getElementById('consent-overlay').classList.add('hidden');
+            } else {
+                document.getElementById('consent-overlay').classList.remove('hidden');
+            }
+        }
+
+        function acceptConsent() {
+            localStorage.setItem('lifeline_consent', 'true');
+            document.getElementById('consent-overlay').classList.add('hidden');
+        }
+
+        checkConsent();
+
         // ===== STARFIELD =====
         const starCanvas = document.getElementById('starfield');
         const starCtx = starCanvas.getContext('2d');
