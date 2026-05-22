@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>LiFe LiNe - Χειρομαντεία με AI</title>
     
-    <meta name="description" content="🖐️ Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου με AI.">
+    <meta name="description" content="🖐️ Ο Omen διαβάζει την παλάμη σου! Συνδύασε Χειρομαντεία & Αστρολογία για μια βαθιά, εξατομικευμένη ανάλυση.">
     
     <meta property="og:title" content="🖐️ LiFe LiNe - Χειρομαντεία με AI">
-    <meta property="og:description" content="Η Aziram διαβάζει την παλάμη σου!">
+    <meta property="og:description" content="Ο Omen διαβάζει την παλάμη σου! Χειρομαντεία & Αστρολογία μαζί.">
     <meta property="og:type" content="website">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -55,7 +55,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
             width: 100%;
             max-width: 700px;
             margin: 0 auto;
@@ -65,7 +65,7 @@
         /* ===== SPLASH PAGE ===== */
         #splash-page {
             text-align: center;
-            gap: 25px;
+            gap: 20px;
             animation: fadeInUp 1s ease;
         }
 
@@ -76,8 +76,8 @@
 
         .logo-container {
             position: relative;
-            width: 160px;
-            height: 160px;
+            width: 140px;
+            height: 140px;
             margin: 0 auto;
             animation: floatLogo 4s infinite ease-in-out;
             cursor: pointer;
@@ -91,30 +91,20 @@
         }
 
         .logo-circle {
-            width: 160px;
-            height: 160px;
+            width: 140px; height: 140px;
             border-radius: 50%;
             background: linear-gradient(135deg, #2a0040, #1a0030, #0d0020);
             border: 4px solid var(--gold);
-            box-shadow: 
-                0 0 40px rgba(255, 215, 0, 0.4),
-                0 0 80px rgba(106, 13, 173, 0.3),
-                inset 0 0 40px rgba(255, 215, 0, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.4), 0 0 80px rgba(106, 13, 173, 0.3), inset 0 0 40px rgba(255, 215, 0, 0.1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 4.5rem;
+            position: relative; overflow: hidden;
         }
 
         .logo-circle::before {
             content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+            position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
             background: radial-gradient(circle, rgba(255,215,0,0.2) 0%, transparent 60%);
             animation: rotateGlow 8s linear infinite;
         }
@@ -125,8 +115,7 @@
         }
 
         .logo-hand {
-            position: relative;
-            z-index: 1;
+            position: relative; z-index: 1;
             filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
             animation: pulseHand 2s infinite ease-in-out;
         }
@@ -137,7 +126,7 @@
         }
 
         .splash-title {
-            font-size: clamp(2.2rem, 6vw, 3.5rem);
+            font-size: clamp(2rem, 6vw, 3.2rem);
             font-weight: 800;
             background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700, #FFA500);
             background-size: 300% 300%;
@@ -156,62 +145,45 @@
 
         .splash-subtitle {
             color: #c9a0dc;
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            font-size: clamp(0.85rem, 2.5vw, 1.1rem);
             letter-spacing: 4px;
             border-top: 1px solid rgba(255, 215, 0, 0.2);
-            padding-top: 12px;
-            margin-top: -5px;
+            padding-top: 10px;
         }
 
         .splash-desc {
             color: #b8a0d0;
-            max-width: 400px;
-            font-size: clamp(0.85rem, 2vw, 1rem);
-            line-height: 1.7;
-            opacity: 0.9;
-            padding: 0 15px;
+            max-width: 420px;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+            line-height: 1.6;
+            padding: 0 10px;
         }
 
         .btn-mystic {
             background: linear-gradient(145deg, #FFD700, #B8860B);
             color: #1a0033;
-            padding: 18px 50px;
+            padding: 16px 40px;
             border: none;
             border-radius: 60px;
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-size: clamp(0.95rem, 2.5vw, 1.15rem);
             font-weight: 700;
             cursor: pointer;
             box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), 0 8px 25px rgba(0,0,0,0.5);
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.4s;
             letter-spacing: 2px;
-            position: relative;
-            overflow: hidden;
             width: 90%;
             max-width: 380px;
         }
 
-        .btn-mystic::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
         .btn-mystic:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
-        .btn-mystic:hover::before { opacity: 1; }
         .btn-mystic:active { transform: scale(0.95); }
 
         /* ===== SCAN PAGE ===== */
-        #scan-page { gap: 15px; padding-top: 15px; padding-bottom: 30px; }
+        #scan-page { gap: 12px; padding-top: 10px; padding-bottom: 25px; }
 
         .scan-header { text-align: center; width: 100%; }
         .scan-header h2 {
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-size: clamp(1.6rem, 5vw, 2.2rem);
             font-weight: 800;
             background: linear-gradient(135deg, #FFD700, #FFA500);
             -webkit-background-clip: text;
@@ -221,8 +193,7 @@
         }
         .scan-header p {
             color: #b8a0d0;
-            font-size: clamp(0.8rem, 2vw, 0.95rem);
-            letter-spacing: 1px;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
         }
 
         /* ===== SELECTORS ROW ===== */
@@ -230,52 +201,48 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
         }
 
         .selector-item {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             background: rgba(20, 10, 40, 0.8);
-            padding: 8px 12px;
+            padding: 7px 10px;
             border-radius: 25px;
             border: 1px solid rgba(255,215,0,0.25);
             flex: 1;
-            min-width: 100px;
-            max-width: 180px;
+            min-width: 90px;
+            max-width: 160px;
             justify-content: center;
         }
 
         .selector-item label {
             color: #c9a0dc;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             white-space: nowrap;
         }
 
         .selector-item select, .selector-item input {
-            padding: 6px 8px;
+            padding: 5px 7px;
             border-radius: 15px;
             border: 1px solid rgba(255,215,0,0.3);
             background: #1a0a2e;
             color: #FFD700;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             width: 100%;
             text-align: center;
         }
 
-        /* ===== GENDER BUTTONS ===== */
-        .gender-btns {
-            display: flex;
-            gap: 8px;
-        }
+        .gender-btns { display: flex; gap: 6px; }
 
         .gender-btn {
-            padding: 8px 16px;
-            font-size: 0.85rem;
+            padding: 7px 14px;
+            font-size: 0.8rem;
             font-weight: 600;
             border: 2px solid rgba(255,215,0,0.3);
             background: rgba(20, 10, 40, 0.6);
@@ -293,34 +260,58 @@
             box-shadow: 0 0 20px rgba(255,215,0,0.4);
         }
 
+        /* ===== TOPIC BUTTONS ===== */
+        .topic-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .topic-btn {
+            padding: 10px 14px;
+            font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+            font-weight: 600;
+            border: 2px solid rgba(255,215,0,0.25);
+            background: rgba(20, 10, 40, 0.6);
+            color: #b9a6d4;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 100px;
+            max-width: 180px;
+            text-align: center;
+        }
+
+        .topic-btn.active {
+            background: linear-gradient(145deg, #9b59b6, #6a0dad);
+            color: #fff;
+            border-color: var(--purple-light);
+            box-shadow: 0 0 20px rgba(155, 89, 182, 0.4);
+        }
+
         /* ===== CAMERA ===== */
         #camera-wrapper {
             position: relative;
             width: 100%;
-            max-width: 450px;
-            margin: 10px auto;
+            max-width: 400px;
+            margin: 8px auto;
             border-radius: 25px;
             overflow: hidden;
             border: 3px solid var(--gold);
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), 0 0 80px rgba(106, 13, 173, 0.2);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
             background: #0a0015;
             aspect-ratio: 1;
         }
 
         #webcam { width: 100%; height: 100%; display: block; object-fit: cover; transform: scaleX(-1); }
-
-        #overlay-canvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            transform: scaleX(-1);
-            pointer-events: none;
-        }
+        #overlay-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: scaleX(-1); pointer-events: none; }
 
         .scan-frame {
-            position: absolute;
-            top: 12%; left: 12%;
-            width: 76%; height: 76%;
+            position: absolute; top: 12%; left: 12%; width: 76%; height: 76%;
             border: 2px solid rgba(255, 215, 0, 0.5);
             border-radius: 30px;
             pointer-events: none;
@@ -329,8 +320,7 @@
 
         .scan-frame::before {
             content: '';
-            position: absolute;
-            top: -2px; left: -2px;
+            position: absolute; top: -2px; left: -2px;
             width: 30px; height: 30px;
             border-top: 4px solid var(--gold);
             border-left: 4px solid var(--gold);
@@ -339,8 +329,7 @@
 
         .scan-frame::after {
             content: '';
-            position: absolute;
-            bottom: -2px; right: -2px;
+            position: absolute; bottom: -2px; right: -2px;
             width: 30px; height: 30px;
             border-bottom: 4px solid var(--gold);
             border-right: 4px solid var(--gold);
@@ -353,8 +342,7 @@
         }
 
         .scan-line {
-            position: absolute;
-            top: 0; left: 0;
+            position: absolute; top: 0; left: 0;
             width: 100%; height: 3px;
             background: linear-gradient(90deg, transparent, var(--gold), transparent);
             animation: scanMove 3s infinite ease-in-out;
@@ -373,33 +361,32 @@
         .controls-row {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             width: 100%;
-            max-width: 500px;
+            max-width: 450px;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 12px 20px;
+            padding: 11px 18px;
             border: none;
             border-radius: 50px;
             font-weight: 700;
-            font-size: clamp(0.8rem, 2vw, 0.95rem);
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
             cursor: pointer;
             transition: all 0.4s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 5px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-            letter-spacing: 1px;
             flex: 1;
-            min-width: 100px;
-            max-width: 200px;
+            min-width: 90px;
+            max-width: 180px;
         }
 
         .btn:active { transform: scale(0.95); }
-        .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
         .btn-gold { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; }
         .btn-purple { background: linear-gradient(145deg, #9b59b6, #6a0dad); color: #fff; }
@@ -407,14 +394,15 @@
             background: linear-gradient(145deg, #2ecc71, #1e8449); 
             color: #fff; 
             width: 100%; 
-            max-width: 500px; 
+            max-width: 450px; 
             display: none;
             margin: 5px auto;
+            font-size: 1rem;
         }
 
         /* ===== UPLOAD ===== */
-        #upload-preview-area { display: none; text-align: center; margin: 10px 0; }
-        #upload-preview-img { max-width: 200px; width: 100%; border-radius: 20px; border: 2px solid var(--gold); }
+        #upload-preview-area { display: none; text-align: center; margin: 8px 0; }
+        #upload-preview-img { max-width: 180px; width: 100%; border-radius: 20px; border: 2px solid var(--gold); }
 
         /* ===== LOADING ===== */
         #loading-box {
@@ -422,39 +410,33 @@
             text-align: center;
             background: rgba(20, 10, 40, 0.95);
             border-radius: 30px;
-            padding: 30px 25px;
-            margin: 20px auto;
+            padding: 25px 20px;
+            margin: 15px auto;
             border: 2px solid rgba(255, 215, 0, 0.3);
             box-shadow: 0 0 60px rgba(255, 215, 0, 0.2);
             width: 100%;
-            max-width: 450px;
+            max-width: 400px;
         }
 
         .loading-spinner {
-            width: 50px; height: 50px;
+            width: 45px; height: 45px;
             border: 3px solid rgba(255, 215, 0, 0.2);
             border-top: 3px solid var(--gold);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin: 15px auto;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .loading-text {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #c9a0dc;
             letter-spacing: 2px;
             animation: mysticPulse 2s infinite ease-in-out;
         }
 
-        @keyframes mysticPulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
+        @keyframes mysticPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
         /* ===== RESULT ===== */
         #result-area {
@@ -462,50 +444,40 @@
             background: var(--card);
             backdrop-filter: blur(10px);
             border-radius: 25px;
-            padding: 25px 20px;
-            margin-top: 20px;
+            padding: 20px 18px;
+            margin-top: 15px;
             border: 1px solid rgba(255,215,0,0.2);
             width: 100%;
             animation: fadeInUp 0.6s ease;
         }
 
-        #result-area h2 {
-            color: var(--gold);
-            text-align: center;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        #result-text {
-            color: #e6d5f5;
-            font-size: 0.95rem;
-            line-height: 1.9;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
+        #result-area h2 { color: var(--gold); text-align: center; font-size: 1.3rem; margin-bottom: 12px; }
+        #result-text { color: #e6d5f5; font-size: 0.9rem; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; }
+        #result-text h2 { font-size: 1.2rem; margin: 15px 0 10px; }
+        #result-text h3 { font-size: 1rem; margin: 10px 0 8px; color: #FFD700; }
 
         .btn-back {
             background: transparent;
             border: 1px solid rgba(255,215,0,0.3);
             color: #c9a0dc;
-            padding: 10px 24px;
+            padding: 8px 20px;
             border-radius: 50px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.3s;
-            letter-spacing: 2px;
         }
         .btn-back:hover { background: rgba(255,215,0,0.1); border-color: var(--gold); color: var(--gold); }
 
-        @media (max-width: 480px) {
-            .selectors-row { gap: 6px; }
-            .selector-item { padding: 6px 8px; min-width: 80px; max-width: 150px; }
+        @media (max-width: 420px) {
+            .selectors-row { gap: 5px; }
+            .selector-item { padding: 5px 7px; min-width: 70px; max-width: 130px; }
             .selector-item label { font-size: 0.7rem; }
-            .selector-item select, .selector-item input { font-size: 0.7rem; padding: 4px 6px; }
-            .gender-btn { padding: 6px 12px; font-size: 0.75rem; }
-            .controls-row { gap: 8px; }
-            .btn { padding: 10px 14px; font-size: 0.8rem; }
-            #camera-wrapper { max-width: 330px; }
+            .selector-item select, .selector-item input { font-size: 0.7rem; padding: 4px 5px; }
+            .gender-btn { padding: 5px 10px; font-size: 0.7rem; }
+            .topic-btn { padding: 8px 10px; font-size: 0.7rem; min-width: 80px; max-width: 140px; }
+            .controls-row { gap: 7px; }
+            .btn { padding: 9px 12px; font-size: 0.75rem; }
+            #camera-wrapper { max-width: 300px; }
         }
     </style>
 </head>
@@ -521,9 +493,9 @@
             </div>
         </div>
         <div class="splash-title">LiFe LiNe</div>
-        <div class="splash-subtitle">✦ Χειρομαντεία με AI ✦</div>
+        <div class="splash-subtitle">✦ Χειρομαντεία & Αστρολογία ✦</div>
         <div class="splash-desc">
-            Τοποθέτησε την παλάμη σου μπροστά στην κάμερα και άφησε την Aziram να αποκαλύψει τα μυστικά που κρύβουν οι γραμμές του χεριού σου.
+            Τοποθέτησε την παλάμη σου μπροστά στην κάμερα. Ο Omen, ο προσωπικός σου Χειρομάντης και Αστρολόγος, θα αποκαλύψει τα μυστικά των γραμμών σου.
         </div>
         <button class="btn-mystic" onclick="goToScan()">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
     </div>
@@ -534,20 +506,18 @@
         
         <div class="scan-header">
             <h2>LiFe LiNe</h2>
-            <p>Η Aziram διαβάζει την παλάμη σου</p>
+            <p>Ο Omen διαβάζει την παλάμη σου</p>
         </div>
 
-        <!-- SELECTORS ROW: Gender + Zodiac -->
+        <!-- ROW 1: Gender + Zodiac + Birthdate -->
         <div class="selectors-row">
             <div class="selector-item">
-                <label>♂♀</label>
                 <div class="gender-btns">
-                    <button class="gender-btn active" id="maleBtn" onclick="setGender('male')">Άντρας</button>
-                    <button class="gender-btn" id="femaleBtn" onclick="setGender('female')">Γυναίκα</button>
+                    <button class="gender-btn active" id="maleBtn" onclick="setGender('male')">♂</button>
+                    <button class="gender-btn" id="femaleBtn" onclick="setGender('female')">♀</button>
                 </div>
             </div>
             <div class="selector-item">
-                <label>♈</label>
                 <select id="zodiac-select" onchange="setZodiac(this.value)">
                     <option value="Κριός">Κριός</option><option value="Ταύρος">Ταύρος</option>
                     <option value="Δίδυμοι">Δίδυμοι</option><option value="Καρκίνος">Καρκίνος</option>
@@ -557,6 +527,18 @@
                     <option value="Υδροχόος">Υδροχόος</option><option value="Ιχθείς">Ιχθείς</option>
                 </select>
             </div>
+            <div class="selector-item">
+                <input type="date" id="birthdate-input" onchange="setBirthdate(this.value)" placeholder="Ημ/νία γέννησης">
+            </div>
+        </div>
+
+        <!-- ROW 2: Topic Buttons -->
+        <div class="topic-row" id="topic-row">
+            <button class="topic-btn active" onclick="setTopic('Έρωτας & Σχέσεις', this)">❤️ Έρωτας & Σχέσεις</button>
+            <button class="topic-btn" onclick="setTopic('Καριέρα & Οικονομικά', this)">💼 Καριέρα & Οικονομικά</button>
+            <button class="topic-btn" onclick="setTopic('Υγεία & Ζωτικότητα', this)">🌱 Υγεία & Ζωτικότητα</button>
+            <button class="topic-btn" onclick="setTopic('Κρυφά Ταλέντα & Προσωπικότητα', this)">🧠 Κρυφά Ταλέντα</button>
+            <button class="topic-btn" onclick="setTopic('Κάρμα & Μελλοντικές Προκλήσεις', this)">🌀 Κάρμα & Προκλήσεις</button>
         </div>
 
         <!-- CAMERA -->
@@ -581,17 +563,17 @@
         </div>
 
         <!-- ANALYZE BUTTON -->
-        <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()">🔮 Ανάλυση Παλάμης</button>
+        <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()">🔮 Αποκάλυψε το Πεπρωμένο μου</button>
 
         <!-- LOADING -->
         <div id="loading-box">
-            <div class="loading-text">🔮 Η Aziram διαβάζει τις γραμμές σου...</div>
+            <div class="loading-text">🔮 Ο Omen διαβάζει τις γραμμές σου...</div>
             <div class="loading-spinner"></div>
         </div>
 
         <!-- RESULT -->
         <div id="result-area">
-            <h2>☽ Η Aziram αποκαλύπτει ☾</h2>
+            <h2>☽ Η Αποκάλυψη του Omen ☾</h2>
             <div id="result-text"></div>
             <div style="text-align:center; margin-top:20px;">
                 <button class="btn btn-purple" onclick="resetScan()">🔄 Σκανάρισε άλλο χέρι</button>
@@ -604,27 +586,22 @@
         const starCanvas = document.getElementById('starfield');
         const starCtx = starCanvas.getContext('2d');
         let stars = [];
-
         function resizeStarfield() { starCanvas.width = window.innerWidth; starCanvas.height = window.innerHeight; }
         window.addEventListener('resize', resizeStarfield);
         resizeStarfield();
-
         function createStars(count = 200) {
             stars = [];
             for (let i = 0; i < count; i++) {
                 stars.push({
-                    x: Math.random() * starCanvas.width,
-                    y: Math.random() * starCanvas.height,
+                    x: Math.random() * starCanvas.width, y: Math.random() * starCanvas.height,
                     r: Math.random() * 2 + 0.5,
-                    dx: (Math.random() - 0.5) * 0.3,
-                    dy: (Math.random() - 0.5) * 0.3,
+                    dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.3,
                     alpha: Math.random() * 0.8 + 0.2,
                     color: Math.random() > 0.7 ? '#FFD700' : '#c9a0dc'
                 });
             }
         }
         createStars();
-
         function drawStars() {
             starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
             stars.forEach(s => {
@@ -645,26 +622,29 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('scan-page').classList.add('active');
         }
-
         function goToSplash() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('splash-page').classList.add('active');
-            stopCamera();
-            resetScan();
+            stopCamera(); resetScan();
         }
 
-        // ===== GENDER & ZODIAC =====
+        // ===== USER SELECTIONS =====
         let userGender = 'male';
         let userZodiac = 'Κριός';
+        let userBirthdate = '';
+        let userTopic = 'Έρωτας & Σχέσεις';
 
         function setGender(gender) {
             userGender = gender;
             document.getElementById('maleBtn').classList.toggle('active', gender === 'male');
             document.getElementById('femaleBtn').classList.toggle('active', gender === 'female');
         }
-
-        function setZodiac(zodiac) {
-            userZodiac = zodiac;
+        function setZodiac(zodiac) { userZodiac = zodiac; }
+        function setBirthdate(date) { userBirthdate = date; }
+        function setTopic(topic, btn) {
+            userTopic = topic;
+            document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
         }
 
         // ===== CAMERA =====
@@ -697,19 +677,16 @@
                 alert('Δεν μπόρεσα να ανοίξω την κάμερα. Δοκίμασε το Upload.');
             }
         }
-
         function stopCamera() {
             if (currentStream) { currentStream.getTracks().forEach(t => t.stop()); currentStream = null; }
         }
-
         function capturePhoto() {
             if (!currentStream) return null;
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth || 500;
             canvas.height = video.videoHeight || 500;
             const ctx = canvas.getContext('2d');
-            ctx.save();
-            ctx.scale(-1, 1);
+            ctx.save(); ctx.scale(-1, 1);
             ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
             ctx.restore();
             return canvas.toDataURL('image/jpeg', 0.8);
@@ -734,11 +711,7 @@
 
         async function performAnalysis() {
             if (isAnalyzing) return;
-
-            if (currentStream && !capturedImage) {
-                capturedImage = capturePhoto();
-            }
-
+            if (currentStream && !capturedImage) { capturedImage = capturePhoto(); }
             if (!capturedImage) {
                 alert('Παρακαλώ πρώτα άνοιξε την κάμερα ή ανέβασε φωτογραφία.');
                 return;
@@ -749,6 +722,8 @@
             document.getElementById('result-area').style.display = 'none';
             document.getElementById('analyze-btn').style.display = 'none';
             document.getElementById('controls-row').style.display = 'none';
+            document.getElementById('topic-row').style.display = 'none';
+            document.querySelector('.selectors-row').style.display = 'none';
 
             try {
                 const response = await fetch(API_URL, {
@@ -757,24 +732,32 @@
                     body: JSON.stringify({
                         image: capturedImage,
                         gender: userGender,
-                        zodiac: userZodiac
+                        zodiac: userZodiac,
+                        birthdate: userBirthdate,
+                        topic: userTopic
                     })
                 });
 
                 const data = await response.json();
 
                 if (data.success && data.reading) {
-                    document.getElementById('result-text').innerHTML = data.reading.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+                    document.getElementById('result-text').innerHTML = data.reading
+                        .replace(/## (.*?)\n/g, '<h2>$1</h2>')
+                        .replace(/### (.*?)\n/g, '<h3>$1</h3>')
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\n/g, '<br>');
                     document.getElementById('result-area').style.display = 'block';
                     document.getElementById('result-area').scrollIntoView({ behavior: 'smooth' });
                 } else {
-                    alert('Η Aziram συνάντησε ένα εμπόδιο. Δοκίμασε ξανά.');
+                    alert('Ο Omen συνάντησε ένα εμπόδιο. Δοκίμασε ξανά.');
                 }
             } catch (error) {
-                alert('Σφάλμα σύνδεσης. Έλεγξε τη σύνδεσή σου και δοκίμασε ξανά.');
+                alert('Σφάλμα σύνδεσης. Έλεγξε τη σύνδεσή σου.');
             } finally {
                 document.getElementById('loading-box').style.display = 'none';
                 document.getElementById('controls-row').style.display = 'flex';
+                document.getElementById('topic-row').style.display = 'flex';
+                document.querySelector('.selectors-row').style.display = 'flex';
                 isAnalyzing = false;
             }
         }
@@ -784,6 +767,8 @@
             document.getElementById('loading-box').style.display = 'none';
             document.getElementById('analyze-btn').style.display = 'none';
             document.getElementById('controls-row').style.display = 'flex';
+            document.getElementById('topic-row').style.display = 'flex';
+            document.querySelector('.selectors-row').style.display = 'flex';
             document.getElementById('upload-preview-area').style.display = 'none';
             document.getElementById('camera-btn').disabled = false;
             document.getElementById('camera-btn').innerText = '📷 Camera';
