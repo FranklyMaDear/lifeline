@@ -5,15 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>LiFe LiNe - Χειρομαντεία με AI</title>
     
-    <meta name="description" content="🖐️ Η Aziram διαβάζει την παλάμη σου! Συνδύασε Χειρομαντεία & Αστρολογία για μια βαθιά, εξατομικευμένη ανάλυση.">
+    <!-- Meta για Social Sharing -->
+    <meta name="description" content="🖐️ Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου με Χειρομαντεία & Αστρολογία.">
     
+    <!-- Open Graph (Facebook, WhatsApp, Viber) -->
     <meta property="og:title" content="🖐️ LiFe LiNe - Χειρομαντεία με AI">
-    <meta property="og:description" content="Η Aziram διαβάζει την παλάμη σου! Χειρομαντεία & Αστρολογία μαζί.">
+    <meta property="og:description" content="Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου με Χειρομαντεία & Αστρολογία.">
+    <meta property="og:image" content="https://lifeline.franklymadear.com/lifeline.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:type" content="image/png">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lifeline.franklymadear.com">
+    <meta property="og:site_name" content="LiFe LiNe - Χειρομαντεία">
+    <meta property="og:locale" content="el_GR">
     
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="🖐️ LiFe LiNe - Χειρομαντεία με AI">
+    <meta name="twitter:description" content="Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου.">
+    <meta name="twitter:image" content="https://lifeline.franklymadear.com/lifeline.png">
+    <meta name="twitter:image:alt" content="LiFe LiNe - Χειρομαντεία">
+    
+    <!-- PWA -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="LiFe LiNe">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#1a0033">
+    <link rel="apple-touch-icon" sizes="180x180" href="lifeline.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="lifeline.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="lifeline.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="lifeline.png">
+    <link rel="shortcut icon" href="lifeline.png">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22LiFe%20LiNe%20-%20%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%22%2C%22short_name%22%3A%22LiFe%20LiNe%22%2C%22description%22%3A%22%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%20%CE%BC%CE%B5%20AI%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231a0033%22%2C%22theme_color%22%3A%22%231a0033%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
     
     <!-- Monetag SDK -->
     <script src='//libtl.com/sdk.js' data-zone='11042671' data-sdk='show_11042671'></script>
@@ -102,6 +129,9 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 4.5rem;
             position: relative; overflow: hidden;
+            background-image: url('lifeline.png');
+            background-size: cover;
+            background-position: center;
         }
 
         .logo-circle::before {
@@ -121,6 +151,7 @@
             position: relative; z-index: 1;
             filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
             animation: pulseHand 2s infinite ease-in-out;
+            font-size: 4.5rem;
         }
 
         @keyframes pulseHand {
@@ -311,9 +342,7 @@
             transition: left 0.5s;
         }
 
-        .topic-btn:hover::after {
-            left: 100%;
-        }
+        .topic-btn:hover::after { left: 100%; }
 
         .topic-btn.active {
             background: linear-gradient(145deg, #9b59b6, #6a0dad);
@@ -387,7 +416,7 @@
             100% { top: 100%; opacity: 0; }
         }
 
-        /* ===== CONTROLS ROW ===== */
+        /* ===== CONTROLS ===== */
         .controls-row {
             display: flex;
             justify-content: center;
@@ -482,15 +511,13 @@
             padding: 20px;
         }
 
-        #ad-modal-overlay.active {
-            display: flex;
-        }
+        #ad-modal-overlay.active { display: flex; }
 
         #ad-modal {
             background: linear-gradient(145deg, #1a0e2a, #2a1a3a);
             border: 3px solid var(--gold);
             border-radius: 20px;
-            padding: 25px 20px;
+            padding: 30px 25px;
             max-width: 500px;
             width: 90%;
             text-align: center;
@@ -542,28 +569,36 @@
             color: #d5c8e8;
             font-size: 0.9rem;
             line-height: 1.6;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             position: relative;
             z-index: 1;
         }
 
-        #ad-modal .countdown {
-            display: inline-block;
-            background: rgba(255,215,0,0.15);
-            color: var(--gold);
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 1.5rem;
+        #ad-modal .btn-ad-now {
+            background: linear-gradient(145deg, #FFD700, #B8860B);
+            color: #1a0033;
+            padding: 14px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
             position: relative;
             z-index: 1;
-            animation: pulseCountdown 1s infinite;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+            animation: pulseBtn 2s infinite;
         }
 
-        @keyframes pulseCountdown {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        @keyframes pulseBtn {
+            0%, 100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.4); }
+            50% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.7); }
+        }
+
+        #ad-modal .btn-ad-now:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
         }
 
         #ad-modal .btn-continue {
@@ -652,6 +687,38 @@
         }
         .btn-back:hover { background: rgba(255,215,0,0.1); border-color: var(--gold); color: var(--gold); }
 
+        /* ===== FOOTER ===== */
+        #site-footer {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,215,0,0.1);
+            width: 100%;
+        }
+        #site-footer .footer-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        #site-footer .footer-link {
+            color: #b9a6d4;
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-decoration: underline;
+            transition: all 0.3s;
+            background: none;
+            border: none;
+            font-family: inherit;
+            letter-spacing: 1px;
+        }
+        #site-footer .footer-link:hover {
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255,215,0,0.3);
+        }
+
         @media (max-width: 420px) {
             .selectors-row { gap: 8px; }
             .selector-item { padding: 8px 10px; min-width: 100px; max-width: 200px; }
@@ -677,8 +744,8 @@
             <div class="modal-icon">📺</div>
             <h3>Δείτε αυτή τη διαφήμιση</h3>
             <p>Παρακαλούμε δείτε τη διαφήμιση και μετά πατήστε <strong>Continue</strong> για να επιστρέψετε στη σελίδα και να ολοκληρώσετε τη χειρομαντεία σας.</p>
-            <div class="countdown" id="countdown-display">5</div>
-            <button class="btn-continue" id="btn-continue-ad" onclick="closeAdModal()">▶ Continue</button>
+            <button class="btn-ad-now" id="btn-ad-now" onclick="showAd()">▶ Διαφήμιση Τώρα</button>
+            <button class="btn-continue" id="btn-continue-ad" onclick="closeAdModal()">✓ Continue</button>
         </div>
     </div>
 
@@ -695,6 +762,14 @@
             Τοποθέτησε την παλάμη σου μπροστά στην κάμερα. Η Aziram, η προσωπική σου Χειρομάντισσα και Αστρολόγος, θα αποκαλύψει τα μυστικά των γραμμών σου.
         </div>
         <button class="btn-mystic" onclick="goToScan()">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
+        
+        <!-- FOOTER -->
+        <div id="site-footer">
+            <div class="footer-links">
+                <a href="terms.html" class="footer-link">📜 Όροι Χρήσης</a>
+                <a href="privacy.html" class="footer-link">🔒 Πολιτική Απορρήτου</a>
+            </div>
+        </div>
     </div>
 
     <!-- ===== SCAN PAGE ===== -->
@@ -723,11 +798,11 @@
 
         <!-- ROW 2: Topic Buttons -->
         <div class="topic-row" id="topic-row">
-            <button class="topic-btn active" id="topic-love" onclick="selectTopic('Έρωτας & Σχέσεις', this)">❤️<br>Έρωτας & Σχέσεις</button>
-            <button class="topic-btn" id="topic-career" onclick="selectTopic('Καριέρα & Οικονομικά', this)">💼<br>Καριέρα & Οικονομικά</button>
-            <button class="topic-btn" id="topic-health" onclick="selectTopic('Υγεία & Ζωτικότητα', this)">🌱<br>Υγεία & Ζωτικότητα</button>
-            <button class="topic-btn" id="topic-talent" onclick="selectTopic('Κρυφά Ταλέντα & Προσωπικότητα', this)">🧠<br>Κρυφά Ταλέντα</button>
-            <button class="topic-btn" id="topic-karma" onclick="selectTopic('Κάρμα & Μελλοντικές Προκλήσεις', this)">🌀<br>Κάρμα & Προκλήσεις</button>
+            <button class="topic-btn active" onclick="selectTopic('Έρωτας & Σχέσεις', this)">❤️<br>Έρωτας & Σχέσεις</button>
+            <button class="topic-btn" onclick="selectTopic('Καριέρα & Οικονομικά', this)">💼<br>Καριέρα & Οικονομικά</button>
+            <button class="topic-btn" onclick="selectTopic('Υγεία & Ζωτικότητα', this)">🌱<br>Υγεία & Ζωτικότητα</button>
+            <button class="topic-btn" onclick="selectTopic('Κρυφά Ταλέντα & Προσωπικότητα', this)">🧠<br>Κρυφά Ταλέντα</button>
+            <button class="topic-btn" onclick="selectTopic('Κάρμα & Μελλοντικές Προκλήσεις', this)">🌀<br>Κάρμα & Προκλήσεις</button>
         </div>
 
         <!-- CAMERA -->
@@ -744,7 +819,7 @@
             <img id="upload-preview-img" src="" alt="Preview">
         </div>
 
-        <!-- CONTROLS ROW -->
+        <!-- CONTROLS -->
         <div class="controls-row" id="controls-row">
             <button class="btn btn-gold" id="camera-btn" onclick="startCamera()">📷 Camera</button>
             <button class="btn btn-purple" onclick="document.getElementById('file-input').click()">📁 Upload</button>
@@ -766,6 +841,14 @@
             <div id="result-text"></div>
             <div style="text-align:center; margin-top:20px; position:relative; z-index:2;">
                 <button class="btn btn-purple" onclick="resetScan()">🔄 Σκανάρισε άλλο χέρι</button>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div id="site-footer">
+            <div class="footer-links">
+                <a href="terms.html" class="footer-link">📜 Όροι Χρήσης</a>
+                <a href="privacy.html" class="footer-link">🔒 Πολιτική Απορρήτου</a>
             </div>
         </div>
     </div>
@@ -822,8 +905,6 @@
         let userZodiac = 'Κριός';
         let userBirthdate = '';
         let userTopic = 'Έρωτας & Σχέσεις';
-        let adCompleted = false;
-        let adCountdown = null;
 
         function setGender(gender) {
             userGender = gender;
@@ -843,12 +924,11 @@
         }
 
         function selectTopic(topic, btn) {
-            // Πρώτα δείχνουμε τη διαφήμιση και μετά ενεργοποιούμε το θέμα
             setTopicOnly(topic, btn);
             showAdModal();
         }
 
-        // ===== ΑΥΤΟΜΑΤΟΣ ΥΠΟΛΟΓΙΣΜΟΣ ΖΩΔΙΟΥ =====
+        // ===== ZODIAC =====
         function getZodiacFromDate(dateString) {
             if (!dateString) return 'Κριός';
             const date = new Date(dateString);
@@ -871,43 +951,30 @@
 
         // ===== AD MODAL =====
         function showAdModal() {
-            adCompleted = false;
-            const overlay = document.getElementById('ad-modal-overlay');
-            const countdownDisplay = document.getElementById('countdown-display');
-            const continueBtn = document.getElementById('btn-continue-ad');
+            document.getElementById('ad-modal-overlay').classList.add('active');
+            document.getElementById('btn-ad-now').style.display = 'inline-block';
+            document.getElementById('btn-continue-ad').style.display = 'none';
+        }
+
+        function showAd() {
+            document.getElementById('btn-ad-now').style.display = 'none';
             
-            overlay.classList.add('active');
-            continueBtn.style.display = 'none';
-            
-            let seconds = 5;
-            countdownDisplay.textContent = seconds;
-            
-            if (adCountdown) clearInterval(adCountdown);
-            
-            adCountdown = setInterval(() => {
-                seconds--;
-                countdownDisplay.textContent = seconds;
-                
-                if (seconds <= 0) {
-                    clearInterval(adCountdown);
-                    countdownDisplay.textContent = '✓';
-                    continueBtn.style.display = 'inline-block';
-                }
-            }, 1000);
-            
-            // Εμφάνιση διαφήμισης Monetag
             if (typeof show_11042671 === 'function') {
-                show_11042671().catch(() => {});
+                show_11042671().then(() => {
+                    document.getElementById('btn-continue-ad').style.display = 'inline-block';
+                }).catch(() => {
+                    document.getElementById('btn-continue-ad').style.display = 'inline-block';
+                });
+            } else {
+                document.getElementById('btn-continue-ad').style.display = 'inline-block';
             }
         }
 
         function closeAdModal() {
             document.getElementById('ad-modal-overlay').classList.remove('active');
-            if (adCountdown) clearInterval(adCountdown);
-            adCompleted = true;
         }
 
-        // ===== ΑΣΤΕΡΑΚΙΑ =====
+        // ===== STARS =====
         function addStarsToResult() {
             const resultArea = document.getElementById('result-area');
             document.querySelectorAll('.result-star').forEach(s => s.remove());
@@ -1053,7 +1120,6 @@
             document.getElementById('camera-btn').innerText = '📷 Camera';
             capturedImage = null;
             isAnalyzing = false;
-            adCompleted = false;
         }
     </script>
 </body>
