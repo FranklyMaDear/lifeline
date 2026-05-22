@@ -2,19 +2,15 @@
 <html lang="el">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Life Line - Χειρομαντεία με AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>LiFe LiNe - Χειρομαντεία με AI</title>
     
-    <!-- Meta για Social Sharing -->
-    <meta name="description" content="🖐️ Ανακάλυψε τα μυστικά της παλάμης σου! Το Life Line αναλύει το χέρι σου με AI.">
+    <meta name="description" content="🖐️ Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου με AI.">
     
-    <!-- Open Graph -->
-    <meta property="og:title" content="🖐️ Life Line - Χειρομαντεία">
-    <meta property="og:description" content="Ανακάλυψε τα μυστικά της παλάμης σου!">
-    <meta property="og:image" content="lifeline-logo.png">
+    <meta property="og:title" content="🖐️ LiFe LiNe - Χειρομαντεία με AI">
+    <meta property="og:description" content="Η Aziram διαβάζει την παλάμη σου!">
     <meta property="og:type" content="website">
     
-    <!-- PWA -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#1a0033">
@@ -43,7 +39,6 @@
                 radial-gradient(ellipse at bottom, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
         }
 
-        /* ===== STARFIELD CANVAS ===== */
         #starfield {
             position: fixed;
             top: 0; left: 0;
@@ -52,7 +47,6 @@
             pointer-events: none;
         }
 
-        /* ===== SPLASH PAGE ===== */
         .page {
             position: relative;
             z-index: 1;
@@ -68,6 +62,7 @@
         }
         .page.active { display: flex; }
 
+        /* ===== SPLASH PAGE ===== */
         #splash-page {
             text-align: center;
             gap: 25px;
@@ -79,7 +74,6 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== LOGO ===== */
         .logo-container {
             position: relative;
             width: 160px;
@@ -142,18 +136,16 @@
             50% { transform: scale(1.1); }
         }
 
-        /* ===== TITLE ===== */
         .splash-title {
-            font-size: 3.5rem;
+            font-size: clamp(2.2rem, 6vw, 3.5rem);
             font-weight: 800;
             background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700, #FFA500);
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: 6px;
+            letter-spacing: 4px;
             animation: shimmer 3s infinite;
-            text-shadow: none;
         }
 
         @keyframes shimmer {
@@ -164,8 +156,8 @@
 
         .splash-subtitle {
             color: #c9a0dc;
-            font-size: 1.1rem;
-            letter-spacing: 5px;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            letter-spacing: 4px;
             border-top: 1px solid rgba(255, 215, 0, 0.2);
             padding-top: 12px;
             margin-top: -5px;
@@ -174,26 +166,28 @@
         .splash-desc {
             color: #b8a0d0;
             max-width: 400px;
-            font-size: 1rem;
+            font-size: clamp(0.85rem, 2vw, 1rem);
             line-height: 1.7;
             opacity: 0.9;
+            padding: 0 15px;
         }
 
-        /* ===== BUTTONS ===== */
         .btn-mystic {
             background: linear-gradient(145deg, #FFD700, #B8860B);
             color: #1a0033;
             padding: 18px 50px;
             border: none;
             border-radius: 60px;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
             font-weight: 700;
             cursor: pointer;
             box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), 0 8px 25px rgba(0,0,0,0.5);
             transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             position: relative;
             overflow: hidden;
+            width: 90%;
+            max-width: 380px;
         }
 
         .btn-mystic::before {
@@ -208,85 +202,125 @@
             transition: opacity 0.5s;
         }
 
-        .btn-mystic:hover {
-            transform: scale(1.07) translateY(-5px);
-            box-shadow: 0 0 80px rgba(255, 215, 0, 0.6), 0 12px 35px rgba(0,0,0,0.6);
-        }
-
+        .btn-mystic:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
         .btn-mystic:hover::before { opacity: 1; }
-
         .btn-mystic:active { transform: scale(0.95); }
 
         /* ===== SCAN PAGE ===== */
-        #scan-page {
-            gap: 20px;
-            padding-top: 20px;
-            padding-bottom: 40px;
-        }
+        #scan-page { gap: 15px; padding-top: 15px; padding-bottom: 30px; }
 
-        .scan-header {
-            text-align: center;
-            width: 100%;
-        }
-
+        .scan-header { text-align: center; width: 100%; }
         .scan-header h2 {
-            font-size: 1.8rem;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 800;
             background: linear-gradient(135deg, #FFD700, #FFA500);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: 3px;
-            margin-bottom: 5px;
         }
-
         .scan-header p {
             color: #b8a0d0;
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
             letter-spacing: 1px;
         }
 
-        /* ===== CAMERA WRAPPER ===== */
+        /* ===== SELECTORS ROW ===== */
+        .selectors-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .selector-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(20, 10, 40, 0.8);
+            padding: 8px 12px;
+            border-radius: 25px;
+            border: 1px solid rgba(255,215,0,0.25);
+            flex: 1;
+            min-width: 100px;
+            max-width: 180px;
+            justify-content: center;
+        }
+
+        .selector-item label {
+            color: #c9a0dc;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .selector-item select, .selector-item input {
+            padding: 6px 8px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,215,0,0.3);
+            background: #1a0a2e;
+            color: #FFD700;
+            font-size: 0.8rem;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* ===== GENDER BUTTONS ===== */
+        .gender-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .gender-btn {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 2px solid rgba(255,215,0,0.3);
+            background: rgba(20, 10, 40, 0.6);
+            color: #b9a6d4;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .gender-btn.active {
+            background: linear-gradient(145deg, #FFD700, #B8860B);
+            color: #1a0033;
+            border-color: #FFD700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.4);
+        }
+
+        /* ===== CAMERA ===== */
         #camera-wrapper {
             position: relative;
             width: 100%;
-            max-width: 500px;
+            max-width: 450px;
             margin: 10px auto;
             border-radius: 25px;
             overflow: hidden;
             border: 3px solid var(--gold);
-            box-shadow: 
-                0 0 40px rgba(255, 215, 0, 0.3),
-                0 0 80px rgba(106, 13, 173, 0.2),
-                inset 0 0 30px rgba(255, 215, 0, 0.1);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), 0 0 80px rgba(106, 13, 173, 0.2);
             background: #0a0015;
             aspect-ratio: 1;
         }
 
-        #webcam {
-            width: 100%;
-            height: 100%;
-            display: block;
-            object-fit: cover;
-            transform: scaleX(-1);
-        }
+        #webcam { width: 100%; height: 100%; display: block; object-fit: cover; transform: scaleX(-1); }
 
         #overlay-canvas {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             transform: scaleX(-1);
             pointer-events: none;
         }
 
-        /* ===== SCAN FRAME ===== */
         .scan-frame {
             position: absolute;
-            top: 15%;
-            left: 15%;
-            width: 70%;
-            height: 70%;
+            top: 12%; left: 12%;
+            width: 76%; height: 76%;
             border: 2px solid rgba(255, 215, 0, 0.5);
             border-radius: 30px;
             pointer-events: none;
@@ -296,10 +330,8 @@
         .scan-frame::before {
             content: '';
             position: absolute;
-            top: -2px;
-            left: -2px;
-            width: 30px;
-            height: 30px;
+            top: -2px; left: -2px;
+            width: 30px; height: 30px;
             border-top: 4px solid var(--gold);
             border-left: 4px solid var(--gold);
             border-radius: 5px 0 0 0;
@@ -308,10 +340,8 @@
         .scan-frame::after {
             content: '';
             position: absolute;
-            bottom: -2px;
-            right: -2px;
-            width: 30px;
-            height: 30px;
+            bottom: -2px; right: -2px;
+            width: 30px; height: 30px;
             border-bottom: 4px solid var(--gold);
             border-right: 4px solid var(--gold);
             border-radius: 0 0 5px 0;
@@ -322,13 +352,10 @@
             50% { border-color: rgba(255, 215, 0, 0.9); }
         }
 
-        /* ===== SCAN LINE ===== */
         .scan-line {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
             background: linear-gradient(90deg, transparent, var(--gold), transparent);
             animation: scanMove 3s infinite ease-in-out;
             pointer-events: none;
@@ -342,162 +369,58 @@
             100% { top: 100%; opacity: 0; }
         }
 
-        /* ===== CONTROLS ===== */
-        .controls {
+        /* ===== CONTROLS ROW ===== */
+        .controls-row {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
             gap: 12px;
-            margin: 15px 0;
+            width: 100%;
+            max-width: 500px;
+            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 14px 28px;
+            padding: 12px 20px;
             border: none;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.4s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            box-shadow: 0 6px 25px rgba(0,0,0,0.5);
+            gap: 6px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
+            flex: 1;
+            min-width: 100px;
+            max-width: 200px;
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
+        .btn:active { transform: scale(0.95); }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-        .btn:hover::before { opacity: 1; }
-        .btn:active { transform: scale(0.92); }
-
-        .btn-gold {
-            background: linear-gradient(145deg, #FFD700, #B8860B);
-            color: #1a0033;
-            box-shadow: 0 6px 25px rgba(255,215,0,0.3);
-        }
-
-        .btn-purple {
-            background: linear-gradient(145deg, #9b59b6, #6a0dad);
-            color: #fff;
-            box-shadow: 0 6px 25px rgba(155,89,182,0.3);
-        }
-
-        .btn-green {
-            background: linear-gradient(145deg, #2ecc71, #1e8449);
-            color: #fff;
-            box-shadow: 0 6px 25px rgba(46,204,113,0.25);
-        }
-
-        .btn-red {
-            background: linear-gradient(145deg, #e74c3c, #a93226);
-            color: #fff;
-        }
-
-        .btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* ===== GENDER SELECTOR ===== */
-        .gender-selector {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin: 10px 0;
-        }
-
-        .gender-btn {
-            padding: 12px 28px;
-            font-size: 1rem;
-            font-weight: 600;
-            border: 2px solid rgba(255,215,0,0.3);
-            background: rgba(20, 12, 40, 0.6);
-            color: #b9a6d4;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.4s;
-        }
-
-        .gender-btn.active {
-            background: linear-gradient(145deg, #FFD700, #B8860B);
-            color: #1a0033;
-            border-color: #FFD700;
-            box-shadow: 0 0 30px rgba(255,215,0,0.4);
-            transform: scale(1.05);
-        }
-
-        .gender-btn:hover:not(.active) {
-            border-color: rgba(255,215,0,0.6);
-            color: #FFD700;
-            transform: translateY(-2px);
-        }
-
-        /* ===== RESULT AREA ===== */
-        #result-area {
+        .btn-gold { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; }
+        .btn-purple { background: linear-gradient(145deg, #9b59b6, #6a0dad); color: #fff; }
+        .btn-green { 
+            background: linear-gradient(145deg, #2ecc71, #1e8449); 
+            color: #fff; 
+            width: 100%; 
+            max-width: 500px; 
             display: none;
-            background: var(--card);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
-            padding: 25px 20px;
-            margin-top: 20px;
-            border: 1px solid rgba(255,215,0,0.2);
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.6s ease;
+            margin: 5px auto;
         }
 
-        #result-area::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(255,215,0,0.05), transparent 70%);
-            pointer-events: none;
-        }
-
-        #result-area h2 {
-            color: var(--gold);
-            font-weight: 400;
-            text-align: center;
-            border-bottom: 1px dashed rgba(255,215,0,0.2);
-            padding-bottom: 12px;
-            margin-bottom: 20px;
-            letter-spacing: 3px;
-            font-size: 1.5rem;
-        }
-
-        #result-text {
-            color: #e6d5f5;
-            font-size: 0.95rem;
-            line-height: 1.8;
-            position: relative;
-            z-index: 2;
-        }
+        /* ===== UPLOAD ===== */
+        #upload-preview-area { display: none; text-align: center; margin: 10px 0; }
+        #upload-preview-img { max-width: 200px; width: 100%; border-radius: 20px; border: 2px solid var(--gold); }
 
         /* ===== LOADING ===== */
         #loading-box {
             display: none;
             text-align: center;
             background: rgba(20, 10, 40, 0.95);
-            backdrop-filter: blur(12px);
             border-radius: 30px;
             padding: 30px 25px;
             margin: 20px auto;
@@ -508,8 +431,7 @@
         }
 
         .loading-spinner {
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             border: 3px solid rgba(255, 215, 0, 0.2);
             border-top: 3px solid var(--gold);
             border-radius: 50%;
@@ -534,7 +456,34 @@
             50% { opacity: 1; }
         }
 
-        /* ===== BACK BUTTON ===== */
+        /* ===== RESULT ===== */
+        #result-area {
+            display: none;
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 25px 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(255,215,0,0.2);
+            width: 100%;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        #result-area h2 {
+            color: var(--gold);
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        #result-text {
+            color: #e6d5f5;
+            font-size: 0.95rem;
+            line-height: 1.9;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
         .btn-back {
             background: transparent;
             border: 1px solid rgba(255,215,0,0.3);
@@ -545,88 +494,69 @@
             cursor: pointer;
             transition: all 0.3s;
             letter-spacing: 2px;
-            align-self: flex-start;
         }
+        .btn-back:hover { background: rgba(255,215,0,0.1); border-color: var(--gold); color: var(--gold); }
 
-        .btn-back:hover {
-            background: rgba(255,215,0,0.1);
-            border-color: var(--gold);
-            color: var(--gold);
-        }
-
-        /* ===== PARTICLES ===== */
-        .particle {
-            position: fixed;
-            pointer-events: none;
-            z-index: 100;
-            animation: particleFloat 2s ease-out forwards;
-        }
-
-        @keyframes particleFloat {
-            0% { 
-                opacity: 1;
-                transform: translateY(0) scale(1) rotate(0deg);
-            }
-            100% { 
-                opacity: 0;
-                transform: translateY(-100px) scale(0) rotate(360deg);
-            }
-        }
-
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 480px) {
-            .splash-title { font-size: 2.4rem; }
-            .logo-circle { width: 130px; height: 130px; font-size: 4rem; }
-            .btn { padding: 12px 20px; font-size: 0.85rem; }
-            #camera-wrapper { max-width: 350px; }
-            .scan-frame { top: 12%; left: 12%; width: 76%; height: 76%; }
+            .selectors-row { gap: 6px; }
+            .selector-item { padding: 6px 8px; min-width: 80px; max-width: 150px; }
+            .selector-item label { font-size: 0.7rem; }
+            .selector-item select, .selector-item input { font-size: 0.7rem; padding: 4px 6px; }
+            .gender-btn { padding: 6px 12px; font-size: 0.75rem; }
+            .controls-row { gap: 8px; }
+            .btn { padding: 10px 14px; font-size: 0.8rem; }
+            #camera-wrapper { max-width: 330px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== STARFIELD BACKGROUND ===== -->
     <canvas id="starfield"></canvas>
 
     <!-- ===== SPLASH PAGE ===== -->
     <div id="splash-page" class="page active">
-        <!-- LOGO -->
         <div class="logo-container" onclick="goToScan()">
             <div class="logo-circle">
                 <span class="logo-hand">🖐️</span>
             </div>
         </div>
-
-        <!-- TITLE -->
-        <div class="splash-title">Life Line</div>
+        <div class="splash-title">LiFe LiNe</div>
         <div class="splash-subtitle">✦ Χειρομαντεία με AI ✦</div>
-
-        <!-- DESCRIPTION -->
         <div class="splash-desc">
-            Τοποθέτησε την παλάμη σου μπροστά στην κάμερα και άφησε την Τεχνητή Νοημοσύνη να αποκαλύψει τα μυστικά που κρύβουν οι γραμμές του χεριού σου.
+            Τοποθέτησε την παλάμη σου μπροστά στην κάμερα και άφησε την Aziram να αποκαλύψει τα μυστικά που κρύβουν οι γραμμές του χεριού σου.
         </div>
-
-        <!-- CTA BUTTON -->
-        <button class="btn-mystic" onclick="goToScan()">
-            🔮 Ανακάλυψε το Πεπρωμένο σου
-        </button>
+        <button class="btn-mystic" onclick="goToScan()">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
     </div>
 
     <!-- ===== SCAN PAGE ===== -->
     <div id="scan-page" class="page">
-        <!-- BACK BUTTON -->
         <button class="btn-back" onclick="goToSplash()">☽ Επιστροφή</button>
-
-        <!-- HEADER -->
+        
         <div class="scan-header">
-            <h2>🖐️ Σκανάρισμα Παλάμης</h2>
-            <p>Τοποθέτησε το χέρι σου στο πλαίσιο</p>
+            <h2>LiFe LiNe</h2>
+            <p>Η Aziram διαβάζει την παλάμη σου</p>
         </div>
 
-        <!-- GENDER SELECTOR -->
-        <div class="gender-selector" id="gender-select">
-            <button class="gender-btn active" onclick="selectGender('male', this)">♂ Άντρας</button>
-            <button class="gender-btn" onclick="selectGender('female', this)">♀ Γυναίκα</button>
+        <!-- SELECTORS ROW: Gender + Zodiac -->
+        <div class="selectors-row">
+            <div class="selector-item">
+                <label>♂♀</label>
+                <div class="gender-btns">
+                    <button class="gender-btn active" id="maleBtn" onclick="setGender('male')">Άντρας</button>
+                    <button class="gender-btn" id="femaleBtn" onclick="setGender('female')">Γυναίκα</button>
+                </div>
+            </div>
+            <div class="selector-item">
+                <label>♈</label>
+                <select id="zodiac-select" onchange="setZodiac(this.value)">
+                    <option value="Κριός">Κριός</option><option value="Ταύρος">Ταύρος</option>
+                    <option value="Δίδυμοι">Δίδυμοι</option><option value="Καρκίνος">Καρκίνος</option>
+                    <option value="Λέων">Λέων</option><option value="Παρθένος">Παρθένος</option>
+                    <option value="Ζυγός">Ζυγός</option><option value="Σκορπιός">Σκορπιός</option>
+                    <option value="Τοξότης">Τοξότης</option><option value="Αιγόκερως">Αιγόκερως</option>
+                    <option value="Υδροχόος">Υδροχόος</option><option value="Ιχθείς">Ιχθείς</option>
+                </select>
+            </div>
         </div>
 
         <!-- CAMERA -->
@@ -637,33 +567,31 @@
             <div class="scan-line"></div>
         </div>
 
-        <!-- CONTROLS -->
-        <div class="controls" id="controls-row">
-            <button class="btn btn-gold" id="start-camera-btn" onclick="startCamera()">📷 Έναρξη Κάμερας</button>
-            <button class="btn btn-purple" onclick="document.getElementById('file-input').click()">📁 Ανέβασμα Φωτογραφίας</button>
+        <!-- UPLOAD PREVIEW -->
+        <div id="upload-preview-area">
+            <p style="color:var(--gold);">✧ Η φωτογραφία είναι έτοιμη ✧</p>
+            <img id="upload-preview-img" src="" alt="Preview">
+        </div>
+
+        <!-- CONTROLS ROW -->
+        <div class="controls-row" id="controls-row">
+            <button class="btn btn-gold" id="camera-btn" onclick="startCamera()">📷 Camera</button>
+            <button class="btn btn-purple" onclick="document.getElementById('file-input').click()">📁 Upload</button>
             <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUpload(event)">
         </div>
 
-        <!-- UPLOAD PREVIEW -->
-        <div id="upload-preview-area" style="display:none; text-align:center; margin:10px 0;">
-            <p style="color:var(--gold);">✧ Η φωτογραφία είναι έτοιμη ✧</p>
-            <img id="upload-preview-img" style="max-width:200px; border-radius:20px; border:2px solid var(--gold);">
-        </div>
-
         <!-- ANALYZE BUTTON -->
-        <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()" style="display:none; width:100%; max-width:400px;">
-            🔮 Ανάλυση Παλάμης
-        </button>
+        <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()">🔮 Ανάλυση Παλάμης</button>
 
         <!-- LOADING -->
         <div id="loading-box">
-            <div class="loading-text">🔮 Αναλύω τις γραμμές του χεριού σου...</div>
+            <div class="loading-text">🔮 Η Aziram διαβάζει τις γραμμές σου...</div>
             <div class="loading-spinner"></div>
         </div>
 
         <!-- RESULT -->
         <div id="result-area">
-            <h2>☽ Το Πεπρωμένο σου ☾</h2>
+            <h2>☽ Η Aziram αποκαλύπτει ☾</h2>
             <div id="result-text"></div>
             <div style="text-align:center; margin-top:20px;">
                 <button class="btn btn-purple" onclick="resetScan()">🔄 Σκανάρισε άλλο χέρι</button>
@@ -672,15 +600,12 @@
     </div>
 
     <script>
-        // ===== STARFIELD BACKGROUND =====
+        // ===== STARFIELD =====
         const starCanvas = document.getElementById('starfield');
         const starCtx = starCanvas.getContext('2d');
         let stars = [];
 
-        function resizeStarfield() {
-            starCanvas.width = window.innerWidth;
-            starCanvas.height = window.innerHeight;
-        }
+        function resizeStarfield() { starCanvas.width = window.innerWidth; starCanvas.height = window.innerHeight; }
         window.addEventListener('resize', resizeStarfield);
         resizeStarfield();
 
@@ -703,32 +628,22 @@
         function drawStars() {
             starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
             stars.forEach(s => {
-                s.x += s.dx;
-                s.y += s.dy;
+                s.x += s.dx; s.y += s.dy;
                 if (s.x < 0 || s.x > starCanvas.width) s.dx *= -1;
                 if (s.y < 0 || s.y > starCanvas.height) s.dy *= -1;
                 starCtx.beginPath();
                 starCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
                 starCtx.fillStyle = `rgba(${s.color === '#FFD700' ? '255,215,0' : '201,160,220'}, ${s.alpha * 0.6})`;
                 starCtx.fill();
-                
-                // Glow effect for some stars
-                if (s.r > 1.5) {
-                    starCtx.beginPath();
-                    starCtx.arc(s.x, s.y, s.r * 2, 0, Math.PI * 2);
-                    starCtx.fillStyle = `rgba(${s.color === '#FFD700' ? '255,215,0' : '201,160,220'}, ${s.alpha * 0.15})`;
-                    starCtx.fill();
-                }
             });
             requestAnimationFrame(drawStars);
         }
         drawStars();
 
-        // ===== PAGE NAVIGATION =====
+        // ===== NAVIGATION =====
         function goToScan() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('scan-page').classList.add('active');
-            createParticles();
         }
 
         function goToSplash() {
@@ -738,33 +653,21 @@
             resetScan();
         }
 
-        // ===== PARTICLE EFFECTS =====
-        function createParticles() {
-            const emojis = ['✨', '🌟', '💫', '🔮', '⭐', '✨'];
-            for (let i = 0; i < 12; i++) {
-                setTimeout(() => {
-                    const particle = document.createElement('span');
-                    particle.className = 'particle';
-                    particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                    particle.style.left = Math.random() * 80 + 10 + '%';
-                    particle.style.top = Math.random() * 60 + 30 + '%';
-                    particle.style.fontSize = (Math.random() * 2 + 1) + 'rem';
-                    document.body.appendChild(particle);
-                    setTimeout(() => particle.remove(), 2000);
-                }, i * 100);
-            }
-        }
-
-        // ===== GENDER SELECTION =====
+        // ===== GENDER & ZODIAC =====
         let userGender = 'male';
+        let userZodiac = 'Κριός';
 
-        function selectGender(gender, btn) {
+        function setGender(gender) {
             userGender = gender;
-            document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            document.getElementById('maleBtn').classList.toggle('active', gender === 'male');
+            document.getElementById('femaleBtn').classList.toggle('active', gender === 'female');
         }
 
-        // ===== CAMERA SETUP =====
+        function setZodiac(zodiac) {
+            userZodiac = zodiac;
+        }
+
+        // ===== CAMERA =====
         const video = document.getElementById('webcam');
         const overlayCanvas = document.getElementById('overlay-canvas');
         const overlayCtx = overlayCanvas.getContext('2d');
@@ -781,39 +684,26 @@
 
         async function startCamera() {
             try {
-                if (currentStream) {
-                    currentStream.getTracks().forEach(t => t.stop());
-                }
+                if (currentStream) { currentStream.getTracks().forEach(t => t.stop()); }
                 currentStream = await navigator.mediaDevices.getUserMedia({
-                    video: { 
-                        facingMode: 'user',
-                        width: { ideal: 500 },
-                        height: { ideal: 500 }
-                    }
+                    video: { facingMode: 'user', width: { ideal: 500 }, height: { ideal: 500 } }
                 });
                 video.srcObject = currentStream;
                 resizeOverlay();
-                
-                // Show analyze button after camera starts
                 document.getElementById('analyze-btn').style.display = 'block';
-                document.getElementById('start-camera-btn').disabled = true;
-                document.getElementById('start-camera-btn').innerText = '✅ Κάμερα Έτοιμη';
-                
+                document.getElementById('camera-btn').disabled = true;
+                document.getElementById('camera-btn').innerText = '✅ Ready';
             } catch (err) {
-                console.error('Σφάλμα κάμερας:', err);
-                alert('Δεν μπόρεσα να ανοίξω την κάμερα. Δοκίμασε το Ανέβασμα Φωτογραφίας.');
+                alert('Δεν μπόρεσα να ανοίξω την κάμερα. Δοκίμασε το Upload.');
             }
         }
 
         function stopCamera() {
-            if (currentStream) {
-                currentStream.getTracks().forEach(t => t.stop());
-                currentStream = null;
-            }
+            if (currentStream) { currentStream.getTracks().forEach(t => t.stop()); currentStream = null; }
         }
 
         function capturePhoto() {
-            if (!currentStream) return;
+            if (!currentStream) return null;
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth || 500;
             canvas.height = video.videoHeight || 500;
@@ -822,15 +712,13 @@
             ctx.scale(-1, 1);
             ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
             ctx.restore();
-            capturedImage = canvas.toDataURL('image/jpeg', 0.8);
-            return capturedImage;
+            return canvas.toDataURL('image/jpeg', 0.8);
         }
 
-        // ===== FILE UPLOAD =====
+        // ===== UPLOAD =====
         function handleUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
-            
             const reader = new FileReader();
             reader.onload = function(e) {
                 capturedImage = e.target.result;
@@ -841,120 +729,54 @@
             reader.readAsDataURL(file);
         }
 
-        // ===== HAND ANALYSIS =====
-        function performAnalysis() {
+        // ===== API =====
+        const API_URL = 'https://franklymadear-lifeline.hf.space/analyze';
+
+        async function performAnalysis() {
             if (isAnalyzing) return;
-            
-            // Capture photo if using camera
+
             if (currentStream && !capturedImage) {
                 capturedImage = capturePhoto();
             }
-            
+
             if (!capturedImage) {
                 alert('Παρακαλώ πρώτα άνοιξε την κάμερα ή ανέβασε φωτογραφία.');
                 return;
             }
-            
+
             isAnalyzing = true;
-            
-            // Show loading
             document.getElementById('loading-box').style.display = 'block';
             document.getElementById('result-area').style.display = 'none';
             document.getElementById('analyze-btn').style.display = 'none';
             document.getElementById('controls-row').style.display = 'none';
-            document.getElementById('gender-select').style.display = 'none';
-            document.getElementById('upload-preview-area').style.display = 'none';
-            
-            // Simulate analysis (1.5-3 seconds)
-            const analysisTime = 1500 + Math.random() * 1500;
-            
-            setTimeout(() => {
-                const result = generateReading();
-                displayResult(result);
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        image: capturedImage,
+                        gender: userGender,
+                        zodiac: userZodiac
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.reading) {
+                    document.getElementById('result-text').innerHTML = data.reading.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+                    document.getElementById('result-area').style.display = 'block';
+                    document.getElementById('result-area').scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    alert('Η Aziram συνάντησε ένα εμπόδιο. Δοκίμασε ξανά.');
+                }
+            } catch (error) {
+                alert('Σφάλμα σύνδεσης. Έλεγξε τη σύνδεσή σου και δοκίμασε ξανά.');
+            } finally {
                 document.getElementById('loading-box').style.display = 'none';
+                document.getElementById('controls-row').style.display = 'flex';
                 isAnalyzing = false;
-            }, analysisTime);
-        }
-
-        function generateReading() {
-            const lifeLineTypes = [
-                { type: "Μακριά & Βαθιά", desc: "Ισχυρή ζωτικότητα, εξαιρετική φυσική κατάσταση και ψυχοσυναισθηματική ισορροπία. Οι αρχαίοι χειρομάντες το θεωρούσαν σημάδι μακροζωίας και ευημερίας." },
-                { type: "Διακεκομμένη & Έντονη", desc: "Σημαντικές αλλαγές πορείας στη ζωή σου. Κάθε διακοπή αντιπροσωπεύει μια νέα αρχή. Οι Κέλτες Δρυΐδες το έβλεπαν ως ένδειξη μετενσάρκωσης." },
-                { type: "Διχαλωτή στην άκρη", desc: "Έντονη κοινωνική αναγνώριση και πολλά ταξίδια. Στην Ινδική παράδοση, αυτό δείχνει μια ζωή γεμάτη περιπέτειες και πνευματική αναζήτηση." }
-            ];
-            
-            const heartLineTypes = [
-                { type: "Μακριά & Καμπύλη", desc: "Ζεστή και δοτική φύση. Εξιδανικεύεις τις σχέσεις και δείχνεις βαθιά ενσυναίσθηση. Ο Αριστοτέλης πίστευε ότι αυτή η γραμμή συνδέεται με την ψυχή." },
-                { type: "Βαθιά & Ευθεία", desc: "Έντονα συναισθήματα με ρεαλιστική προσέγγιση. Ισορροπείς ανάμεσα στο συναίσθημα και τη λογική στις σχέσεις σου." }
-            ];
-            
-            const headLineTypes = [
-                { type: "Μακριά & Οριζόντια", desc: "Υψηλή πνευματική διαύγεια και εξαιρετική μνήμη. Οι Ρωμαίοι οιωνοσκόποι θεωρούσαν αυτή τη γραμμή ένδειξη στρατηγικής ιδιοφυΐας." },
-                { type: "Κυματώδης & Δημιουργική", desc: "Διαρκής εσωτερική μάχη ανάμεσα στη λογική και τη φαντασία. Αυτό το μοτίβο εμφανίζεται συχνά σε καλλιτέχνες και εφευρέτες." }
-            ];
-            
-            const handTypes = [
-                "Γήινο (Πλατύ, τετράγωνο με κοντά δάχτυλα — Σταθερότητα & Πρακτικότητα)",
-                "Αέρινο (Μακρύ, λεπτό με οξύληκτα δάχτυλα — Διαίσθηση & Πνευματικότητα)",
-                "Πύρινο (Έντονη παλάμη, μακριά δάχτυλα — Φιλοδοξία & Πάθος)"
-            ];
-            
-            const genderText = userGender === 'male' ? 'Άντρας' : 'Γυναίκα';
-            const genderAnalysis = userGender === 'male' 
-                ? 'Η γραμμή Ζωής παρουσιάζει έντονο βάθος, δείχνοντας σωματική ανθεκτικότητα. Οι αρχαίοι πολεμιστές με τέτοια παλάμη θεωρούνταν ευλογημένοι από τον Άρη.'
-                : 'Η γραμμή Καρδιάς είναι εξαιρετικά εκφραστική και καμπύλη, δείχνοντας πλούσιο συναισθηματικό υπόβαθρο. Οι ιέρειες της Αφροδίτης αναγνώριζαν αυτό το σημάδι ως ένδειξη ενσυναίσθησης.';
-            
-            const randomSymbols = [
-                "Μυστικιστικός Σταυρός (Mystic Cross) ανάμεσα σε Καρδιά και Κεφάλι: Έφεση στον αποκρυφισμό και την πνευματική αναζήτηση.",
-                "Ζώνη της Αφροδίτης (Girdle of Venus): Ιδιαίτερη συναισθηματική ευαισθησία και καλλιτεχνική φύση.",
-                "Γραμμές Βραχιολιών (Bracelets): Ένδειξη μακροζωίας σύμφωνα με την αρχαία Κινεζική χειρομαντεία.",
-                "Δαχτυλίδι Σολομώντα: Σημάδι σοφίας και διορατικότητας, σπάνιο και πολύτιμο."
-            ];
-            
-            const lifeLine = lifeLineTypes[Math.floor(Math.random() * lifeLineTypes.length)];
-            const heartLine = heartLineTypes[Math.floor(Math.random() * heartLineTypes.length)];
-            const headLine = headLineTypes[Math.floor(Math.random() * headLineTypes.length)];
-            const handType = handTypes[Math.floor(Math.random() * handTypes.length)];
-            const symbol = randomSymbols[Math.floor(Math.random() * randomSymbols.length)];
-            
-            return {
-                lifeLine, heartLine, headLine, handType,
-                genderAnalysis, symbol, genderText
-            };
-        }
-
-        function displayResult(r) {
-            const resultArea = document.getElementById('result-area');
-            const resultText = document.getElementById('result-text');
-            
-            resultText.innerHTML = `
-                <p style="text-align:center; color:var(--gold); margin-bottom:20px;">
-                    <strong>👤 Φύλο:</strong> ${r.genderText}
-                </p>
-                
-                <p><strong>🧬 Γραμμή Ζωής (${r.lifeLine.type}):</strong> ${r.lifeLine.desc}</p>
-                <br>
-                <p><strong>❤️ Γραμμή Καρδιάς (${r.heartLine.type}):</strong> ${r.heartLine.desc}</p>
-                <br>
-                <p><strong>🧠 Γραμμή Νου (${r.headLine.type}):</strong> ${r.headLine.desc}</p>
-                <br>
-                <hr style="border-color: rgba(255,215,0,0.2);">
-                <br>
-                <p><strong>🖐️ Μορφολογία Παλάμης:</strong> ${r.handType}</p>
-                <br>
-                <p><strong>🔖 Ιστορικό Σημάδι:</strong> ${r.symbol}</p>
-                <br>
-                <hr style="border-color: rgba(255,215,0,0.2);">
-                <br>
-                <p>${r.genderAnalysis}</p>
-                <br>
-                <p style="text-align:center; color:var(--gold); font-style:italic; margin-top:15px;">
-                    ✨ Οι γραμμές του χεριού σου αλλάζουν κάθε 7 χρόνια. Το πεπρωμένο είναι στα χέρια σου — κυριολεκτικά! ✨
-                </p>
-            `;
-            
-            resultArea.style.display = 'block';
-            resultArea.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         function resetScan() {
@@ -962,10 +784,9 @@
             document.getElementById('loading-box').style.display = 'none';
             document.getElementById('analyze-btn').style.display = 'none';
             document.getElementById('controls-row').style.display = 'flex';
-            document.getElementById('gender-select').style.display = 'flex';
             document.getElementById('upload-preview-area').style.display = 'none';
-            document.getElementById('start-camera-btn').disabled = false;
-            document.getElementById('start-camera-btn').innerText = '📷 Έναρξη Κάμερας';
+            document.getElementById('camera-btn').disabled = false;
+            document.getElementById('camera-btn').innerText = '📷 Camera';
             capturedImage = null;
             isAnalyzing = false;
         }
