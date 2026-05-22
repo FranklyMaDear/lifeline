@@ -15,6 +15,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#1a0033">
     
+    <!-- Monetag SDK -->
+    <script src='//libtl.com/sdk.js' data-zone='11042671' data-sdk='show_11042671'></script>
+    
     <style>
         :root {
             --gold: #FFD700;
@@ -200,7 +203,7 @@
         .selectors-row {
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: stretch;
             gap: 8px;
             flex-wrap: wrap;
             width: 100%;
@@ -209,48 +212,56 @@
 
         .selector-item {
             display: flex;
+            flex-direction: column;
             align-items: center;
             gap: 5px;
             background: rgba(20, 10, 40, 0.8);
-            padding: 7px 10px;
-            border-radius: 25px;
+            padding: 8px 10px;
+            border-radius: 20px;
             border: 1px solid rgba(255,215,0,0.25);
             flex: 1;
-            min-width: 90px;
-            max-width: 160px;
-            justify-content: center;
+            min-width: 100px;
+            max-width: 170px;
         }
 
-        .selector-item label {
-            color: #c9a0dc;
-            font-size: 0.75rem;
-            white-space: nowrap;
+        .selector-label {
+            color: var(--gold);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .selector-item select, .selector-item input {
-            padding: 5px 7px;
+            padding: 6px 8px;
             border-radius: 15px;
             border: 1px solid rgba(255,215,0,0.3);
             background: #1a0a2e;
             color: #FFD700;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             width: 100%;
             text-align: center;
+            font-weight: 500;
         }
 
-        .gender-btns { display: flex; gap: 6px; }
+        .gender-btns { 
+            display: flex; 
+            gap: 6px; 
+            width: 100%; 
+        }
 
         .gender-btn {
-            padding: 7px 14px;
+            padding: 8px 10px;
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 700;
             border: 2px solid rgba(255,215,0,0.3);
             background: rgba(20, 10, 40, 0.6);
             color: #b9a6d4;
-            border-radius: 25px;
+            border-radius: 15px;
             cursor: pointer;
             transition: all 0.3s;
-            white-space: nowrap;
+            flex: 1;
+            text-align: center;
         }
 
         .gender-btn.active {
@@ -271,19 +282,20 @@
         }
 
         .topic-btn {
-            padding: 10px 14px;
-            font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+            padding: 10px 12px;
+            font-size: clamp(0.7rem, 1.8vw, 0.8rem);
             font-weight: 600;
             border: 2px solid rgba(255,215,0,0.25);
             background: rgba(20, 10, 40, 0.6);
-            color: #b9a6d4;
-            border-radius: 25px;
+            color: #c9a0dc;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
             flex: 1;
-            min-width: 100px;
-            max-width: 180px;
+            min-width: 95px;
+            max-width: 160px;
             text-align: center;
+            line-height: 1.3;
         }
 
         .topic-btn.active {
@@ -291,6 +303,7 @@
             color: #fff;
             border-color: var(--purple-light);
             box-shadow: 0 0 20px rgba(155, 89, 182, 0.4);
+            transform: scale(1.03);
         }
 
         /* ===== CAMERA ===== */
@@ -398,6 +411,7 @@
             display: none;
             margin: 5px auto;
             font-size: 1rem;
+            padding: 14px 20px;
         }
 
         /* ===== UPLOAD ===== */
@@ -453,7 +467,7 @@
 
         #result-area h2 { color: var(--gold); text-align: center; font-size: 1.3rem; margin-bottom: 12px; }
         #result-text { color: #e6d5f5; font-size: 0.9rem; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; }
-        #result-text h2 { font-size: 1.2rem; margin: 15px 0 10px; }
+        #result-text h2 { font-size: 1.2rem; margin: 15px 0 10px; color: var(--gold); }
         #result-text h3 { font-size: 1rem; margin: 10px 0 8px; color: #FFD700; }
 
         .btn-back {
@@ -470,11 +484,11 @@
 
         @media (max-width: 420px) {
             .selectors-row { gap: 5px; }
-            .selector-item { padding: 5px 7px; min-width: 70px; max-width: 130px; }
-            .selector-item label { font-size: 0.7rem; }
-            .selector-item select, .selector-item input { font-size: 0.7rem; padding: 4px 5px; }
-            .gender-btn { padding: 5px 10px; font-size: 0.7rem; }
-            .topic-btn { padding: 8px 10px; font-size: 0.7rem; min-width: 80px; max-width: 140px; }
+            .selector-item { padding: 6px 7px; min-width: 80px; max-width: 140px; }
+            .selector-label { font-size: 0.65rem; }
+            .selector-item select, .selector-item input { font-size: 0.7rem; padding: 5px 6px; }
+            .gender-btn { padding: 6px 8px; font-size: 0.7rem; }
+            .topic-btn { padding: 8px 8px; font-size: 0.68rem; min-width: 75px; max-width: 130px; }
             .controls-row { gap: 7px; }
             .btn { padding: 9px 12px; font-size: 0.75rem; }
             #camera-wrapper { max-width: 300px; }
@@ -512,12 +526,14 @@
         <!-- ROW 1: Gender + Zodiac + Birthdate -->
         <div class="selectors-row">
             <div class="selector-item">
+                <span class="selector-label">Φύλο</span>
                 <div class="gender-btns">
-                    <button class="gender-btn active" id="maleBtn" onclick="setGender('male')">♂</button>
-                    <button class="gender-btn" id="femaleBtn" onclick="setGender('female')">♀</button>
+                    <button class="gender-btn active" id="maleBtn" onclick="setGender('male')">Άντρας</button>
+                    <button class="gender-btn" id="femaleBtn" onclick="setGender('female')">Γυναίκα</button>
                 </div>
             </div>
             <div class="selector-item">
+                <span class="selector-label">Ζώδιο</span>
                 <select id="zodiac-select" onchange="setZodiac(this.value)">
                     <option value="Κριός">Κριός</option><option value="Ταύρος">Ταύρος</option>
                     <option value="Δίδυμοι">Δίδυμοι</option><option value="Καρκίνος">Καρκίνος</option>
@@ -528,17 +544,18 @@
                 </select>
             </div>
             <div class="selector-item">
-                <input type="date" id="birthdate-input" onchange="setBirthdate(this.value)" placeholder="Ημ/νία γέννησης">
+                <span class="selector-label">Ημερομηνία</span>
+                <input type="date" id="birthdate-input" onchange="setBirthdate(this.value)">
             </div>
         </div>
 
         <!-- ROW 2: Topic Buttons -->
         <div class="topic-row" id="topic-row">
-            <button class="topic-btn active" onclick="setTopic('Έρωτας & Σχέσεις', this)">❤️ Έρωτας & Σχέσεις</button>
-            <button class="topic-btn" onclick="setTopic('Καριέρα & Οικονομικά', this)">💼 Καριέρα & Οικονομικά</button>
-            <button class="topic-btn" onclick="setTopic('Υγεία & Ζωτικότητα', this)">🌱 Υγεία & Ζωτικότητα</button>
-            <button class="topic-btn" onclick="setTopic('Κρυφά Ταλέντα & Προσωπικότητα', this)">🧠 Κρυφά Ταλέντα</button>
-            <button class="topic-btn" onclick="setTopic('Κάρμα & Μελλοντικές Προκλήσεις', this)">🌀 Κάρμα & Προκλήσεις</button>
+            <button class="topic-btn active" onclick="setTopic('Έρωτας & Σχέσεις', this)">❤️<br>Έρωτας & Σχέσεις</button>
+            <button class="topic-btn" onclick="setTopic('Καριέρα & Οικονομικά', this)">💼<br>Καριέρα & Οικονομικά</button>
+            <button class="topic-btn" onclick="setTopic('Υγεία & Ζωτικότητα', this)">🌱<br>Υγεία & Ζωτικότητα</button>
+            <button class="topic-btn" onclick="setTopic('Κρυφά Ταλέντα & Προσωπικότητα', this)">🧠<br>Κρυφά Ταλέντα</button>
+            <button class="topic-btn" onclick="setTopic('Κάρμα & Μελλοντικές Προκλήσεις', this)">🌀<br>Κάρμα & Προκλήσεις</button>
         </div>
 
         <!-- CAMERA -->
@@ -563,7 +580,7 @@
         </div>
 
         <!-- ANALYZE BUTTON -->
-        <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()">🔮 Αποκάλυψε το Πεπρωμένο μου</button>
+        <button class="btn btn-green" id="analyze-btn" onclick="startAnalysisWithAd()">🔮 Αποκάλυψε το Πεπρωμένο μου</button>
 
         <!-- LOADING -->
         <div id="loading-box">
@@ -645,6 +662,22 @@
             userTopic = topic;
             document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+        }
+
+        // ===== MONETAG REWARDED AD =====
+        function startAnalysisWithAd() {
+            if (typeof show_11042671 === 'function') {
+                show_11042671().then(() => {
+                    // Η ανάλυση ξεκινά αφού ο χρήστης δει τη διαφήμιση
+                    performAnalysis();
+                }).catch(() => {
+                    // Αν αποτύχει η διαφήμιση, ξεκινά η ανάλυση κανονικά
+                    performAnalysis();
+                });
+            } else {
+                // Αν δεν είναι διαθέσιμη η διαφήμιση, ξεκινά η ανάλυση κανονικά
+                performAnalysis();
+            }
         }
 
         // ===== CAMERA =====
