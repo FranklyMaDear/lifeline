@@ -2,659 +2,973 @@
 <html lang="el">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, minimal-ui">
-    <title>🧿 HandMaster Pro - Ανάλυση Χεριού</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Life Line - Χειρομαντεία με AI</title>
     
-    <script src='//libtl.com/sdk.js' data-zone='10979429' data-sdk='show_10979429'></script>
+    <!-- Meta για Social Sharing -->
+    <meta name="description" content="🖐️ Ανακάλυψε τα μυστικά της παλάμης σου! Το Life Line αναλύει το χέρι σου με AI.">
     
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Open Graph -->
+    <meta property="og:title" content="🖐️ Life Line - Χειρομαντεία">
+    <meta property="og:description" content="Ανακάλυψε τα μυστικά της παλάμης σου!">
+    <meta property="og:image" content="lifeline-logo.png">
+    <meta property="og:type" content="website">
+    
+    <!-- PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a0033">
+    
     <style>
-        * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0d0d0d; color: #fff; margin: 0; padding: 20px; text-align: center; }
-        h1 { color: #FFD700; text-shadow: 0 0 20px rgba(255,215,0,0.3); }
-        #container { max-width: 700px; margin: 0 auto; }
-        
-        #camera-wrapper { position: relative; width: 100%; max-width: 500px; margin: 20px auto; border-radius: 20px; overflow: hidden; border: 3px solid #FFD700; box-shadow: 0 0 30px rgba(255,215,0,0.2); background: #111; }
-        video { width: 100%; display: block; transform: scaleX(-1); }
-        #overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: scaleX(-1); pointer-events: none; }
-
-        .controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 20px 0; }
-        .btn { padding: 12px 24px; border: none; border-radius: 30px; font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.3s; flex: 1; min-width: 80px; }
-        .btn-gold { background: #FFD700; color: #111; }
-        .btn-gold:hover { background: #FFC107; transform: scale(1.03); }
-        .btn-green { background: #2ecc71; color: #fff; }
-        .btn-red { background: #e74c3c; color: #fff; }
-        .btn-blue { background: #3498db; color: #fff; }
-        .btn-purple { background: #9b59b6; color: #fff; }
-        .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-
-        #user-inputs-row { display: flex; justify-content: center; align-items: center; gap: 15px; margin: 10px 0; flex-wrap: wrap; width: 100%; }
-        .input-group { display: flex; align-items: center; gap: 8px; background: #1a1a1a; padding: 10px 16px; border-radius: 25px; border: 1px solid #444; flex: 0 1 auto; min-width: 140px; }
-        .input-group label { color: #aaa; font-size: 14px; }
-        select, input { padding: 6px 12px; border-radius: 20px; border: none; background: #333; color: white; font-size: 14px; height: 36px; }
-        input[type="number"] { width: 60px; }
-
-        #gender-selector { display: flex; justify-content: center; gap: 15px; margin: 10px 0; flex-wrap: wrap; }
-        .gender-btn { padding: 10px 24px; border: 2px solid #444; border-radius: 30px; background: transparent; color: #aaa; cursor: pointer; transition: 0.3s; font-size: 16px; }
-        .gender-btn.active { border-color: #FFD700; color: #FFD700; background: rgba(255,215,0,0.1); }
-
-        #result-area { display: none; background: #1a1a1a; border-radius: 20px; padding: 20px; margin-top: 20px; border-left: 5px solid #FFD700; text-align: left; }
-        #result-area h2 { color: #FFD700; margin-top: 0; }
-        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
-        .stat-item { background: #222; padding: 8px 12px; border-radius: 10px; }
-
-        .badge { display: inline-block; background: #FFD700; color: #111; padding: 2px 10px; border-radius: 20px; font-size: 12px; }
-        #loading { display: none; margin: 15px; color: #aaa; }
-
-        #upload-section { margin: 20px 0; padding: 25px; border: 2px dashed #444; border-radius: 20px; background: #1a1a1a; }
-        #upload-section:hover { border-color: #FFD700; }
-        #file-input { display: none; }
-        .upload-label { padding: 15px 30px; background: #333; border-radius: 30px; cursor: pointer; display: inline-block; transition: 0.3s; font-size: 16px; }
-        .upload-label:hover { background: #444; }
-        #upload-preview { max-width: 100%; max-height: 300px; border-radius: 10px; margin: 10px 0; display: none; }
-        #auto-status { margin: 10px 0; color: #2ecc71; font-weight: bold; display: none; }
-        #upload-type { margin: 10px 0; color: #FFD700; font-weight: bold; font-size: 16px; }
-
-        #age-display { margin: 15px 0; color: #FFD700; font-size: 18px; }
-        #element-display { margin: 10px 0; color: #aaa; font-size: 16px; }
-
-        #history-area { display: none; margin-top: 30px; text-align: left; }
-        #history-area h2 { color: #FFD700; }
-        .history-item { background: #1a1a1a; padding: 15px; border-radius: 10px; margin: 10px 0; border-left: 4px solid #3498db; }
-        .history-actions { display: flex; gap: 5px; margin-top: 5px; }
-        .history-actions button { padding: 5px 12px; border: none; border-radius: 15px; cursor: pointer; font-size: 12px; }
-
-        .instructions {
-            margin-top: 10px;
-            padding: 12px;
-            background: #1a1a1a;
-            border-radius: 10px;
-            border: 1px solid #FFD700;
-            color: #eee;
-            font-size: 14px;
+        :root {
+            --gold: #FFD700;
+            --gold-dark: #B8860B;
+            --purple: #6a0dad;
+            --purple-dark: #1a0033;
+            --purple-light: #9b59b6;
+            --bg: #0a0015;
+            --card: rgba(30, 10, 60, 0.9);
         }
-        .instructions strong { color: #FFD700; }
 
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            color: #f0e6ff;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(ellipse at top, rgba(106, 13, 173, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+        }
+
+        /* ===== STARFIELD CANVAS ===== */
+        #starfield {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== SPLASH PAGE ===== */
+        .page {
+            position: relative;
+            z-index: 1;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .page.active { display: flex; }
+
+        #splash-page {
+            text-align: center;
+            gap: 25px;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== LOGO ===== */
+        .logo-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto;
+            animation: floatLogo 4s infinite ease-in-out;
+            cursor: pointer;
+        }
+
+        @keyframes floatLogo {
+            0% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(2deg); }
+            75% { transform: translateY(-18px) rotate(-2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .logo-circle {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2a0040, #1a0030, #0d0020);
+            border: 4px solid var(--gold);
+            box-shadow: 
+                0 0 40px rgba(255, 215, 0, 0.4),
+                0 0 80px rgba(106, 13, 173, 0.3),
+                inset 0 0 40px rgba(255, 215, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-circle::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.2) 0%, transparent 60%);
+            animation: rotateGlow 8s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-hand {
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+            animation: pulseHand 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseHand {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* ===== TITLE ===== */
+        .splash-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700, #FFA500);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 6px;
+            animation: shimmer 3s infinite;
+            text-shadow: none;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .splash-subtitle {
+            color: #c9a0dc;
+            font-size: 1.1rem;
+            letter-spacing: 5px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            padding-top: 12px;
+            margin-top: -5px;
+        }
+
+        .splash-desc {
+            color: #b8a0d0;
+            max-width: 400px;
+            font-size: 1rem;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-mystic {
+            background: linear-gradient(145deg, #FFD700, #B8860B);
+            color: #1a0033;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), 0 8px 25px rgba(0,0,0,0.5);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-mystic::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .btn-mystic:hover {
+            transform: scale(1.07) translateY(-5px);
+            box-shadow: 0 0 80px rgba(255, 215, 0, 0.6), 0 12px 35px rgba(0,0,0,0.6);
+        }
+
+        .btn-mystic:hover::before { opacity: 1; }
+
+        .btn-mystic:active { transform: scale(0.95); }
+
+        /* ===== SCAN PAGE ===== */
+        #scan-page {
+            gap: 20px;
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+
+        .scan-header {
+            text-align: center;
+            width: 100%;
+        }
+
+        .scan-header h2 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+        }
+
+        .scan-header p {
+            color: #b8a0d0;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        /* ===== CAMERA WRAPPER ===== */
+        #camera-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 10px auto;
+            border-radius: 25px;
+            overflow: hidden;
+            border: 3px solid var(--gold);
+            box-shadow: 
+                0 0 40px rgba(255, 215, 0, 0.3),
+                0 0 80px rgba(106, 13, 173, 0.2),
+                inset 0 0 30px rgba(255, 215, 0, 0.1);
+            background: #0a0015;
+            aspect-ratio: 1;
+        }
+
+        #webcam {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            transform: scaleX(-1);
+        }
+
+        #overlay-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: scaleX(-1);
+            pointer-events: none;
+        }
+
+        /* ===== SCAN FRAME ===== */
+        .scan-frame {
+            position: absolute;
+            top: 15%;
+            left: 15%;
+            width: 70%;
+            height: 70%;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            border-radius: 30px;
+            pointer-events: none;
+            animation: framePulse 2s infinite ease-in-out;
+        }
+
+        .scan-frame::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: 30px;
+            height: 30px;
+            border-top: 4px solid var(--gold);
+            border-left: 4px solid var(--gold);
+            border-radius: 5px 0 0 0;
+        }
+
+        .scan-frame::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 30px;
+            height: 30px;
+            border-bottom: 4px solid var(--gold);
+            border-right: 4px solid var(--gold);
+            border-radius: 0 0 5px 0;
+        }
+
+        @keyframes framePulse {
+            0%, 100% { border-color: rgba(255, 215, 0, 0.5); }
+            50% { border-color: rgba(255, 215, 0, 0.9); }
+        }
+
+        /* ===== SCAN LINE ===== */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            animation: scanMove 3s infinite ease-in-out;
+            pointer-events: none;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+
+        @keyframes scanMove {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .btn:hover::before { opacity: 1; }
+        .btn:active { transform: scale(0.92); }
+
+        .btn-gold {
+            background: linear-gradient(145deg, #FFD700, #B8860B);
+            color: #1a0033;
+            box-shadow: 0 6px 25px rgba(255,215,0,0.3);
+        }
+
+        .btn-purple {
+            background: linear-gradient(145deg, #9b59b6, #6a0dad);
+            color: #fff;
+            box-shadow: 0 6px 25px rgba(155,89,182,0.3);
+        }
+
+        .btn-green {
+            background: linear-gradient(145deg, #2ecc71, #1e8449);
+            color: #fff;
+            box-shadow: 0 6px 25px rgba(46,204,113,0.25);
+        }
+
+        .btn-red {
+            background: linear-gradient(145deg, #e74c3c, #a93226);
+            color: #fff;
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== GENDER SELECTOR ===== */
+        .gender-selector {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .gender-btn {
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 2px solid rgba(255,215,0,0.3);
+            background: rgba(20, 12, 40, 0.6);
+            color: #b9a6d4;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        .gender-btn.active {
+            background: linear-gradient(145deg, #FFD700, #B8860B);
+            color: #1a0033;
+            border-color: #FFD700;
+            box-shadow: 0 0 30px rgba(255,215,0,0.4);
+            transform: scale(1.05);
+        }
+
+        .gender-btn:hover:not(.active) {
+            border-color: rgba(255,215,0,0.6);
+            color: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        /* ===== RESULT AREA ===== */
+        #result-area {
+            display: none;
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 25px 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(255,215,0,0.2);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        #result-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(255,215,0,0.05), transparent 70%);
+            pointer-events: none;
+        }
+
+        #result-area h2 {
+            color: var(--gold);
+            font-weight: 400;
+            text-align: center;
+            border-bottom: 1px dashed rgba(255,215,0,0.2);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            font-size: 1.5rem;
+        }
+
+        #result-text {
+            color: #e6d5f5;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== LOADING ===== */
+        #loading-box {
+            display: none;
+            text-align: center;
+            background: rgba(20, 10, 40, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 30px;
+            padding: 30px 25px;
+            margin: 20px auto;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 215, 0, 0.2);
+            border-top: 3px solid var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            color: #c9a0dc;
+            letter-spacing: 2px;
+            animation: mysticPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes mysticPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* ===== BACK BUTTON ===== */
+        .btn-back {
+            background: transparent;
+            border: 1px solid rgba(255,215,0,0.3);
+            color: #c9a0dc;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 2px;
+            align-self: flex-start;
+        }
+
+        .btn-back:hover {
+            background: rgba(255,215,0,0.1);
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* ===== PARTICLES ===== */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            animation: particleFloat 2s ease-out forwards;
+        }
+
+        @keyframes particleFloat {
+            0% { 
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            100% { 
+                opacity: 0;
+                transform: translateY(-100px) scale(0) rotate(360deg);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 480px) {
-            #user-inputs-row { gap: 10px; }
-            .input-group { padding: 6px 12px; min-width: 100px; }
-            select, input { font-size: 13px; padding: 4px 8px; height: 32px; }
-            input[type="number"] { width: 50px; }
-            #gender-selector { gap: 10px; }
-            .gender-btn { padding: 8px 16px; font-size: 14px; }
+            .splash-title { font-size: 2.4rem; }
+            .logo-circle { width: 130px; height: 130px; font-size: 4rem; }
+            .btn { padding: 12px 20px; font-size: 0.85rem; }
+            #camera-wrapper { max-width: 350px; }
+            .scan-frame { top: 12%; left: 12%; width: 76%; height: 76%; }
         }
     </style>
 </head>
 <body>
-    <div id="container">
-        <h1>🧿 HandMaster Pro</h1>
-        <p style="color:#aaa;">Προηγμένη Ανάλυση Χειρομαντείας</p>
 
-        <div id="user-inputs-row">
-            <div class="input-group">
-                <label>🎂</label>
-                <input type="number" id="user-age" min="1" max="120" value="30">
-            </div>
-            <div class="input-group">
-                <label>♈</label>
-                <select id="zodiac">
-                    <option value="Κριός">Κριός</option>
-                    <option value="Ταύρος">Ταύρος</option>
-                    <option value="Δίδυμοι">Δίδυμοι</option>
-                    <option value="Καρκίνος">Καρκίνος</option>
-                    <option value="Λέων">Λέων</option>
-                    <option value="Παρθένος">Παρθένος</option>
-                    <option value="Ζυγός">Ζυγός</option>
-                    <option value="Σκορπιός">Σκορπιός</option>
-                    <option value="Τοξότης">Τοξότης</option>
-                    <option value="Αιγόκερως">Αιγόκερως</option>
-                    <option value="Υδροχόος">Υδροχόος</option>
-                    <option value="Ιχθείς">Ιχθείς</option>
-                </select>
+    <!-- ===== STARFIELD BACKGROUND ===== -->
+    <canvas id="starfield"></canvas>
+
+    <!-- ===== SPLASH PAGE ===== -->
+    <div id="splash-page" class="page active">
+        <!-- LOGO -->
+        <div class="logo-container" onclick="goToScan()">
+            <div class="logo-circle">
+                <span class="logo-hand">🖐️</span>
             </div>
         </div>
 
-        <div id="gender-selector">
-            <button class="gender-btn active" id="maleBtn" onclick="setGender('male')">♂ Άντρας</button>
-            <button class="gender-btn" id="femaleBtn" onclick="setGender('female')">♀ Γυναίκα</button>
+        <!-- TITLE -->
+        <div class="splash-title">Life Line</div>
+        <div class="splash-subtitle">✦ Χειρομαντεία με AI ✦</div>
+
+        <!-- DESCRIPTION -->
+        <div class="splash-desc">
+            Τοποθέτησε την παλάμη σου μπροστά στην κάμερα και άφησε την Τεχνητή Νοημοσύνη να αποκαλύψει τα μυστικά που κρύβουν οι γραμμές του χεριού σου.
         </div>
 
-        <div id="upload-section">
-            <label for="file-input" class="upload-label">📁 Ανέβασε φωτογραφία</label>
-            <input type="file" id="file-input" accept="image/*" onchange="handleUpload(event)">
-            <div id="upload-type"></div>
-            <img id="upload-preview">
-            <div id="auto-status" style="margin-top:10px; color:#2ecc71; font-weight:bold; display:none;">⏳ Αυτόματη ανάλυση σε εξέλιξη...</div>
-            <div class="instructions">
-                <strong>📌 Οδηγίες:</strong> Πατήστε το κουμπί <strong>Κάμερα</strong> και τοποθετήστε το χέρι μπροστά στην Οθόνη. 
-                Η ανάλυση θα γίνει <strong>αυτόματα!</strong> ή ανεβάστε φωτογραφία.
-            </div>
+        <!-- CTA BUTTON -->
+        <button class="btn-mystic" onclick="goToScan()">
+            🔮 Ανακάλυψε το Πεπρωμένο σου
+        </button>
+    </div>
+
+    <!-- ===== SCAN PAGE ===== -->
+    <div id="scan-page" class="page">
+        <!-- BACK BUTTON -->
+        <button class="btn-back" onclick="goToSplash()">☽ Επιστροφή</button>
+
+        <!-- HEADER -->
+        <div class="scan-header">
+            <h2>🖐️ Σκανάρισμα Παλάμης</h2>
+            <p>Τοποθέτησε το χέρι σου στο πλαίσιο</p>
         </div>
 
+        <!-- GENDER SELECTOR -->
+        <div class="gender-selector" id="gender-select">
+            <button class="gender-btn active" onclick="selectGender('male', this)">♂ Άντρας</button>
+            <button class="gender-btn" onclick="selectGender('female', this)">♀ Γυναίκα</button>
+        </div>
+
+        <!-- CAMERA -->
         <div id="camera-wrapper">
-            <video id="webcam" playsinline></video>
-            <canvas id="overlay"></canvas>
+            <video id="webcam" playsinline autoplay></video>
+            <canvas id="overlay-canvas"></canvas>
+            <div class="scan-frame"></div>
+            <div class="scan-line"></div>
         </div>
 
-        <div class="controls">
-            <button class="btn btn-gold" id="startBtn" onclick="startCamera()">📷 Κάμερα</button>
-            <button class="btn btn-red" id="refreshBtn" onclick="refreshWithAd()">🔄 Ανανέωση</button>
+        <!-- CONTROLS -->
+        <div class="controls" id="controls-row">
+            <button class="btn btn-gold" id="start-camera-btn" onclick="startCamera()">📷 Έναρξη Κάμερας</button>
+            <button class="btn btn-purple" onclick="document.getElementById('file-input').click()">📁 Ανέβασμα Φωτογραφίας</button>
+            <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUpload(event)">
         </div>
 
-        <div id="loading">⏳ Αναλύω...</div>
+        <!-- UPLOAD PREVIEW -->
+        <div id="upload-preview-area" style="display:none; text-align:center; margin:10px 0;">
+            <p style="color:var(--gold);">✧ Η φωτογραφία είναι έτοιμη ✧</p>
+            <img id="upload-preview-img" style="max-width:200px; border-radius:20px; border:2px solid var(--gold);">
+        </div>
 
+        <!-- ANALYZE BUTTON -->
+        <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()" style="display:none; width:100%; max-width:400px;">
+            🔮 Ανάλυση Παλάμης
+        </button>
+
+        <!-- LOADING -->
+        <div id="loading-box">
+            <div class="loading-text">🔮 Αναλύω τις γραμμές του χεριού σου...</div>
+            <div class="loading-spinner"></div>
+        </div>
+
+        <!-- RESULT -->
         <div id="result-area">
-            <h2>🔮 Ανάλυση</h2>
-            <div id="element-display"></div>
-            <div id="age-display"></div>
+            <h2>☽ Το Πεπρωμένο σου ☾</h2>
             <div id="result-text"></div>
-            <div class="stat-grid" id="stats-grid"></div>
-            <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
-                <button class="btn btn-blue" onclick="exportPDF()">📄 PDF</button>
-                <button class="btn btn-purple" onclick="saveToHistory()">💾 Αποθήκευση</button>
+            <div style="text-align:center; margin-top:20px;">
+                <button class="btn btn-purple" onclick="resetScan()">🔄 Σκανάρισε άλλο χέρι</button>
             </div>
-        </div>
-
-        <div id="history-area">
-            <h2>📚 Ιστορικό Αναλύσεων</h2>
-            <div id="history-list"></div>
-            <button class="btn btn-red" onclick="clearHistory()">🗑️ Διαγραφή Ιστορικού</button>
         </div>
     </div>
 
     <script>
-        // --- MediaPipe Setup ---
-        const video = document.getElementById('webcam');
-        const overlay = document.getElementById('overlay');
-        const ctx = overlay.getContext('2d');
-        let landmarksData = null;
-        let analysisResult = null;
-        let capturedPhoto = null;
-        let uploadedImage = null;
-        let analysisDone = false;
-        let userGender = 'male';
-        let detectedHand = null;
-        let camera = null;
+        // ===== STARFIELD BACKGROUND =====
+        const starCanvas = document.getElementById('starfield');
+        const starCtx = starCanvas.getContext('2d');
+        let stars = [];
 
-        overlay.width = 500; overlay.height = 500;
+        function resizeStarfield() {
+            starCanvas.width = window.innerWidth;
+            starCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeStarfield);
+        resizeStarfield();
 
-        const hands = new Hands({
-            locateFile: (f) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}`
-        });
-
-        hands.setOptions({
-            maxNumHands: 1,
-            modelComplexity: 1,
-            minDetectionConfidence: 0.7,
-            minTrackingConfidence: 0.5
-        });
-
-        hands.onResults((results) => {
-            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-                landmarksData = results.multiHandLandmarks[0];
-                drawHand(landmarksData);
-                document.getElementById('startBtn').disabled = true;
-                
-                const wristX = landmarksData[0].x;
-                detectedHand = wristX > 0.5 ? 'right' : 'left';
-                
-                if (!analysisDone) {
-                    analysisDone = true;
-                    performAnalysis();
-                }
-            } else {
-                ctx.clearRect(0, 0, overlay.width, overlay.height);
-                landmarksData = null;
-                analysisDone = false;
-                detectedHand = null;
+        function createStars(count = 200) {
+            stars = [];
+            for (let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * starCanvas.width,
+                    y: Math.random() * starCanvas.height,
+                    r: Math.random() * 2 + 0.5,
+                    dx: (Math.random() - 0.5) * 0.3,
+                    dy: (Math.random() - 0.5) * 0.3,
+                    alpha: Math.random() * 0.8 + 0.2,
+                    color: Math.random() > 0.7 ? '#FFD700' : '#c9a0dc'
+                });
             }
-        });
+        }
+        createStars();
 
-        function drawHand(lm) {
-            ctx.clearRect(0, 0, overlay.width, overlay.height);
-            ctx.save();
-            ctx.scale(1,1);
-            drawConnectors(ctx, lm, HAND_CONNECTIONS, {color:'#FFD700', lineWidth:2});
-            drawLandmarks(ctx, lm, {color:'#FFD700', radius:4});
-            ctx.restore();
+        function drawStars() {
+            starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+            stars.forEach(s => {
+                s.x += s.dx;
+                s.y += s.dy;
+                if (s.x < 0 || s.x > starCanvas.width) s.dx *= -1;
+                if (s.y < 0 || s.y > starCanvas.height) s.dy *= -1;
+                starCtx.beginPath();
+                starCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                starCtx.fillStyle = `rgba(${s.color === '#FFD700' ? '255,215,0' : '201,160,220'}, ${s.alpha * 0.6})`;
+                starCtx.fill();
+                
+                // Glow effect for some stars
+                if (s.r > 1.5) {
+                    starCtx.beginPath();
+                    starCtx.arc(s.x, s.y, s.r * 2, 0, Math.PI * 2);
+                    starCtx.fillStyle = `rgba(${s.color === '#FFD700' ? '255,215,0' : '201,160,220'}, ${s.alpha * 0.15})`;
+                    starCtx.fill();
+                }
+            });
+            requestAnimationFrame(drawStars);
+        }
+        drawStars();
+
+        // ===== PAGE NAVIGATION =====
+        function goToScan() {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('scan-page').classList.add('active');
+            createParticles();
         }
 
-        function setGender(gender) {
+        function goToSplash() {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('splash-page').classList.add('active');
+            stopCamera();
+            resetScan();
+        }
+
+        // ===== PARTICLE EFFECTS =====
+        function createParticles() {
+            const emojis = ['✨', '🌟', '💫', '🔮', '⭐', '✨'];
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('span');
+                    particle.className = 'particle';
+                    particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    particle.style.left = Math.random() * 80 + 10 + '%';
+                    particle.style.top = Math.random() * 60 + 30 + '%';
+                    particle.style.fontSize = (Math.random() * 2 + 1) + 'rem';
+                    document.body.appendChild(particle);
+                    setTimeout(() => particle.remove(), 2000);
+                }, i * 100);
+            }
+        }
+
+        // ===== GENDER SELECTION =====
+        let userGender = 'male';
+
+        function selectGender(gender, btn) {
             userGender = gender;
             document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
-            if (gender === 'male') {
-                document.getElementById('maleBtn').classList.add('active');
-            } else {
-                document.getElementById('femaleBtn').classList.add('active');
+            btn.classList.add('active');
+        }
+
+        // ===== CAMERA SETUP =====
+        const video = document.getElementById('webcam');
+        const overlayCanvas = document.getElementById('overlay-canvas');
+        const overlayCtx = overlayCanvas.getContext('2d');
+        let currentStream = null;
+        let capturedImage = null;
+        let isAnalyzing = false;
+
+        function resizeOverlay() {
+            const wrapper = document.getElementById('camera-wrapper');
+            overlayCanvas.width = wrapper.clientWidth;
+            overlayCanvas.height = wrapper.clientHeight;
+        }
+        window.addEventListener('resize', resizeOverlay);
+
+        async function startCamera() {
+            try {
+                if (currentStream) {
+                    currentStream.getTracks().forEach(t => t.stop());
+                }
+                currentStream = await navigator.mediaDevices.getUserMedia({
+                    video: { 
+                        facingMode: 'user',
+                        width: { ideal: 500 },
+                        height: { ideal: 500 }
+                    }
+                });
+                video.srcObject = currentStream;
+                resizeOverlay();
+                
+                // Show analyze button after camera starts
+                document.getElementById('analyze-btn').style.display = 'block';
+                document.getElementById('start-camera-btn').disabled = true;
+                document.getElementById('start-camera-btn').innerText = '✅ Κάμερα Έτοιμη';
+                
+            } catch (err) {
+                console.error('Σφάλμα κάμερας:', err);
+                alert('Δεν μπόρεσα να ανοίξω την κάμερα. Δοκίμασε το Ανέβασμα Φωτογραφίας.');
             }
         }
 
+        function stopCamera() {
+            if (currentStream) {
+                currentStream.getTracks().forEach(t => t.stop());
+                currentStream = null;
+            }
+        }
+
+        function capturePhoto() {
+            if (!currentStream) return;
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth || 500;
+            canvas.height = video.videoHeight || 500;
+            const ctx = canvas.getContext('2d');
+            ctx.save();
+            ctx.scale(-1, 1);
+            ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+            ctx.restore();
+            capturedImage = canvas.toDataURL('image/jpeg', 0.8);
+            return capturedImage;
+        }
+
+        // ===== FILE UPLOAD =====
         function handleUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
             
             const reader = new FileReader();
             reader.onload = function(e) {
-                uploadedImage = e.target.result;
-                const preview = document.getElementById('upload-preview');
-                preview.src = uploadedImage;
-                preview.style.display = 'block';
-                
-                document.getElementById('auto-status').style.display = 'block';
-                document.getElementById('auto-status').innerText = '⏳ Αυτόματη ανάλυση σε εξέλιξη...';
-                
-                setTimeout(() => {
-                    const result = analyzeHand();
-                    displayResult(result);
-                    analysisResult = result;
-                    document.getElementById('auto-status').innerText = '✅ Ανάλυση ολοκληρώθηκε!';
-                    document.getElementById('auto-status').style.color = '#2ecc71';
-                }, 500);
+                capturedImage = e.target.result;
+                document.getElementById('upload-preview-img').src = capturedImage;
+                document.getElementById('upload-preview-area').style.display = 'block';
+                document.getElementById('analyze-btn').style.display = 'block';
             };
             reader.readAsDataURL(file);
         }
 
-        function startCamera() {
-            const btn = document.getElementById('startBtn');
-            btn.disabled = true;
-            btn.innerText = "⏳...";
-            camera = new Camera(video, {
-                onFrame: async () => {
-                    await hands.send({image: video});
-                },
-                width: 500,
-                height: 500,
-                facingMode: 'user'
-            });
-            camera.start().then(() => {
-                btn.innerText = "✅ Ready";
-                btn.style.background = "#2ecc71";
-                btn.disabled = false;
-            }).catch(err => {
-                console.error("Camera error:", err);
-                btn.innerText = "📷 Κάμερα";
-                btn.style.background = "";
-                btn.disabled = false;
-                alert("Σφάλμα κάμερας: " + err);
-            });
-        }
-
-        function analyzeHand() {
-            const age = parseInt(document.getElementById('user-age').value) || 30;
-            const zodiac = document.getElementById('zodiac').value;
-            const gender = userGender;
-            const hand = detectedHand || 'right';
-            
-            const isLeftHanded = (hand === 'left');
-            const dominantHand = isLeftHanded ? 'Αριστερό' : 'Δεξί';
-            const nonDominant = isLeftHanded ? 'Δεξί' : 'Αριστερό';
-
-            // --- 1. ΚΥΡΙΕΣ ΓΡΑΜΜΕΣ (Modern & Sivartha Charts) ---
-            const lifeLineTypes = [
-                { type: "Μακριά & Βαθιά", desc: "Ισχυρή ζωτικότητα, εξαιρετική φυσική κατάσταση, σταθερά επίπεδα ενέργειας και ψυχοσυναισθηματική ισορροπία." },
-                { type: "Κοντή & Βαθιά", desc: "Μεγάλη ικανότητα διεξόδου από ψυχικές και σωματικές αντιξοότητες. Τάση να επηρεάζεσαι εύκολα από το περιβάλλον σου." },
-                { type: "Αχνή / Αδύναμη", desc: "Χαμηλότερα επίπεδα ενέργειας, ανάγκη για ξεκούραση και αποφυγή περιττών ρίσκων ή ακραίων αλλαγών στη ζωή." },
-                { type: "Διακεκομμένη", desc: "Σημαντικές, απρόσμενες αλλαγές πορείας ή εσωτερικοί αγώνες. Γρήγορη ανάκαμψη και υπέρβαση των εμποδίων." },
-                { type: "Αλυσιδωτή", desc: "Η πορεία της ζωής σου περνάει από πολλές διαφορετικές κατευθύνσεις και συναισθηματικές μεταβολές." },
-                { type: "Διχαλωτή", desc: "Έντονη κοινωνική αναγνώριση, πολλά ταξίδια, πιθανότητα για ριζική αλλαγή περιβάλλοντος ή μετακόμιση στο εξωτερικό." }
-            ];
-            const lifeLine = lifeLineTypes[Math.floor(Math.random() * lifeLineTypes.length)];
-
-            const heartLineTypes = [
-                { type: "Μακριά & Καμπύλη", desc: "Ζεστή και δοτική φύση. Εξιδανικεύεις τις σχέσεις και δείχνεις βαθιά ενσυναίσθηση στους γύρω σου." },
-                { type: "Κοντή & Ίσια", desc: "Κλειστός συναισθηματικός κόσμος, επιλεκτική εμπιστοσύνη, έντονος ρεαλισμός και προστασία των συναισθημάτων σου." },
-                { type: "Βαθιά", desc: "Έντονα συναισθήματα, μόνιμο ενδιαφέρον για την πορεία των σχέσεων, αλλά και τάση για εσωτερική ανησυχία." },
-                { type: "Κυματώδης", desc: "Πολλές κοινωνικές επαφές και ερωτικές εμπειρίες, δυσκολία ή διστακτικότητα για μακροχρόνια δέσμευση." },
-                { type: "Τοξωτή", desc: "Διαισθητικό άτομο με εκφραστική δύναμη. Εξωτερικεύεις με μεγάλη ευκολία την αγάπη και τα συναισθήματά σου." }
-            ];
-            const heartLine = heartLineTypes[Math.floor(Math.random() * heartLineTypes.length)];
-
-            const headLineTypes = [
-                { type: "Μακριά", desc: "Υψηλή πνευματική διαύγεια, εξαιρετική μνήμη και ικανότητα διατήρησης της ψυχραιμίας σε κρίσιμες καταστάσεις." },
-                { type: "Ίσια / Οριζόντια", desc: "Προσγειωμένη και ρεαλιστική σκέψη. Δίνεις τεράστια βάση στη λεπτομέρεια, τη λογική και την οργάνωση." },
-                { type: "Κυματώδης", desc: "Διαρκής εσωτερική μάχη ανάμεσα στη λογική και το συναίσθημα. Μεταβολές στον τρόπο προσέγγισης προβλημάτων." },
-                { type: "Αχνή / Διακοπτόμενη", desc: "Τάση για διάσπαση προσοχής, έντονη φαντασία που σε παρασύρει μακριά από την καθημερινή ρουτίνα." },
-                { type: "Αλυσιδωτή", desc: "Ανάγκη για καθοδήγηση και επιβεβαίωση πριν από τη λήψη μεγάλων αποφάσεων. Επιφυλακτικότητα." }
-            ];
-            const headLine = headLineTypes[Math.floor(Math.random() * headLineTypes.length)];
-
-            // --- 2. ΔΕΥΤΕΡΕΥΟΥΣΕΣ ΓΡΑΜΜΕΣ & ΕΡΜΗΤΙΚΑ ΣΗΜΑΔΙΑ (French & Medieval Charts) ---
-            const sunLine = Math.random() > 0.5 ? "Εμφανής (Γραμμή Απόλλωνα: Καλλιτεχνική κλίση, φήμη και αναγνώριση)" : "Αμυδρή (Ήσυχη, σταθερή ζωή χωρίς ανάγκη προβολής)";
-            const intuitionLine = Math.random() > 0.5 ? "Εμφανής (Δαχτυλίδι Σολομώντα: Έντονη διορατικότητα, σοφία και πνευματικές ικανότητες)" : "Αμυδρή ή ανύπαρκτη";
-            const marriageLine = Math.random() > 0.5 ? "Καθαρή (Σημαντικοί και βαθιοί συναισθηματικοί δεσμοί στη ζωή)" : "Πολλαπλές λεπτές γραμμές (Έμφαση στην προσωπική ανεξαρτησία)";
-
-            // --- 3. ΤΥΠΟΙ ΧΕΡΙΩΝ & ΑΣΤΡΟΛΟΓΙΚΟΙ ΟΡΟΙ ---
-            const handTypes = [
-                "Πρακτικό / Γήινο (Πλατύ, τετράγωνο με κοντά δάχτυλα — Σταθερότητα)",
-                "Ιδεαλιστικό / Πνευματικό (Μακρύ, λεπτό με οξύληκτα δάχτυλα — Διαίσθηση)",
-                "Ενεργητικό / Πύρινο (Έντονη παλάμη, μακριά δάχτυλα — Φιλοδοξία & Δράση)",
-                "Μικτό (Συνδυασμός χαρακτηριστικών — Ευελιξία και προσαρμοστικότητα)"
-            ];
-            const handType = handTypes[Math.floor(Math.random() * handTypes.length)];
-
-            const signs = [];
-            if (Math.random() > 0.5) signs.push("Μυστικιστικός Σταυρός (Mystic Cross) ανάμεσα σε Καρδιά και Κεφάλι: Έφεση στον αποκρυφισμό.");
-            if (Math.random() > 0.6) signs.push("Ζώνη της Αφροδίτης (Girdle of Venus): Ιδιαίτερη συναισθηματική ευαισθησία.");
-            if (Math.random() > 0.7) signs.push("Γραμμές Βραχιολιών (Bracelets): Ένδειξη μακροζωίας με βάση την ηλικιακή χαρτογράφηση.");
-            if (signs.length === 0) signs.push("Κλασικά γραμμικά μοτίβα χωρίς ξένα σώματα.");
-
-            // --- 4. ΠΑΡΑΔΟΣΙΑΚΗ ΚΙΝΕΖΙΚΗ ΙΑΤΡΙΚΗ & ΜΕΣΗΜΒΡΙΝΟΙ (Reflexology Map) ---
-            const reflexologyData = [
-                { focus: "Μεσημβρινός Πνεύμονα & Παχέος Εντέρου", desc: "Εντοπίζεται στον Αντίχειρα και τον Δείκτη. Δείχνει καλή διαχείριση της ζωτικής ενέργειας (Qi)." },
-                { focus: "Μεσημβρινός Περικαρδίου & Καρδιάς", desc: "Στον Μεσαίο και το Μικρό δάχτυλο. Συνδέεται άμεσα με την κυκλοφορία του αίματος και την πνευματική ηρεμία." },
-                { focus: "Ζώνη Πεπτικού Συστήματος (Κέντρο Παλάμης)", desc: "Αντανακλά τη λειτουργία του στομάχου και του ήπατος. Η καθαρότητα της περιοχής δείχνει σωματική αντοχή." }
-            ];
-            const reflexology = reflexologyData[Math.floor(Math.random() * reflexologyData.length)];
-
-            // --- 5. ΦΥΛΟ & ΚΥΡΙΑΡΧΟ ΧΕΡΙ ---
-            let genderAnalysis = "";
-            if (gender === 'male') {
-                genderAnalysis = `
-                    <strong>👤 Ανάλυση Φύλου (Άντρας):</strong><br>
-                    • Η γραμμή Ζωής παρουσιάζει έντονο βάθος, δείχνοντας σωματική ανθεκτικότητα.<br>
-                    • Η γραμμή Κεφαλής εστιάζει στη λογική, την ανάλυση και τη στρατηγική λήψη αποφάσεων.<br>
-                    • Οι Αστρολογικοί Όροι του Άρη και του Κρόνου είναι πιο ανεπτυγμένοι, ενισχύοντας την πειθαρχία.
-                `;
-            } else {
-                genderAnalysis = `
-                    <strong>👤 Ανάλυση Φύλου (Γυναίκα):</strong><br>
-                    • Η γραμμή Καρδιάς είναι εξαιρετικά εκφραστική και καμπύλη, δείχνοντας πλούσιο συναισθηματικό υπόβαθρο.<br>
-                    • Η γραμμή Κεφαλής συνδυάζει τη λογική με τη διαίσθηση.<br>
-                    • Οι Όροι της Αφροδίτης και της Σελήνης είναι έντονοι, προσφέροντας δημιουργικότητα και ενσυναίσθηση.
-                `;
-            }
-
-            const dominantAnalysis = `
-                <strong>🖐️ Δυναμική Χεριών:</strong><br>
-                • <strong>Κυρίαρχο (${dominantHand}):</strong> Αντιπροσωπεύει τα επίκτητα χαρακτηριστικά, τις επιλογές σου και την τρέχουσα κατεύθυνση στη ζωή.<br>
-                • <strong>Μη Κυρίαρχο (${nonDominant}):</strong> Αντιπροσωπεύει το πεπρωμένο, τις γενετικές προδιαθέσεις, τα κρυμμένα ταλέντα και το παρελθόν.
-            `;
-
-            let ageAnalysis = "";
-            if (age < 25) {
-                ageAnalysis = `Στα ${age} σας χρόνια, οι γραμμές δείχνουν μια φάση έντονης διαμόρφωσης χαρακτήρα, αναζήτησης και νέων ξεκινημάτων.`;
-            } else if (age < 40) {
-                ageAnalysis = `Στα ${age} σας χρόνια, η παλάμη μαρτυρά σταθεροποίηση των στόχων, επαγγελματική ωριμότητα και σημαντικές αποφάσεις ζωής.`;
-            } else {
-                ageAnalysis = `Στα ${age} σας χρόνια, οι γραμμές δείχνουν συσσωρευμένη σοφία, πνευματική ανάπτυξη και την ανάγκη για προσφορά.`;
-            }
-
-            const zodiacMap = {
-                "Κριός": "Συνδέεται με τον Όρο του Άρη. Παρορμητική φύση, θάρρος και ηγετικές τάσεις.",
-                "Ταύρος": "Συνδέεται με τον Όρο της Αφροδίτης. Σταθερότητα, αγάπη για την άνεση και αντοχή.",
-                "Δίδυμοι": "Συνδέεται με τον Όρο του Ερμή. Εξαιρετική επικοινωνία, προσαρμοστικότητα και πνευματική εγρήγορση.",
-                "Καρκίνος": "Συνδέεται με τον Όρο της Σελήνης. Υψηλή συναισθηματική νοημοσύνη, φαντασία και κυκλοθυμία.",
-                "Λέων": "Συνδέεται με τον Όρο του Απόλλωνα. Γενναιοδωρία, ανάγκη για προβολή, δημιουργικότητα.",
-                "Παρθένος": "Συνδέεται με τον Όρο του Ερμή. Αναλυτικό πνεύμα, τελειομανία και έμφαση στην οργάνωση.",
-                "Ζυγός": "Συνδέεται με τον Όρο της Αφροδίτης. Αναζήτηση αρμονίας, καλλιτεχνική φύση και διπλωματία.",
-                "Σκορπιός": "Συνδέεται με τον Όρο του Άρη. Μαγνητική προσωπικότητα, μυστήριο και τεράστια ψυχική δύναμη.",
-                "Τοξότης": "Συνδέεται με τον Όρο του Δία. Φιλοσοφημένη στάση ζωής, αγάπη για τα ταξίδια και την ελευθερία.",
-                "Αιγόκερως": "Συνδέεται με τον Όρο του Κρόνου. Φιλοδοξία, υπομονή, εργατικότητα και σοβαρότητα.",
-                "Υδροχόος": "Συνδέεται με τον Όρο του Κρόνου/Ουρανού. Πρωτοποριακή σκέψη, ανεξαρτησία και αντισυμβατικότητα.",
-                "Ιχθείς": "Συνδέεται με τον Όρο της Σελήνης. Έντονος ιδεαλισμός, ρομαντισμός και πνευματικές αναζητήσεις."
-            };
-            const zodiacMatch = zodiacMap[zodiac] || "Συνδυασμός με το ζώδιο σου.";
-
-            return {
-                type: 'hand',
-                lifeLine: lifeLine,
-                heartLine: heartLine,
-                headLine: headLine,
-                sunLine: sunLine,
-                intuitionLine: intuitionLine,
-                marriageLine: marriageLine,
-                handType: handType,
-                signs: signs,
-                reflexology: reflexology,
-                genderAnalysis: genderAnalysis,
-                dominantAnalysis: dominantAnalysis,
-                ageAnalysis: ageAnalysis,
-                zodiac: zodiac,
-                zodiacMatch: zodiacMatch,
-                userAge: age,
-                dominantHand: dominantHand,
-                gender: gender === 'male' ? 'Άντρας' : 'Γυναίκα',
-                stats: {
-                    "Γραμμή Ζωής": lifeLine.type,
-                    "Γραμμή Καρδιάς": heartLine.type,
-                    "Γραμμή Νου": headLine.type,
-                    "Τύπος Χεριού": handType.split(' ')[0],
-                    "Ενεργειακή Ζώνη": reflexology.focus.split(' ')[1],
-                    "Σημάδια": signs[0].split(' ')[0],
-                    "Ζώδιο": zodiac,
-                    "Κυρίαρχο Χέρι": dominantHand
-                },
-                date: new Date().toISOString(),
-                source: uploadedImage ? 'upload' : 'camera'
-            };
-        }
-
+        // ===== HAND ANALYSIS =====
         function performAnalysis() {
-            const result = analyzeHand();
-            displayResult(result);
-            analysisResult = result;
+            if (isAnalyzing) return;
+            
+            // Capture photo if using camera
+            if (currentStream && !capturedImage) {
+                capturedImage = capturePhoto();
+            }
+            
+            if (!capturedImage) {
+                alert('Παρακαλώ πρώτα άνοιξε την κάμερα ή ανέβασε φωτογραφία.');
+                return;
+            }
+            
+            isAnalyzing = true;
+            
+            // Show loading
+            document.getElementById('loading-box').style.display = 'block';
+            document.getElementById('result-area').style.display = 'none';
+            document.getElementById('analyze-btn').style.display = 'none';
+            document.getElementById('controls-row').style.display = 'none';
+            document.getElementById('gender-select').style.display = 'none';
+            document.getElementById('upload-preview-area').style.display = 'none';
+            
+            // Simulate analysis (1.5-3 seconds)
+            const analysisTime = 1500 + Math.random() * 1500;
+            
+            setTimeout(() => {
+                const result = generateReading();
+                displayResult(result);
+                document.getElementById('loading-box').style.display = 'none';
+                isAnalyzing = false;
+            }, analysisTime);
+        }
+
+        function generateReading() {
+            const lifeLineTypes = [
+                { type: "Μακριά & Βαθιά", desc: "Ισχυρή ζωτικότητα, εξαιρετική φυσική κατάσταση και ψυχοσυναισθηματική ισορροπία. Οι αρχαίοι χειρομάντες το θεωρούσαν σημάδι μακροζωίας και ευημερίας." },
+                { type: "Διακεκομμένη & Έντονη", desc: "Σημαντικές αλλαγές πορείας στη ζωή σου. Κάθε διακοπή αντιπροσωπεύει μια νέα αρχή. Οι Κέλτες Δρυΐδες το έβλεπαν ως ένδειξη μετενσάρκωσης." },
+                { type: "Διχαλωτή στην άκρη", desc: "Έντονη κοινωνική αναγνώριση και πολλά ταξίδια. Στην Ινδική παράδοση, αυτό δείχνει μια ζωή γεμάτη περιπέτειες και πνευματική αναζήτηση." }
+            ];
+            
+            const heartLineTypes = [
+                { type: "Μακριά & Καμπύλη", desc: "Ζεστή και δοτική φύση. Εξιδανικεύεις τις σχέσεις και δείχνεις βαθιά ενσυναίσθηση. Ο Αριστοτέλης πίστευε ότι αυτή η γραμμή συνδέεται με την ψυχή." },
+                { type: "Βαθιά & Ευθεία", desc: "Έντονα συναισθήματα με ρεαλιστική προσέγγιση. Ισορροπείς ανάμεσα στο συναίσθημα και τη λογική στις σχέσεις σου." }
+            ];
+            
+            const headLineTypes = [
+                { type: "Μακριά & Οριζόντια", desc: "Υψηλή πνευματική διαύγεια και εξαιρετική μνήμη. Οι Ρωμαίοι οιωνοσκόποι θεωρούσαν αυτή τη γραμμή ένδειξη στρατηγικής ιδιοφυΐας." },
+                { type: "Κυματώδης & Δημιουργική", desc: "Διαρκής εσωτερική μάχη ανάμεσα στη λογική και τη φαντασία. Αυτό το μοτίβο εμφανίζεται συχνά σε καλλιτέχνες και εφευρέτες." }
+            ];
+            
+            const handTypes = [
+                "Γήινο (Πλατύ, τετράγωνο με κοντά δάχτυλα — Σταθερότητα & Πρακτικότητα)",
+                "Αέρινο (Μακρύ, λεπτό με οξύληκτα δάχτυλα — Διαίσθηση & Πνευματικότητα)",
+                "Πύρινο (Έντονη παλάμη, μακριά δάχτυλα — Φιλοδοξία & Πάθος)"
+            ];
+            
+            const genderText = userGender === 'male' ? 'Άντρας' : 'Γυναίκα';
+            const genderAnalysis = userGender === 'male' 
+                ? 'Η γραμμή Ζωής παρουσιάζει έντονο βάθος, δείχνοντας σωματική ανθεκτικότητα. Οι αρχαίοι πολεμιστές με τέτοια παλάμη θεωρούνταν ευλογημένοι από τον Άρη.'
+                : 'Η γραμμή Καρδιάς είναι εξαιρετικά εκφραστική και καμπύλη, δείχνοντας πλούσιο συναισθηματικό υπόβαθρο. Οι ιέρειες της Αφροδίτης αναγνώριζαν αυτό το σημάδι ως ένδειξη ενσυναίσθησης.';
+            
+            const randomSymbols = [
+                "Μυστικιστικός Σταυρός (Mystic Cross) ανάμεσα σε Καρδιά και Κεφάλι: Έφεση στον αποκρυφισμό και την πνευματική αναζήτηση.",
+                "Ζώνη της Αφροδίτης (Girdle of Venus): Ιδιαίτερη συναισθηματική ευαισθησία και καλλιτεχνική φύση.",
+                "Γραμμές Βραχιολιών (Bracelets): Ένδειξη μακροζωίας σύμφωνα με την αρχαία Κινεζική χειρομαντεία.",
+                "Δαχτυλίδι Σολομώντα: Σημάδι σοφίας και διορατικότητας, σπάνιο και πολύτιμο."
+            ];
+            
+            const lifeLine = lifeLineTypes[Math.floor(Math.random() * lifeLineTypes.length)];
+            const heartLine = heartLineTypes[Math.floor(Math.random() * heartLineTypes.length)];
+            const headLine = headLineTypes[Math.floor(Math.random() * headLineTypes.length)];
+            const handType = handTypes[Math.floor(Math.random() * handTypes.length)];
+            const symbol = randomSymbols[Math.floor(Math.random() * randomSymbols.length)];
+            
+            return {
+                lifeLine, heartLine, headLine, handType,
+                genderAnalysis, symbol, genderText
+            };
         }
 
         function displayResult(r) {
-            const area = document.getElementById('result-area');
-            const text = document.getElementById('result-text');
-            const grid = document.getElementById('stats-grid');
-            const elementDisplay = document.getElementById('element-display');
-            const ageDisplay = document.getElementById('age-display');
-
-            area.style.display = 'block';
-
-            elementDisplay.innerHTML = `<strong>✋ Πλήρης Εσωτερική Ανάλυση Παλάμης</strong> (${r.gender})`;
-            elementDisplay.style.color = "#FFD700";
+            const resultArea = document.getElementById('result-area');
+            const resultText = document.getElementById('result-text');
             
-            ageDisplay.innerHTML = `📅 ${r.ageAnalysis}`;
-            
-            text.innerHTML = `
-                <strong>🧬 Γραμμή Ζωής (${r.lifeLine.type}):</strong> ${r.lifeLine.desc}<br><br>
-                <strong>❤️ Γραμμή Καρδιάς (${r.heartLine.type}):</strong> ${r.heartLine.desc}<br><br>
-                <strong>🧠 Γραμμή Νου / Κεφαλιού (${r.headLine.type}):</strong> ${r.headLine.desc}<br>
-                <hr style="border-color:#444;">
-                <strong>☀️ Γραμμή Απόλλωνα (Επιτυχία):</strong> ${r.sunLine}<br>
-                <strong>🔮 Εσωτερισμός / Διορατικότητα:</strong> ${r.intuitionLine}<br>
-                <strong>💍 Σχέσεις & Γάμος:</strong> ${r.marriageLine}<br>
-                <hr style="border-color:#444;">
-                <strong>🌿 Κινεζική Ιατρική & Ρεφλεξολογία:</strong><br>
-                • <em>Εστίαση:</em> ${r.reflexology.focus}<br>
-                • <em>Ερμηνεία:</em> ${r.reflexology.desc}<br>
-                <hr style="border-color:#444;">
-                <strong>🖐️ Μορφολογία:</strong> ${r.handType}<br>
-                <strong>🔖 Ιστορικά Σημάδια:</strong> ${r.signs.join(' ')}<br>
-                <hr style="border-color:#444;">
-                ${r.genderAnalysis}<br>
-                <hr style="border-color:#444;">
-                ${r.dominantAnalysis}<br>
-                <hr style="border-color:#444;">
-                <strong>♈ Αστρολογική Σύνδεση (${r.zodiac}):</strong> ${r.zodiacMatch}
+            resultText.innerHTML = `
+                <p style="text-align:center; color:var(--gold); margin-bottom:20px;">
+                    <strong>👤 Φύλο:</strong> ${r.genderText}
+                </p>
+                
+                <p><strong>🧬 Γραμμή Ζωής (${r.lifeLine.type}):</strong> ${r.lifeLine.desc}</p>
+                <br>
+                <p><strong>❤️ Γραμμή Καρδιάς (${r.heartLine.type}):</strong> ${r.heartLine.desc}</p>
+                <br>
+                <p><strong>🧠 Γραμμή Νου (${r.headLine.type}):</strong> ${r.headLine.desc}</p>
+                <br>
+                <hr style="border-color: rgba(255,215,0,0.2);">
+                <br>
+                <p><strong>🖐️ Μορφολογία Παλάμης:</strong> ${r.handType}</p>
+                <br>
+                <p><strong>🔖 Ιστορικό Σημάδι:</strong> ${r.symbol}</p>
+                <br>
+                <hr style="border-color: rgba(255,215,0,0.2);">
+                <br>
+                <p>${r.genderAnalysis}</p>
+                <br>
+                <p style="text-align:center; color:var(--gold); font-style:italic; margin-top:15px;">
+                    ✨ Οι γραμμές του χεριού σου αλλάζουν κάθε 7 χρόνια. Το πεπρωμένο είναι στα χέρια σου — κυριολεκτικά! ✨
+                </p>
             `;
             
-            grid.innerHTML = `
-                <div class="stat-item"><span class="badge">Γραμμή Ζωής</span><br>${r.lifeLine.type}</div>
-                <div class="stat-item"><span class="badge">Γραμμή Καρδιάς</span><br>${r.heartLine.type}</div>
-                <div class="stat-item"><span class="badge">Γραμμή Νου</span><br>${r.headLine.type}</div>
-                <div class="stat-item"><span class="badge">Μορφολογία</span><br>${r.handType.split(' ')[0]}</div>
-                <div class="stat-item"><span class="badge">Ρεφλεξολογία</span><br>Ενεργό Qi</div>
-                <div class="stat-item"><span class="badge">Ζώδιο</span><br>${r.zodiac}</div>
-                <div class="stat-item"><span class="badge">Σημάδια</span><br>Εντοπίστηκαν</div>
-                <div class="stat-item"><span class="badge">Κυρίαρχο Χέρι</span><br>${r.dominantHand}</div>
-            `;
+            resultArea.style.display = 'block';
+            resultArea.scrollIntoView({ behavior: 'smooth' });
         }
 
-        function callMonetagAd() {
-            return new Promise((resolve, reject) => {
-                if (typeof show_10979429 === 'function') {
-                    show_10979429().then(resolve).catch(reject);
-                } else {
-                    setTimeout(() => {
-                        if (typeof show_10979429 === 'function') {
-                            show_10979429().then(resolve).catch(reject);
-                        } else {
-                            resolve();
-                        }
-                    }, 500);
-                }
-            });
-        }
-
-        function refreshWithAd() {
-            callMonetagAd().then(() => {
-                resetAll();
-            }).catch(() => {
-                resetAll();
-            });
-        }
-
-        function resetAll() {
+        function resetScan() {
             document.getElementById('result-area').style.display = 'none';
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('startBtn').disabled = false;
-            document.getElementById('startBtn').innerText = "📷 Κάμερα";
-            ctx.clearRect(0,0,overlay.width,overlay.height);
-            landmarksData = null;
-            analysisResult = null;
-            analysisDone = false;
-            document.getElementById('upload-preview').style.display = 'none';
-            document.getElementById('auto-status').style.display = 'none';
-            document.getElementById('upload-type').innerText = '';
-            uploadedImage = null;
+            document.getElementById('loading-box').style.display = 'none';
+            document.getElementById('analyze-btn').style.display = 'none';
+            document.getElementById('controls-row').style.display = 'flex';
+            document.getElementById('gender-select').style.display = 'flex';
+            document.getElementById('upload-preview-area').style.display = 'none';
+            document.getElementById('start-camera-btn').disabled = false;
+            document.getElementById('start-camera-btn').innerText = '📷 Έναρξη Κάμερας';
+            capturedImage = null;
+            isAnalyzing = false;
         }
-
-        function saveToHistory() {
-            if (!analysisResult) { alert("Κάνε ανάλυση πρώτα!"); return; }
-            let h = JSON.parse(localStorage.getItem('history') || '[]');
-            h.push({
-                id: Date.now(),
-                ...analysisResult,
-                dateStr: new Date().toLocaleString('el-GR')
-            });
-            localStorage.setItem('history', JSON.stringify(h));
-            renderHistory();
-            alert("✅ Η ανάλυση αποθηκεύτηκε επιτυχώς στο ιστορικό!");
-        }
-
-        function renderHistory() {
-            const list = document.getElementById('history-list');
-            const h = JSON.parse(localStorage.getItem('history') || '[]');
-            if (!h.length) {
-                list.innerHTML = "<p style='color:#888;'>Δεν υπάρχουν αποθηκευμένες αναλύσεις.</p>";
-                return;
-            }
-            list.innerHTML = h.map((item, i) => `
-                <div class="history-item">
-                    <strong>#${i+1}</strong> <small>${item.dateStr}</small> (${item.source === 'upload' ? '📁 Φωτογραφία' : '📷 Κάμερα'})<br>
-                    ✋ Ζωή: ${item.lifeLine.type} | Καρδιά: ${item.heartLine.type} | ♈ ${item.zodiac} | 📅 ${item.userAge} ετών
-                    <div class="history-actions">
-                        <button onclick="deleteHistoryItem(${i})" style="background:#e74c3c;color:#fff;">Διαγραφή</button>
-                        <button onclick="exportHistoryItemAsPDF(${i})" style="background:#3498db;color:#fff;">PDF</button>
-                    </div>
-                </div>
-            `).join('');
-            document.getElementById('history-area').style.display = 'block';
-        }
-
-        function deleteHistoryItem(i) {
-            let h = JSON.parse(localStorage.getItem('history') || '[]');
-            h.splice(i, 1);
-            localStorage.setItem('history', JSON.stringify(h));
-            renderHistory();
-        }
-
-        function clearHistory() {
-            if (confirm("Θέλετε σίγουρα να διαγράψετε όλο το ιστορικό αναλύσεων;")) {
-                localStorage.removeItem('history');
-                renderHistory();
-                alert("Το ιστορικό εκκαθαρίστηκε.");
-            }
-        }
-
-        async function exportHistoryItemAsPDF(i) {
-            const h = JSON.parse(localStorage.getItem('history') || '[]');
-            const item = h[i];
-            if (!item) return;
-            generatePDFFile(item, item.dateStr);
-        }
-
-        async function exportPDF() {
-            if (!analysisResult) { alert("Κάνε ανάλυση πρώτα!"); return; }
-            const now = new Date();
-            generatePDFFile(analysisResult, now.toLocaleDateString('el-GR'));
-        }
-
-        async function generatePDFFile(data, dateLabel) {
-            const content = document.createElement('div');
-            content.innerHTML = `
-                <div style="font-family:Arial, sans-serif; padding:30px; color:#111; background:white; max-width:600px; margin:auto; border: 2px solid #B8860B; border-radius:15px;">
-                    <h2 style="text-align:center; color:#B8860B; margin-bottom:5px;">🧿 HandMaster Pro</h2>
-                    <p style="text-align:center; color:#666; font-size:12px; margin-top:0;">Προηγμένη Αναφορά Χειρομαντείας AI</p>
-                    <p style="text-align:right; color:#444; font-size:12px;"><strong>Ημερομηνία:</strong> ${dateLabel}</p>
-                    <hr style="border-color:#B8860B;">
-                    <p><strong>👤 Προφίλ:</strong> ${data.gender} | ${data.userAge} ετών | Ζώδιο: ${data.zodiac}</p>
-                    <p><strong>🖐️ Κυρίαρχο Χέρι:</strong> ${data.dominantHand}</p>
-                    <p><strong>📐 Μορφολογία Παλάμης:</strong> ${data.handType}</p>
-                    <hr style="border-color:#eee;">
-                    <p><strong>🧬 Γραμμή Ζωής:</strong> ${data.lifeLine.type} — ${data.lifeLine.desc}</p>
-                    <p><strong>❤️ Γραμμή Καρδιάς:</strong> ${data.heartLine.type} — ${data.heartLine.desc}</p>
-                    <p><strong>🧠 Γραμμή Νου:</strong> ${data.headLine.type} — ${data.headLine.desc}</p>
-                    <p><strong>☀️ Γραμμή Απόλλωνα (Ήλιου):</strong> ${data.sunLine}</p>
-                    <p><strong>🌿 Ρεφλεξολογία (Κινεζική Ιατρική):</strong> ${data.reflexology.focus} — ${data.reflexology.desc}</p>
-                    <p><strong>🔖 Ειδικά Σημάδια:</strong> ${data.signs.join(' ')}</p>
-                    <hr style="border-color:#B8860B;">
-                    <p style="text-align:center; font-size:11px; color:#999; font-style:italic;">Ευχαριστούμε που χρησιμοποιήσατε το HandMaster Pro AI</p>
-                </div>
-            `;
-            document.body.appendChild(content); // Προσωρινή προσθήκη για σωστό rendering
-            const { jsPDF } = window.jspdf;
-            const canvas = await html2canvas(content, { scale:2, backgroundColor:'#ffffff' });
-            document.body.removeChild(content);
-            
-            const pdf = new jsPDF('p','mm','a4');
-            const w = pdf.internal.pageSize.getWidth();
-            pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, w, (canvas.height * w) / canvas.width);
-            pdf.save(`HandMaster_Report_${dateLabel.replace(/\//g, '-')}.pdf`);
-        }
-
-        function drawConnectors(ctx, lm, conn, style) {
-            ctx.strokeStyle = style.color;
-            ctx.lineWidth = style.lineWidth;
-            for (const [i,j] of conn) {
-                ctx.beginPath();
-                ctx.moveTo(lm[i].x * overlay.width, lm[i].y * overlay.height);
-                ctx.lineTo(lm[j].x * overlay.width, lm[j].y * overlay.height);
-                ctx.stroke();
-            }
-        }
-        function drawLandmarks(ctx, lm, style) {
-            ctx.fillStyle = style.color;
-            for (const p of lm) {
-                ctx.beginPath();
-                ctx.arc(p.x * overlay.width, p.y * overlay.height, style.radius, 0, 2*Math.PI);
-                ctx.fill();
-            }
-        }
-        const HAND_CONNECTIONS = [
-            [0,1],[1,2],[2,3],[3,4],
-            [0,5],[5,6],[6,7],[7,8],
-            [0,9],[9,10],[10,11],[11,12],
-            [0,13],[13,14],[14,15],[15,16],
-            [0,17],[17,18],[18,19],[19,20],
-            [5,9],[9,13],[13,17]
-        ];
-
-        window.onload = function() {
-            const h = JSON.parse(localStorage.getItem('history') || '[]');
-            if (h.length) {
-                renderHistory();
-                document.getElementById('history-area').style.display = 'block';
-            }
-        };
     </script>
 </body>
 </html>
