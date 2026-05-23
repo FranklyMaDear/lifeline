@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>LiFe LiNe - Χειρομαντεία με AI</title>
     
-    <!-- Meta για Social Sharing -->
     <meta name="description" content="🖐️ Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου με Χειρομαντεία & Αστρολογία.">
     
-    <!-- Open Graph (Facebook, WhatsApp, Viber) -->
     <meta property="og:title" content="🖐️ LiFe LiNe - Χειρομαντεία με AI">
     <meta property="og:description" content="Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου με Χειρομαντεία & Αστρολογία.">
     <meta property="og:image" content="https://lifeline.franklymadear.com/lifeline.png">
@@ -20,14 +18,12 @@
     <meta property="og:site_name" content="LiFe LiNe - Χειρομαντεία">
     <meta property="og:locale" content="el_GR">
     
-    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="🖐️ LiFe LiNe - Χειρομαντεία με AI">
     <meta name="twitter:description" content="Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου.">
     <meta name="twitter:image" content="https://lifeline.franklymadear.com/lifeline.png">
     <meta name="twitter:image:alt" content="LiFe LiNe - Χειρομαντεία">
     
-    <!-- PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="LiFe LiNe">
@@ -39,10 +35,8 @@
     <link rel="icon" type="image/png" sizes="512x512" href="lifeline.png">
     <link rel="shortcut icon" href="lifeline.png">
     
-    <!-- Web App Manifest -->
     <link rel="manifest" href="/manifest.json">
     
-    <!-- Monetag SDK -->
     <script src='//libtl.com/sdk.js' data-zone='11042671' data-sdk='show_11042671'></script>
     
     <style>
@@ -92,7 +86,6 @@
         }
         .page.active { display: flex; }
 
-        /* ===== LANGUAGE BAR ===== */
         #language-bar {
             display: flex; align-items: center; gap: 8px;
             background: rgba(20, 10, 40, 0.8); backdrop-filter: blur(8px);
@@ -142,7 +135,6 @@
         }
         #reset-lang-btn:hover { transform: scale(1.1); box-shadow: 0 0 25px rgba(155, 89, 182, 0.6); }
 
-        /* ===== CONSENT MODAL ===== */
         #consent-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -242,7 +234,6 @@
             box-shadow: 0 0 50px rgba(255, 215, 0, 0.6);
         }
 
-        /* ===== SPLASH PAGE ===== */
         #splash-page {
             text-align: center;
             gap: 20px;
@@ -370,7 +361,6 @@
         .btn-mystic:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
         .btn-mystic:active { transform: scale(0.95); }
 
-        /* ===== PWA INSTALL BUTTON ===== */
         #pwa-install-btn {
             background: linear-gradient(145deg, #9b59b6, #6a0dad);
             color: #fff;
@@ -387,7 +377,7 @@
             max-width: 380px;
             position: relative;
             z-index: 2;
-            display: none; /* Κρυφό μέχρι να είναι διαθέσιμο το event */
+            display: none;
         }
 
         #pwa-install-btn:hover {
@@ -396,7 +386,6 @@
             border-color: var(--gold);
         }
 
-        /* Ειδική οδηγία για Safari iOS */
         .ios-pwa-hint {
             display: none;
             color: #c9a0dc;
@@ -413,25 +402,7 @@
             position: relative;
             z-index: 2;
         }
-        .ios-pwa-hint .share-icon {
-            display: inline-block;
-            width: 20px; height: 20px;
-            background: #007AFF;
-            border-radius: 5px;
-            vertical-align: middle;
-            margin: 0 3px;
-            position: relative;
-        }
-        .ios-pwa-hint .share-icon::after {
-            content: '↑';
-            position: absolute;
-            top: -2px; left: 4px;
-            color: #fff;
-            font-size: 14px;
-            font-weight: bold;
-        }
 
-        /* ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ ===== */
         #kafemanteia-container {
             position: fixed; bottom: 0; left: 0; width: 100%; height: 150px;
             z-index: 5; pointer-events: none; overflow: visible;
@@ -500,7 +471,6 @@
         
         .kafemanteia-comet.animating { animation: cometTripleMotion 30s ease-in-out infinite; }
 
-        /* ===== SCAN PAGE ===== */
         #scan-page { gap: 12px; padding-top: 10px; padding-bottom: 25px; }
 
         .scan-header { text-align: center; width: 100%; }
@@ -1030,13 +1000,12 @@
             <p style="color:#d5c8e8; font-size:0.9rem; line-height:1.6; margin-bottom:20px;">
                 Για να λειτουργήσει σωστά η εφαρμογή, πρέπει να ανοίξει σε κανονικό browser (Chrome, Safari κλπ).
             </p>
-            <button id="fb-escape-link" style="display:inline-block; background:linear-gradient(145deg, #FFD700, #B8860B); color:#1a0033; padding:15px 30px; border-radius:50px; text-decoration:none; font-weight:700; font-size:1rem; letter-spacing:1px; box-shadow:0 0 30px rgba(255,215,0,0.3); cursor:pointer; border:none; width:100%; max-width:300px;">
+            <button id="fb-escape-btn" style="display:inline-block; background:linear-gradient(145deg, #FFD700, #B8860B); color:#1a0033; padding:15px 30px; border-radius:50px; text-decoration:none; font-weight:700; font-size:1rem; letter-spacing:1px; box-shadow:0 0 30px rgba(255,215,0,0.3); cursor:pointer; border:none; width:100%; max-width:300px;">
                 📱 ΑΝΟΙΓΜΑ ΣΤΟΝ BROWSER
             </button>
             <p style="color:#b9a6d4; font-size:0.75rem; margin-top:15px;">Πατήστε το κουμπί παραπάνω για να ανοίξει η σελίδα στον browser σας</p>
         </div>
         
-        <!-- Δεύτερη επιλογή: Χειροκίνητες οδηγίες -->
         <div style="background:rgba(20,10,40,0.9); border:2px solid rgba(255,215,0,0.3); border-radius:20px; padding:20px; max-width:480px; width:100%; text-align:center;">
             <p style="color:#FFD700; font-size:0.9rem; margin-bottom:10px; font-weight:700;">🔄 Εναλλακτικός τρόπος:</p>
             <p style="color:#d5c8e8; font-size:0.8rem; line-height:1.6;">
@@ -1088,7 +1057,6 @@
             Τοποθέτησε την παλάμη σου μπροστά στην κάμερα. Η Aziram, η προσωπική σου Χειρομάντισσα και Αστρολόγος, θα αποκαλύψει τα μυστικά των γραμμών σου.
         </div>
         
-        <!-- ===== LANGUAGE BAR ===== -->
         <div id="language-bar">
             <span class="lang-label" id="lang-label">🌐 Γλώσσα</span>
             <select id="language-select">
@@ -1127,18 +1095,15 @@
         
         <button class="btn-mystic" onclick="handleDiscoverDestiny()" data-translate="true">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
         
-        <!-- ===== PWA INSTALL BUTTON ===== -->
         <button class="btn-mystic" id="pwa-install-btn" style="display:none; background:linear-gradient(145deg, #9b59b6, #6a0dad); color:#fff; border:2px solid rgba(255,215,0,0.4);">
             📱 Προσθήκη στην Αρχική Οθόνη
         </button>
         
-        <!-- Οδηγία για Safari iOS -->
         <div class="ios-pwa-hint" id="ios-pwa-hint">
             📱 <strong>Για να προσθέσετε την εφαρμογή στην αρχική οθόνη:</strong><br>
             Πατήστε το κουμπί <span style="display:inline-block; width:18px; height:18px; background:#007AFF; border-radius:4px; vertical-align:middle; margin:0 2px;"><span style="color:#fff; font-size:12px; position:relative; top:-1px;">↑</span></span> <strong>Share</strong> και μετά <strong>"Προσθήκη στην Αρχική Οθόνη"</strong>
         </div>
         
-        <!-- FOOTER -->
         <div id="site-footer">
             <div class="footer-links">
                 <a href="terms.html" class="footer-link" data-translate="true">📜 Όροι Χρήσης</a>
@@ -1237,29 +1202,72 @@
         // ===== FACEBOOK / IN-APP BROWSER ESCAPE =====
         (function() {
             var ua = navigator.userAgent || navigator.vendor || window.opera;
-            var isInAppBrowser = (ua.indexOf('FBAN') > -1 || ua.indexOf('FBAV') > -1 || 
-                                 ua.indexOf('Instagram') > -1 || ua.indexOf('Messenger') > -1);
+            var isFB = (ua.indexOf('FBAN') > -1 || ua.indexOf('FBAV') > -1);
+            var isIG = (ua.indexOf('Instagram') > -1);
+            var isMessenger = (ua.indexOf('Messenger') > -1);
+            var isInAppBrowser = isFB || isIG || isMessenger;
+            var isAndroid = ua.indexOf('Android') > -1;
+            var isIOS = /iPad|iPhone|iPod/.test(ua);
+            var currentUrl = window.location.href;
             
             if (isInAppBrowser) {
-                // Εμφάνιση του overlay που βοηθά τον χρήστη να ανοίξει σε εξωτερικό browser
-                document.getElementById('fb-escape-overlay').style.display = 'flex';
+                var overlay = document.getElementById('fb-escape-overlay');
+                overlay.style.display = 'flex';
                 
-                // Προσπάθεια αυτόματου ανοίγματος (μπορεί να μην δουλέψει σε όλες τις περιπτώσεις)
-                var currentUrl = window.location.href;
+                var escapeBtn = document.getElementById('fb-escape-btn');
                 
-                // Android Intent
-                if (ua.indexOf('Android') > -1) {
-                    window.location.href = "intent://" + currentUrl.replace(/https?:\/\//, '') + "#Intent;scheme=https;package=com.android.chrome;end;";
-                }
+                // Κάνουμε το κουμπί να ανοίγει ΣΙΓΟΥΡΑ σε browser
+                escapeBtn.onclick = function() {
+                    if (isAndroid) {
+                        // Μέθοδος 1: Intent για Chrome
+                        var intentUrl = 'intent://' + currentUrl.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;end';
+                        window.location.href = intentUrl;
+                        
+                        // Μέθοδος 2: googlechrome:// URL scheme
+                        setTimeout(function() {
+                            var chromeUrl = 'googlechrome://navigate?url=' + encodeURIComponent(currentUrl);
+                            window.location.href = chromeUrl;
+                        }, 300);
+                        
+                        // Μέθοδος 3: Απευθείας redirect (ως έσχατη λύση)
+                        setTimeout(function() {
+                            window.top.location.href = currentUrl;
+                        }, 800);
+                    } 
+                    else if (isIOS) {
+                        // Μέθοδος για iOS: Αλλάζουμε το window.location για να σπάσουμε το WebView
+                        window.open(currentUrl, '_blank');
+                        
+                        // Δεύτερη προσπάθεια με διαφορετικό τρόπο
+                        setTimeout(function() {
+                            var a = document.createElement('a');
+                            a.href = currentUrl;
+                            a.target = '_blank';
+                            a.rel = 'noopener noreferrer';
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                        }, 200);
+                    }
+                    else {
+                        // Desktop ή άλλες συσκευές
+                        window.open(currentUrl, '_blank', 'noopener,noreferrer');
+                    }
+                    
+                    return false;
+                };
                 
-                // iOS - προσπάθεια με window.open
-                if (ua.indexOf('iPhone') > -1 || ua.indexOf('iPad') > -1) {
-                    window.open(currentUrl, '_blank', 'noopener,noreferrer');
+                // Προσπάθεια αυτόματου ανοίγματος
+                if (isAndroid) {
+                    setTimeout(function() {
+                        var intentUrl = 'intent://' + currentUrl.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;end';
+                        window.location.href = intentUrl;
+                    }, 500);
                 }
             }
         })();
 
-        // ===== SERVICE WORKER REGISTRATION (για PWA) =====
+        // ===== SERVICE WORKER REGISTRATION =====
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('/sw.js').then(function(registration) {
@@ -1270,51 +1278,40 @@
             });
         }
 
-        // ===== PWA INSTALL (beforeinstallprompt) =====
+        // ===== PWA INSTALL =====
         let deferredPrompt;
         const pwaInstallBtn = document.getElementById('pwa-install-btn');
         const iosPwaHint = document.getElementById('ios-pwa-hint');
 
         window.addEventListener('beforeinstallprompt', function(e) {
-            // Αποτροπή του αυτόματου popup
             e.preventDefault();
-            // Αποθήκευση του event για αργότερα
             deferredPrompt = e;
-            // Εμφάνιση του κουμπιού
             pwaInstallBtn.style.display = 'block';
         });
 
         pwaInstallBtn.addEventListener('click', function() {
             if (deferredPrompt) {
-                // Εμφάνιση του native install prompt
                 deferredPrompt.prompt();
-                // Έλεγχος της επιλογής του χρήστη
                 deferredPrompt.userChoice.then(function(choiceResult) {
                     if (choiceResult.outcome === 'accepted') {
-                        console.log('Ο χρήστης αποδέχτηκε την εγκατάσταση');
+                        console.log('User accepted install');
                         pwaInstallBtn.style.display = 'none';
-                    } else {
-                        console.log('Ο χρήστης απέρριψε την εγκατάσταση');
                     }
                     deferredPrompt = null;
                 });
             }
         });
 
-        // Ανίχνευση αν είναι ήδη εγκατεστημένο ως PWA
         window.addEventListener('appinstalled', function() {
             pwaInstallBtn.style.display = 'none';
-            console.log('PWA installed');
         });
 
-        // Εμφάνιση οδηγιών για Safari iOS
         function detectIOS() {
             var ua = navigator.userAgent;
             var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
-            var isStandalone = window.navigator.standalone; // Μόνο για iOS Safari
+            var isStandalone = window.navigator.standalone;
             
             if (isIOS && !isStandalone) {
-                // Είναι σε Safari iOS αλλά όχι standalone mode
                 iosPwaHint.style.display = 'block';
             }
         }
@@ -1516,7 +1513,6 @@
         }
         drawStars();
 
-        // ===== ΕΠΑΝΕΚΚΙΝΗΣΗ ΑΣΤΕΡΟΕΙΔΗ =====
         function restartComet() {
             var comet = document.getElementById('kafemanteia-comet');
             if (comet) {
@@ -1526,7 +1522,6 @@
             }
         }
 
-        // ===== NAVIGATION =====
         function goToScan() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('scan-page').classList.add('active');
@@ -1542,18 +1537,14 @@
             resetScan();
         }
 
-        // ===== HANDLE DISCOVER DESTINY BUTTON (ΔΙΟΡΘΩΜΕΝΟ) =====
         function handleDiscoverDestiny() {
-            // Πρώτα πηγαίνουμε στη σελίδα σάρωσης
             goToScan();
             
-            // Μετά από 5 δευτερόλεπτα εμφανίζεται η διαφήμιση
             setTimeout(function() {
                 showAdModal();
             }, 5000);
         }
 
-        // ===== USER SELECTIONS =====
         let userGender = 'male';
         let userZodiac = 'Κριός';
         let userBirthdate = '';
@@ -1576,7 +1567,6 @@
             btn.classList.add('active');
         }
 
-        // ===== ZODIAC =====
         function getZodiacFromDate(dateString) {
             if (!dateString) return 'Κριός';
             const date = new Date(dateString);
@@ -1597,7 +1587,6 @@
             return 'Κριός';
         }
 
-        // ===== AD MODAL =====
         function showAdModal() {
             document.getElementById('ad-modal-overlay').classList.add('active');
             document.getElementById('btn-ad-now').style.display = 'inline-block';
@@ -1622,7 +1611,6 @@
             document.getElementById('ad-modal-overlay').classList.remove('active');
         }
 
-        // ===== STARS =====
         function addStarsToResult() {
             const resultArea = document.getElementById('result-area');
             document.querySelectorAll('.result-star').forEach(s => s.remove());
@@ -1639,7 +1627,6 @@
             }
         }
 
-        // ===== CAMERA =====
         const video = document.getElementById('webcam');
         const overlayCanvas = document.getElementById('overlay-canvas');
         const overlayCtx = overlayCanvas.getContext('2d');
@@ -1684,7 +1671,6 @@
             return canvas.toDataURL('image/jpeg', 0.8);
         }
 
-        // ===== UPLOAD =====
         function handleUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1698,7 +1684,6 @@
             reader.readAsDataURL(file);
         }
 
-        // ===== API =====
         const API_URL = 'https://franklymadear-lifeline.hf.space/analyze';
 
         async function performAnalysis() {
