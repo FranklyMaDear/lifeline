@@ -377,15 +377,6 @@
             color: #e0c5f0;
         }
 
-        /* Απόκρυψη του Google Translate Widget */
-        #google_translate_element {
-            display: none !important;
-        }
-        .goog-te-banner-frame { display: none !important; }
-        body { top: 0 !important; }
-        .skiptranslate { display: none !important; }
-        iframe.goog-te-banner-frame { display: none !important; }
-
         /* ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ ===== */
         #kafemanteia-container {
             position: fixed;
@@ -898,7 +889,7 @@
             Ανακάλυψε το Πεπρωμένο σου
         </button>
         
-        <!-- ===== CUSTOM LANGUAGE SELECTOR - ΚΑΤΩ ΑΠΟ ΤΟ ΚΟΥΜΠΙ ===== -->
+        <!-- ===== CUSTOM LANGUAGE SELECTOR ===== -->
         <div id="custom-language-selector">
             <span class="lang-label" id="lang-label">🌐 Γλώσσα</span>
             <select id="language-select" onchange="changeLanguage(this.value)">
@@ -954,8 +945,8 @@
         </a>
     </div>
 
-    <!-- Google Translate Element (κρυφό, χρησιμοποιείται από το custom selector) -->
-    <div id="google_translate_element"></div>
+    <!-- Google Translate Element (κρυφό) -->
+    <div id="google_translate_element" style="display:none !important; position:absolute; top:-9999px; left:-9999px;"></div>
 
     <div id="scan-page" class="page">
         <button class="btn-back" onclick="goToSplash()">☽ Επιστροφή</button>
@@ -1034,7 +1025,7 @@
             new google.translate.TranslateElement({
                 pageLanguage: 'el',
                 includedLanguages: 'en,de,fr,es,it,ar,zh-CN,ja,ru,tr,nl,pt,sv,no,da,fi,pl,cs,ro,bg,uk,ko,hi,vi,th,id,iw',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
                 autoDisplay: false
             }, 'google_translate_element');
         }
@@ -1072,34 +1063,54 @@
 
         checkConsent();
 
-        // ===== CUSTOM LANGUAGE SELECTOR =====
-        function changeLanguage(lang) {
-            var select = document.querySelector('.goog-te-combo');
-            if (select) {
-                select.value = lang;
-                select.dispatchEvent(new Event('change'));
+        // ===== GOOGLE TRANSLATE ΜΕΣΩ URL - ΑΞΙΟΠΙΣΤΗ ΜΕΘΟΔΟΣ =====
+        var currentLang = 'el';
+        var googleTranslateCombo = null;
+
+        // Περιμένουμε να φορτώσει το Google Translate
+        function waitForGoogleTranslate(callback) {
+            if (document.querySelector('.goog-te-combo')) {
+                callback();
             } else {
-                // Αν δεν υπάρχει ακόμα το Google combo, κάνουμε αναμονή
-                var attempts = 0;
-                var interval = setInterval(function() {
-                    var combo = document.querySelector('.goog-te-combo');
-                    if (combo) {
-                        combo.value = lang;
-                        combo.dispatchEvent(new Event('change'));
-                        clearInterval(interval);
-                    }
-                    attempts++;
-                    if (attempts > 50) clearInterval(interval);
-                }, 100);
+                setTimeout(function() {
+                    waitForGoogleTranslate(callback);
+                }, 200);
             }
         }
 
-        // Αυτόματη ανίχνευση γλώσσας συσκευής και ρύθμιση του selector
-        function detectAndSetLanguage() {
+        function changeLanguage(lang) {
+            currentLang = lang;
+            
+            // Μέθοδος 1: Μέσω Google Translate combo
+            var combo = document.querySelector('.goog-te-combo');
+            if (combo) {
+                combo.value = lang;
+                combo.dispatchEvent(new Event('change'));
+                return;
+            }
+            
+            // Μέθοδος 2: Μέσω cookie και reload
+            var d = new Date();
+            d.setTime(d.getTime() + (365*24*60*60*1000));
+            document.cookie = 'googtrans=/el/' + lang + ';expires=' + d.toUTCString() + ';path=/';
+            document.cookie = 'googtrans=/el/' + lang + ';expires=' + d.toUTCString() + ';path=/;domain=' + window.location.hostname;
+            
+            // Μέθοδος 3: Απευθείας μετάφραση μέσω Google Translate URL
+            if (lang !== 'el') {
+                var currentUrl = window.location.href.split('#')[0];
+                var translateUrl = 'https://translate.google.com/translate?hl=' + lang + '&sl=el&tl=' + lang + '&u=' + encodeURIComponent(currentUrl);
+                window.location.href = translateUrl;
+            }
+        }
+
+        // Αρχικοποίηση όταν φορτώσει το Google Translate
+        waitForGoogleTranslate(function() {
+            googleTranslateCombo = document.querySelector('.goog-te-combo');
+            
+            // Αυτόματη ανίχνευση γλώσσας
             var userLang = navigator.language || navigator.userLanguage;
             var langCode = userLang.split('-')[0];
             
-            // Αντιστοίχιση κωδικών γλώσσας
             var langMap = {
                 'el': 'el', 'en': 'en', 'de': 'de', 'fr': 'fr', 'es': 'es',
                 'it': 'it', 'ar': 'ar', 'zh': 'zh-CN', 'ja': 'ja', 'ru': 'ru',
@@ -1111,20 +1122,22 @@
             
             var mappedLang = langMap[langCode] || 'el';
             
-            // Ρύθμιση του selector
             var langSelect = document.getElementById('language-select');
             if (langSelect) {
                 langSelect.value = mappedLang;
             }
             
-            // Αν δεν είναι ελληνικά, μετάφραση
+            // Αυτόματη μετάφραση αν δεν είναι ελληνικά
             if (mappedLang !== 'el') {
                 setTimeout(function() {
-                    changeLanguage(mappedLang);
-                }, 1500);
+                    if (googleTranslateCombo) {
+                        googleTranslateCombo.value = mappedLang;
+                        googleTranslateCombo.dispatchEvent(new Event('change'));
+                    }
+                }, 500);
             }
 
-            // Ρύθμιση της ετικέτας
+            // Ρύθμιση ετικέτας
             var label = document.getElementById('lang-label');
             if (label) {
                 var labelMap = {
@@ -1141,10 +1154,7 @@
                 };
                 label.textContent = labelMap[mappedLang] || '🌐 Language';
             }
-        }
-
-        // Εκτέλεση ανίχνευσης γλώσσας
-        detectAndSetLanguage();
+        });
 
         const starCanvas = document.getElementById('starfield');
         const starCtx = starCanvas.getContext('2d');
