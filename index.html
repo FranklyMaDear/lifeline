@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>LiFe LiNe - Χειρομαντεία με AI</title>
     
+    <!-- Meta για Social Sharing -->
     <meta name="description" content="🖐️ Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου με Χειρομαντεία & Αστρολογία.">
     
+    <!-- Open Graph (Facebook, WhatsApp, Viber) -->
     <meta property="og:title" content="🖐️ LiFe LiNe - Χειρομαντεία με AI">
     <meta property="og:description" content="Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου με Χειρομαντεία & Αστρολογία.">
     <meta property="og:image" content="https://lifeline.franklymadear.com/lifeline.png">
@@ -18,12 +20,14 @@
     <meta property="og:site_name" content="LiFe LiNe - Χειρομαντεία">
     <meta property="og:locale" content="el_GR">
     
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="🖐️ LiFe LiNe - Χειρομαντεία με AI">
     <meta name="twitter:description" content="Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου.">
     <meta name="twitter:image" content="https://lifeline.franklymadear.com/lifeline.png">
     <meta name="twitter:image:alt" content="LiFe LiNe - Χειρομαντεία">
     
+    <!-- PWA -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="LiFe LiNe">
@@ -35,8 +39,10 @@
     <link rel="icon" type="image/png" sizes="512x512" href="lifeline.png">
     <link rel="shortcut icon" href="lifeline.png">
     
+    <!-- Web App Manifest -->
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22LiFe%20LiNe%20-%20%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%22%2C%22short_name%22%3A%22LiFe%20LiNe%22%2C%22description%22%3A%22%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%20%CE%BC%CE%B5%20AI%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231a0033%22%2C%22theme_color%22%3A%22%231a0033%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
     
+    <!-- Monetag SDK -->
     <script src='//libtl.com/sdk.js' data-zone='11042671' data-sdk='show_11042671'></script>
     
     <style>
@@ -63,296 +69,869 @@
                 radial-gradient(ellipse at bottom, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
         }
 
-        #starfield { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        #starfield {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
 
         .page {
-            position: relative; z-index: 1;
-            display: none; flex-direction: column; align-items: center;
-            justify-content: center; min-height: 100vh; padding: 15px;
-            width: 100%; max-width: 700px; margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 15px;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
         }
         .page.active { display: flex; }
 
+        /* ===== CONSENT MODAL ===== */
         #consent-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(12px);
-            z-index: 9999; display: flex; align-items: center;
-            justify-content: center; padding: 20px;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
         #consent-overlay.hidden { display: none; }
 
         #consent-modal {
             background: linear-gradient(145deg, #1a0e2a, #2a1a3a);
-            border: 3px solid var(--gold); border-radius: 25px;
-            padding: 35px 25px; max-width: 480px; width: 100%;
+            border: 3px solid var(--gold);
+            border-radius: 25px;
+            padding: 35px 25px;
+            max-width: 480px;
+            width: 100%;
             text-align: center;
-            box-shadow: 0 0 60px rgba(255, 215, 0, 0.4), 0 0 100px rgba(106, 13, 173, 0.3);
+            box-shadow: 
+                0 0 60px rgba(255, 215, 0, 0.4),
+                0 0 100px rgba(106, 13, 173, 0.3);
             animation: modalFadeIn 0.5s ease;
         }
-        @keyframes modalFadeIn { 0% { opacity: 0; transform: scale(0.9) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-        #consent-modal .consent-icon { font-size: 3.5rem; margin-bottom: 12px; animation: floatIcon 2s infinite ease-in-out; }
-        @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        #consent-modal h2 { color: var(--gold); font-size: 1.4rem; margin-bottom: 12px; letter-spacing: 2px; }
-        #consent-modal p { color: #d5c8e8; font-size: 0.9rem; line-height: 1.6; margin-bottom: 18px; }
-        #consent-modal .consent-links { display: flex; gap: 12px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap; }
-        #consent-modal .consent-link { color: var(--gold); text-decoration: underline; cursor: pointer; font-size: 0.8rem; transition: all 0.3s; }
-        #consent-modal .consent-link:hover { color: #fff; text-shadow: 0 0 10px rgba(255,215,0,0.5); }
-        #consent-btn {
-            background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033;
-            padding: 15px 28px; border: none; border-radius: 60px;
-            font-size: 1rem; font-weight: 700; cursor: pointer;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3); transition: all 0.4s;
-            letter-spacing: 1px; width: 100%;
+
+        @keyframes modalFadeIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
-        #consent-btn:hover { transform: scale(1.04) translateY(-3px); box-shadow: 0 0 50px rgba(255, 215, 0, 0.6); }
 
-        #splash-page { text-align: center; gap: 20px; animation: fadeInUp 1s ease; position: relative; padding-bottom: 120px; }
-        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        #consent-modal .consent-icon {
+            font-size: 3.5rem;
+            margin-bottom: 12px;
+            animation: floatIcon 2s infinite ease-in-out;
+        }
 
-        .logo-container { position: relative; width: 140px; height: 140px; margin: 0 auto; animation: floatLogo 4s infinite ease-in-out; cursor: pointer; z-index: 2; }
-        @keyframes floatLogo { 0% { transform: translateY(0px) rotate(0deg); } 25% { transform: translateY(-10px) rotate(2deg); } 75% { transform: translateY(-18px) rotate(-2deg); } 100% { transform: translateY(0px) rotate(0deg); } }
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #consent-modal h2 {
+            color: var(--gold);
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        #consent-modal p {
+            color: #d5c8e8;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        #consent-modal .consent-links {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        #consent-modal .consent-link {
+            color: var(--gold);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        #consent-modal .consent-link:hover {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+
+        #consent-btn {
+            background: linear-gradient(145deg, #FFD700, #B8860B);
+            color: #1a0033;
+            padding: 15px 28px;
+            border: none;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            transition: all 0.4s;
+            letter-spacing: 1px;
+            width: 100%;
+        }
+
+        #consent-btn:hover {
+            transform: scale(1.04) translateY(-3px);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.6);
+        }
+
+        /* ===== SPLASH PAGE ===== */
+        #splash-page {
+            text-align: center;
+            gap: 20px;
+            animation: fadeInUp 1s ease;
+            position: relative;
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-container {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto;
+            animation: floatLogo 4s infinite ease-in-out;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        @keyframes floatLogo {
+            0% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(2deg); }
+            75% { transform: translateY(-18px) rotate(-2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
         .logo-circle {
-            width: 140px; height: 140px; border-radius: 50%;
+            width: 140px; height: 140px;
+            border-radius: 50%;
             background: linear-gradient(135deg, #2a0040, #1a0030, #0d0020);
             border: 4px solid var(--gold);
             box-shadow: 0 0 40px rgba(255, 215, 0, 0.4), 0 0 80px rgba(106, 13, 173, 0.3), inset 0 0 40px rgba(255, 215, 0, 0.1);
             display: flex; align-items: center; justify-content: center;
-            font-size: 4.5rem; position: relative; overflow: hidden;
+            font-size: 4.5rem;
+            position: relative; overflow: hidden;
         }
-        .logo-circle::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,215,0,0.2) 0%, transparent 60%); animation: rotateGlow 8s linear infinite; }
-        @keyframes rotateGlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .logo-hand { position: relative; z-index: 1; filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5)); animation: pulseHand 2s infinite ease-in-out; font-size: 4.5rem; }
-        @keyframes pulseHand { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        .logo-circle::before {
+            content: '';
+            position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.2) 0%, transparent 60%);
+            animation: rotateGlow 8s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-hand {
+            position: relative; z-index: 1;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+            animation: pulseHand 2s infinite ease-in-out;
+            font-size: 4.5rem;
+        }
+
+        @keyframes pulseHand {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
 
         .splash-title {
-            font-size: clamp(2rem, 6vw, 3.2rem); font-weight: 800;
+            font-size: clamp(2rem, 6vw, 3.2rem);
+            font-weight: 800;
             background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700, #FFA500);
             background-size: 300% 300%;
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text; letter-spacing: 4px;
-            animation: shimmer 3s infinite; position: relative; z-index: 2;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 4px;
+            animation: shimmer 3s infinite;
+            position: relative;
+            z-index: 2;
         }
-        @keyframes shimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .splash-subtitle { color: #c9a0dc; font-size: clamp(0.85rem, 2.5vw, 1.1rem); letter-spacing: 4px; border-top: 1px solid rgba(255, 215, 0, 0.2); padding-top: 10px; position: relative; z-index: 2; }
-        .splash-desc { color: #b8a0d0; max-width: 420px; font-size: clamp(0.8rem, 2vw, 0.95rem); line-height: 1.6; padding: 0 10px; position: relative; z-index: 2; }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .splash-subtitle {
+            color: #c9a0dc;
+            font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+            letter-spacing: 4px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            padding-top: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .splash-desc {
+            color: #b8a0d0;
+            max-width: 420px;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+            line-height: 1.6;
+            padding: 0 10px;
+            position: relative;
+            z-index: 2;
+        }
 
         .btn-mystic {
-            background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033;
-            padding: 16px 40px; border: none; border-radius: 60px;
-            font-size: clamp(0.95rem, 2.5vw, 1.15rem); font-weight: 700;
-            cursor: pointer; box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), 0 8px 25px rgba(0,0,0,0.5);
-            transition: all 0.4s; letter-spacing: 2px;
-            width: 90%; max-width: 380px; position: relative; z-index: 2;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: linear-gradient(145deg, #FFD700, #B8860B);
+            color: #1a0033;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 60px;
+            font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), 0 8px 25px rgba(0,0,0,0.5);
+            transition: all 0.4s;
+            letter-spacing: 2px;
+            width: 90%;
+            max-width: 380px;
+            position: relative;
+            z-index: 2;
         }
-        .btn-mystic .btn-icon { font-size: 1.3rem; animation: pulseHand 2s infinite ease-in-out; }
+
         .btn-mystic:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
         .btn-mystic:active { transform: scale(0.95); }
 
-        /* ===== LANGUAGE SELECTOR - ΑΠΕΥΘΕΙΑΣ ΜΕΤΑΦΡΑΣΗ ===== */
-        #language-bar {
-            display: flex; align-items: center; gap: 8px;
-            background: rgba(20, 10, 40, 0.8); backdrop-filter: blur(8px);
-            border: 2px solid rgba(155, 89, 182, 0.6); border-radius: 30px;
-            padding: 8px 12px; position: relative; z-index: 2;
-            width: 90%; max-width: 380px; margin: 0 auto;
-            box-shadow: 0 0 20px rgba(155, 89, 182, 0.2);
-            flex-wrap: wrap; justify-content: center;
-        }
-        #language-bar .lang-label {
-            color: #FFD700; font-size: 0.8rem; font-weight: 700;
-            letter-spacing: 1px; white-space: nowrap; min-width: 60px; text-align: center;
-        }
-        #language-bar select {
-            flex: 1; min-width: 100px;
-            background: rgba(10, 5, 25, 0.9); color: #FFD700;
-            border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 20px;
-            padding: 8px 30px 8px 12px; font-size: 0.8rem; font-weight: 600;
-            cursor: pointer;
-            appearance: none; -webkit-appearance: none; -moz-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FFD700' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 10px center;
-            outline: none; font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
-        }
-        #language-bar select:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
-        #language-bar select option { background: #1a0a2e; color: #e0c5f0; }
-        
-        #translate-btn {
-            background: linear-gradient(145deg, #9b59b6, #6a0dad);
-            color: #fff; border: none; border-radius: 50%;
-            width: 36px; height: 36px; min-width: 36px;
-            font-size: 1rem; cursor: pointer; font-weight: 700;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 15px rgba(155, 89, 182, 0.3);
-            transition: all 0.3s;
-        }
-        #translate-btn:hover { transform: scale(1.1); box-shadow: 0 0 25px rgba(155, 89, 182, 0.6); }
-        #translate-btn:active { transform: scale(0.9); }
-        #translate-btn.translating { animation: spin 0.8s linear infinite; pointer-events: none; opacity: 0.7; }
-
         /* ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ ===== */
-        #kafemanteia-container { position: fixed; bottom: 0; left: 0; width: 100%; height: 150px; z-index: 5; pointer-events: none; overflow: visible; }
         .kafemanteia-comet {
-            position: absolute; cursor: pointer; pointer-events: auto;
-            text-decoration: none; display: flex; align-items: center; gap: 8px;
-            background: rgba(20, 10, 40, 0.85); backdrop-filter: blur(8px);
-            border: 2px solid rgba(155, 89, 182, 0.6); border-radius: 50px;
-            padding: 12px 22px;
-            box-shadow: 0 0 30px rgba(155, 89, 182, 0.4), 0 0 60px rgba(106, 13, 173, 0.3), 0 0 100px rgba(255, 215, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            white-space: nowrap; will-change: transform, opacity, left, right, bottom; transform: scale(1);
+            position: fixed;
+            z-index: 10;
+            cursor: pointer;
+            pointer-events: auto;
+            animation: cometFloat 6s infinite ease-in-out;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(20, 10, 40, 0.7);
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 50px;
+            padding: 10px 20px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), 0 0 60px rgba(106, 13, 173, 0.2);
+            transition: all 0.5s ease;
         }
+
         .kafemanteia-comet:hover {
-            transform: scale(1.1) !important;
-            box-shadow: 0 0 50px rgba(155, 89, 182, 0.8), 0 0 80px rgba(106, 13, 173, 0.6), 0 0 120px rgba(255, 215, 0, 0.3);
-            border-color: var(--purple-light); background: rgba(30, 15, 50, 0.95);
+            transform: scale(1.1);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.6), 0 0 80px rgba(106, 13, 173, 0.4);
+            border-color: var(--gold);
+            background: rgba(30, 15, 50, 0.9);
         }
-        .kafemanteia-comet .comet-icon { font-size: 1.6rem; animation: crystalGlow 2s infinite ease-in-out; }
-        .kafemanteia-comet .comet-text { color: #e0c5f0; font-weight: 700; font-size: 1rem; letter-spacing: 2px; text-shadow: 0 0 10px rgba(155, 89, 182, 0.5); }
-        .comet-star { position: absolute; color: #FFD700; pointer-events: none; animation: starOrbit 3s infinite ease-in-out; font-size: 0.9rem; }
-        .comet-star:nth-child(2) { animation-delay: 0s; top: -15px; left: -10px; }
-        .comet-star:nth-child(3) { animation-delay: 0.5s; top: -10px; right: -15px; }
-        .comet-star:nth-child(4) { animation-delay: 1s; bottom: -15px; left: 20px; }
-        .comet-star:nth-child(5) { animation-delay: 1.5s; bottom: -10px; right: 10px; }
-        .comet-star:nth-child(6) { animation-delay: 2s; top: 5px; left: -20px; }
-        .comet-star:nth-child(7) { animation-delay: 2.5s; top: 5px; right: -20px; }
 
-        @keyframes crystalGlow { 0%, 100% { filter: drop-shadow(0 0 5px rgba(155, 89, 182, 0.5)); transform: scale(1); } 50% { filter: drop-shadow(0 0 15px rgba(155, 89, 182, 1)); transform: scale(1.2); } }
-        @keyframes starOrbit { 0%, 100% { opacity: 0.2; transform: translate(0, 0) scale(0.8); } 50% { opacity: 1; transform: translate(5px, -8px) scale(1.3); } }
-
-        @keyframes cometFullCycle {
-            0% { left: auto; right: -300px; bottom: 30px; opacity: 0; transform: scale(1); }
-            4% { opacity: 1; }
-            21% { left: auto; right: 50%; bottom: 30px; opacity: 1; transform: scale(1); }
-            24.5% { opacity: 0; }
-            25% { left: auto; right: calc(100% + 300px); bottom: 30px; opacity: 0; transform: scale(1); }
-            25.1% { left: 50%; right: auto; bottom: 10px; opacity: 0; transform: scale(0.3) translateX(-50%); }
-            32% { opacity: 1; transform: scale(1.05) translateX(-50%); }
-            42% { opacity: 1; transform: scale(1) translateX(-50%); }
-            49% { opacity: 0; transform: scale(0.3) translateX(-50%); }
-            50% { opacity: 0; transform: scale(0.3) translateX(-50%); }
-            50.1% { left: -300px; right: auto; bottom: 50px; opacity: 0; transform: scale(1); }
-            54% { opacity: 1; }
-            71% { left: 50%; right: auto; bottom: 50px; opacity: 1; transform: scale(1); }
-            74.5% { opacity: 0; }
-            75% { left: calc(100% + 300px); right: auto; bottom: 50px; opacity: 0; transform: scale(1); }
-            75.1% { left: 50%; right: auto; bottom: -80px; opacity: 0; transform: scale(0.8) translateX(-50%); }
-            82% { opacity: 1; bottom: 10px; transform: scale(1) translateX(-50%); }
-            94% { opacity: 1; bottom: 60px; transform: scale(1) translateX(-50%); }
-            99% { opacity: 0; bottom: 60px; transform: scale(1) translateX(-50%); }
-            100% { opacity: 0; bottom: 60px; transform: scale(1) translateX(-50%); }
+        .kafemanteia-comet .comet-icon {
+            font-size: 1.8rem;
+            animation: cometSpin 2s infinite linear;
         }
-        .kafemanteia-comet.animating { animation: cometFullCycle 24s linear infinite; }
 
+        .kafemanteia-comet .comet-text {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .kafemanteia-comet .comet-tail {
+            position: absolute;
+            top: 50%;
+            right: -30px;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, rgba(255,215,0,0.8), transparent);
+            transform: translateY(-50%);
+            border-radius: 50%;
+            animation: tailGlow 1.5s infinite ease-in-out;
+        }
+
+        @keyframes cometFloat {
+            0% { transform: translate(0, 0) rotate(-5deg); }
+            25% { transform: translate(15px, -10px) rotate(-3deg); }
+            50% { transform: translate(10px, -20px) rotate(-1deg); }
+            75% { transform: translate(-5px, -10px) rotate(-3deg); }
+            100% { transform: translate(0, 0) rotate(-5deg); }
+        }
+
+        @keyframes cometSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes tailGlow {
+            0%, 100% { opacity: 0.5; width: 30px; }
+            50% { opacity: 1; width: 50px; }
+        }
+
+        /* ===== SCAN PAGE ===== */
         #scan-page { gap: 12px; padding-top: 10px; padding-bottom: 25px; }
+
         .scan-header { text-align: center; width: 100%; }
-        .scan-header h2 { font-size: clamp(1.6rem, 5vw, 2.2rem); font-weight: 800; background: linear-gradient(135deg, #FFD700, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 3px; }
-        .scan-header p { color: #b8a0d0; font-size: clamp(0.75rem, 2vw, 0.9rem); }
+        .scan-header h2 {
+            font-size: clamp(1.6rem, 5vw, 2.2rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 3px;
+        }
+        .scan-header p {
+            color: #b8a0d0;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
+        }
 
-        .selectors-row { display: flex; justify-content: center; align-items: stretch; gap: 10px; flex-wrap: wrap; width: 100%; max-width: 600px; }
-        .selector-item { display: flex; flex-direction: column; align-items: center; gap: 6px; background: rgba(20, 10, 40, 0.8); padding: 10px 12px; border-radius: 20px; border: 1px solid rgba(255,215,0,0.25); flex: 1; min-width: 130px; max-width: 250px; }
-        .selector-label { color: var(--gold); font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; text-align: center; }
-        .gender-btns { display: flex; gap: 0; width: 100%; border-radius: 15px; overflow: hidden; border: 2px solid rgba(255,215,0,0.3); }
-        .gender-btn { padding: 10px 16px; font-size: 0.85rem; font-weight: 700; border: none; background: rgba(20, 10, 40, 0.6); color: #b9a6d4; cursor: pointer; transition: all 0.3s; flex: 1; text-align: center; }
-        .gender-btn.active { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; box-shadow: inset 0 0 15px rgba(0,0,0,0.2); }
-        .selector-item input { padding: 10px 12px; border-radius: 15px; border: 2px solid rgba(255,215,0,0.3); background: #1a0a2e; color: #FFD700; font-size: 0.85rem; width: 100%; text-align: center; font-weight: 500; }
-        .topic-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; width: 100%; max-width: 650px; }
-        .topic-btn { padding: 12px 10px; font-size: clamp(0.7rem, 1.8vw, 0.8rem); font-weight: 600; border: 2px solid rgba(255,215,0,0.25); background: rgba(20, 10, 40, 0.6); color: #c9a0dc; border-radius: 20px; cursor: pointer; transition: all 0.3s; flex: 1; min-width: 95px; max-width: 160px; text-align: center; line-height: 1.4; position: relative; overflow: hidden; }
-        .topic-btn::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); transition: left 0.5s; }
+        /* ===== SELECTORS ROW ===== */
+        .selectors-row {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .selector-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            background: rgba(20, 10, 40, 0.8);
+            padding: 10px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,215,0,0.25);
+            flex: 1;
+            min-width: 130px;
+            max-width: 250px;
+        }
+
+        .selector-label {
+            color: var(--gold);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .gender-btns { 
+            display: flex; 
+            gap: 0;
+            width: 100%; 
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid rgba(255,215,0,0.3);
+        }
+
+        .gender-btn {
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: none;
+            background: rgba(20, 10, 40, 0.6);
+            color: #b9a6d4;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+
+        .gender-btn.active {
+            background: linear-gradient(145deg, #FFD700, #B8860B);
+            color: #1a0033;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+        }
+
+        .selector-item input {
+            padding: 10px 12px;
+            border-radius: 15px;
+            border: 2px solid rgba(255,215,0,0.3);
+            background: #1a0a2e;
+            color: #FFD700;
+            font-size: 0.85rem;
+            width: 100%;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* ===== TOPIC BUTTONS ===== */
+        .topic-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .topic-btn {
+            padding: 12px 10px;
+            font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+            font-weight: 600;
+            border: 2px solid rgba(255,215,0,0.25);
+            background: rgba(20, 10, 40, 0.6);
+            color: #c9a0dc;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 95px;
+            max-width: 160px;
+            text-align: center;
+            line-height: 1.4;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s;
+        }
+
         .topic-btn:hover::after { left: 100%; }
-        .topic-btn.active { background: linear-gradient(145deg, #9b59b6, #6a0dad); color: #fff; border-color: var(--purple-light); box-shadow: 0 0 20px rgba(155, 89, 182, 0.4); transform: scale(1.03); }
 
-        #camera-wrapper { position: relative; width: 100%; max-width: 400px; margin: 8px auto; border-radius: 25px; overflow: hidden; border: 3px solid var(--gold); box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); background: #0a0015; aspect-ratio: 1; }
+        .topic-btn.active {
+            background: linear-gradient(145deg, #9b59b6, #6a0dad);
+            color: #fff;
+            border-color: var(--purple-light);
+            box-shadow: 0 0 20px rgba(155, 89, 182, 0.4);
+            transform: scale(1.03);
+        }
+
+        /* ===== CAMERA ===== */
+        #camera-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 8px auto;
+            border-radius: 25px;
+            overflow: hidden;
+            border: 3px solid var(--gold);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+            background: #0a0015;
+            aspect-ratio: 1;
+        }
+
         #webcam { width: 100%; height: 100%; display: block; object-fit: cover; transform: scaleX(-1); }
         #overlay-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: scaleX(-1); pointer-events: none; }
-        .scan-frame { position: absolute; top: 12%; left: 12%; width: 76%; height: 76%; border: 2px solid rgba(255, 215, 0, 0.5); border-radius: 30px; pointer-events: none; animation: framePulse 2s infinite ease-in-out; }
-        .scan-frame::before { content: ''; position: absolute; top: -2px; left: -2px; width: 30px; height: 30px; border-top: 4px solid var(--gold); border-left: 4px solid var(--gold); border-radius: 5px 0 0 0; }
-        .scan-frame::after { content: ''; position: absolute; bottom: -2px; right: -2px; width: 30px; height: 30px; border-bottom: 4px solid var(--gold); border-right: 4px solid var(--gold); border-radius: 0 0 5px 0; }
-        @keyframes framePulse { 0%, 100% { border-color: rgba(255, 215, 0, 0.5); } 50% { border-color: rgba(255, 215, 0, 0.9); } }
-        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: scanMove 3s infinite ease-in-out; pointer-events: none; box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
-        @keyframes scanMove { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
 
-        .controls-row { display: flex; justify-content: center; gap: 10px; width: 100%; max-width: 450px; flex-wrap: wrap; }
-        .btn { padding: 12px 20px; border: none; border-radius: 50px; font-weight: 700; font-size: clamp(0.8rem, 2vw, 0.9rem); cursor: pointer; transition: all 0.4s; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); flex: 1; min-width: 100px; max-width: 180px; }
-        .btn:active { transform: scale(0.95); } .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .scan-frame {
+            position: absolute; top: 12%; left: 12%; width: 76%; height: 76%;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            border-radius: 30px;
+            pointer-events: none;
+            animation: framePulse 2s infinite ease-in-out;
+        }
+
+        .scan-frame::before {
+            content: '';
+            position: absolute; top: -2px; left: -2px;
+            width: 30px; height: 30px;
+            border-top: 4px solid var(--gold);
+            border-left: 4px solid var(--gold);
+            border-radius: 5px 0 0 0;
+        }
+
+        .scan-frame::after {
+            content: '';
+            position: absolute; bottom: -2px; right: -2px;
+            width: 30px; height: 30px;
+            border-bottom: 4px solid var(--gold);
+            border-right: 4px solid var(--gold);
+            border-radius: 0 0 5px 0;
+        }
+
+        @keyframes framePulse {
+            0%, 100% { border-color: rgba(255, 215, 0, 0.5); }
+            50% { border-color: rgba(255, 215, 0, 0.9); }
+        }
+
+        .scan-line {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            animation: scanMove 3s infinite ease-in-out;
+            pointer-events: none;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+
+        @keyframes scanMove {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 450px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            cursor: pointer;
+            transition: all 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            flex: 1;
+            min-width: 100px;
+            max-width: 180px;
+        }
+
+        .btn:active { transform: scale(0.95); }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
         .btn-gold { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; }
         .btn-purple { background: linear-gradient(145deg, #9b59b6, #6a0dad); color: #fff; }
-        .btn-green { background: linear-gradient(145deg, #2ecc71, #1e8449); color: #fff; width: 100%; max-width: 450px; display: none; margin: 5px auto; font-size: 1rem; padding: 15px 20px; }
+        .btn-green { 
+            background: linear-gradient(145deg, #2ecc71, #1e8449); 
+            color: #fff; 
+            width: 100%; 
+            max-width: 450px; 
+            display: none;
+            margin: 5px auto;
+            font-size: 1rem;
+            padding: 15px 20px;
+        }
 
+        /* ===== UPLOAD ===== */
         #upload-preview-area { display: none; text-align: center; margin: 8px 0; }
         #upload-preview-img { max-width: 180px; width: 100%; border-radius: 20px; border: 2px solid var(--gold); }
 
-        #loading-box { display: none; text-align: center; background: rgba(20, 10, 40, 0.95); border-radius: 30px; padding: 25px 20px; margin: 15px auto; border: 2px solid rgba(255, 215, 0, 0.3); box-shadow: 0 0 60px rgba(255, 215, 0, 0.2); width: 100%; max-width: 400px; }
-        .loading-spinner { width: 45px; height: 45px; border: 3px solid rgba(255, 215, 0, 0.2); border-top: 3px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 15px auto; }
+        /* ===== LOADING ===== */
+        #loading-box {
+            display: none;
+            text-align: center;
+            background: rgba(20, 10, 40, 0.95);
+            border-radius: 30px;
+            padding: 25px 20px;
+            margin: 15px auto;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .loading-spinner {
+            width: 45px; height: 45px;
+            border: 3px solid rgba(255, 215, 0, 0.2);
+            border-top: 3px solid var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 15px auto;
+        }
+
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .loading-text { font-size: 1rem; color: #c9a0dc; letter-spacing: 2px; animation: mysticPulse 2s infinite ease-in-out; }
+
+        .loading-text {
+            font-size: 1rem;
+            color: #c9a0dc;
+            letter-spacing: 2px;
+            animation: mysticPulse 2s infinite ease-in-out;
+        }
+
         @keyframes mysticPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-        #ad-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 9998; justify-content: center; align-items: center; padding: 20px; }
+        /* ===== AD MODAL ===== */
+        #ad-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9998;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
         #ad-modal-overlay.active { display: flex; }
-        #ad-modal { background: linear-gradient(145deg, #1a0e2a, #2a1a3a); border: 3px solid var(--gold); border-radius: 20px; padding: 30px 25px; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 0 60px rgba(255, 215, 0, 0.4), 0 0 100px rgba(106, 13, 173, 0.3); animation: modalPopIn 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1); position: relative; overflow: hidden; }
-        @keyframes modalPopIn { 0% { opacity: 0; transform: scale(0.8) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-        #ad-modal::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 60%); animation: rotateGlow 6s linear infinite; }
-        #ad-modal .modal-icon { font-size: 3rem; margin-bottom: 10px; animation: floatIcon 2s infinite ease-in-out; position: relative; z-index: 1; }
-        #ad-modal h3 { color: var(--gold); font-size: 1.2rem; margin-bottom: 10px; letter-spacing: 1px; position: relative; z-index: 1; }
-        #ad-modal p { color: #d5c8e8; font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px; position: relative; z-index: 1; }
-        #ad-modal .btn-ad-now { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; padding: 14px 35px; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; letter-spacing: 1px; position: relative; z-index: 1; box-shadow: 0 0 25px rgba(255, 215, 0, 0.4); animation: pulseBtn 2s infinite; }
-        @keyframes pulseBtn { 0%, 100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.4); } 50% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.7); } }
-        #ad-modal .btn-ad-now:hover { transform: scale(1.05); box-shadow: 0 0 60px rgba(255, 215, 0, 0.8); }
-        #ad-modal .btn-continue { background: linear-gradient(145deg, #2ecc71, #1e8449); color: #fff; padding: 14px 30px; border: none; border-radius: 50px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; letter-spacing: 1px; position: relative; z-index: 1; display: none; box-shadow: 0 0 25px rgba(46, 204, 113, 0.4); }
-        #ad-modal .btn-continue:hover { transform: scale(1.05); box-shadow: 0 0 40px rgba(46, 204, 113, 0.6); }
 
-        #result-area { display: none; background: var(--card); backdrop-filter: blur(10px); border-radius: 25px; padding: 25px 20px; margin-top: 15px; border: 1px solid rgba(255,215,0,0.2); width: 100%; position: relative; overflow: hidden; animation: fadeInUp 0.6s ease; }
-        #result-area h2 { color: var(--gold); text-align: center; font-size: 1.3rem; margin-bottom: 12px; position: relative; z-index: 2; }
-        #result-text { color: #e6d5f5; font-size: 0.9rem; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; position: relative; z-index: 2; }
-        .result-star { position: absolute; color: #FFD700; opacity: 0.6; animation: floatStar 3s infinite ease-in-out; pointer-events: none; font-size: 1.2rem; z-index: 1; }
-        @keyframes floatStar { 0% { transform: translateY(0) rotate(0deg); opacity: 0.3; } 50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; } 100% { transform: translateY(0) rotate(360deg); opacity: 0.3; } }
+        #ad-modal {
+            background: linear-gradient(145deg, #1a0e2a, #2a1a3a);
+            border: 3px solid var(--gold);
+            border-radius: 20px;
+            padding: 30px 25px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 
+                0 0 60px rgba(255, 215, 0, 0.4),
+                0 0 100px rgba(106, 13, 173, 0.3);
+            animation: modalPopIn 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            position: relative;
+            overflow: hidden;
+        }
 
-        .btn-back { background: transparent; border: 1px solid rgba(255,215,0,0.3); color: #c9a0dc; padding: 8px 20px; border-radius: 50px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s; }
+        @keyframes modalPopIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        #ad-modal::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 60%);
+            animation: rotateGlow 6s linear infinite;
+        }
+
+        #ad-modal .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: floatIcon 2s infinite ease-in-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        #ad-modal h3 {
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #ad-modal p {
+            color: #d5c8e8;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #ad-modal .btn-ad-now {
+            background: linear-gradient(145deg, #FFD700, #B8860B);
+            color: #1a0033;
+            padding: 14px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+            animation: pulseBtn 2s infinite;
+        }
+
+        @keyframes pulseBtn {
+            0%, 100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.4); }
+            50% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.7); }
+        }
+
+        #ad-modal .btn-ad-now:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
+        }
+
+        #ad-modal .btn-continue {
+            background: linear-gradient(145deg, #2ecc71, #1e8449);
+            color: #fff;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+            display: none;
+            box-shadow: 0 0 25px rgba(46, 204, 113, 0.4);
+        }
+
+        #ad-modal .btn-continue:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(46, 204, 113, 0.6);
+        }
+
+        /* ===== RESULT AREA ===== */
+        #result-area {
+            display: none;
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 25px 20px;
+            margin-top: 15px;
+            border: 1px solid rgba(255,215,0,0.2);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        #result-area h2 { 
+            color: var(--gold); 
+            text-align: center; 
+            font-size: 1.3rem; 
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 2;
+        }
+        #result-text { 
+            color: #e6d5f5; 
+            font-size: 0.9rem; 
+            line-height: 1.8; 
+            white-space: pre-wrap; 
+            word-wrap: break-word; 
+            position: relative;
+            z-index: 2;
+        }
+        #result-text h2 { font-size: 1.2rem; margin: 15px 0 10px; color: var(--gold); }
+        #result-text h3 { font-size: 1rem; margin: 10px 0 8px; color: #FFD700; }
+
+        /* ===== ΑΣΤΕΡΑΚΙΑ ===== */
+        .result-star {
+            position: absolute;
+            color: #FFD700;
+            opacity: 0.6;
+            animation: floatStar 3s infinite ease-in-out;
+            pointer-events: none;
+            font-size: 1.2rem;
+            z-index: 1;
+        }
+
+        @keyframes floatStar {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+            100% { transform: translateY(0) rotate(360deg); opacity: 0.3; }
+        }
+
+        .btn-back {
+            background: transparent;
+            border: 1px solid rgba(255,215,0,0.3);
+            color: #c9a0dc;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
         .btn-back:hover { background: rgba(255,215,0,0.1); border-color: var(--gold); color: var(--gold); }
 
-        #site-footer { position: relative; z-index: 2; text-align: center; padding: 20px; margin-top: 30px; border-top: 1px solid rgba(255,215,0,0.1); width: 100%; }
-        #site-footer .footer-links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-        #site-footer .footer-link { color: #b9a6d4; cursor: pointer; font-size: 0.8rem; text-decoration: underline; transition: all 0.3s; background: none; border: none; font-family: inherit; letter-spacing: 1px; }
-        #site-footer .footer-link:hover { color: #FFD700; text-shadow: 0 0 10px rgba(255,215,0,0.3); }
+        /* ===== FOOTER ===== */
+        #site-footer {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,215,0,0.1);
+            width: 100%;
+        }
+        #site-footer .footer-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        #site-footer .footer-link {
+            color: #b9a6d4;
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-decoration: underline;
+            transition: all 0.3s;
+            background: none;
+            border: none;
+            font-family: inherit;
+            letter-spacing: 1px;
+        }
+        #site-footer .footer-link:hover {
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255,215,0,0.3);
+        }
 
         @media (max-width: 420px) {
-            .selectors-row { gap: 8px; } .selector-item { padding: 8px 10px; min-width: 100px; max-width: 200px; }
-            .selector-label { font-size: 0.7rem; } .selector-item input { font-size: 0.8rem; padding: 8px 10px; }
+            .selectors-row { gap: 8px; }
+            .selector-item { padding: 8px 10px; min-width: 100px; max-width: 200px; }
+            .selector-label { font-size: 0.7rem; }
+            .selector-item input { font-size: 0.8rem; padding: 8px 10px; }
             .gender-btn { padding: 8px 12px; font-size: 0.8rem; }
             .topic-btn { padding: 10px 8px; font-size: 0.7rem; min-width: 75px; max-width: 130px; }
-            .controls-row { gap: 8px; } .btn { padding: 10px 14px; font-size: 0.8rem; }
-            #camera-wrapper { max-width: 300px; } #ad-modal { padding: 20px 15px; } #ad-modal h3 { font-size: 1rem; }
-            #consent-modal { padding: 25px 18px; } #consent-modal h2 { font-size: 1.2rem; } #consent-modal p { font-size: 0.85rem; }
-            .kafemanteia-comet { padding: 10px 16px; } .kafemanteia-comet .comet-text { font-size: 0.85rem; } .kafemanteia-comet .comet-icon { font-size: 1.3rem; }
-            #splash-page { padding-bottom: 100px; }
-            #language-bar { padding: 6px 10px; gap: 5px; }
-            #language-bar .lang-label { font-size: 0.7rem; min-width: 50px; }
-            #language-bar select { font-size: 0.7rem; padding: 6px 25px 6px 8px; min-width: 80px; }
-            #translate-btn { width: 30px; height: 30px; min-width: 30px; font-size: 0.8rem; }
+            .controls-row { gap: 8px; }
+            .btn { padding: 10px 14px; font-size: 0.8rem; }
+            #camera-wrapper { max-width: 300px; }
+            #ad-modal { padding: 20px 15px; }
+            #ad-modal h3 { font-size: 1rem; }
+            #consent-modal { padding: 25px 18px; }
+            #consent-modal h2 { font-size: 1.2rem; }
+            #consent-modal p { font-size: 0.85rem; }
+            .kafemanteia-comet {
+                padding: 8px 15px;
+            }
+            .kafemanteia-comet .comet-text {
+                font-size: 0.85rem;
+            }
+            .kafemanteia-comet .comet-icon {
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <script>
-        (function() {
-            var consent = localStorage.getItem('lifeline_consent');
-            if (consent === 'true') {
-                var style = document.createElement('style');
-                style.textContent = '#consent-overlay { display: none !important; }';
-                document.head.appendChild(style);
-            }
-        })();
-    </script>
-
     <canvas id="starfield"></canvas>
 
+    <!-- ===== CONSENT OVERLAY ===== -->
     <div id="consent-overlay">
         <div id="consent-modal">
             <div class="consent-icon">🖐️</div>
             <h2>Καλώς ήρθατε στο LiFe LiNe!</h2>
-            <p>Για να συνεχίσετε, πρέπει να επιβεβαιώσετε ότι είστε <strong>άνω των 18 ετών</strong> και ότι αποδέχεστε πως η εφαρμογή χρησιμοποιεί Τεχνητή Νοημοσύνη για να παράγει αποτελέσματα με καθαρά <strong>ψυχαγωγικό και μη κατευθυντικό χαρακτήρα</strong>.</p>
+            <p>
+                Για να συνεχίσετε, πρέπει να επιβεβαιώσετε ότι είστε <strong>άνω των 18 ετών</strong> 
+                και ότι αποδέχεστε πως η εφαρμογή χρησιμοποιεί Τεχνητή Νοημοσύνη για να παράγει 
+                αποτελέσματα με καθαρά <strong>ψυχαγωγικό και μη κατευθυντικό χαρακτήρα</strong>.
+            </p>
             <div class="consent-links">
                 <a href="terms.html" class="consent-link" target="_blank">📜 Όροι Χρήσης</a>
                 <a href="privacy.html" class="consent-link" target="_blank">🔒 Πολιτική Απορρήτου</a>
@@ -361,6 +940,7 @@
         </div>
     </div>
 
+    <!-- ===== AD MODAL ===== -->
     <div id="ad-modal-overlay">
         <div id="ad-modal">
             <div class="modal-icon">📺</div>
@@ -371,274 +951,151 @@
         </div>
     </div>
 
+    <!-- ===== SPLASH PAGE ===== -->
     <div id="splash-page" class="page active">
-        <div class="logo-container" onclick="goToScan()"><div class="logo-circle"><span class="logo-hand">🖐️</span></div></div>
-        <div class="splash-title" data-translate="true">LiFe LiNe</div>
-        <div class="splash-subtitle" data-translate="true">✦ Χειρομαντεία & Αστρολογία ✦</div>
-        <div class="splash-desc" data-translate="true">Τοποθέτησε την παλάμη σου μπροστά στην κάμερα. Η Aziram, η προσωπική σου Χειρομάντισσα και Αστρολόγος, θα αποκαλύψει τα μυστικά των γραμμών σου.</div>
-        <button class="btn-mystic" onclick="handleDiscoverDestiny()"><span class="btn-icon">🔮</span> <span data-translate="true">Ανακάλυψε το Πεπρωμένο σου</span></button>
-        
-        <!-- ===== LANGUAGE BAR ΜΕ PLAY ΚΟΥΜΠΙ ===== -->
-        <div id="language-bar">
-            <span class="lang-label" id="lang-label">🌐 Γλώσσα</span>
-            <select id="language-select">
-                <option value="el">🇬🇷 Ελληνικά</option>
-                <option value="en">🇬🇧 English</option>
-                <option value="de">🇩🇪 Deutsch</option>
-                <option value="fr">🇫🇷 Français</option>
-                <option value="es">🇪🇸 Español</option>
-                <option value="it">🇮🇹 Italiano</option>
-                <option value="ar">🇸🇦 العربية</option>
-                <option value="zh-CN">🇨🇳 中文</option>
-                <option value="ja">🇯🇵 日本語</option>
-                <option value="ru">🇷🇺 Русский</option>
-                <option value="tr">🇹🇷 Türkçe</option>
-                <option value="nl">🇳🇱 Nederlands</option>
-                <option value="pt">🇵🇹 Português</option>
-                <option value="sv">🇸🇪 Svenska</option>
-                <option value="no">🇳🇴 Norsk</option>
-                <option value="da">🇩🇰 Dansk</option>
-                <option value="fi">🇫🇮 Suomi</option>
-                <option value="pl">🇵🇱 Polski</option>
-                <option value="cs">🇨🇿 Čeština</option>
-                <option value="ro">🇷🇴 Română</option>
-                <option value="bg">🇧🇬 Български</option>
-                <option value="uk">🇺🇦 Українська</option>
-                <option value="ko">🇰🇷 한국어</option>
-                <option value="hi">🇮🇳 हिन्दी</option>
-                <option value="vi">🇻🇳 Tiếng Việt</option>
-                <option value="th">🇹🇭 ไทย</option>
-                <option value="id">🇮🇩 Indonesia</option>
-                <option value="iw">🇮🇱 עברית</option>
-            </select>
-            <button id="translate-btn" onclick="startTranslation()" title="Μετάφραση">▶</button>
+        <div class="logo-container" onclick="goToScan()">
+            <div class="logo-circle">
+                <span class="logo-hand">🖐️</span>
+            </div>
         </div>
+        <div class="splash-title">LiFe LiNe</div>
+        <div class="splash-subtitle">✦ Χειρομαντεία & Αστρολογία ✦</div>
+        <div class="splash-desc">
+            Τοποθέτησε την παλάμη σου μπροστά στην κάμερα. Η Aziram, η προσωπική σου Χειρομάντισσα και Αστρολόγος, θα αποκαλύψει τα μυστικά των γραμμών σου.
+        </div>
+        <button class="btn-mystic" onclick="handleDiscoverDestiny()">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
         
+        <!-- FOOTER -->
         <div id="site-footer">
             <div class="footer-links">
-                <a href="terms.html" class="footer-link" data-translate="true">📜 Όροι Χρήσης</a>
-                <a href="privacy.html" class="footer-link" data-translate="true">🔒 Πολιτική Απορρήτου</a>
+                <a href="terms.html" class="footer-link">📜 Όροι Χρήσης</a>
+                <a href="privacy.html" class="footer-link">🔒 Πολιτική Απορρήτου</a>
             </div>
         </div>
     </div>
 
-    <div id="kafemanteia-container">
-        <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet animating" id="kafemanteia-comet">
-            <span class="comet-star">✨</span><span class="comet-star">⭐</span><span class="comet-star">💫</span>
-            <span class="comet-star">✨</span><span class="comet-star">🌟</span><span class="comet-star">💫</span>
-            <span class="comet-icon">🔮</span>
-            <span class="comet-text" data-translate="true">Omen-Καφεμαντεία</span>
-        </a>
-    </div>
+    <!-- ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ (ΜΟΝΟ ΣΤΟ SPLASH) ===== -->
+    <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet" id="kafemanteia-comet" style="bottom: 100px; right: 20px;">
+        <span class="comet-icon">☄️</span>
+        <span class="comet-text">Καφεμαντεία</span>
+        <span class="comet-tail"></span>
+    </a>
 
+    <!-- ===== SCAN PAGE ===== -->
     <div id="scan-page" class="page">
-        <button class="btn-back" onclick="goToSplash()">☽ <span data-translate="true">Επιστροφή</span></button>
-        <div class="scan-header"><h2>LiFe LiNe</h2><p data-translate="true">Η Aziram διαβάζει την παλάμη σου</p></div>
+        <button class="btn-back" onclick="goToSplash()">☽ Επιστροφή</button>
+        
+        <div class="scan-header">
+            <h2>LiFe LiNe</h2>
+            <p>Η Aziram διαβάζει την παλάμη σου</p>
+        </div>
+
+        <!-- ROW 1: Gender + Birthdate -->
         <div class="selectors-row">
             <div class="selector-item">
-                <span class="selector-label" data-translate="true">Φύλο</span>
+                <span class="selector-label">Φύλο</span>
                 <div class="gender-btns">
-                    <button class="gender-btn active" id="maleBtn" onclick="setGender('male')" data-translate="true">Άντρας</button>
-                    <button class="gender-btn" id="femaleBtn" onclick="setGender('female')" data-translate="true">Γυναίκα</button>
+                    <button class="gender-btn active" id="maleBtn" onclick="setGender('male')">Άντρας</button>
+                    <button class="gender-btn" id="femaleBtn" onclick="setGender('female')">Γυναίκα</button>
                 </div>
             </div>
             <div class="selector-item">
-                <span class="selector-label" data-translate="true">Ημερομηνία Γέννησης</span>
+                <span class="selector-label">Ημερομηνία Γέννησης</span>
                 <input type="date" id="birthdate-input" onchange="setBirthdate(this.value)">
             </div>
         </div>
+
+        <!-- ROW 2: Topic Buttons -->
         <div class="topic-row" id="topic-row">
-            <button class="topic-btn active" onclick="selectTopic('Έρωτας & Σχέσεις', this)" data-translate="true">❤️<br>Έρωτας & Σχέσεις</button>
-            <button class="topic-btn" onclick="selectTopic('Καριέρα & Οικονομικά', this)" data-translate="true">💼<br>Καριέρα & Οικονομικά</button>
-            <button class="topic-btn" onclick="selectTopic('Υγεία & Ζωτικότητα', this)" data-translate="true">🌱<br>Υγεία & Ζωτικότητα</button>
-            <button class="topic-btn" onclick="selectTopic('Κρυφά Ταλέντα & Προσωπικότητα', this)" data-translate="true">🧠<br>Κρυφά Ταλέντα</button>
-            <button class="topic-btn" onclick="selectTopic('Κάρμα & Μελλοντικές Προκλήσεις', this)" data-translate="true">🌀<br>Κάρμα & Προκλήσεις</button>
+            <button class="topic-btn active" onclick="selectTopic('Έρωτας & Σχέσεις', this)">❤️<br>Έρωτας & Σχέσεις</button>
+            <button class="topic-btn" onclick="selectTopic('Καριέρα & Οικονομικά', this)">💼<br>Καριέρα & Οικονομικά</button>
+            <button class="topic-btn" onclick="selectTopic('Υγεία & Ζωτικότητα', this)">🌱<br>Υγεία & Ζωτικότητα</button>
+            <button class="topic-btn" onclick="selectTopic('Κρυφά Ταλέντα & Προσωπικότητα', this)">🧠<br>Κρυφά Ταλέντα</button>
+            <button class="topic-btn" onclick="selectTopic('Κάρμα & Μελλοντικές Προκλήσεις', this)">🌀<br>Κάρμα & Προκλήσεις</button>
         </div>
-        <div id="camera-wrapper"><video id="webcam" playsinline autoplay></video><canvas id="overlay-canvas"></canvas><div class="scan-frame"></div><div class="scan-line"></div></div>
-        <div id="upload-preview-area"><p style="color:var(--gold);">✧ <span data-translate="true">Η φωτογραφία είναι έτοιμη</span> ✧</p><img id="upload-preview-img" src="" alt="Preview"></div>
+
+        <!-- CAMERA -->
+        <div id="camera-wrapper">
+            <video id="webcam" playsinline autoplay></video>
+            <canvas id="overlay-canvas"></canvas>
+            <div class="scan-frame"></div>
+            <div class="scan-line"></div>
+        </div>
+
+        <!-- UPLOAD PREVIEW -->
+        <div id="upload-preview-area">
+            <p style="color:var(--gold);">✧ Η φωτογραφία είναι έτοιμη ✧</p>
+            <img id="upload-preview-img" src="" alt="Preview">
+        </div>
+
+        <!-- CONTROLS -->
         <div class="controls-row" id="controls-row">
-            <button class="btn btn-gold" id="camera-btn" onclick="startCamera()" data-translate="true">📷 Camera</button>
-            <button class="btn btn-purple" onclick="document.getElementById('file-input').click()" data-translate="true">📁 Upload</button>
+            <button class="btn btn-gold" id="camera-btn" onclick="startCamera()">📷 Camera</button>
+            <button class="btn btn-purple" onclick="document.getElementById('file-input').click()">📁 Upload</button>
             <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUpload(event)">
         </div>
-        <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()" data-translate="true">🔮 Αποκάλυψε το Πεπρωμένο μου</button>
-        <div id="loading-box"><div class="loading-text" data-translate="true">🔮 Η Aziram διαβάζει τις γραμμές σου...</div><div class="loading-spinner"></div></div>
-        <div id="result-area"><h2>☽ <span data-translate="true">Η Αποκάλυψη της Aziram</span> ☾</h2><div id="result-text"></div><div style="text-align:center; margin-top:20px; position:relative; z-index:2;"><button class="btn btn-purple" onclick="resetScan()" data-translate="true">🔄 Σκανάρισε άλλο χέρι</button></div></div>
-        <div id="site-footer"><div class="footer-links"><a href="terms.html" class="footer-link" data-translate="true">📜 Όροι Χρήσης</a><a href="privacy.html" class="footer-link" data-translate="true">🔒 Πολιτική Απορρήτου</a></div></div>
+
+        <!-- ANALYZE BUTTON -->
+        <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()">🔮 Αποκάλυψε το Πεπρωμένο μου</button>
+
+        <!-- LOADING -->
+        <div id="loading-box">
+            <div class="loading-text">🔮 Η Aziram διαβάζει τις γραμμές σου...</div>
+            <div class="loading-spinner"></div>
+        </div>
+
+        <!-- RESULT -->
+        <div id="result-area">
+            <h2>☽ Η Αποκάλυψη της Aziram ☾</h2>
+            <div id="result-text"></div>
+            <div style="text-align:center; margin-top:20px; position:relative; z-index:2;">
+                <button class="btn btn-purple" onclick="resetScan()">🔄 Σκανάρισε άλλο χέρι</button>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div id="site-footer">
+            <div class="footer-links">
+                <a href="terms.html" class="footer-link">📜 Όροι Χρήσης</a>
+                <a href="privacy.html" class="footer-link">🔒 Πολιτική Απορρήτου</a>
+            </div>
+        </div>
     </div>
 
     <script>
         // ===== CONSENT =====
-        (function() {
-            var consent = localStorage.getItem('lifeline_consent');
-            if (consent === 'true') {
-                var overlay = document.getElementById('consent-overlay');
-                if (overlay) { overlay.style.display = 'none'; overlay.classList.add('hidden'); }
-            }
-        })();
         function checkConsent() {
-            var consent = localStorage.getItem('lifeline_consent');
-            var overlay = document.getElementById('consent-overlay');
-            if (consent === 'true') { overlay.classList.add('hidden'); }
-            else { overlay.classList.remove('hidden'); }
+            const consent = localStorage.getItem('lifeline_consent');
+            if (consent === 'true') {
+                document.getElementById('consent-overlay').classList.add('hidden');
+            } else {
+                document.getElementById('consent-overlay').classList.remove('hidden');
+            }
         }
+
         function acceptConsent() {
             localStorage.setItem('lifeline_consent', 'true');
             document.getElementById('consent-overlay').classList.add('hidden');
         }
+
         checkConsent();
-
-        // ===== ΑΠΕΥΘΕΙΑΣ ΜΕΤΑΦΡΑΣΗ ΜΕ GOOGLE TRANSLATE API =====
-        var originalTexts = {};
-        var currentLang = 'el';
-
-        // Αποθήκευση αρχικών κειμένων
-        function saveOriginalTexts() {
-            document.querySelectorAll('[data-translate="true"]').forEach(function(el) {
-                if (!originalTexts[el.outerHTML]) {
-                    originalTexts[el.outerHTML] = el.textContent.trim();
-                }
-            });
-        }
-        saveOriginalTexts();
-
-        function startTranslation() {
-            var lang = document.getElementById('language-select').value;
-            if (lang === 'el') {
-                restoreOriginalTexts();
-                currentLang = 'el';
-                return;
-            }
-            
-            var btn = document.getElementById('translate-btn');
-            btn.classList.add('translating');
-            btn.textContent = '⟳';
-            
-            translatePage(lang);
-        }
-
-        async function translatePage(targetLang) {
-            var elements = document.querySelectorAll('[data-translate="true"]');
-            var textsToTranslate = [];
-            var elementsToUpdate = [];
-            
-            elements.forEach(function(el) {
-                var text = el.textContent.trim();
-                if (text.length > 0 && text.length < 500) {
-                    textsToTranslate.push(text);
-                    elementsToUpdate.push(el);
-                }
-            });
-            
-            if (textsToTranslate.length === 0) {
-                document.getElementById('translate-btn').classList.remove('translating');
-                document.getElementById('translate-btn').textContent = '▶';
-                return;
-            }
-
-            // Χωρισμός σε ομάδες των 10 για να μην υπερβούμε το όριο
-            var batchSize = 10;
-            for (var i = 0; i < textsToTranslate.length; i += batchSize) {
-                var batch = textsToTranslate.slice(i, i + batchSize);
-                var batchElements = elementsToUpdate.slice(i, i + batchSize);
-                
-                try {
-                    var translatedTexts = await translateBatch(batch, targetLang);
-                    for (var j = 0; j < batchElements.length; j++) {
-                        if (translatedTexts[j]) {
-                            batchElements[j].textContent = translatedTexts[j];
-                        }
-                    }
-                } catch (e) {
-                    console.log('Σφάλμα μετάφρασης:', e);
-                }
-            }
-            
-            currentLang = targetLang;
-            document.getElementById('translate-btn').classList.remove('translating');
-            document.getElementById('translate-btn').textContent = '▶';
-        }
-
-        async function translateBatch(texts, targetLang) {
-            var url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=el&tl=' + targetLang + '&dt=t&q=' + encodeURIComponent(texts.join('|||'));
-            
-            var response = await fetch(url);
-            var data = await response.json();
-            
-            var translations = [];
-            if (data && data[0]) {
-                var translatedText = '';
-                for (var i = 0; i < data[0].length; i++) {
-                    if (data[0][i][0]) {
-                        translatedText += data[0][i][0];
-                    }
-                }
-                translations = translatedText.split('|||');
-            }
-            return translations;
-        }
-
-        function restoreOriginalTexts() {
-            document.querySelectorAll('[data-translate="true"]').forEach(function(el) {
-                var key = el.outerHTML;
-                if (originalTexts[key]) {
-                    el.textContent = originalTexts[key];
-                }
-            });
-        }
-
-        // Ανίχνευση γλώσσας συσκευής
-        function detectLanguage() {
-            var userLang = navigator.language || navigator.userLanguage;
-            var langCode = userLang.split('-')[0];
-            var langMap = {
-                'el': 'el', 'en': 'en', 'de': 'de', 'fr': 'fr', 'es': 'es',
-                'it': 'it', 'ar': 'ar', 'zh': 'zh-CN', 'ja': 'ja', 'ru': 'ru',
-                'tr': 'tr', 'nl': 'nl', 'pt': 'pt', 'sv': 'sv', 'no': 'no',
-                'da': 'da', 'fi': 'fi', 'pl': 'pl', 'cs': 'cs', 'ro': 'ro',
-                'bg': 'bg', 'uk': 'uk', 'ko': 'ko', 'hi': 'hi', 'vi': 'vi',
-                'th': 'th', 'id': 'id', 'he': 'iw', 'iw': 'iw'
-            };
-            var mappedLang = langMap[langCode] || 'el';
-            
-            var langSelect = document.getElementById('language-select');
-            if (langSelect) { langSelect.value = mappedLang; }
-            
-            var labelMap = {
-                'el': '🌐 Γλώσσα', 'en': '🌐 Language', 'de': '🌐 Sprache',
-                'fr': '🌐 Langue', 'es': '🌐 Idioma', 'it': '🌐 Lingua',
-                'ar': '🌐 اللغة', 'zh-CN': '🌐 语言', 'ja': '🌐 言語',
-                'ru': '🌐 Язык', 'tr': '🌐 Dil', 'nl': '🌐 Taal',
-                'pt': '🌐 Idioma', 'sv': '🌐 Språk', 'no': '🌐 Språk',
-                'da': '🌐 Sprog', 'fi': '🌐 Kieli', 'pl': '🌐 Język',
-                'cs': '🌐 Jazyk', 'ro': '🌐 Limbă', 'bg': '🌐 Език',
-                'uk': '🌐 Мова', 'ko': '🌐 언어', 'hi': '🌐 भाषा',
-                'vi': '🌐 Ngôn ngữ', 'th': '🌐 ภาษา', 'id': '🌐 Bahasa',
-                'iw': '🌐 שפה'
-            };
-            var label = document.getElementById('lang-label');
-            if (label) { label.textContent = labelMap[mappedLang] || '🌐 Language'; }
-            
-            // Αυτόματη μετάφραση αν δεν είναι ελληνικά
-            if (mappedLang !== 'el') {
-                setTimeout(function() { startTranslation(); }, 1000);
-            }
-        }
-        detectLanguage();
 
         // ===== STARFIELD =====
         const starCanvas = document.getElementById('starfield');
         const starCtx = starCanvas.getContext('2d');
         let stars = [];
         function resizeStarfield() { starCanvas.width = window.innerWidth; starCanvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeStarfield); resizeStarfield();
+        window.addEventListener('resize', resizeStarfield);
+        resizeStarfield();
         function createStars(count = 200) {
             stars = [];
             for (let i = 0; i < count; i++) {
                 stars.push({
                     x: Math.random() * starCanvas.width, y: Math.random() * starCanvas.height,
-                    r: Math.random() * 2 + 0.5, dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.3,
-                    alpha: Math.random() * 0.8 + 0.2, color: Math.random() > 0.7 ? '#FFD700' : '#c9a0dc'
+                    r: Math.random() * 2 + 0.5,
+                    dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.3,
+                    alpha: Math.random() * 0.8 + 0.2,
+                    color: Math.random() > 0.7 ? '#FFD700' : '#c9a0dc'
                 });
             }
         }
@@ -649,7 +1106,8 @@
                 s.x += s.dx; s.y += s.dy;
                 if (s.x < 0 || s.x > starCanvas.width) s.dx *= -1;
                 if (s.y < 0 || s.y > starCanvas.height) s.dy *= -1;
-                starCtx.beginPath(); starCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                starCtx.beginPath();
+                starCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
                 starCtx.fillStyle = `rgba(${s.color === '#FFD700' ? '255,215,0' : '201,160,220'}, ${s.alpha * 0.6})`;
                 starCtx.fill();
             });
@@ -657,38 +1115,64 @@
         }
         drawStars();
 
+        // ===== NAVIGATION =====
         function goToScan() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('scan-page').classList.add('active');
-            document.getElementById('kafemanteia-container').style.display = 'none';
+            // Απόκρυψη του αστεροειδή όταν φεύγουμε από το splash
+            document.getElementById('kafemanteia-comet').style.display = 'none';
         }
+        
         function goToSplash() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('splash-page').classList.add('active');
-            document.getElementById('kafemanteia-container').style.display = 'block';
-            restartCometAnimation(); stopCamera(); resetScan();
+            // Εμφάνιση του αστεροειδή όταν επιστρέφουμε στο splash
+            document.getElementById('kafemanteia-comet').style.display = 'flex';
+            stopCamera(); 
+            resetScan();
         }
-        function restartCometAnimation() {
-            const comet = document.getElementById('kafemanteia-comet');
-            comet.classList.remove('animating'); void comet.offsetWidth; comet.classList.add('animating');
-        }
-        function handleDiscoverDestiny() { setTimeout(() => { showAdModal(); }, 5000); goToScan(); }
 
-        let userGender = 'male', userZodiac = 'Κριός', userBirthdate = '', userTopic = 'Έρωτας & Σχέσεις';
+        // ===== HANDLE DISCOVER DESTINY BUTTON =====
+        function handleDiscoverDestiny() {
+            // Μετά από 5 δευτερόλεπτα εμφανίζεται το ad modal
+            setTimeout(() => {
+                showAdModal();
+            }, 5000);
+            
+            // Αμέσως πηγαίνουμε στη σελίδα σκαναρίσματος
+            goToScan();
+        }
+
+        // ===== USER SELECTIONS =====
+        let userGender = 'male';
+        let userZodiac = 'Κριός';
+        let userBirthdate = '';
+        let userTopic = 'Έρωτας & Σχέσεις';
+
         function setGender(gender) {
             userGender = gender;
             document.getElementById('maleBtn').classList.toggle('active', gender === 'male');
             document.getElementById('femaleBtn').classList.toggle('active', gender === 'female');
         }
-        function setBirthdate(date) { userBirthdate = date; userZodiac = getZodiacFromDate(date); }
+
+        function setBirthdate(date) {
+            userBirthdate = date;
+            userZodiac = getZodiacFromDate(date);
+        }
+
         function selectTopic(topic, btn) {
             userTopic = topic;
             document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            // ΑΦΑΙΡΕΣΑΜΕ ΤΗΝ ΚΛΗΣΗ ΤΗΣ ΔΙΑΦΗΜΙΣΗΣ ΑΠΟ ΕΔΩ
         }
+
+        // ===== ZODIAC =====
         function getZodiacFromDate(dateString) {
             if (!dateString) return 'Κριός';
-            const date = new Date(dateString); const day = date.getDate(), month = date.getMonth() + 1;
+            const date = new Date(dateString);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
             if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return 'Κριός';
             if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return 'Ταύρος';
             if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return 'Δίδυμοι';
@@ -704,60 +1188,97 @@
             return 'Κριός';
         }
 
+        // ===== AD MODAL =====
         function showAdModal() {
             document.getElementById('ad-modal-overlay').classList.add('active');
             document.getElementById('btn-ad-now').style.display = 'inline-block';
             document.getElementById('btn-continue-ad').style.display = 'none';
         }
+
         function showAd() {
             document.getElementById('btn-ad-now').style.display = 'none';
+            
             if (typeof show_11042671 === 'function') {
-                show_11042671().then(() => { document.getElementById('btn-continue-ad').style.display = 'inline-block'; })
-                .catch(() => { document.getElementById('btn-continue-ad').style.display = 'inline-block'; });
-            } else { document.getElementById('btn-continue-ad').style.display = 'inline-block'; }
+                show_11042671().then(() => {
+                    document.getElementById('btn-continue-ad').style.display = 'inline-block';
+                }).catch(() => {
+                    document.getElementById('btn-continue-ad').style.display = 'inline-block';
+                });
+            } else {
+                document.getElementById('btn-continue-ad').style.display = 'inline-block';
+            }
         }
-        function closeAdModal() { document.getElementById('ad-modal-overlay').classList.remove('active'); }
 
+        function closeAdModal() {
+            document.getElementById('ad-modal-overlay').classList.remove('active');
+        }
+
+        // ===== STARS =====
         function addStarsToResult() {
             const resultArea = document.getElementById('result-area');
             document.querySelectorAll('.result-star').forEach(s => s.remove());
             const emojis = ['✨', '⭐', '💫', '🌟', '✨', '🔮', '💖', '🌙', '☽', '✧'];
             for (let i = 0; i < 18; i++) {
-                const star = document.createElement('span'); star.className = 'result-star';
+                const star = document.createElement('span');
+                star.className = 'result-star';
                 star.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                star.style.left = Math.random() * 90 + '%'; star.style.top = Math.random() * 90 + '%';
+                star.style.left = Math.random() * 90 + '%';
+                star.style.top = Math.random() * 90 + '%';
                 star.style.animationDelay = Math.random() * 3 + 's';
                 star.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
                 resultArea.appendChild(star);
             }
         }
 
+        // ===== CAMERA =====
         const video = document.getElementById('webcam');
         const overlayCanvas = document.getElementById('overlay-canvas');
         const overlayCtx = overlayCanvas.getContext('2d');
-        let currentStream = null, capturedImage = null, isAnalyzing = false;
-        function resizeOverlay() { const wrapper = document.getElementById('camera-wrapper'); overlayCanvas.width = wrapper.clientWidth; overlayCanvas.height = wrapper.clientHeight; }
+        let currentStream = null;
+        let capturedImage = null;
+        let isAnalyzing = false;
+
+        function resizeOverlay() {
+            const wrapper = document.getElementById('camera-wrapper');
+            overlayCanvas.width = wrapper.clientWidth;
+            overlayCanvas.height = wrapper.clientHeight;
+        }
         window.addEventListener('resize', resizeOverlay);
+
         async function startCamera() {
             try {
                 if (currentStream) { currentStream.getTracks().forEach(t => t.stop()); }
-                currentStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 500 }, height: { ideal: 500 } } });
-                video.srcObject = currentStream; resizeOverlay();
+                currentStream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'user', width: { ideal: 500 }, height: { ideal: 500 } }
+                });
+                video.srcObject = currentStream;
+                resizeOverlay();
                 document.getElementById('analyze-btn').style.display = 'block';
                 document.getElementById('camera-btn').disabled = true;
                 document.getElementById('camera-btn').innerText = '✅ Ready';
-            } catch (err) { alert('Δεν μπόρεσα να ανοίξω την κάμερα. Δοκίμασε το Upload.'); }
+            } catch (err) {
+                alert('Δεν μπόρεσα να ανοίξω την κάμερα. Δοκίμασε το Upload.');
+            }
         }
-        function stopCamera() { if (currentStream) { currentStream.getTracks().forEach(t => t.stop()); currentStream = null; } }
+        function stopCamera() {
+            if (currentStream) { currentStream.getTracks().forEach(t => t.stop()); currentStream = null; }
+        }
         function capturePhoto() {
             if (!currentStream) return null;
-            const canvas = document.createElement('canvas'); canvas.width = video.videoWidth || 500; canvas.height = video.videoHeight || 500;
-            const ctx = canvas.getContext('2d'); ctx.save(); ctx.scale(-1, 1);
-            ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height); ctx.restore();
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth || 500;
+            canvas.height = video.videoHeight || 500;
+            const ctx = canvas.getContext('2d');
+            ctx.save(); ctx.scale(-1, 1);
+            ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+            ctx.restore();
             return canvas.toDataURL('image/jpeg', 0.8);
         }
+
+        // ===== UPLOAD =====
         function handleUpload(event) {
-            const file = event.target.files[0]; if (!file) return;
+            const file = event.target.files[0];
+            if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
                 capturedImage = e.target.result;
@@ -768,11 +1289,17 @@
             reader.readAsDataURL(file);
         }
 
+        // ===== API =====
         const API_URL = 'https://franklymadear-lifeline.hf.space/analyze';
+
         async function performAnalysis() {
             if (isAnalyzing) return;
             if (currentStream && !capturedImage) { capturedImage = capturePhoto(); }
-            if (!capturedImage) { alert('Παρακαλώ πρώτα άνοιξε την κάμερα ή ανέβασε φωτογραφία.'); return; }
+            if (!capturedImage) {
+                alert('Παρακαλώ πρώτα άνοιξε την κάμερα ή ανέβασε φωτογραφία.');
+                return;
+            }
+
             isAnalyzing = true;
             document.getElementById('loading-box').style.display = 'block';
             document.getElementById('result-area').style.display = 'none';
@@ -780,28 +1307,45 @@
             document.getElementById('controls-row').style.display = 'none';
             document.getElementById('topic-row').style.display = 'none';
             document.querySelector('.selectors-row').style.display = 'none';
+
             try {
                 const response = await fetch(API_URL, {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ image: capturedImage, gender: userGender, zodiac: userZodiac, birthdate: userBirthdate, topic: userTopic })
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        image: capturedImage,
+                        gender: userGender,
+                        zodiac: userZodiac,
+                        birthdate: userBirthdate,
+                        topic: userTopic
+                    })
                 });
+
                 const data = await response.json();
+
                 if (data.success && data.reading) {
                     document.getElementById('result-text').innerHTML = data.reading
-                        .replace(/## (.*?)\n/g, '<h2>$1</h2>').replace(/### (.*?)\n/g, '<h3>$1</h3>')
-                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+                        .replace(/## (.*?)\n/g, '<h2>$1</h2>')
+                        .replace(/### (.*?)\n/g, '<h3>$1</h3>')
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\n/g, '<br>');
                     document.getElementById('result-area').style.display = 'block';
                     addStarsToResult();
                     document.getElementById('result-area').scrollIntoView({ behavior: 'smooth' });
-                } else { alert('Η Aziram συνάντησε ένα εμπόδιο. Δοκίμασε ξανά.'); }
-            } catch (error) { alert('Σφάλμα σύνδεσης. Έλεγξε τη σύνδεσή σου.'); }
-            finally {
+                } else {
+                    alert('Η Aziram συνάντησε ένα εμπόδιο. Δοκίμασε ξανά.');
+                }
+            } catch (error) {
+                alert('Σφάλμα σύνδεσης. Έλεγξε τη σύνδεσή σου.');
+            } finally {
                 document.getElementById('loading-box').style.display = 'none';
                 document.getElementById('controls-row').style.display = 'flex';
                 document.getElementById('topic-row').style.display = 'flex';
-                document.querySelector('.selectors-row').style.display = 'flex'; isAnalyzing = false;
+                document.querySelector('.selectors-row').style.display = 'flex';
+                isAnalyzing = false;
             }
         }
+
         function resetScan() {
             document.getElementById('result-area').style.display = 'none';
             document.querySelectorAll('.result-star').forEach(s => s.remove());
@@ -813,11 +1357,14 @@
             document.getElementById('upload-preview-area').style.display = 'none';
             document.getElementById('camera-btn').disabled = false;
             document.getElementById('camera-btn').innerText = '📷 Camera';
-            capturedImage = null; isAnalyzing = false;
+            capturedImage = null;
+            isAnalyzing = false;
         }
 
-        document.getElementById('kafemanteia-container').style.display = 'block';
-        document.getElementById('kafemanteia-comet').classList.add('animating');
+        // ===== ΕΜΦΑΝΙΣΗ ΑΣΤΕΡΟΕΙΔΟΥΣ ΜΟΝΟ ΣΤΟ SPLASH =====
+        // Ο αστεροειδής είναι ορατός μόνο όταν το splash page είναι ενεργό
+        // και κρύβεται όταν πηγαίνουμε στο scan page
+        document.getElementById('kafemanteia-comet').style.display = 'flex';
     </script>
 </body>
 </html>
