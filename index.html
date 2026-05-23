@@ -138,7 +138,7 @@
         #splash-page {
             text-align: center; gap: 20px;
             animation: fadeInUp 1s ease; position: relative;
-            padding-bottom: 140px;
+            padding-bottom: 120px;
         }
         @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
 
@@ -209,93 +209,91 @@
         .btn-mystic:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
         .btn-mystic:active { transform: scale(0.95); }
 
-        /* ===== GOOGLE TRANSLATE WIDGET - ΠΡΟΣΑΡΜΟΣΜΕΝΟ ΧΡΩΜΑ ===== */
-        #google-translate-widget {
+        /* ===== CUSTOM LANGUAGE SELECTOR ===== */
+        #custom-language-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(20, 10, 40, 0.8);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(155, 89, 182, 0.6);
+            border-radius: 30px;
+            padding: 10px 18px;
             position: relative;
             z-index: 2;
             width: 90%;
             max-width: 380px;
             margin: 0 auto;
-            min-height: 40px;
-        }
-        #google_translate_element {
-            text-align: center;
-        }
-        /* Στυλ για το Google Translate */
-        .goog-te-banner-frame { display: none !important; }
-        body { top: 0 !important; }
-        .skiptranslate { display: none !important; }
-        iframe.goog-te-banner-frame { display: none !important; }
-        
-        /* Προσαρμοσμένα χρώματα για το Google Translate */
-        .goog-te-gadget {
-            color: #e0c5f0 !important;
-            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif !important;
-        }
-        .goog-te-gadget-simple {
-            background: rgba(20, 10, 40, 0.8) !important;
-            border: 2px solid rgba(155, 89, 182, 0.6) !important;
-            border-radius: 25px !important;
-            padding: 8px 16px !important;
-            display: inline-block !important;
-        }
-        .goog-te-gadget-simple span {
-            color: #FFD700 !important;
-            font-weight: 600 !important;
-        }
-        .goog-te-gadget img {
-            display: none !important;
-        }
-        .goog-te-menu-value {
-            color: #FFD700 !important;
-            font-weight: 600 !important;
-        }
-        .goog-te-menu-value span {
-            color: #FFD700 !important;
-            font-weight: 600 !important;
-        }
-        .goog-te-menu-value:hover {
-            text-decoration: none !important;
-            color: #fff !important;
-        }
-        .goog-te-menu-value:hover span {
-            color: #fff !important;
-            text-decoration: none !important;
-        }
-        /* Dropdown μενού */
-        .goog-te-menu2 {
-            background: #1a0a2e !important;
-            border: 2px solid var(--gold) !important;
-            border-radius: 15px !important;
-            box-shadow: 0 0 30px rgba(155, 89, 182, 0.5) !important;
-            max-height: 300px !important;
-            overflow-y: auto !important;
-        }
-        .goog-te-menu2-item div {
-            color: #e0c5f0 !important;
-            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif !important;
-            padding: 8px 16px !important;
-        }
-        .goog-te-menu2-item:hover div {
-            background: rgba(155, 89, 182, 0.3) !important;
-            color: #FFD700 !important;
-        }
-        .goog-te-menu2-item-selected div {
-            background: rgba(106, 13, 173, 0.5) !important;
-            color: #FFD700 !important;
-            font-weight: 700 !important;
+            box-shadow: 0 0 20px rgba(155, 89, 182, 0.2);
         }
 
-        /* ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ - ΔΙΟΡΘΩΜΕΝΗ ΚΙΝΗΣΗ ===== */
+        #custom-language-selector .lang-label {
+            color: #FFD700;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        #custom-language-selector select {
+            flex: 1;
+            background: rgba(10, 5, 25, 0.9);
+            color: #FFD700;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 10px 38px 10px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23FFD700' d='M7 10L1 4h12z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            outline: none;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            transition: all 0.3s;
+        }
+
+        #custom-language-selector select:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        #custom-language-selector select option {
+            background: #1a0a2e;
+            color: #e0c5f0;
+            padding: 10px;
+        }
+
+        /* ===== GOOGLE TRANSLATE BANNER - ΧΡΩΜΑΤΑ ===== */
+        .goog-te-banner-frame {
+            border: none !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
+        }
+        
+        body > .skiptranslate {
+            display: block !important;
+        }
+        
+        iframe.goog-te-banner-frame {
+            max-width: 100% !important;
+            width: 100% !important;
+        }
+
+        /* ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ - ΑΡΧΙΚΗ ΚΙΝΗΣΗ ===== */
         #kafemanteia-container {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 120px;
+            height: 150px;
             z-index: 5;
             pointer-events: none;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .kafemanteia-comet {
@@ -317,7 +315,7 @@
                 0 0 100px rgba(255, 215, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             white-space: nowrap;
-            will-change: transform, opacity, left;
+            will-change: transform, opacity, left, right, bottom;
             transform: scale(1);
         }
 
@@ -368,116 +366,110 @@
             50% { opacity: 1; transform: translate(5px, -8px) scale(1.3); }
         }
 
-        /* ΔΙΟΡΘΩΜΕΝΗ ΚΙΝΗΣΗ - ΜΕΣΑ ΣΤΑ ΟΡΙΑ ΤΗΣ ΟΘΟΝΗΣ */
+        /* ΑΡΧΙΚΗ ΚΙΝΗΣΗ - ΟΠΩΣ ΗΤΑΝ */
         @keyframes cometFullCycle {
-            /* Φάση 1: Δεξιά → Αριστερά (0% - 25%) */
             0% {
-                left: calc(100% + 300px);
+                left: auto;
+                right: -300px;
                 bottom: 30px;
                 opacity: 0;
                 transform: scale(1);
             }
-            3% { opacity: 1; left: calc(100% - 200px); }
-            20% {
-                left: 50%;
+            4% { opacity: 1; }
+            21% {
+                left: auto;
+                right: 50%;
                 bottom: 30px;
                 opacity: 1;
                 transform: scale(1);
             }
-            24% {
-                left: -300px;
-                bottom: 30px;
+            24.5% {
                 opacity: 0;
-                transform: scale(1);
             }
             25% {
-                left: -300px;
+                left: auto;
+                right: calc(100% + 300px);
                 bottom: 30px;
                 opacity: 0;
                 transform: scale(1);
             }
 
-            /* Φάση 2: Pop-up από βάθος (25% - 50%) */
             25.1% {
                 left: 50%;
-                bottom: 5px;
+                right: auto;
+                bottom: 10px;
                 opacity: 0;
                 transform: scale(0.3) translateX(-50%);
             }
-            31% {
+            32% {
                 opacity: 1;
-                transform: scale(1) translateX(-50%);
-                bottom: 25px;
+                transform: scale(1.05) translateX(-50%);
             }
-            44% {
+            42% {
                 opacity: 1;
                 transform: scale(1) translateX(-50%);
-                bottom: 30px;
             }
             49% {
                 opacity: 0;
                 transform: scale(0.3) translateX(-50%);
-                bottom: 30px;
             }
             50% {
                 opacity: 0;
                 transform: scale(0.3) translateX(-50%);
-                bottom: 30px;
             }
 
-            /* Φάση 3: Αριστερά → Δεξιά (50% - 75%) */
             50.1% {
                 left: -300px;
-                bottom: 45px;
+                right: auto;
+                bottom: 50px;
                 opacity: 0;
                 transform: scale(1);
             }
-            53% { opacity: 1; left: 50px; }
-            70% {
+            54% { opacity: 1; }
+            71% {
                 left: 50%;
-                bottom: 45px;
+                right: auto;
+                bottom: 50px;
                 opacity: 1;
                 transform: scale(1);
             }
-            74% {
-                left: calc(100% + 300px);
-                bottom: 45px;
+            74.5% {
                 opacity: 0;
-                transform: scale(1);
             }
             75% {
                 left: calc(100% + 300px);
-                bottom: 45px;
+                right: auto;
+                bottom: 50px;
                 opacity: 0;
                 transform: scale(1);
             }
 
-            /* Φάση 4: Κάτω → Μέση (75% - 100%) */
             75.1% {
                 left: 50%;
-                bottom: -60px;
+                right: auto;
+                bottom: -80px;
                 opacity: 0;
                 transform: scale(0.8) translateX(-50%);
             }
-            80% {
+            82% {
                 opacity: 1;
                 bottom: 10px;
                 transform: scale(1) translateX(-50%);
             }
-            92% {
+            94% {
                 opacity: 1;
-                bottom: 55px;
+                bottom: 60px;
                 transform: scale(1) translateX(-50%);
             }
-            98% {
+            99% {
                 opacity: 0;
-                bottom: 55px;
-                transform: scale(0.8) translateX(-50%);
+                bottom: 60px;
+                transform: scale(1) translateX(-50%);
             }
             100% {
                 opacity: 0;
-                bottom: 55px;
-                transform: scale(0.8) translateX(-50%);
+                bottom: 60px;
+                transform: scale(1) translateX(-50%);
             }
         }
 
@@ -495,43 +487,27 @@
         }
         .scan-header p { color: #b8a0d0; font-size: clamp(0.75rem, 2vw, 0.9rem); }
 
-        .selectors-row {
-            display: flex; justify-content: center; align-items: stretch;
-            gap: 10px; flex-wrap: wrap; width: 100%; max-width: 600px;
-        }
+        .selectors-row { display: flex; justify-content: center; align-items: stretch; gap: 10px; flex-wrap: wrap; width: 100%; max-width: 600px; }
         .selector-item {
             display: flex; flex-direction: column; align-items: center; gap: 6px;
             background: rgba(20, 10, 40, 0.8); padding: 10px 12px;
             border-radius: 20px; border: 1px solid rgba(255,215,0,0.25);
             flex: 1; min-width: 130px; max-width: 250px;
         }
-        .selector-label {
-            color: var(--gold); font-size: 0.75rem; font-weight: 700;
-            letter-spacing: 1px; text-transform: uppercase; text-align: center;
-        }
-        .gender-btns { 
-            display: flex; gap: 0; width: 100%; 
-            border-radius: 15px; overflow: hidden; border: 2px solid rgba(255,215,0,0.3);
-        }
+        .selector-label { color: var(--gold); font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; text-align: center; }
+        .gender-btns { display: flex; gap: 0; width: 100%; border-radius: 15px; overflow: hidden; border: 2px solid rgba(255,215,0,0.3); }
         .gender-btn {
             padding: 10px 16px; font-size: 0.85rem; font-weight: 700;
             border: none; background: rgba(20, 10, 40, 0.6); color: #b9a6d4;
             cursor: pointer; transition: all 0.3s; flex: 1; text-align: center;
         }
-        .gender-btn.active {
-            background: linear-gradient(145deg, #FFD700, #B8860B);
-            color: #1a0033; box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
-        }
+        .gender-btn.active { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; box-shadow: inset 0 0 15px rgba(0,0,0,0.2); }
         .selector-item input {
             padding: 10px 12px; border-radius: 15px;
             border: 2px solid rgba(255,215,0,0.3); background: #1a0a2e;
-            color: #FFD700; font-size: 0.85rem; width: 100%;
-            text-align: center; font-weight: 500;
+            color: #FFD700; font-size: 0.85rem; width: 100%; text-align: center; font-weight: 500;
         }
-        .topic-row {
-            display: flex; flex-wrap: wrap; justify-content: center;
-            gap: 8px; width: 100%; max-width: 650px;
-        }
+        .topic-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; width: 100%; max-width: 650px; }
         .topic-btn {
             padding: 12px 10px; font-size: clamp(0.7rem, 1.8vw, 0.8rem);
             font-weight: 600; border: 2px solid rgba(255,215,0,0.25);
@@ -718,14 +694,10 @@
             .kafemanteia-comet { padding: 10px 16px; }
             .kafemanteia-comet .comet-text { font-size: 0.85rem; }
             .kafemanteia-comet .comet-icon { font-size: 1.3rem; }
-            #splash-page { padding-bottom: 120px; }
-            #kafemanteia-container { height: 100px; }
-            #google-translate-widget { max-width: 300px; }
-        }
-
-        @media (min-width: 768px) {
-            #google-translate-widget { max-width: 500px; }
-            .goog-te-gadget-simple { padding: 10px 20px !important; }
+            #splash-page { padding-bottom: 100px; }
+            #custom-language-selector { padding: 8px 14px; gap: 6px; }
+            #custom-language-selector .lang-label { font-size: 0.75rem; min-width: 60px; }
+            #custom-language-selector select { font-size: 0.8rem; padding: 8px 32px 8px 12px; }
         }
     </style>
 </head>
@@ -785,9 +757,39 @@
             Ανακάλυψε το Πεπρωμένο σου
         </button>
         
-        <!-- GOOGLE TRANSLATE WIDGET -->
-        <div id="google-translate-widget">
-            <div id="google_translate_element"></div>
+        <!-- ===== CUSTOM LANGUAGE SELECTOR ===== -->
+        <div id="custom-language-selector">
+            <span class="lang-label" id="lang-label">🌐 Γλώσσα</span>
+            <select id="language-select" onchange="changeLanguage(this.value)">
+                <option value="el">🇬🇷 Ελληνικά</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="it">🇮🇹 Italiano</option>
+                <option value="ar">🇸🇦 العربية</option>
+                <option value="zh-CN">🇨🇳 中文</option>
+                <option value="ja">🇯🇵 日本語</option>
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="tr">🇹🇷 Türkçe</option>
+                <option value="nl">🇳🇱 Nederlands</option>
+                <option value="pt">🇵🇹 Português</option>
+                <option value="sv">🇸🇪 Svenska</option>
+                <option value="no">🇳🇴 Norsk</option>
+                <option value="da">🇩🇰 Dansk</option>
+                <option value="fi">🇫🇮 Suomi</option>
+                <option value="pl">🇵🇱 Polski</option>
+                <option value="cs">🇨🇿 Čeština</option>
+                <option value="ro">🇷🇴 Română</option>
+                <option value="bg">🇧🇬 Български</option>
+                <option value="uk">🇺🇦 Українська</option>
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="hi">🇮🇳 हिन्दी</option>
+                <option value="vi">🇻🇳 Tiếng Việt</option>
+                <option value="th">🇹🇭 ไทย</option>
+                <option value="id">🇮🇩 Indonesia</option>
+                <option value="iw">🇮🇱 עברית</option>
+            </select>
         </div>
         
         <div id="site-footer">
@@ -812,12 +814,12 @@
         </a>
     </div>
 
+    <!-- Google Translate Element (κρυφό, χρησιμοποιείται από το custom selector) -->
+    <div id="google_translate_element" style="position:absolute;top:0;left:0;opacity:0;pointer-events:none;z-index:-1;"></div>
+
     <div id="scan-page" class="page">
         <button class="btn-back" onclick="goToSplash()">☽ Επιστροφή</button>
-        <div class="scan-header">
-            <h2>LiFe LiNe</h2>
-            <p>Η Aziram διαβάζει την παλάμη σου</p>
-        </div>
+        <div class="scan-header"><h2>LiFe LiNe</h2><p>Η Aziram διαβάζει την παλάμη σου</p></div>
         <div class="selectors-row">
             <div class="selector-item">
                 <span class="selector-label">Φύλο</span>
@@ -844,20 +846,14 @@
             <div class="scan-frame"></div>
             <div class="scan-line"></div>
         </div>
-        <div id="upload-preview-area">
-            <p style="color:var(--gold);">✧ Η φωτογραφία είναι έτοιμη ✧</p>
-            <img id="upload-preview-img" src="" alt="Preview">
-        </div>
+        <div id="upload-preview-area"><p style="color:var(--gold);">✧ Η φωτογραφία είναι έτοιμη ✧</p><img id="upload-preview-img" src="" alt="Preview"></div>
         <div class="controls-row" id="controls-row">
             <button class="btn btn-gold" id="camera-btn" onclick="startCamera()">📷 Camera</button>
             <button class="btn btn-purple" onclick="document.getElementById('file-input').click()">📁 Upload</button>
             <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUpload(event)">
         </div>
         <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()">🔮 Αποκάλυψε το Πεπρωμένο μου</button>
-        <div id="loading-box">
-            <div class="loading-text">🔮 Η Aziram διαβάζει τις γραμμές σου...</div>
-            <div class="loading-spinner"></div>
-        </div>
+        <div id="loading-box"><div class="loading-text">🔮 Η Aziram διαβάζει τις γραμμές σου...</div><div class="loading-spinner"></div></div>
         <div id="result-area">
             <h2>☽ Η Αποκάλυψη της Aziram ☾</h2>
             <div id="result-text"></div>
@@ -908,21 +904,56 @@
         }
         checkConsent();
 
-        // ===== GOOGLE TRANSLATE =====
-        function waitForGoogleTranslate(callback) {
-            if (document.querySelector('.goog-te-combo')) { callback(); }
-            else { setTimeout(function() { waitForGoogleTranslate(callback); }, 200); }
-        }
+        // ===== GOOGLE TRANSLATE ΜΕΣΩ CUSTOM SELECTOR =====
         function changeLanguage(lang) {
             var combo = document.querySelector('.goog-te-combo');
-            if (combo) { combo.value = lang; combo.dispatchEvent(new Event('change')); return; }
-            var d = new Date();
-            d.setTime(d.getTime() + (365*24*60*60*1000));
-            document.cookie = 'googtrans=/el/' + lang + ';expires=' + d.toUTCString() + ';path=/';
-            if (lang !== 'el') {
-                window.location.href = 'https://translate.google.com/translate?hl=' + lang + '&sl=el&tl=' + lang + '&u=' + encodeURIComponent(window.location.href.split('#')[0]);
+            if (combo) {
+                combo.value = lang;
+                combo.dispatchEvent(new Event('change'));
+            } else {
+                setTimeout(function() {
+                    var combo2 = document.querySelector('.goog-te-combo');
+                    if (combo2) {
+                        combo2.value = lang;
+                        combo2.dispatchEvent(new Event('change'));
+                    }
+                }, 500);
             }
         }
+
+        // Ανίχνευση γλώσσας συσκευής
+        function detectLanguage() {
+            var userLang = navigator.language || navigator.userLanguage;
+            var langCode = userLang.split('-')[0];
+            var langMap = {
+                'el': 'el', 'en': 'en', 'de': 'de', 'fr': 'fr', 'es': 'es',
+                'it': 'it', 'ar': 'ar', 'zh': 'zh-CN', 'ja': 'ja', 'ru': 'ru',
+                'tr': 'tr', 'nl': 'nl', 'pt': 'pt', 'sv': 'sv', 'no': 'no',
+                'da': 'da', 'fi': 'fi', 'pl': 'pl', 'cs': 'cs', 'ro': 'ro',
+                'bg': 'bg', 'uk': 'uk', 'ko': 'ko', 'hi': 'hi', 'vi': 'vi',
+                'th': 'th', 'id': 'id', 'he': 'iw', 'iw': 'iw'
+            };
+            var mappedLang = langMap[langCode] || 'el';
+            
+            var langSelect = document.getElementById('language-select');
+            if (langSelect) { langSelect.value = mappedLang; }
+            
+            var labelMap = {
+                'el': '🌐 Γλώσσα', 'en': '🌐 Language', 'de': '🌐 Sprache',
+                'fr': '🌐 Langue', 'es': '🌐 Idioma', 'it': '🌐 Lingua',
+                'ar': '🌐 اللغة', 'zh-CN': '🌐 语言', 'ja': '🌐 言語',
+                'ru': '🌐 Язык', 'tr': '🌐 Dil', 'nl': '🌐 Taal',
+                'pt': '🌐 Idioma', 'sv': '🌐 Språk', 'no': '🌐 Språk',
+                'da': '🌐 Sprog', 'fi': '🌐 Kieli', 'pl': '🌐 Język',
+                'cs': '🌐 Jazyk', 'ro': '🌐 Limbă', 'bg': '🌐 Език',
+                'uk': '🌐 Мова', 'ko': '🌐 언어', 'hi': '🌐 भाषा',
+                'vi': '🌐 Ngôn ngữ', 'th': '🌐 ภาษา', 'id': '🌐 Bahasa',
+                'iw': '🌐 שפה'
+            };
+            var label = document.getElementById('lang-label');
+            if (label) { label.textContent = labelMap[mappedLang] || '🌐 Language'; }
+        }
+        detectLanguage();
 
         // ===== STARFIELD =====
         const starCanvas = document.getElementById('starfield');
@@ -1050,14 +1081,12 @@
         const overlayCanvas = document.getElementById('overlay-canvas');
         const overlayCtx = overlayCanvas.getContext('2d');
         let currentStream = null, capturedImage = null, isAnalyzing = false;
-
         function resizeOverlay() {
             const wrapper = document.getElementById('camera-wrapper');
             overlayCanvas.width = wrapper.clientWidth;
             overlayCanvas.height = wrapper.clientHeight;
         }
         window.addEventListener('resize', resizeOverlay);
-
         async function startCamera() {
             try {
                 if (currentStream) { currentStream.getTracks().forEach(t => t.stop()); }
@@ -1082,7 +1111,6 @@
             ctx.restore();
             return canvas.toDataURL('image/jpeg', 0.8);
         }
-
         function handleUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1132,7 +1160,6 @@
                 isAnalyzing = false;
             }
         }
-
         function resetScan() {
             document.getElementById('result-area').style.display = 'none';
             document.querySelectorAll('.result-star').forEach(s => s.remove());
