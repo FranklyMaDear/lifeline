@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>LiFe LiNe - Χειρομαντεία με AI</title>
     
-    <!-- Meta για Social Sharing -->
     <meta name="description" content="🖐️ Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου με Χειρομαντεία & Αστρολογία.">
     
-    <!-- Open Graph (Facebook, WhatsApp, Viber) -->
     <meta property="og:title" content="🖐️ LiFe LiNe - Χειρομαντεία με AI">
     <meta property="og:description" content="Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου με Χειρομαντεία & Αστρολογία.">
     <meta property="og:image" content="https://lifeline.franklymadear.com/lifeline.png">
@@ -20,14 +18,12 @@
     <meta property="og:site_name" content="LiFe LiNe - Χειρομαντεία">
     <meta property="og:locale" content="el_GR">
     
-    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="🖐️ LiFe LiNe - Χειρομαντεία με AI">
     <meta name="twitter:description" content="Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου.">
     <meta name="twitter:image" content="https://lifeline.franklymadear.com/lifeline.png">
     <meta name="twitter:image:alt" content="LiFe LiNe - Χειρομαντεία">
     
-    <!-- PWA -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="LiFe LiNe">
@@ -39,10 +35,8 @@
     <link rel="icon" type="image/png" sizes="512x512" href="lifeline.png">
     <link rel="shortcut icon" href="lifeline.png">
     
-    <!-- Web App Manifest -->
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22LiFe%20LiNe%20-%20%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%22%2C%22short_name%22%3A%22LiFe%20LiNe%22%2C%22description%22%3A%22%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%20%CE%BC%CE%B5%20AI%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231a0033%22%2C%22theme_color%22%3A%22%231a0033%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
     
-    <!-- Monetag SDK -->
     <script src='//libtl.com/sdk.js' data-zone='11042671' data-sdk='show_11042671'></script>
     
     <style>
@@ -92,7 +86,6 @@
         }
         .page.active { display: flex; }
 
-        /* ===== CONSENT MODAL ===== */
         #consent-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -386,7 +379,6 @@
             text-shadow: 0 0 10px rgba(155, 89, 182, 0.5);
         }
 
-        /* Αστεράκια γύρω από τον αστεροειδή */
         .comet-star {
             position: absolute;
             color: #FFD700;
@@ -424,9 +416,7 @@
             }
         }
 
-        /* ===== ΚΙΝΗΣΕΙΣ ΑΣΤΕΡΟΕΙΔΗ ===== */
-        
-        /* Κίνηση 1: Δεξιά προς Αριστερά */
+        /* ===== ΚΙΝΗΣΕΙΣ ΑΣΤΕΡΟΕΙΔΗ - ΑΡΓΕΣ & ΣΤΑΘΕΡΕΣ ===== */
         @keyframes cometRightToLeft {
             0% {
                 left: auto;
@@ -435,22 +425,18 @@
                 opacity: 0;
                 transform: scale(1);
             }
-            5% {
+            8% {
                 opacity: 1;
             }
-            45% {
+            85% {
                 left: auto;
                 right: 50%;
-                bottom: 40px;
+                bottom: 30px;
                 opacity: 1;
                 transform: scale(1);
             }
-            50% {
-                left: auto;
-                right: calc(100% + 250px);
-                bottom: 40px;
+            95% {
                 opacity: 0;
-                transform: scale(1);
             }
             100% {
                 left: auto;
@@ -461,39 +447,42 @@
             }
         }
 
-        /* Κίνηση 2: Pop-up από το βάθος */
         @keyframes cometPopUp {
             0% {
                 left: 50%;
                 right: auto;
                 bottom: 10px;
                 opacity: 0;
-                transform: scale(0.2) translateX(-50%);
-                filter: blur(4px);
+                transform: scale(0.3) translateX(-50%);
+                filter: blur(3px);
             }
-            15% {
-                opacity: 0.8;
-                transform: scale(1.1) translateX(-50%);
+            20% {
+                opacity: 1;
+                transform: scale(1.05) translateX(-50%);
                 filter: blur(0);
             }
-            30% {
+            40% {
                 opacity: 1;
                 transform: scale(1) translateX(-50%);
                 filter: blur(0);
             }
-            45% {
+            80% {
+                opacity: 0.8;
+                transform: scale(1.1) translateX(-50%);
+                filter: blur(0);
+            }
+            95% {
                 opacity: 0;
-                transform: scale(1.2) translateX(-50%);
-                filter: blur(2px);
+                transform: scale(0.3) translateX(-50%);
+                filter: blur(4px);
             }
             100% {
                 opacity: 0;
-                transform: scale(0.2) translateX(-50%);
+                transform: scale(0.3) translateX(-50%);
                 filter: blur(4px);
             }
         }
 
-        /* Κίνηση 3: Αριστερά προς Δεξιά */
         @keyframes cometLeftToRight {
             0% {
                 left: -250px;
@@ -502,22 +491,18 @@
                 opacity: 0;
                 transform: scale(1);
             }
-            5% {
+            8% {
                 opacity: 1;
             }
-            45% {
+            85% {
                 left: 50%;
                 right: auto;
-                bottom: 35px;
+                bottom: 50px;
                 opacity: 1;
                 transform: scale(1);
             }
-            50% {
-                left: calc(100% + 250px);
-                right: auto;
-                bottom: 35px;
+            95% {
                 opacity: 0;
-                transform: scale(1);
             }
             100% {
                 left: calc(100% + 250px);
@@ -528,7 +513,6 @@
             }
         }
 
-        /* Κίνηση 4: Από κάτω προς τη μέση */
         @keyframes cometBottomToMiddle {
             0% {
                 left: 50%;
@@ -539,18 +523,23 @@
             }
             15% {
                 opacity: 1;
-                bottom: 15px;
+                bottom: 10px;
                 transform: scale(1) translateX(-50%);
             }
-            35% {
+            45% {
                 opacity: 1;
                 bottom: 60px;
-                transform: scale(1.05) translateX(-50%);
+                transform: scale(1.03) translateX(-50%);
             }
-            50% {
+            75% {
+                opacity: 1;
+                bottom: 60px;
+                transform: scale(1) translateX(-50%);
+            }
+            90% {
                 opacity: 0;
                 bottom: 60px;
-                transform: scale(0.9) translateX(-50%);
+                transform: scale(0.8) translateX(-50%);
                 filter: blur(3px);
             }
             100% {
@@ -561,9 +550,9 @@
             }
         }
 
-        /* Σύνθετο animation που συνδυάζει όλες τις κινήσεις */
+        /* Σύνθετο animation - 24 δευτερόλεπτα, 6 δευτ. ανά φάση */
         @keyframes cometFullCycle {
-            /* Φάση 1: Δεξιά → Αριστερά (0% - 20%) */
+            /* Φάση 1: Δεξιά → Αριστερά (0% - 25%) - 6 δευτερόλεπτα */
             0% {
                 left: auto;
                 right: -250px;
@@ -571,49 +560,62 @@
                 opacity: 0;
                 transform: scale(1);
             }
-            2% { opacity: 1; }
-            17% {
+            4% { opacity: 1; }
+            21% {
                 left: auto;
                 right: 50%;
-                bottom: 40px;
+                bottom: 30px;
                 opacity: 1;
                 transform: scale(1);
             }
-            20% {
+            24.5% {
+                opacity: 0;
+            }
+            25% {
                 left: auto;
                 right: calc(100% + 250px);
-                bottom: 40px;
+                bottom: 30px;
                 opacity: 0;
                 transform: scale(1);
             }
 
-            /* Φάση 2: Pop-up από βάθος (20% - 40%) */
-            20.1% {
+            /* Φάση 2: Pop-up από βάθος (25% - 50%) - 6 δευτερόλεπτα */
+            25.1% {
                 left: 50%;
                 right: auto;
                 bottom: 10px;
                 opacity: 0;
-                transform: scale(0.2) translateX(-50%);
-                filter: blur(4px);
+                transform: scale(0.3) translateX(-50%);
+                filter: blur(3px);
             }
-            27% {
+            32% {
                 opacity: 1;
-                transform: scale(1.1) translateX(-50%);
+                transform: scale(1.05) translateX(-50%);
                 filter: blur(0);
             }
-            35% {
+            40% {
                 opacity: 1;
                 transform: scale(1) translateX(-50%);
                 filter: blur(0);
             }
-            40% {
+            46% {
+                opacity: 0.8;
+                transform: scale(1.1) translateX(-50%);
+                filter: blur(0);
+            }
+            49.5% {
+                opacity: 0;
+                transform: scale(0.3) translateX(-50%);
+                filter: blur(4px);
+            }
+            50% {
                 opacity: 0;
                 transform: scale(0.3) translateX(-50%);
                 filter: blur(4px);
             }
 
-            /* Φάση 3: Αριστερά → Δεξιά (40% - 60%) */
-            40.1% {
+            /* Φάση 3: Αριστερά → Δεξιά (50% - 75%) - 6 δευτερόλεπτα */
+            50.1% {
                 left: -250px;
                 right: auto;
                 bottom: 50px;
@@ -621,24 +623,27 @@
                 transform: scale(1);
                 filter: blur(0);
             }
-            42% { opacity: 1; }
-            57% {
+            54% { opacity: 1; }
+            71% {
                 left: 50%;
                 right: auto;
-                bottom: 35px;
+                bottom: 50px;
                 opacity: 1;
                 transform: scale(1);
             }
-            60% {
+            74.5% {
+                opacity: 0;
+            }
+            75% {
                 left: calc(100% + 250px);
                 right: auto;
-                bottom: 35px;
+                bottom: 50px;
                 opacity: 0;
                 transform: scale(1);
             }
 
-            /* Φάση 4: Κάτω → Μέση (60% - 80%) */
-            60.1% {
+            /* Φάση 4: Κάτω → Μέση (75% - 100%) - 6 δευτερόλεπτα */
+            75.1% {
                 left: 50%;
                 right: auto;
                 bottom: -80px;
@@ -646,44 +651,32 @@
                 transform: scale(0.8) translateX(-50%);
                 filter: blur(0);
             }
-            67% {
+            82% {
                 opacity: 1;
-                bottom: 15px;
+                bottom: 10px;
                 transform: scale(1) translateX(-50%);
             }
-            75% {
+            90% {
                 opacity: 1;
                 bottom: 60px;
-                transform: scale(1.05) translateX(-50%);
+                transform: scale(1.03) translateX(-50%);
             }
-            80% {
+            96% {
                 opacity: 0;
                 bottom: 60px;
                 transform: scale(0.5) translateX(-50%);
                 filter: blur(5px);
             }
-
-            /* Παύση πριν την επανάληψη (80% - 100%) */
-            80.1% {
-                left: auto;
-                right: -250px;
-                bottom: 30px;
-                opacity: 0;
-                transform: scale(1);
-                filter: blur(0);
-            }
             100% {
-                left: auto;
-                right: -250px;
-                bottom: 30px;
                 opacity: 0;
-                transform: scale(1);
-                filter: blur(0);
+                bottom: 60px;
+                transform: scale(0.5) translateX(-50%);
+                filter: blur(5px);
             }
         }
 
         .kafemanteia-comet.animating {
-            animation: cometFullCycle 12s linear infinite;
+            animation: cometFullCycle 24s linear infinite;
         }
 
         /* ===== SCAN PAGE ===== */
@@ -704,7 +697,6 @@
             font-size: clamp(0.75rem, 2vw, 0.9rem);
         }
 
-        /* ===== SELECTORS ROW ===== */
         .selectors-row {
             display: flex;
             justify-content: center;
@@ -778,7 +770,6 @@
             font-weight: 500;
         }
 
-        /* ===== TOPIC BUTTONS ===== */
         .topic-row {
             display: flex;
             flex-wrap: wrap;
@@ -826,7 +817,6 @@
             transform: scale(1.03);
         }
 
-        /* ===== CAMERA ===== */
         #camera-wrapper {
             position: relative;
             width: 100%;
@@ -890,7 +880,6 @@
             100% { top: 100%; opacity: 0; }
         }
 
-        /* ===== CONTROLS ===== */
         .controls-row {
             display: flex;
             justify-content: center;
@@ -934,11 +923,9 @@
             padding: 15px 20px;
         }
 
-        /* ===== UPLOAD ===== */
         #upload-preview-area { display: none; text-align: center; margin: 8px 0; }
         #upload-preview-img { max-width: 180px; width: 100%; border-radius: 20px; border: 2px solid var(--gold); }
 
-        /* ===== LOADING ===== */
         #loading-box {
             display: none;
             text-align: center;
@@ -972,7 +959,6 @@
 
         @keyframes mysticPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-        /* ===== AD MODAL ===== */
         #ad-modal-overlay {
             display: none;
             position: fixed;
@@ -1092,7 +1078,6 @@
             box-shadow: 0 0 40px rgba(46, 204, 113, 0.6);
         }
 
-        /* ===== RESULT AREA ===== */
         #result-area {
             display: none;
             background: var(--card);
@@ -1127,7 +1112,6 @@
         #result-text h2 { font-size: 1.2rem; margin: 15px 0 10px; color: var(--gold); }
         #result-text h3 { font-size: 1rem; margin: 10px 0 8px; color: #FFD700; }
 
-        /* ===== ΑΣΤΕΡΑΚΙΑ ===== */
         .result-star {
             position: absolute;
             color: #FFD700;
@@ -1156,7 +1140,6 @@
         }
         .btn-back:hover { background: rgba(255,215,0,0.1); border-color: var(--gold); color: var(--gold); }
 
-        /* ===== FOOTER ===== */
         #site-footer {
             position: relative;
             z-index: 2;
@@ -1222,7 +1205,6 @@
 
     <canvas id="starfield"></canvas>
 
-    <!-- ===== CONSENT OVERLAY ===== -->
     <div id="consent-overlay">
         <div id="consent-modal">
             <div class="consent-icon">🖐️</div>
@@ -1240,7 +1222,6 @@
         </div>
     </div>
 
-    <!-- ===== AD MODAL ===== -->
     <div id="ad-modal-overlay">
         <div id="ad-modal">
             <div class="modal-icon">📺</div>
@@ -1268,7 +1249,6 @@
             Ανακάλυψε το Πεπρωμένο σου
         </button>
         
-        <!-- FOOTER -->
         <div id="site-footer">
             <div class="footer-links">
                 <a href="terms.html" class="footer-link">📜 Όροι Χρήσης</a>
@@ -1277,7 +1257,7 @@
         </div>
     </div>
 
-    <!-- ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ (MONO ΣΤΟ SPLASH) ===== -->
+    <!-- ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ ===== -->
     <div id="kafemanteia-container">
         <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet animating" id="kafemanteia-comet">
             <span class="comet-star">✨</span>
@@ -1300,7 +1280,6 @@
             <p>Η Aziram διαβάζει την παλάμη σου</p>
         </div>
 
-        <!-- ROW 1: Gender + Birthdate -->
         <div class="selectors-row">
             <div class="selector-item">
                 <span class="selector-label">Φύλο</span>
@@ -1315,7 +1294,6 @@
             </div>
         </div>
 
-        <!-- ROW 2: Topic Buttons -->
         <div class="topic-row" id="topic-row">
             <button class="topic-btn active" onclick="selectTopic('Έρωτας & Σχέσεις', this)">❤️<br>Έρωτας & Σχέσεις</button>
             <button class="topic-btn" onclick="selectTopic('Καριέρα & Οικονομικά', this)">💼<br>Καριέρα & Οικονομικά</button>
@@ -1324,7 +1302,6 @@
             <button class="topic-btn" onclick="selectTopic('Κάρμα & Μελλοντικές Προκλήσεις', this)">🌀<br>Κάρμα & Προκλήσεις</button>
         </div>
 
-        <!-- CAMERA -->
         <div id="camera-wrapper">
             <video id="webcam" playsinline autoplay></video>
             <canvas id="overlay-canvas"></canvas>
@@ -1332,29 +1309,24 @@
             <div class="scan-line"></div>
         </div>
 
-        <!-- UPLOAD PREVIEW -->
         <div id="upload-preview-area">
             <p style="color:var(--gold);">✧ Η φωτογραφία είναι έτοιμη ✧</p>
             <img id="upload-preview-img" src="" alt="Preview">
         </div>
 
-        <!-- CONTROLS -->
         <div class="controls-row" id="controls-row">
             <button class="btn btn-gold" id="camera-btn" onclick="startCamera()">📷 Camera</button>
             <button class="btn btn-purple" onclick="document.getElementById('file-input').click()">📁 Upload</button>
             <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUpload(event)">
         </div>
 
-        <!-- ANALYZE BUTTON -->
         <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()">🔮 Αποκάλυψε το Πεπρωμένο μου</button>
 
-        <!-- LOADING -->
         <div id="loading-box">
             <div class="loading-text">🔮 Η Aziram διαβάζει τις γραμμές σου...</div>
             <div class="loading-spinner"></div>
         </div>
 
-        <!-- RESULT -->
         <div id="result-area">
             <h2>☽ Η Αποκάλυψη της Aziram ☾</h2>
             <div id="result-text"></div>
@@ -1363,7 +1335,6 @@
             </div>
         </div>
 
-        <!-- FOOTER -->
         <div id="site-footer">
             <div class="footer-links">
                 <a href="terms.html" class="footer-link">📜 Όροι Χρήσης</a>
@@ -1373,7 +1344,6 @@
     </div>
 
     <script>
-        // ===== CONSENT =====
         function checkConsent() {
             const consent = localStorage.getItem('lifeline_consent');
             if (consent === 'true') {
@@ -1390,7 +1360,6 @@
 
         checkConsent();
 
-        // ===== STARFIELD =====
         const starCanvas = document.getElementById('starfield');
         const starCtx = starCanvas.getContext('2d');
         let stars = [];
@@ -1425,20 +1394,16 @@
         }
         drawStars();
 
-        // ===== NAVIGATION =====
         function goToScan() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('scan-page').classList.add('active');
-            // Απόκρυψη του container του αστεροειδή
             document.getElementById('kafemanteia-container').style.display = 'none';
         }
         
         function goToSplash() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('splash-page').classList.add('active');
-            // Εμφάνιση του container του αστεροειδή
             document.getElementById('kafemanteia-container').style.display = 'block';
-            // Επανεκκίνηση του animation
             restartCometAnimation();
             stopCamera(); 
             resetScan();
@@ -1451,18 +1416,13 @@
             comet.classList.add('animating');
         }
 
-        // ===== HANDLE DISCOVER DESTINY BUTTON =====
         function handleDiscoverDestiny() {
-            // Μετά από 5 δευτερόλεπτα εμφανίζεται το ad modal
             setTimeout(() => {
                 showAdModal();
             }, 5000);
-            
-            // Αμέσως πηγαίνουμε στη σελίδα σκαναρίσματος
             goToScan();
         }
 
-        // ===== USER SELECTIONS =====
         let userGender = 'male';
         let userZodiac = 'Κριός';
         let userBirthdate = '';
@@ -1485,7 +1445,6 @@
             btn.classList.add('active');
         }
 
-        // ===== ZODIAC =====
         function getZodiacFromDate(dateString) {
             if (!dateString) return 'Κριός';
             const date = new Date(dateString);
@@ -1506,7 +1465,6 @@
             return 'Κριός';
         }
 
-        // ===== AD MODAL =====
         function showAdModal() {
             document.getElementById('ad-modal-overlay').classList.add('active');
             document.getElementById('btn-ad-now').style.display = 'inline-block';
@@ -1515,7 +1473,6 @@
 
         function showAd() {
             document.getElementById('btn-ad-now').style.display = 'none';
-            
             if (typeof show_11042671 === 'function') {
                 show_11042671().then(() => {
                     document.getElementById('btn-continue-ad').style.display = 'inline-block';
@@ -1531,7 +1488,6 @@
             document.getElementById('ad-modal-overlay').classList.remove('active');
         }
 
-        // ===== STARS =====
         function addStarsToResult() {
             const resultArea = document.getElementById('result-area');
             document.querySelectorAll('.result-star').forEach(s => s.remove());
@@ -1548,7 +1504,6 @@
             }
         }
 
-        // ===== CAMERA =====
         const video = document.getElementById('webcam');
         const overlayCanvas = document.getElementById('overlay-canvas');
         const overlayCtx = overlayCanvas.getContext('2d');
@@ -1593,7 +1548,6 @@
             return canvas.toDataURL('image/jpeg', 0.8);
         }
 
-        // ===== UPLOAD =====
         function handleUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1607,7 +1561,6 @@
             reader.readAsDataURL(file);
         }
 
-        // ===== API =====
         const API_URL = 'https://franklymadear-lifeline.hf.space/analyze';
 
         async function performAnalysis() {
@@ -1679,9 +1632,7 @@
             isAnalyzing = false;
         }
 
-        // ===== ΕΜΦΑΝΙΣΗ ΑΣΤΕΡΟΕΙΔΟΥΣ ΜΟΝΟ ΣΤΟ SPLASH =====
         document.getElementById('kafemanteia-container').style.display = 'block';
-        // Ξεκινάμε το animation
         document.getElementById('kafemanteia-comet').classList.add('animating');
     </script>
 </body>
