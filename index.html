@@ -705,16 +705,16 @@
             justify-content: center;
             gap: 8px;
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 10px 16px;
+            padding: 10px 14px;
             border: none;
             border-radius: 50px;
             font-weight: 700;
-            font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+            font-size: clamp(0.72rem, 1.7vw, 0.82rem);
             cursor: pointer;
             transition: all 0.4s;
             display: flex;
@@ -723,24 +723,90 @@
             gap: 5px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             flex: 1;
-            min-width: 90px;
-            max-width: 160px;
+            min-width: 70px;
+            max-width: 130px;
         }
 
         .btn:active { transform: scale(0.95); }
         .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-        .btn-gold { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; }
-        .btn-purple { background: linear-gradient(145deg, #9b59b6, #6a0dad); color: #fff; }
+        .btn-gold { 
+            background: linear-gradient(145deg, #FFD700, #B8860B); 
+            color: #1a0033; 
+        }
+        .btn-gold:hover { 
+            transform: scale(1.05) translateY(-2px); 
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.6); 
+        }
+        
+        .btn-purple { 
+            background: linear-gradient(145deg, #9b59b6, #6a0dad); 
+            color: #fff; 
+        }
+        .btn-purple:hover { 
+            transform: scale(1.05) translateY(-2px); 
+            box-shadow: 0 0 50px rgba(155, 89, 182, 0.6); 
+        }
+        
         .btn-green { 
             background: linear-gradient(145deg, #2ecc71, #1e8449); 
             color: #fff; 
             width: 100%; 
-            max-width: 450px; 
+            max-width: 300px;
             display: none;
             margin: 4px auto;
-            font-size: 0.95rem;
-            padding: 12px 18px;
+            font-size: 0.85rem;
+            padding: 10px 16px;
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.3);
+            animation: gentlePulse 3s infinite ease-in-out;
+        }
+        .btn-green:hover { 
+            transform: scale(1.05) translateY(-2px); 
+            box-shadow: 0 0 60px rgba(46, 204, 113, 0.6); 
+        }
+        .btn-green:active { transform: scale(0.95); }
+
+        /* Camera toggle buttons */
+        .camera-toggle-row {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            max-width: 500px;
+            flex-wrap: wrap;
+            margin-top: 2px;
+        }
+
+        .camera-toggle-btn {
+            padding: 8px 12px;
+            border: 2px solid rgba(255,215,0,0.25);
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.72rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(20, 10, 40, 0.6);
+            color: #c9a0dc;
+            flex: 1;
+            min-width: 70px;
+            max-width: 130px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .camera-toggle-btn.active {
+            background: linear-gradient(145deg, #FFD700, #B8860B);
+            color: #1a0033;
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .camera-toggle-btn:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
         }
 
         /* ===== UPLOAD ===== */
@@ -887,8 +953,10 @@
             .selector-item input { font-size: 0.75rem; padding: 6px 8px; }
             .gender-btn { padding: 6px 10px; font-size: 0.75rem; }
             .topic-btn { padding: 8px 6px; font-size: 0.65rem; min-width: 65px; max-width: 110px; }
-            .controls-row { gap: 6px; }
-            .btn { padding: 8px 12px; font-size: 0.75rem; min-width: 80px; }
+            .controls-row { gap: 5px; }
+            .btn { padding: 8px 10px; font-size: 0.7rem; min-width: 60px; max-width: 100px; }
+            .camera-toggle-btn { padding: 6px 10px; font-size: 0.68rem; min-width: 60px; max-width: 100px; }
+            .btn-green { max-width: 260px; font-size: 0.78rem; padding: 8px 14px; }
             #camera-wrapper { max-width: 100%; }
             #consent-modal { padding: 22px 16px; }
             #consent-modal h2 { font-size: 1.1rem; }
@@ -1052,11 +1120,21 @@
             <img id="upload-preview-img" src="" alt="Preview">
         </div>
 
-        <!-- CONTROLS -->
+        <!-- CAMERA CONTROLS -->
         <div class="controls-row" id="controls-row">
-            <button class="btn btn-gold" id="camera-btn" onclick="startCamera()" data-translate="true">📷 Camera</button>
+            <button class="btn btn-gold" id="camera-btn" onclick="startCamera()" data-translate="true">📷 Έναρξη</button>
             <button class="btn btn-purple" onclick="document.getElementById('file-input').click()" data-translate="true">📁 Upload</button>
             <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUpload(event)">
+        </div>
+
+        <!-- CAMERA TOGGLE BUTTONS -->
+        <div class="camera-toggle-row" id="camera-toggle-row" style="display:none;">
+            <button class="camera-toggle-btn active" id="selfie-btn" onclick="switchCamera('user')">
+                🤳 <span data-translate="true">Selfie</span>
+            </button>
+            <button class="camera-toggle-btn" id="back-btn" onclick="switchCamera('environment')">
+                📷 <span data-translate="true">Πίσω</span>
+            </button>
         </div>
 
         <!-- ANALYZE BUTTON -->
@@ -1290,7 +1368,7 @@
             var comet = document.getElementById('kafemanteia-comet');
             if (comet) {
                 comet.style.animation = 'none';
-                comet.offsetHeight; /* trigger reflow */
+                comet.offsetHeight;
                 comet.style.animation = 'rollUpBanner 7s ease-in-out infinite';
             }
         }
@@ -1377,6 +1455,7 @@
         var currentStream = null;
         var capturedImage = null;
         var isAnalyzing = false;
+        var currentFacingMode = 'user'; // Default: selfie κάμερα
 
         function resizeOverlay() {
             var wrapper = document.getElementById('camera-wrapper');
@@ -1387,31 +1466,91 @@
 
         async function startCamera() {
             try {
-                if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); }
+                if (currentStream) { 
+                    currentStream.getTracks().forEach(function(t) { t.stop(); }); 
+                }
                 currentStream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: 'environment', width: { ideal: 640 }, height: { ideal: 480 } }
+                    video: { 
+                        facingMode: currentFacingMode, 
+                        width: { ideal: 640 }, 
+                        height: { ideal: 480 } 
+                    }
                 });
                 video.srcObject = currentStream;
                 resizeOverlay();
                 document.getElementById('analyze-btn').style.display = 'block';
+                document.getElementById('camera-toggle-row').style.display = 'flex';
                 document.getElementById('camera-btn').disabled = true;
                 document.getElementById('camera-btn').innerText = '✅ Ready';
+                updateCameraToggleButtons();
             } catch (err) {
                 alert('Δεν μπόρεσα να ανοίξω την κάμερα. Δοκίμασε το Upload.');
             }
         }
-        function stopCamera() {
-            if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); currentStream = null; }
+
+        async function switchCamera(facingMode) {
+            if (currentFacingMode === facingMode) return; // Ήδη σε αυτή την κάμερα
+            currentFacingMode = facingMode;
+            
+            if (currentStream) {
+                // Σταμάτησε το τρέχον stream
+                currentStream.getTracks().forEach(function(t) { t.stop(); });
+                currentStream = null;
+            }
+            
+            try {
+                currentStream = await navigator.mediaDevices.getUserMedia({
+                    video: { 
+                        facingMode: currentFacingMode, 
+                        width: { ideal: 640 }, 
+                        height: { ideal: 480 } 
+                    }
+                });
+                video.srcObject = currentStream;
+                resizeOverlay();
+                updateCameraToggleButtons();
+                document.getElementById('camera-btn').disabled = true;
+                document.getElementById('camera-btn').innerText = '✅ Ready';
+            } catch (err) {
+                alert('Δεν ήταν δυνατή η εναλλαγή κάμερας.');
+            }
         }
+
+        function updateCameraToggleButtons() {
+            var selfieBtn = document.getElementById('selfie-btn');
+            var backBtn = document.getElementById('back-btn');
+            
+            selfieBtn.classList.toggle('active', currentFacingMode === 'user');
+            backBtn.classList.toggle('active', currentFacingMode === 'environment');
+        }
+
+        function stopCamera() {
+            if (currentStream) { 
+                currentStream.getTracks().forEach(function(t) { t.stop(); }); 
+                currentStream = null; 
+            }
+            document.getElementById('camera-toggle-row').style.display = 'none';
+            document.getElementById('camera-btn').disabled = false;
+            document.getElementById('camera-btn').innerText = '📷 Έναρξη';
+        }
+
         function capturePhoto() {
             if (!currentStream) return null;
             var canvas = document.createElement('canvas');
             canvas.width = video.videoWidth || 640;
             canvas.height = video.videoHeight || 480;
             var ctx = canvas.getContext('2d');
-            ctx.save(); ctx.scale(-1, 1);
-            ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
-            ctx.restore();
+            
+            // Αν είναι selfie κάμερα, κάνε mirror
+            if (currentFacingMode === 'user') {
+                ctx.save(); 
+                ctx.scale(-1, 1);
+                ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+                ctx.restore();
+            } else {
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            }
+            
             return canvas.toDataURL('image/jpeg', 0.8);
         }
 
@@ -1445,6 +1584,7 @@
             document.getElementById('result-area').style.display = 'none';
             document.getElementById('analyze-btn').style.display = 'none';
             document.getElementById('controls-row').style.display = 'none';
+            document.getElementById('camera-toggle-row').style.display = 'none';
             document.getElementById('topic-row').style.display = 'none';
             document.querySelector('.selectors-row').style.display = 'none';
 
@@ -1480,6 +1620,9 @@
             } finally {
                 document.getElementById('loading-box').style.display = 'none';
                 document.getElementById('controls-row').style.display = 'flex';
+                if (currentStream) {
+                    document.getElementById('camera-toggle-row').style.display = 'flex';
+                }
                 document.getElementById('topic-row').style.display = 'flex';
                 document.querySelector('.selectors-row').style.display = 'flex';
                 isAnalyzing = false;
@@ -1492,11 +1635,12 @@
             document.getElementById('loading-box').style.display = 'none';
             document.getElementById('analyze-btn').style.display = 'none';
             document.getElementById('controls-row').style.display = 'flex';
+            document.getElementById('camera-toggle-row').style.display = 'none';
             document.getElementById('topic-row').style.display = 'flex';
             document.querySelector('.selectors-row').style.display = 'flex';
             document.getElementById('upload-preview-area').style.display = 'none';
             document.getElementById('camera-btn').disabled = false;
-            document.getElementById('camera-btn').innerText = '📷 Camera';
+            document.getElementById('camera-btn').innerText = '📷 Έναρξη';
             capturedImage = null;
             isAnalyzing = false;
         }
