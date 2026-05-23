@@ -321,45 +321,67 @@
         .btn-mystic:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
         .btn-mystic:active { transform: scale(0.95); }
 
-        /* ===== GOOGLE TRANSLATE WIDGET ===== */
-        #google-translate-container {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 100;
-            background: rgba(20, 10, 40, 0.9);
-            border-radius: 12px;
-            padding: 8px 12px;
-            border: 2px solid rgba(155, 89, 182, 0.6);
-            box-shadow: 0 0 20px rgba(155, 89, 182, 0.4), 0 0 40px rgba(106, 13, 173, 0.2);
+        /* ===== CUSTOM LANGUAGE SELECTOR ===== */
+        #custom-language-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(20, 10, 40, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(155, 89, 182, 0.4);
+            border-radius: 30px;
+            padding: 8px 16px;
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 380px;
+            margin: 0 auto;
         }
+
+        #custom-language-selector .lang-label {
+            color: #c9a0dc;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            min-width: 60px;
+        }
+
+        #custom-language-selector select {
+            flex: 1;
+            background: rgba(10, 5, 25, 0.8);
+            color: #FFD700;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 8px 35px 8px 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FFD700' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            outline: none;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+        }
+
+        #custom-language-selector select:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+        }
+
+        #custom-language-selector select option {
+            background: #1a0a2e;
+            color: #e0c5f0;
+        }
+
+        /* Απόκρυψη του Google Translate Widget */
         #google_translate_element {
-            min-width: 140px;
-        }
-        .goog-te-banner-frame {
             display: none !important;
         }
-        .goog-te-gadget {
-            color: #e0c5f0 !important;
-            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif !important;
-            font-size: 13px !important;
-        }
-        .goog-te-gadget-simple {
-            background: transparent !important;
-            border: none !important;
-            color: #e0c5f0 !important;
-            font-size: 13px !important;
-            padding: 4px 8px !important;
-        }
-        .goog-te-gadget-simple span {
-            color: #e0c5f0 !important;
-        }
-        .goog-te-menu-value span {
-            color: #e0c5f0 !important;
-        }
-        .goog-te-menu-value:hover {
-            text-decoration: none !important;
-        }
+        .goog-te-banner-frame { display: none !important; }
         body { top: 0 !important; }
         .skiptranslate { display: none !important; }
         iframe.goog-te-banner-frame { display: none !important; }
@@ -811,18 +833,22 @@
             .kafemanteia-comet .comet-text { font-size: 0.85rem; }
             .kafemanteia-comet .comet-icon { font-size: 1.3rem; }
             #splash-page { padding-bottom: 100px; }
-            #google-translate-container { bottom: 10px; left: 10px; padding: 6px 10px; }
+            #custom-language-selector { padding: 6px 12px; gap: 6px; }
+            #custom-language-selector .lang-label { font-size: 0.7rem; min-width: 50px; }
+            #custom-language-selector select { font-size: 0.75rem; padding: 6px 28px 6px 10px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== ΑΜΕΣΟ SCRIPT ΓΙΑ ΤΟ CONSENT - ΤΡΕΧΕΙ ΠΡΙΝ ΦΟΡΤΩΣΕΙ Η ΣΕΛΙΔΑ ===== -->
+    <!-- ===== ΑΜΕΣΟ SCRIPT ΓΙΑ ΤΟ CONSENT ===== -->
     <script>
         (function() {
             var consent = localStorage.getItem('lifeline_consent');
             if (consent === 'true') {
-                document.documentElement.style.setProperty('--consent-hidden', 'none');
+                var style = document.createElement('style');
+                style.textContent = '#consent-overlay { display: none !important; }';
+                document.head.appendChild(style);
             }
         })();
     </script>
@@ -872,6 +898,41 @@
             Ανακάλυψε το Πεπρωμένο σου
         </button>
         
+        <!-- ===== CUSTOM LANGUAGE SELECTOR - ΚΑΤΩ ΑΠΟ ΤΟ ΚΟΥΜΠΙ ===== -->
+        <div id="custom-language-selector">
+            <span class="lang-label" id="lang-label">🌐 Γλώσσα</span>
+            <select id="language-select" onchange="changeLanguage(this.value)">
+                <option value="el">🇬🇷 Ελληνικά</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="it">🇮🇹 Italiano</option>
+                <option value="ar">🇸🇦 العربية</option>
+                <option value="zh-CN">🇨🇳 中文</option>
+                <option value="ja">🇯🇵 日本語</option>
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="tr">🇹🇷 Türkçe</option>
+                <option value="nl">🇳🇱 Nederlands</option>
+                <option value="pt">🇵🇹 Português</option>
+                <option value="sv">🇸🇪 Svenska</option>
+                <option value="no">🇳🇴 Norsk</option>
+                <option value="da">🇩🇰 Dansk</option>
+                <option value="fi">🇫🇮 Suomi</option>
+                <option value="pl">🇵🇱 Polski</option>
+                <option value="cs">🇨🇿 Čeština</option>
+                <option value="ro">🇷🇴 Română</option>
+                <option value="bg">🇧🇬 Български</option>
+                <option value="uk">🇺🇦 Українська</option>
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="hi">🇮🇳 हिन्दी</option>
+                <option value="vi">🇻🇳 Tiếng Việt</option>
+                <option value="th">🇹🇭 ไทย</option>
+                <option value="id">🇮🇩 Indonesia</option>
+                <option value="iw">🇮🇱 עברית</option>
+            </select>
+        </div>
+        
         <div id="site-footer">
             <div class="footer-links">
                 <a href="terms.html" class="footer-link">📜 Όροι Χρήσης</a>
@@ -893,10 +954,8 @@
         </a>
     </div>
 
-    <!-- ===== GOOGLE TRANSLATE WIDGET - ΜΕΤΑΚΙΝΗΘΗΚΕ ΑΡΙΣΤΕΡΑ ===== -->
-    <div id="google-translate-container">
-        <div id="google_translate_element"></div>
-    </div>
+    <!-- Google Translate Element (κρυφό, χρησιμοποιείται από το custom selector) -->
+    <div id="google_translate_element"></div>
 
     <div id="scan-page" class="page">
         <button class="btn-back" onclick="goToSplash()">☽ Επιστροφή</button>
@@ -976,15 +1035,14 @@
                 pageLanguage: 'el',
                 includedLanguages: 'en,de,fr,es,it,ar,zh-CN,ja,ru,tr,nl,pt,sv,no,da,fi,pl,cs,ro,bg,uk,ko,hi,vi,th,id,iw',
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: true,
-                multilanguagePage: true
+                autoDisplay: false
             }, 'google_translate_element');
         }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        // ===== CONSENT - ΑΜΕΣΟΣ ΕΛΕΓΧΟΣ ΠΡΙΝ ΦΑΝΕΙ ΟΤΙΔΗΠΟΤΕ =====
+        // ===== CONSENT - ΑΜΕΣΟΣ ΕΛΕΓΧΟΣ =====
         (function() {
             var consent = localStorage.getItem('lifeline_consent');
             if (consent === 'true') {
@@ -1013,6 +1071,80 @@
         }
 
         checkConsent();
+
+        // ===== CUSTOM LANGUAGE SELECTOR =====
+        function changeLanguage(lang) {
+            var select = document.querySelector('.goog-te-combo');
+            if (select) {
+                select.value = lang;
+                select.dispatchEvent(new Event('change'));
+            } else {
+                // Αν δεν υπάρχει ακόμα το Google combo, κάνουμε αναμονή
+                var attempts = 0;
+                var interval = setInterval(function() {
+                    var combo = document.querySelector('.goog-te-combo');
+                    if (combo) {
+                        combo.value = lang;
+                        combo.dispatchEvent(new Event('change'));
+                        clearInterval(interval);
+                    }
+                    attempts++;
+                    if (attempts > 50) clearInterval(interval);
+                }, 100);
+            }
+        }
+
+        // Αυτόματη ανίχνευση γλώσσας συσκευής και ρύθμιση του selector
+        function detectAndSetLanguage() {
+            var userLang = navigator.language || navigator.userLanguage;
+            var langCode = userLang.split('-')[0];
+            
+            // Αντιστοίχιση κωδικών γλώσσας
+            var langMap = {
+                'el': 'el', 'en': 'en', 'de': 'de', 'fr': 'fr', 'es': 'es',
+                'it': 'it', 'ar': 'ar', 'zh': 'zh-CN', 'ja': 'ja', 'ru': 'ru',
+                'tr': 'tr', 'nl': 'nl', 'pt': 'pt', 'sv': 'sv', 'no': 'no',
+                'da': 'da', 'fi': 'fi', 'pl': 'pl', 'cs': 'cs', 'ro': 'ro',
+                'bg': 'bg', 'uk': 'uk', 'ko': 'ko', 'hi': 'hi', 'vi': 'vi',
+                'th': 'th', 'id': 'id', 'he': 'iw', 'iw': 'iw'
+            };
+            
+            var mappedLang = langMap[langCode] || 'el';
+            
+            // Ρύθμιση του selector
+            var langSelect = document.getElementById('language-select');
+            if (langSelect) {
+                langSelect.value = mappedLang;
+            }
+            
+            // Αν δεν είναι ελληνικά, μετάφραση
+            if (mappedLang !== 'el') {
+                setTimeout(function() {
+                    changeLanguage(mappedLang);
+                }, 1500);
+            }
+
+            // Ρύθμιση της ετικέτας
+            var label = document.getElementById('lang-label');
+            if (label) {
+                var labelMap = {
+                    'el': '🌐 Γλώσσα', 'en': '🌐 Language', 'de': '🌐 Sprache',
+                    'fr': '🌐 Langue', 'es': '🌐 Idioma', 'it': '🌐 Lingua',
+                    'ar': '🌐 اللغة', 'zh-CN': '🌐 语言', 'ja': '🌐 言語',
+                    'ru': '🌐 Язык', 'tr': '🌐 Dil', 'nl': '🌐 Taal',
+                    'pt': '🌐 Idioma', 'sv': '🌐 Språk', 'no': '🌐 Språk',
+                    'da': '🌐 Sprog', 'fi': '🌐 Kieli', 'pl': '🌐 Język',
+                    'cs': '🌐 Jazyk', 'ro': '🌐 Limbă', 'bg': '🌐 Език',
+                    'uk': '🌐 Мова', 'ko': '🌐 언어', 'hi': '🌐 भाषा',
+                    'vi': '🌐 Ngôn ngữ', 'th': '🌐 ภาษา', 'id': '🌐 Bahasa',
+                    'iw': '🌐 שפה'
+                };
+                label.textContent = labelMap[mappedLang] || '🌐 Language';
+            }
+        }
+
+        // Εκτέλεση ανίχνευσης γλώσσας
+        detectAndSetLanguage();
 
         const starCanvas = document.getElementById('starfield');
         const starCtx = starCanvas.getContext('2d');
