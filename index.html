@@ -198,7 +198,7 @@
             gap: 20px;
             animation: fadeInUp 1s ease;
             position: relative;
-            padding-bottom: 120px; /* Χώρος για τον αστεροειδή */
+            padding-bottom: 120px;
         }
 
         @keyframes fadeInUp {
@@ -335,10 +335,10 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 200px;
+            height: 150px;
             z-index: 5;
             pointer-events: none;
-            overflow: visible;
+            overflow: hidden;
         }
 
         .kafemanteia-comet {
@@ -349,7 +349,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(20, 10, 40, 0.7);
+            background: rgba(20, 10, 40, 0.75);
             backdrop-filter: blur(8px);
             border: 2px solid rgba(155, 89, 182, 0.6);
             border-radius: 50px;
@@ -358,9 +358,9 @@
                 0 0 30px rgba(155, 89, 182, 0.4),
                 0 0 60px rgba(106, 13, 173, 0.3),
                 0 0 100px rgba(255, 215, 0, 0.1);
-            transition: all 0.3s ease;
-            animation: cometWander 8s infinite ease-in-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             white-space: nowrap;
+            will-change: transform, opacity, left, right, bottom;
         }
 
         .kafemanteia-comet:hover {
@@ -371,7 +371,6 @@
                 0 0 120px rgba(255, 215, 0, 0.3);
             border-color: var(--purple-light);
             background: rgba(30, 15, 50, 0.95);
-            animation-play-state: paused;
         }
 
         .kafemanteia-comet .comet-icon {
@@ -425,68 +424,266 @@
             }
         }
 
-        @keyframes cometWander {
+        /* ===== ΚΙΝΗΣΕΙΣ ΑΣΤΕΡΟΕΙΔΗ ===== */
+        
+        /* Κίνηση 1: Δεξιά προς Αριστερά */
+        @keyframes cometRightToLeft {
             0% {
-                right: -200px;
                 left: auto;
-                bottom: 20px;
-                opacity: 0;
-                transform: scale(0.6) translateZ(-50px);
-                filter: blur(2px);
-            }
-            10% {
-                opacity: 1;
-                transform: scale(1) translateZ(0);
-                filter: blur(0);
-            }
-            25% {
-                right: 20%;
-                left: auto;
-                bottom: 60px;
-                opacity: 1;
-                transform: scale(1.05) translateZ(10px);
-                filter: blur(0);
-            }
-            40% {
-                right: auto;
-                left: 50%;
+                right: -250px;
                 bottom: 30px;
-                opacity: 0.9;
-                transform: scale(0.95) translateZ(0);
-                filter: blur(0);
+                opacity: 0;
+                transform: scale(1);
             }
-            55% {
-                right: auto;
-                left: 20%;
-                bottom: 80px;
+            5% {
                 opacity: 1;
-                transform: scale(1.02) translateZ(5px);
-                filter: blur(0);
             }
-            70% {
-                right: auto;
-                left: -200px;
+            45% {
+                left: auto;
+                right: 50%;
+                bottom: 40px;
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                left: auto;
+                right: calc(100% + 250px);
                 bottom: 40px;
                 opacity: 0;
-                transform: scale(0.7) translateZ(-30px);
-                filter: blur(3px);
+                transform: scale(1);
             }
-            85% {
-                right: -200px;
+            100% {
                 left: auto;
-                bottom: 20px;
+                right: calc(100% + 250px);
+                bottom: 30px;
                 opacity: 0;
-                transform: scale(0.6) translateZ(-50px);
+                transform: scale(1);
+            }
+        }
+
+        /* Κίνηση 2: Pop-up από το βάθος */
+        @keyframes cometPopUp {
+            0% {
+                left: 50%;
+                right: auto;
+                bottom: 10px;
+                opacity: 0;
+                transform: scale(0.2) translateX(-50%);
+                filter: blur(4px);
+            }
+            15% {
+                opacity: 0.8;
+                transform: scale(1.1) translateX(-50%);
+                filter: blur(0);
+            }
+            30% {
+                opacity: 1;
+                transform: scale(1) translateX(-50%);
+                filter: blur(0);
+            }
+            45% {
+                opacity: 0;
+                transform: scale(1.2) translateX(-50%);
                 filter: blur(2px);
             }
             100% {
-                right: -200px;
-                left: auto;
-                bottom: 20px;
                 opacity: 0;
-                transform: scale(0.6) translateZ(-50px);
-                filter: blur(2px);
+                transform: scale(0.2) translateX(-50%);
+                filter: blur(4px);
             }
+        }
+
+        /* Κίνηση 3: Αριστερά προς Δεξιά */
+        @keyframes cometLeftToRight {
+            0% {
+                left: -250px;
+                right: auto;
+                bottom: 50px;
+                opacity: 0;
+                transform: scale(1);
+            }
+            5% {
+                opacity: 1;
+            }
+            45% {
+                left: 50%;
+                right: auto;
+                bottom: 35px;
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                left: calc(100% + 250px);
+                right: auto;
+                bottom: 35px;
+                opacity: 0;
+                transform: scale(1);
+            }
+            100% {
+                left: calc(100% + 250px);
+                right: auto;
+                bottom: 50px;
+                opacity: 0;
+                transform: scale(1);
+            }
+        }
+
+        /* Κίνηση 4: Από κάτω προς τη μέση */
+        @keyframes cometBottomToMiddle {
+            0% {
+                left: 50%;
+                right: auto;
+                bottom: -80px;
+                opacity: 0;
+                transform: scale(0.8) translateX(-50%);
+            }
+            15% {
+                opacity: 1;
+                bottom: 15px;
+                transform: scale(1) translateX(-50%);
+            }
+            35% {
+                opacity: 1;
+                bottom: 60px;
+                transform: scale(1.05) translateX(-50%);
+            }
+            50% {
+                opacity: 0;
+                bottom: 60px;
+                transform: scale(0.9) translateX(-50%);
+                filter: blur(3px);
+            }
+            100% {
+                opacity: 0;
+                bottom: 60px;
+                transform: scale(0.5) translateX(-50%);
+                filter: blur(5px);
+            }
+        }
+
+        /* Σύνθετο animation που συνδυάζει όλες τις κινήσεις */
+        @keyframes cometFullCycle {
+            /* Φάση 1: Δεξιά → Αριστερά (0% - 20%) */
+            0% {
+                left: auto;
+                right: -250px;
+                bottom: 30px;
+                opacity: 0;
+                transform: scale(1);
+            }
+            2% { opacity: 1; }
+            17% {
+                left: auto;
+                right: 50%;
+                bottom: 40px;
+                opacity: 1;
+                transform: scale(1);
+            }
+            20% {
+                left: auto;
+                right: calc(100% + 250px);
+                bottom: 40px;
+                opacity: 0;
+                transform: scale(1);
+            }
+
+            /* Φάση 2: Pop-up από βάθος (20% - 40%) */
+            20.1% {
+                left: 50%;
+                right: auto;
+                bottom: 10px;
+                opacity: 0;
+                transform: scale(0.2) translateX(-50%);
+                filter: blur(4px);
+            }
+            27% {
+                opacity: 1;
+                transform: scale(1.1) translateX(-50%);
+                filter: blur(0);
+            }
+            35% {
+                opacity: 1;
+                transform: scale(1) translateX(-50%);
+                filter: blur(0);
+            }
+            40% {
+                opacity: 0;
+                transform: scale(0.3) translateX(-50%);
+                filter: blur(4px);
+            }
+
+            /* Φάση 3: Αριστερά → Δεξιά (40% - 60%) */
+            40.1% {
+                left: -250px;
+                right: auto;
+                bottom: 50px;
+                opacity: 0;
+                transform: scale(1);
+                filter: blur(0);
+            }
+            42% { opacity: 1; }
+            57% {
+                left: 50%;
+                right: auto;
+                bottom: 35px;
+                opacity: 1;
+                transform: scale(1);
+            }
+            60% {
+                left: calc(100% + 250px);
+                right: auto;
+                bottom: 35px;
+                opacity: 0;
+                transform: scale(1);
+            }
+
+            /* Φάση 4: Κάτω → Μέση (60% - 80%) */
+            60.1% {
+                left: 50%;
+                right: auto;
+                bottom: -80px;
+                opacity: 0;
+                transform: scale(0.8) translateX(-50%);
+                filter: blur(0);
+            }
+            67% {
+                opacity: 1;
+                bottom: 15px;
+                transform: scale(1) translateX(-50%);
+            }
+            75% {
+                opacity: 1;
+                bottom: 60px;
+                transform: scale(1.05) translateX(-50%);
+            }
+            80% {
+                opacity: 0;
+                bottom: 60px;
+                transform: scale(0.5) translateX(-50%);
+                filter: blur(5px);
+            }
+
+            /* Παύση πριν την επανάληψη (80% - 100%) */
+            80.1% {
+                left: auto;
+                right: -250px;
+                bottom: 30px;
+                opacity: 0;
+                transform: scale(1);
+                filter: blur(0);
+            }
+            100% {
+                left: auto;
+                right: -250px;
+                bottom: 30px;
+                opacity: 0;
+                transform: scale(1);
+                filter: blur(0);
+            }
+        }
+
+        .kafemanteia-comet.animating {
+            animation: cometFullCycle 12s linear infinite;
         }
 
         /* ===== SCAN PAGE ===== */
@@ -1082,7 +1279,7 @@
 
     <!-- ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ (MONO ΣΤΟ SPLASH) ===== -->
     <div id="kafemanteia-container">
-        <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet" id="kafemanteia-comet">
+        <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet animating" id="kafemanteia-comet">
             <span class="comet-star">✨</span>
             <span class="comet-star">⭐</span>
             <span class="comet-star">💫</span>
@@ -1232,22 +1429,26 @@
         function goToScan() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('scan-page').classList.add('active');
-            // Απόκρυψη του αστεροειδή όταν φεύγουμε από το splash
+            // Απόκρυψη του container του αστεροειδή
             document.getElementById('kafemanteia-container').style.display = 'none';
         }
         
         function goToSplash() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('splash-page').classList.add('active');
-            // Εμφάνιση του αστεροειδή όταν επιστρέφουμε στο splash
+            // Εμφάνιση του container του αστεροειδή
             document.getElementById('kafemanteia-container').style.display = 'block';
             // Επανεκκίνηση του animation
-            const comet = document.getElementById('kafemanteia-comet');
-            comet.style.animation = 'none';
-            comet.offsetHeight;
-            comet.style.animation = 'cometWander 8s infinite ease-in-out';
+            restartCometAnimation();
             stopCamera(); 
             resetScan();
+        }
+
+        function restartCometAnimation() {
+            const comet = document.getElementById('kafemanteia-comet');
+            comet.classList.remove('animating');
+            void comet.offsetWidth;
+            comet.classList.add('animating');
         }
 
         // ===== HANDLE DISCOVER DESTINY BUTTON =====
@@ -1480,6 +1681,8 @@
 
         // ===== ΕΜΦΑΝΙΣΗ ΑΣΤΕΡΟΕΙΔΟΥΣ ΜΟΝΟ ΣΤΟ SPLASH =====
         document.getElementById('kafemanteia-container').style.display = 'block';
+        // Ξεκινάμε το animation
+        document.getElementById('kafemanteia-comet').classList.add('animating');
     </script>
 </body>
 </html>
