@@ -1023,15 +1023,26 @@
     <canvas id="starfield"></canvas>
 
     <!-- ===== FACEBOOK ESCAPE OVERLAY ===== -->
-    <div id="fb-escape-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); backdrop-filter:blur(10px); z-index:99999; align-items:center; justify-content:center; padding:20px;">
+    <div id="fb-escape-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); backdrop-filter:blur(10px); z-index:99999; align-items:center; justify-content:center; padding:20px; flex-direction:column; gap:15px;">
         <div style="background:linear-gradient(145deg, #1a0e2a, #2a1a3a); border:3px solid #FFD700; border-radius:25px; padding:35px 25px; max-width:480px; width:100%; text-align:center; box-shadow:0 0 60px rgba(255,215,0,0.4);">
             <div style="font-size:3rem; margin-bottom:15px;">⚠️</div>
             <h2 style="color:#FFD700; font-size:1.3rem; margin-bottom:12px; letter-spacing:1px;">Άνοιγμα σε εξωτερικό browser</h2>
             <p style="color:#d5c8e8; font-size:0.9rem; line-height:1.6; margin-bottom:20px;">
                 Για να λειτουργήσει σωστά η εφαρμογή, πρέπει να ανοίξει σε κανονικό browser (Chrome, Safari κλπ).
             </p>
-            <a id="fb-escape-link" href="https://lifeline.franklymadear.com" style="display:inline-block; background:linear-gradient(145deg, #FFD700, #B8860B); color:#1a0033; padding:15px 30px; border-radius:50px; text-decoration:none; font-weight:700; font-size:1rem; letter-spacing:1px; box-shadow:0 0 30px rgba(255,215,0,0.3);">📱 ΑΝΟΙΓΜΑ ΣΤΟΝ BROWSER</a>
-            <p style="color:#b9a6d4; font-size:0.75rem; margin-top:15px;">Πατήστε το κουμπί και επιλέξτε "Άνοιγμα στο Chrome/Safari"</p>
+            <button id="fb-escape-link" style="display:inline-block; background:linear-gradient(145deg, #FFD700, #B8860B); color:#1a0033; padding:15px 30px; border-radius:50px; text-decoration:none; font-weight:700; font-size:1rem; letter-spacing:1px; box-shadow:0 0 30px rgba(255,215,0,0.3); cursor:pointer; border:none; width:100%; max-width:300px;">
+                📱 ΑΝΟΙΓΜΑ ΣΤΟΝ BROWSER
+            </button>
+            <p style="color:#b9a6d4; font-size:0.75rem; margin-top:15px;">Πατήστε το κουμπί παραπάνω για να ανοίξει η σελίδα στον browser σας</p>
+        </div>
+        
+        <!-- Δεύτερη επιλογή: Χειροκίνητες οδηγίες -->
+        <div style="background:rgba(20,10,40,0.9); border:2px solid rgba(255,215,0,0.3); border-radius:20px; padding:20px; max-width:480px; width:100%; text-align:center;">
+            <p style="color:#FFD700; font-size:0.9rem; margin-bottom:10px; font-weight:700;">🔄 Εναλλακτικός τρόπος:</p>
+            <p style="color:#d5c8e8; font-size:0.8rem; line-height:1.6;">
+                <strong>1.</strong> Πατήστε τις <strong>τρεις τελείες (⋮)</strong> πάνω δεξιά<br>
+                <strong>2.</strong> Επιλέξτε <strong>"Άνοιγμα στον Browser"</strong> ή <strong>"Open in Chrome/Safari"</strong>
+            </p>
         </div>
     </div>
 
