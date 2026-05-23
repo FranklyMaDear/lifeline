@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>LiFe LiNe - Χειρομαντεία με AI</title>
     
+    <!-- Meta για Social Sharing -->
     <meta name="description" content="🖐️ Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου με Χειρομαντεία & Αστρολογία.">
     
+    <!-- Open Graph (Facebook, WhatsApp, Viber) -->
     <meta property="og:title" content="🖐️ LiFe LiNe - Χειρομαντεία με AI">
     <meta property="og:description" content="Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου με Χειρομαντεία & Αστρολογία.">
     <meta property="og:image" content="https://lifeline.franklymadear.com/lifeline.png">
@@ -18,12 +20,14 @@
     <meta property="og:site_name" content="LiFe LiNe - Χειρομαντεία">
     <meta property="og:locale" content="el_GR">
     
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="🖐️ LiFe LiNe - Χειρομαντεία με AI">
     <meta name="twitter:description" content="Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου.">
     <meta name="twitter:image" content="https://lifeline.franklymadear.com/lifeline.png">
     <meta name="twitter:image:alt" content="LiFe LiNe - Χειρομαντεία">
     
+    <!-- PWA -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="LiFe LiNe">
@@ -35,8 +39,10 @@
     <link rel="icon" type="image/png" sizes="512x512" href="lifeline.png">
     <link rel="shortcut icon" href="lifeline.png">
     
-    <link rel="manifest" href="/manifest.json">
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22LiFe%20LiNe%20-%20%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%22%2C%22short_name%22%3A%22LiFe%20LiNe%22%2C%22description%22%3A%22%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%20%CE%BC%CE%B5%20AI%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231a0033%22%2C%22theme_color%22%3A%22%231a0033%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
     
+    <!-- Monetag SDK -->
     <script src='//libtl.com/sdk.js' data-zone='11042671' data-sdk='show_11042671'></script>
     
     <style>
@@ -86,6 +92,7 @@
         }
         .page.active { display: flex; }
 
+        /* ===== LANGUAGE BAR ===== */
         #language-bar {
             display: flex; align-items: center; gap: 8px;
             background: rgba(20, 10, 40, 0.8); backdrop-filter: blur(8px);
@@ -135,6 +142,7 @@
         }
         #reset-lang-btn:hover { transform: scale(1.1); box-shadow: 0 0 25px rgba(155, 89, 182, 0.6); }
 
+        /* ===== CONSENT MODAL ===== */
         #consent-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -234,6 +242,7 @@
             box-shadow: 0 0 50px rgba(255, 215, 0, 0.6);
         }
 
+        /* ===== SPLASH PAGE ===== */
         #splash-page {
             text-align: center;
             gap: 20px;
@@ -361,48 +370,7 @@
         .btn-mystic:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
         .btn-mystic:active { transform: scale(0.95); }
 
-        #pwa-install-btn {
-            background: linear-gradient(145deg, #9b59b6, #6a0dad);
-            color: #fff;
-            padding: 14px 35px;
-            border: 2px solid rgba(255, 215, 0, 0.4);
-            border-radius: 60px;
-            font-size: clamp(0.85rem, 2vw, 1rem);
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 0 30px rgba(155, 89, 182, 0.3), 0 6px 20px rgba(0,0,0,0.4);
-            transition: all 0.4s;
-            letter-spacing: 1px;
-            width: 90%;
-            max-width: 380px;
-            position: relative;
-            z-index: 2;
-            display: none;
-        }
-
-        #pwa-install-btn:hover {
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 0 50px rgba(155, 89, 182, 0.6);
-            border-color: var(--gold);
-        }
-
-        .ios-pwa-hint {
-            display: none;
-            color: #c9a0dc;
-            font-size: 0.8rem;
-            margin-top: 8px;
-            padding: 10px;
-            background: rgba(20, 10, 40, 0.7);
-            border-radius: 15px;
-            border: 1px solid rgba(255,215,0,0.2);
-            max-width: 380px;
-            width: 90%;
-            text-align: center;
-            line-height: 1.6;
-            position: relative;
-            z-index: 2;
-        }
-
+        /* ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ (ΝΕΟ ΣΥΣΤΗΜΑ) ===== */
         #kafemanteia-container {
             position: fixed; bottom: 0; left: 0; width: 100%; height: 150px;
             z-index: 5; pointer-events: none; overflow: visible;
@@ -451,17 +419,50 @@
             50% { opacity: 1; transform: translate(5px, -8px) scale(1.3); }
         }
 
+        /* Κίνηση 1: Από δεξιά προς αριστερά */
+        @keyframes cometRightToLeft {
+            0% { left: auto; right: -300px; bottom: 30px; opacity: 0; transform: scale(1); }
+            5% { opacity: 1; }
+            40% { left: auto; right: calc(100% + 300px); bottom: 30px; opacity: 1; transform: scale(1); }
+            45% { opacity: 0; }
+            50% { left: auto; right: calc(100% + 300px); bottom: 30px; opacity: 0; transform: scale(1); }
+            100% { left: auto; right: calc(100% + 300px); bottom: 30px; opacity: 0; transform: scale(1); }
+        }
+
+        /* Κίνηση 2: Από αριστερά προς δεξιά */
+        @keyframes cometLeftToRight {
+            0% { left: -300px; right: auto; bottom: 50px; opacity: 0; transform: scale(1); }
+            5% { opacity: 1; }
+            40% { left: calc(100% + 300px); right: auto; bottom: 50px; opacity: 1; transform: scale(1); }
+            45% { opacity: 0; }
+            50% { left: calc(100% + 300px); right: auto; bottom: 50px; opacity: 0; transform: scale(1); }
+            100% { left: calc(100% + 300px); right: auto; bottom: 50px; opacity: 0; transform: scale(1); }
+        }
+
+        /* Κίνηση 3: Από το βάθος μπροστά στην οθόνη και εξαφάνιση */
+        @keyframes cometDepthForward {
+            0% { left: 50%; right: auto; bottom: -80px; opacity: 0; transform: scale(0.3) translateX(-50%); }
+            15% { opacity: 1; bottom: 10px; transform: scale(1.1) translateX(-50%); }
+            35% { opacity: 1; bottom: 40px; transform: scale(1) translateX(-50%); }
+            45% { opacity: 0; bottom: 60px; transform: scale(1.2) translateX(-50%); }
+            50% { opacity: 0; bottom: 60px; transform: scale(1.2) translateX(-50%); }
+            100% { opacity: 0; bottom: 60px; transform: scale(1.2) translateX(-50%); }
+        }
+
+        /* Συνδυασμένο animation με τις 3 κινήσεις διαδοχικά */
         @keyframes cometTripleMotion {
             0% { left: auto; right: -300px; bottom: 30px; opacity: 0; transform: scale(1); }
             3% { opacity: 1; }
             20% { left: auto; right: calc(100% + 300px); bottom: 30px; opacity: 1; transform: scale(1); }
             24% { opacity: 0; }
             25% { left: auto; right: calc(100% + 300px); bottom: 30px; opacity: 0; transform: scale(1); }
+            /* Παύση πριν την επόμενη κίνηση */
             28% { left: -300px; right: auto; bottom: 50px; opacity: 0; transform: scale(1); }
             31% { opacity: 1; }
             48% { left: calc(100% + 300px); right: auto; bottom: 50px; opacity: 1; transform: scale(1); }
             52% { opacity: 0; }
             55% { left: calc(100% + 300px); right: auto; bottom: 50px; opacity: 0; transform: scale(1); }
+            /* Παύση πριν την τρίτη κίνηση */
             58% { left: 50%; right: auto; bottom: -80px; opacity: 0; transform: scale(0.3) translateX(-50%); }
             63% { opacity: 1; bottom: 10px; transform: scale(1.1) translateX(-50%); }
             83% { opacity: 1; bottom: 40px; transform: scale(1) translateX(-50%); }
@@ -471,6 +472,7 @@
         
         .kafemanteia-comet.animating { animation: cometTripleMotion 30s ease-in-out infinite; }
 
+        /* ===== SCAN PAGE ===== */
         #scan-page { gap: 12px; padding-top: 10px; padding-bottom: 25px; }
 
         .scan-header { text-align: center; width: 100%; }
@@ -488,6 +490,7 @@
             font-size: clamp(0.75rem, 2vw, 0.9rem);
         }
 
+        /* ===== SELECTORS ROW ===== */
         .selectors-row {
             display: flex;
             justify-content: center;
@@ -561,6 +564,7 @@
             font-weight: 500;
         }
 
+        /* ===== TOPIC BUTTONS ===== */
         .topic-row {
             display: flex;
             flex-wrap: wrap;
@@ -608,6 +612,7 @@
             transform: scale(1.03);
         }
 
+        /* ===== CAMERA ===== */
         #camera-wrapper {
             position: relative;
             width: 100%;
@@ -671,6 +676,7 @@
             100% { top: 100%; opacity: 0; }
         }
 
+        /* ===== CONTROLS ===== */
         .controls-row {
             display: flex;
             justify-content: center;
@@ -714,9 +720,11 @@
             padding: 15px 20px;
         }
 
+        /* ===== UPLOAD ===== */
         #upload-preview-area { display: none; text-align: center; margin: 8px 0; }
         #upload-preview-img { max-width: 180px; width: 100%; border-radius: 20px; border: 2px solid var(--gold); }
 
+        /* ===== LOADING ===== */
         #loading-box {
             display: none;
             text-align: center;
@@ -750,6 +758,7 @@
 
         @keyframes mysticPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
+        /* ===== AD MODAL ===== */
         #ad-modal-overlay {
             display: none;
             position: fixed;
@@ -869,6 +878,7 @@
             box-shadow: 0 0 40px rgba(46, 204, 113, 0.6);
         }
 
+        /* ===== RESULT AREA ===== */
         #result-area {
             display: none;
             background: var(--card);
@@ -903,6 +913,7 @@
         #result-text h2 { font-size: 1.2rem; margin: 15px 0 10px; color: var(--gold); }
         #result-text h3 { font-size: 1rem; margin: 10px 0 8px; color: #FFD700; }
 
+        /* ===== ΑΣΤΕΡΑΚΙΑ ===== */
         .result-star {
             position: absolute;
             color: #FFD700;
@@ -931,6 +942,7 @@
         }
         .btn-back:hover { background: rgba(255,215,0,0.1); border-color: var(--gold); color: var(--gold); }
 
+        /* ===== FOOTER ===== */
         #site-footer {
             position: relative;
             z-index: 2;
@@ -992,29 +1004,6 @@
 
     <canvas id="starfield"></canvas>
 
-    <!-- ===== FACEBOOK ESCAPE OVERLAY ===== -->
-    <div id="fb-escape-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); backdrop-filter:blur(10px); z-index:99999; align-items:center; justify-content:center; padding:20px; flex-direction:column; gap:15px;">
-        <div style="background:linear-gradient(145deg, #1a0e2a, #2a1a3a); border:3px solid #FFD700; border-radius:25px; padding:35px 25px; max-width:480px; width:100%; text-align:center; box-shadow:0 0 60px rgba(255,215,0,0.4);">
-            <div style="font-size:3rem; margin-bottom:15px;">⚠️</div>
-            <h2 style="color:#FFD700; font-size:1.3rem; margin-bottom:12px; letter-spacing:1px;">Άνοιγμα σε εξωτερικό browser</h2>
-            <p style="color:#d5c8e8; font-size:0.9rem; line-height:1.6; margin-bottom:20px;">
-                Για να λειτουργήσει σωστά η εφαρμογή, πρέπει να ανοίξει σε κανονικό browser (Chrome, Safari κλπ).
-            </p>
-            <button id="fb-escape-btn" style="display:inline-block; background:linear-gradient(145deg, #FFD700, #B8860B); color:#1a0033; padding:15px 30px; border-radius:50px; text-decoration:none; font-weight:700; font-size:1rem; letter-spacing:1px; box-shadow:0 0 30px rgba(255,215,0,0.3); cursor:pointer; border:none; width:100%; max-width:300px;">
-                📱 ΑΝΟΙΓΜΑ ΣΤΟΝ BROWSER
-            </button>
-            <p style="color:#b9a6d4; font-size:0.75rem; margin-top:15px;">Πατήστε το κουμπί παραπάνω για να ανοίξει η σελίδα στον browser σας</p>
-        </div>
-        
-        <div style="background:rgba(20,10,40,0.9); border:2px solid rgba(255,215,0,0.3); border-radius:20px; padding:20px; max-width:480px; width:100%; text-align:center;">
-            <p style="color:#FFD700; font-size:0.9rem; margin-bottom:10px; font-weight:700;">🔄 Εναλλακτικός τρόπος:</p>
-            <p style="color:#d5c8e8; font-size:0.8rem; line-height:1.6;">
-                <strong>1.</strong> Πατήστε τις <strong>τρεις τελείες (⋮)</strong> πάνω δεξιά<br>
-                <strong>2.</strong> Επιλέξτε <strong>"Άνοιγμα στον Browser"</strong> ή <strong>"Open in Chrome/Safari"</strong>
-            </p>
-        </div>
-    </div>
-
     <!-- ===== CONSENT OVERLAY ===== -->
     <div id="consent-overlay">
         <div id="consent-modal">
@@ -1057,6 +1046,7 @@
             Τοποθέτησε την παλάμη σου μπροστά στην κάμερα. Η Aziram, η προσωπική σου Χειρομάντισσα και Αστρολόγος, θα αποκαλύψει τα μυστικά των γραμμών σου.
         </div>
         
+        <!-- ===== LANGUAGE BAR ===== -->
         <div id="language-bar">
             <span class="lang-label" id="lang-label">🌐 Γλώσσα</span>
             <select id="language-select">
@@ -1095,15 +1085,7 @@
         
         <button class="btn-mystic" onclick="handleDiscoverDestiny()" data-translate="true">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
         
-        <button class="btn-mystic" id="pwa-install-btn" style="display:none; background:linear-gradient(145deg, #9b59b6, #6a0dad); color:#fff; border:2px solid rgba(255,215,0,0.4);">
-            📱 Προσθήκη στην Αρχική Οθόνη
-        </button>
-        
-        <div class="ios-pwa-hint" id="ios-pwa-hint">
-            📱 <strong>Για να προσθέσετε την εφαρμογή στην αρχική οθόνη:</strong><br>
-            Πατήστε το κουμπί <span style="display:inline-block; width:18px; height:18px; background:#007AFF; border-radius:4px; vertical-align:middle; margin:0 2px;"><span style="color:#fff; font-size:12px; position:relative; top:-1px;">↑</span></span> <strong>Share</strong> και μετά <strong>"Προσθήκη στην Αρχική Οθόνη"</strong>
-        </div>
-        
+        <!-- FOOTER -->
         <div id="site-footer">
             <div class="footer-links">
                 <a href="terms.html" class="footer-link" data-translate="true">📜 Όροι Χρήσης</a>
@@ -1112,7 +1094,7 @@
         </div>
     </div>
 
-    <!-- ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ ===== -->
+    <!-- ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ (ΝΕΟ ΣΥΣΤΗΜΑ ΜΕ 3 ΚΙΝΗΣΕΙΣ) ===== -->
     <div id="kafemanteia-container">
         <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet animating" id="kafemanteia-comet">
             <span class="comet-star">✨</span>
@@ -1122,7 +1104,7 @@
             <span class="comet-star">🌟</span>
             <span class="comet-star">💫</span>
             <span class="comet-icon">🔮</span>
-            <span class="comet-text">Omen-Καφεμαντεία</span>
+            <span class="comet-text">Καφεμαντεία</span>
         </a>
     </div>
 
@@ -1135,6 +1117,7 @@
             <p data-translate="true">Η Aziram διαβάζει την παλάμη σου</p>
         </div>
 
+        <!-- ROW 1: Gender + Birthdate -->
         <div class="selectors-row">
             <div class="selector-item">
                 <span class="selector-label" data-translate="true">Φύλο</span>
@@ -1149,6 +1132,7 @@
             </div>
         </div>
 
+        <!-- ROW 2: Topic Buttons -->
         <div class="topic-row" id="topic-row">
             <button class="topic-btn active" onclick="selectTopic('Έρωτας & Σχέσεις', this)" data-translate="true">❤️<br>Έρωτας & Σχέσεις</button>
             <button class="topic-btn" onclick="selectTopic('Καριέρα & Οικονομικά', this)" data-translate="true">💼<br>Καριέρα & Οικονομικά</button>
@@ -1157,6 +1141,7 @@
             <button class="topic-btn" onclick="selectTopic('Κάρμα & Μελλοντικές Προκλήσεις', this)" data-translate="true">🌀<br>Κάρμα & Προκλήσεις</button>
         </div>
 
+        <!-- CAMERA -->
         <div id="camera-wrapper">
             <video id="webcam" playsinline autoplay></video>
             <canvas id="overlay-canvas"></canvas>
@@ -1164,24 +1149,29 @@
             <div class="scan-line"></div>
         </div>
 
+        <!-- UPLOAD PREVIEW -->
         <div id="upload-preview-area">
             <p style="color:var(--gold);" data-translate="true">✧ Η φωτογραφία είναι έτοιμη ✧</p>
             <img id="upload-preview-img" src="" alt="Preview">
         </div>
 
+        <!-- CONTROLS -->
         <div class="controls-row" id="controls-row">
             <button class="btn btn-gold" id="camera-btn" onclick="startCamera()" data-translate="true">📷 Camera</button>
             <button class="btn btn-purple" onclick="document.getElementById('file-input').click()" data-translate="true">📁 Upload</button>
             <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUpload(event)">
         </div>
 
+        <!-- ANALYZE BUTTON -->
         <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()" data-translate="true">🔮 Αποκάλυψε το Πεπρωμένο μου</button>
 
+        <!-- LOADING -->
         <div id="loading-box">
             <div class="loading-text" data-translate="true">🔮 Η Aziram διαβάζει τις γραμμές σου...</div>
             <div class="loading-spinner"></div>
         </div>
 
+        <!-- RESULT -->
         <div id="result-area">
             <h2 data-translate="true">☽ Η Αποκάλυψη της Aziram ☾</h2>
             <div id="result-text"></div>
@@ -1190,6 +1180,7 @@
             </div>
         </div>
 
+        <!-- FOOTER -->
         <div id="site-footer">
             <div class="footer-links">
                 <a href="terms.html" class="footer-link" data-translate="true">📜 Όροι Χρήσης</a>
@@ -1199,124 +1190,6 @@
     </div>
 
     <script>
-        // ===== FACEBOOK / IN-APP BROWSER ESCAPE =====
-        (function() {
-            var ua = navigator.userAgent || navigator.vendor || window.opera;
-            var isFB = (ua.indexOf('FBAN') > -1 || ua.indexOf('FBAV') > -1);
-            var isIG = (ua.indexOf('Instagram') > -1);
-            var isMessenger = (ua.indexOf('Messenger') > -1);
-            var isInAppBrowser = isFB || isIG || isMessenger;
-            var isAndroid = ua.indexOf('Android') > -1;
-            var isIOS = /iPad|iPhone|iPod/.test(ua);
-            var currentUrl = window.location.href;
-            
-            if (isInAppBrowser) {
-                var overlay = document.getElementById('fb-escape-overlay');
-                overlay.style.display = 'flex';
-                
-                var escapeBtn = document.getElementById('fb-escape-btn');
-                
-                // Κάνουμε το κουμπί να ανοίγει ΣΙΓΟΥΡΑ σε browser
-                escapeBtn.onclick = function() {
-                    if (isAndroid) {
-                        // Μέθοδος 1: Intent για Chrome
-                        var intentUrl = 'intent://' + currentUrl.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;end';
-                        window.location.href = intentUrl;
-                        
-                        // Μέθοδος 2: googlechrome:// URL scheme
-                        setTimeout(function() {
-                            var chromeUrl = 'googlechrome://navigate?url=' + encodeURIComponent(currentUrl);
-                            window.location.href = chromeUrl;
-                        }, 300);
-                        
-                        // Μέθοδος 3: Απευθείας redirect (ως έσχατη λύση)
-                        setTimeout(function() {
-                            window.top.location.href = currentUrl;
-                        }, 800);
-                    } 
-                    else if (isIOS) {
-                        // Μέθοδος για iOS: Αλλάζουμε το window.location για να σπάσουμε το WebView
-                        window.open(currentUrl, '_blank');
-                        
-                        // Δεύτερη προσπάθεια με διαφορετικό τρόπο
-                        setTimeout(function() {
-                            var a = document.createElement('a');
-                            a.href = currentUrl;
-                            a.target = '_blank';
-                            a.rel = 'noopener noreferrer';
-                            document.body.appendChild(a);
-                            a.click();
-                            document.body.removeChild(a);
-                        }, 200);
-                    }
-                    else {
-                        // Desktop ή άλλες συσκευές
-                        window.open(currentUrl, '_blank', 'noopener,noreferrer');
-                    }
-                    
-                    return false;
-                };
-                
-                // Προσπάθεια αυτόματου ανοίγματος
-                if (isAndroid) {
-                    setTimeout(function() {
-                        var intentUrl = 'intent://' + currentUrl.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;end';
-                        window.location.href = intentUrl;
-                    }, 500);
-                }
-            }
-        })();
-
-        // ===== SERVICE WORKER REGISTRATION =====
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                    console.log('Service Worker registered:', registration.scope);
-                }).catch(function(error) {
-                    console.log('Service Worker registration failed:', error);
-                });
-            });
-        }
-
-        // ===== PWA INSTALL =====
-        let deferredPrompt;
-        const pwaInstallBtn = document.getElementById('pwa-install-btn');
-        const iosPwaHint = document.getElementById('ios-pwa-hint');
-
-        window.addEventListener('beforeinstallprompt', function(e) {
-            e.preventDefault();
-            deferredPrompt = e;
-            pwaInstallBtn.style.display = 'block';
-        });
-
-        pwaInstallBtn.addEventListener('click', function() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(function(choiceResult) {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted install');
-                        pwaInstallBtn.style.display = 'none';
-                    }
-                    deferredPrompt = null;
-                });
-            }
-        });
-
-        window.addEventListener('appinstalled', function() {
-            pwaInstallBtn.style.display = 'none';
-        });
-
-        function detectIOS() {
-            var ua = navigator.userAgent;
-            var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
-            var isStandalone = window.navigator.standalone;
-            
-            if (isIOS && !isStandalone) {
-                iosPwaHint.style.display = 'block';
-            }
-        }
-        detectIOS();
-
         // ===== CONSENT =====
         function checkConsent() {
             const consent = localStorage.getItem('lifeline_consent');
@@ -1513,6 +1386,7 @@
         }
         drawStars();
 
+        // ===== ΕΠΑΝΕΚΚΙΝΗΣΗ ΑΣΤΕΡΟΕΙΔΗ =====
         function restartComet() {
             var comet = document.getElementById('kafemanteia-comet');
             if (comet) {
@@ -1522,6 +1396,7 @@
             }
         }
 
+        // ===== NAVIGATION =====
         function goToScan() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('scan-page').classList.add('active');
@@ -1537,14 +1412,16 @@
             resetScan();
         }
 
+        // ===== HANDLE DISCOVER DESTINY BUTTON =====
         function handleDiscoverDestiny() {
-            goToScan();
-            
-            setTimeout(function() {
+            setTimeout(() => {
                 showAdModal();
             }, 5000);
+            
+            goToScan();
         }
 
+        // ===== USER SELECTIONS =====
         let userGender = 'male';
         let userZodiac = 'Κριός';
         let userBirthdate = '';
@@ -1567,6 +1444,7 @@
             btn.classList.add('active');
         }
 
+        // ===== ZODIAC =====
         function getZodiacFromDate(dateString) {
             if (!dateString) return 'Κριός';
             const date = new Date(dateString);
@@ -1587,6 +1465,7 @@
             return 'Κριός';
         }
 
+        // ===== AD MODAL =====
         function showAdModal() {
             document.getElementById('ad-modal-overlay').classList.add('active');
             document.getElementById('btn-ad-now').style.display = 'inline-block';
@@ -1611,6 +1490,7 @@
             document.getElementById('ad-modal-overlay').classList.remove('active');
         }
 
+        // ===== STARS =====
         function addStarsToResult() {
             const resultArea = document.getElementById('result-area');
             document.querySelectorAll('.result-star').forEach(s => s.remove());
@@ -1627,6 +1507,7 @@
             }
         }
 
+        // ===== CAMERA =====
         const video = document.getElementById('webcam');
         const overlayCanvas = document.getElementById('overlay-canvas');
         const overlayCtx = overlayCanvas.getContext('2d');
@@ -1671,6 +1552,7 @@
             return canvas.toDataURL('image/jpeg', 0.8);
         }
 
+        // ===== UPLOAD =====
         function handleUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1684,6 +1566,7 @@
             reader.readAsDataURL(file);
         }
 
+        // ===== API =====
         const API_URL = 'https://franklymadear-lifeline.hf.space/analyze';
 
         async function performAnalysis() {
