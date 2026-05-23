@@ -185,7 +185,6 @@
             box-shadow: 0 0 50px rgba(255, 215, 0, 0.6);
         }
 
-        /* ===== SPLASH PAGE ===== */
         #splash-page {
             text-align: center;
             gap: 20px;
@@ -342,7 +341,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(20, 10, 40, 0.75);
+            background: rgba(20, 10, 40, 0.8);
             backdrop-filter: blur(8px);
             border: 2px solid rgba(155, 89, 182, 0.6);
             border-radius: 50px;
@@ -416,141 +415,7 @@
             }
         }
 
-        /* ===== ΚΙΝΗΣΕΙΣ ΑΣΤΕΡΟΕΙΔΗ - ΑΡΓΕΣ & ΣΤΑΘΕΡΕΣ ===== */
-        @keyframes cometRightToLeft {
-            0% {
-                left: auto;
-                right: -250px;
-                bottom: 30px;
-                opacity: 0;
-                transform: scale(1);
-            }
-            8% {
-                opacity: 1;
-            }
-            85% {
-                left: auto;
-                right: 50%;
-                bottom: 30px;
-                opacity: 1;
-                transform: scale(1);
-            }
-            95% {
-                opacity: 0;
-            }
-            100% {
-                left: auto;
-                right: calc(100% + 250px);
-                bottom: 30px;
-                opacity: 0;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes cometPopUp {
-            0% {
-                left: 50%;
-                right: auto;
-                bottom: 10px;
-                opacity: 0;
-                transform: scale(0.3) translateX(-50%);
-                filter: blur(3px);
-            }
-            20% {
-                opacity: 1;
-                transform: scale(1.05) translateX(-50%);
-                filter: blur(0);
-            }
-            40% {
-                opacity: 1;
-                transform: scale(1) translateX(-50%);
-                filter: blur(0);
-            }
-            80% {
-                opacity: 0.8;
-                transform: scale(1.1) translateX(-50%);
-                filter: blur(0);
-            }
-            95% {
-                opacity: 0;
-                transform: scale(0.3) translateX(-50%);
-                filter: blur(4px);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0.3) translateX(-50%);
-                filter: blur(4px);
-            }
-        }
-
-        @keyframes cometLeftToRight {
-            0% {
-                left: -250px;
-                right: auto;
-                bottom: 50px;
-                opacity: 0;
-                transform: scale(1);
-            }
-            8% {
-                opacity: 1;
-            }
-            85% {
-                left: 50%;
-                right: auto;
-                bottom: 50px;
-                opacity: 1;
-                transform: scale(1);
-            }
-            95% {
-                opacity: 0;
-            }
-            100% {
-                left: calc(100% + 250px);
-                right: auto;
-                bottom: 50px;
-                opacity: 0;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes cometBottomToMiddle {
-            0% {
-                left: 50%;
-                right: auto;
-                bottom: -80px;
-                opacity: 0;
-                transform: scale(0.8) translateX(-50%);
-            }
-            15% {
-                opacity: 1;
-                bottom: 10px;
-                transform: scale(1) translateX(-50%);
-            }
-            45% {
-                opacity: 1;
-                bottom: 60px;
-                transform: scale(1.03) translateX(-50%);
-            }
-            75% {
-                opacity: 1;
-                bottom: 60px;
-                transform: scale(1) translateX(-50%);
-            }
-            90% {
-                opacity: 0;
-                bottom: 60px;
-                transform: scale(0.8) translateX(-50%);
-                filter: blur(3px);
-            }
-            100% {
-                opacity: 0;
-                bottom: 60px;
-                transform: scale(0.5) translateX(-50%);
-                filter: blur(5px);
-            }
-        }
-
-        /* Σύνθετο animation - 24 δευτερόλεπτα, 6 δευτ. ανά φάση */
+        /* ===== ΚΙΝΗΣΕΙΣ ΑΣΤΕΡΟΕΙΔΗ - ΚΑΘΑΡΕΣ, ΑΡΓΕΣ & ΣΤΑΘΕΡΕΣ ===== */
         @keyframes cometFullCycle {
             /* Φάση 1: Δεξιά → Αριστερά (0% - 25%) - 6 δευτερόλεπτα */
             0% {
@@ -558,15 +423,15 @@
                 right: -250px;
                 bottom: 30px;
                 opacity: 0;
-                transform: scale(1);
             }
-            4% { opacity: 1; }
+            4% { 
+                opacity: 1; 
+            }
             21% {
                 left: auto;
                 right: 50%;
                 bottom: 30px;
                 opacity: 1;
-                transform: scale(1);
             }
             24.5% {
                 opacity: 0;
@@ -576,7 +441,6 @@
                 right: calc(100% + 250px);
                 bottom: 30px;
                 opacity: 0;
-                transform: scale(1);
             }
 
             /* Φάση 2: Pop-up από βάθος (25% - 50%) - 6 δευτερόλεπτα */
@@ -586,32 +450,22 @@
                 bottom: 10px;
                 opacity: 0;
                 transform: scale(0.3) translateX(-50%);
-                filter: blur(3px);
             }
             32% {
                 opacity: 1;
                 transform: scale(1.05) translateX(-50%);
-                filter: blur(0);
             }
-            40% {
+            42% {
                 opacity: 1;
                 transform: scale(1) translateX(-50%);
-                filter: blur(0);
             }
-            46% {
-                opacity: 0.8;
-                transform: scale(1.1) translateX(-50%);
-                filter: blur(0);
-            }
-            49.5% {
+            48% {
                 opacity: 0;
                 transform: scale(0.3) translateX(-50%);
-                filter: blur(4px);
             }
             50% {
                 opacity: 0;
                 transform: scale(0.3) translateX(-50%);
-                filter: blur(4px);
             }
 
             /* Φάση 3: Αριστερά → Δεξιά (50% - 75%) - 6 δευτερόλεπτα */
@@ -621,9 +475,10 @@
                 bottom: 50px;
                 opacity: 0;
                 transform: scale(1);
-                filter: blur(0);
             }
-            54% { opacity: 1; }
+            54% { 
+                opacity: 1; 
+            }
             71% {
                 left: 50%;
                 right: auto;
@@ -649,29 +504,26 @@
                 bottom: -80px;
                 opacity: 0;
                 transform: scale(0.8) translateX(-50%);
-                filter: blur(0);
             }
             82% {
                 opacity: 1;
                 bottom: 10px;
                 transform: scale(1) translateX(-50%);
             }
-            90% {
+            92% {
                 opacity: 1;
                 bottom: 60px;
-                transform: scale(1.03) translateX(-50%);
+                transform: scale(1) translateX(-50%);
             }
-            96% {
+            98% {
                 opacity: 0;
                 bottom: 60px;
-                transform: scale(0.5) translateX(-50%);
-                filter: blur(5px);
+                transform: scale(0.8) translateX(-50%);
             }
             100% {
                 opacity: 0;
                 bottom: 60px;
-                transform: scale(0.5) translateX(-50%);
-                filter: blur(5px);
+                transform: scale(0.8) translateX(-50%);
             }
         }
 
@@ -679,7 +531,6 @@
             animation: cometFullCycle 24s linear infinite;
         }
 
-        /* ===== SCAN PAGE ===== */
         #scan-page { gap: 12px; padding-top: 10px; padding-bottom: 25px; }
 
         .scan-header { text-align: center; width: 100%; }
@@ -1232,7 +1083,6 @@
         </div>
     </div>
 
-    <!-- ===== SPLASH PAGE ===== -->
     <div id="splash-page" class="page active">
         <div class="logo-container" onclick="goToScan()">
             <div class="logo-circle">
@@ -1257,7 +1107,6 @@
         </div>
     </div>
 
-    <!-- ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ ===== -->
     <div id="kafemanteia-container">
         <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet animating" id="kafemanteia-comet">
             <span class="comet-star">✨</span>
@@ -1271,7 +1120,6 @@
         </a>
     </div>
 
-    <!-- ===== SCAN PAGE ===== -->
     <div id="scan-page" class="page">
         <button class="btn-back" onclick="goToSplash()">☽ Επιστροφή</button>
         
