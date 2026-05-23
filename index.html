@@ -41,10 +41,7 @@
     
     <!-- Web App Manifest -->
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22LiFe%20LiNe%20-%20%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%22%2C%22short_name%22%3A%22LiFe%20LiNe%22%2C%22description%22%3A%22%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%20%CE%BC%CE%B5%20AI%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231a0033%22%2C%22theme_color%22%3A%22%231a0033%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
-    
-    <!-- Monetag SDK -->
-    <script src='//libtl.com/sdk.js' data-zone='11042671' data-sdk='show_11042671'></script>
-    
+
     <style>
         :root {
             --gold: #FFD700;
@@ -58,15 +55,26 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
+        html, body {
+            position: fixed;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            height: 100vh;
+            height: 100dvh;
+        }
+
         body {
             font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
             background: var(--bg);
-            min-height: 100vh;
             color: #f0e6ff;
-            overflow-x: hidden;
             background-image: 
                 radial-gradient(ellipse at top, rgba(106, 13, 173, 0.3) 0%, transparent 50%),
                 radial-gradient(ellipse at bottom, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         #starfield {
@@ -84,11 +92,13 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            padding: 15px;
+            height: 100%;
             width: 100%;
             max-width: 700px;
             margin: 0 auto;
+            overflow-y: auto;
+            padding: 15px;
+            -webkit-overflow-scrolling: touch;
         }
         .page.active { display: flex; }
 
@@ -248,7 +258,9 @@
             gap: 20px;
             animation: fadeInUp 1s ease;
             position: relative;
-            padding-bottom: 120px;
+            padding-bottom: 80px;
+            justify-content: flex-start;
+            padding-top: 10px;
         }
 
         @keyframes fadeInUp {
@@ -256,10 +268,29 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
+        #pwa-prompt {
+            background: rgba(255, 215, 0, 0.15);
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            border-radius: 25px;
+            padding: 10px 20px;
+            margin-bottom: 5px;
+            color: var(--gold);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(5px);
+            animation: gentlePulse 3s infinite ease-in-out;
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
         .logo-container {
             position: relative;
-            width: 140px;
-            height: 140px;
+            width: 120px;
+            height: 120px;
             margin: 0 auto;
             animation: floatLogo 4s infinite ease-in-out;
             cursor: pointer;
@@ -274,13 +305,13 @@
         }
 
         .logo-circle {
-            width: 140px; height: 140px;
+            width: 120px; height: 120px;
             border-radius: 50%;
             background: linear-gradient(135deg, #2a0040, #1a0030, #0d0020);
             border: 4px solid var(--gold);
             box-shadow: 0 0 40px rgba(255, 215, 0, 0.4), 0 0 80px rgba(106, 13, 173, 0.3), inset 0 0 40px rgba(255, 215, 0, 0.1);
             display: flex; align-items: center; justify-content: center;
-            font-size: 4.5rem;
+            font-size: 4rem;
             position: relative; overflow: hidden;
         }
 
@@ -301,7 +332,7 @@
             position: relative; z-index: 1;
             filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
             animation: pulseHand 2s infinite ease-in-out;
-            font-size: 4.5rem;
+            font-size: 4rem;
         }
 
         @keyframes pulseHand {
@@ -370,38 +401,51 @@
         .btn-mystic:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
         .btn-mystic:active { transform: scale(0.95); }
 
-        /* ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ (ΝΕΟ ΣΥΣΤΗΜΑ) ===== */
+        /* ===== ΚΑΦΕΜΑΝΤΕΙΑ ROLL-UP BANNER ===== */
         #kafemanteia-container {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 150px;
-            z-index: 5; pointer-events: none; overflow: visible;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            z-index: 15;
+            pointer-events: none;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
         }
+
         .kafemanteia-comet {
-            position: absolute; cursor: pointer; pointer-events: auto;
+            position: absolute;
+            bottom: -70px;
+            cursor: pointer; pointer-events: auto;
             text-decoration: none; display: flex; align-items: center; gap: 8px;
             background: rgba(20, 10, 40, 0.85); backdrop-filter: blur(8px);
             border: 2px solid rgba(255, 215, 0, 0.5); border-radius: 50px;
-            padding: 12px 22px;
+            padding: 10px 22px;
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.2), 0 0 60px rgba(155, 89, 182, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            white-space: nowrap; will-change: transform, opacity, left, right, bottom;
-            transform: scale(1);
+            white-space: nowrap;
+            animation: rollUpBanner 7s ease-in-out infinite;
+            will-change: transform, bottom;
         }
         .kafemanteia-comet:hover {
-            transform: scale(1.1) !important;
+            transform: scale(1.05) !important;
             box-shadow: 0 0 50px rgba(255, 215, 0, 0.5), 0 0 80px rgba(155, 89, 182, 0.4);
             border-color: var(--gold); background: rgba(30, 15, 50, 0.95);
         }
         .kafemanteia-comet .comet-icon {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             animation: crystalGlow 2s infinite ease-in-out;
         }
         .kafemanteia-comet .comet-text {
-            color: var(--gold); font-weight: 700; font-size: 1rem;
+            color: var(--gold); font-weight: 700; font-size: 0.9rem;
             letter-spacing: 2px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
         .comet-star {
             position: absolute; color: #FFD700; pointer-events: none;
-            animation: starOrbit 3s infinite ease-in-out; font-size: 0.9rem;
+            animation: starOrbit 3s infinite ease-in-out; font-size: 0.8rem;
         }
         .comet-star:nth-child(2) { animation-delay: 0s; top: -15px; left: -10px; }
         .comet-star:nth-child(3) { animation-delay: 0.5s; top: -10px; right: -15px; }
@@ -418,59 +462,14 @@
             0%, 100% { opacity: 0.2; transform: translate(0, 0) scale(0.8); }
             50% { opacity: 1; transform: translate(5px, -8px) scale(1.3); }
         }
-
-        /* Κίνηση 1: Από δεξιά προς αριστερά */
-        @keyframes cometRightToLeft {
-            0% { left: auto; right: -300px; bottom: 30px; opacity: 0; transform: scale(1); }
-            5% { opacity: 1; }
-            40% { left: auto; right: calc(100% + 300px); bottom: 30px; opacity: 1; transform: scale(1); }
-            45% { opacity: 0; }
-            50% { left: auto; right: calc(100% + 300px); bottom: 30px; opacity: 0; transform: scale(1); }
-            100% { left: auto; right: calc(100% + 300px); bottom: 30px; opacity: 0; transform: scale(1); }
-        }
-
-        /* Κίνηση 2: Από αριστερά προς δεξιά */
-        @keyframes cometLeftToRight {
-            0% { left: -300px; right: auto; bottom: 50px; opacity: 0; transform: scale(1); }
-            5% { opacity: 1; }
-            40% { left: calc(100% + 300px); right: auto; bottom: 50px; opacity: 1; transform: scale(1); }
-            45% { opacity: 0; }
-            50% { left: calc(100% + 300px); right: auto; bottom: 50px; opacity: 0; transform: scale(1); }
-            100% { left: calc(100% + 300px); right: auto; bottom: 50px; opacity: 0; transform: scale(1); }
-        }
-
-        /* Κίνηση 3: Από το βάθος μπροστά στην οθόνη και εξαφάνιση */
-        @keyframes cometDepthForward {
-            0% { left: 50%; right: auto; bottom: -80px; opacity: 0; transform: scale(0.3) translateX(-50%); }
-            15% { opacity: 1; bottom: 10px; transform: scale(1.1) translateX(-50%); }
-            35% { opacity: 1; bottom: 40px; transform: scale(1) translateX(-50%); }
-            45% { opacity: 0; bottom: 60px; transform: scale(1.2) translateX(-50%); }
-            50% { opacity: 0; bottom: 60px; transform: scale(1.2) translateX(-50%); }
-            100% { opacity: 0; bottom: 60px; transform: scale(1.2) translateX(-50%); }
-        }
-
-        /* Συνδυασμένο animation με τις 3 κινήσεις διαδοχικά */
-        @keyframes cometTripleMotion {
-            0% { left: auto; right: -300px; bottom: 30px; opacity: 0; transform: scale(1); }
-            3% { opacity: 1; }
-            20% { left: auto; right: calc(100% + 300px); bottom: 30px; opacity: 1; transform: scale(1); }
-            24% { opacity: 0; }
-            25% { left: auto; right: calc(100% + 300px); bottom: 30px; opacity: 0; transform: scale(1); }
-            /* Παύση πριν την επόμενη κίνηση */
-            28% { left: -300px; right: auto; bottom: 50px; opacity: 0; transform: scale(1); }
-            31% { opacity: 1; }
-            48% { left: calc(100% + 300px); right: auto; bottom: 50px; opacity: 1; transform: scale(1); }
-            52% { opacity: 0; }
-            55% { left: calc(100% + 300px); right: auto; bottom: 50px; opacity: 0; transform: scale(1); }
-            /* Παύση πριν την τρίτη κίνηση */
-            58% { left: 50%; right: auto; bottom: -80px; opacity: 0; transform: scale(0.3) translateX(-50%); }
-            63% { opacity: 1; bottom: 10px; transform: scale(1.1) translateX(-50%); }
-            83% { opacity: 1; bottom: 40px; transform: scale(1) translateX(-50%); }
-            93% { opacity: 0; bottom: 60px; transform: scale(1.2) translateX(-50%); }
-            100% { opacity: 0; bottom: 60px; transform: scale(1.2) translateX(-50%); }
-        }
         
-        .kafemanteia-comet.animating { animation: cometTripleMotion 30s ease-in-out infinite; }
+        @keyframes rollUpBanner {
+            0% { bottom: -70px; transform: translateX(0); }
+            10% { bottom: 15px; transform: translateX(0); }
+            80% { bottom: 15px; transform: translateX(0); }
+            90% { bottom: -70px; transform: translateX(0); }
+            100% { bottom: -70px; transform: translateX(0); }
+        }
 
         /* ===== SCAN PAGE ===== */
         #scan-page { gap: 12px; padding-top: 10px; padding-bottom: 25px; }
@@ -616,7 +615,7 @@
         #camera-wrapper {
             position: relative;
             width: 100%;
-            max-width: 400px;
+            max-width: 350px;
             margin: 8px auto;
             border-radius: 25px;
             overflow: hidden;
@@ -758,126 +757,6 @@
 
         @keyframes mysticPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-        /* ===== AD MODAL ===== */
-        #ad-modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 9998;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        #ad-modal-overlay.active { display: flex; }
-
-        #ad-modal {
-            background: linear-gradient(145deg, #1a0e2a, #2a1a3a);
-            border: 3px solid var(--gold);
-            border-radius: 20px;
-            padding: 30px 25px;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 
-                0 0 60px rgba(255, 215, 0, 0.4),
-                0 0 100px rgba(106, 13, 173, 0.3);
-            animation: modalPopIn 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        @keyframes modalPopIn {
-            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        #ad-modal::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 60%);
-            animation: rotateGlow 6s linear infinite;
-        }
-
-        #ad-modal .modal-icon {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            animation: floatIcon 2s infinite ease-in-out;
-            position: relative;
-            z-index: 1;
-        }
-
-        #ad-modal h3 {
-            color: var(--gold);
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 1;
-        }
-
-        #ad-modal p {
-            color: #d5c8e8;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        #ad-modal .btn-ad-now {
-            background: linear-gradient(145deg, #FFD700, #B8860B);
-            color: #1a0033;
-            padding: 14px 35px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
-            animation: pulseBtn 2s infinite;
-        }
-
-        @keyframes pulseBtn {
-            0%, 100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.4); }
-            50% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.7); }
-        }
-
-        #ad-modal .btn-ad-now:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
-        }
-
-        #ad-modal .btn-continue {
-            background: linear-gradient(145deg, #2ecc71, #1e8449);
-            color: #fff;
-            padding: 14px 30px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 1;
-            display: none;
-            box-shadow: 0 0 25px rgba(46, 204, 113, 0.4);
-        }
-
-        #ad-modal .btn-continue:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 40px rgba(46, 204, 113, 0.6);
-        }
-
         /* ===== RESULT AREA ===== */
         #result-area {
             display: none;
@@ -984,11 +863,10 @@
             .controls-row { gap: 8px; }
             .btn { padding: 10px 14px; font-size: 0.8rem; }
             #camera-wrapper { max-width: 300px; }
-            #ad-modal { padding: 20px 15px; }
-            #ad-modal h3 { font-size: 1rem; }
             #consent-modal { padding: 25px 18px; }
             #consent-modal h2 { font-size: 1.2rem; }
             #consent-modal p { font-size: 0.85rem; }
+            #pwa-prompt { font-size: 0.75rem; padding: 8px 15px; }
             .kafemanteia-comet { padding: 10px 16px; }
             .kafemanteia-comet .comet-text { font-size: 0.85rem; }
             .kafemanteia-comet .comet-icon { font-size: 1.3rem; }
@@ -1022,19 +900,11 @@
         </div>
     </div>
 
-    <!-- ===== AD MODAL ===== -->
-    <div id="ad-modal-overlay">
-        <div id="ad-modal">
-            <div class="modal-icon">📺</div>
-            <h3 data-translate="true">Δείτε αυτή τη διαφήμιση</h3>
-            <p data-translate="true">Παρακαλούμε δείτε τη διαφήμιση και μετά πατήστε <strong>Continue</strong> για να επιστρέψετε στη σελίδα και να ολοκληρώσετε τη χειρομαντεία σας.</p>
-            <button class="btn-ad-now" id="btn-ad-now" onclick="showAd()">▶ <span data-translate="true">Διαφήμιση Τώρα</span></button>
-            <button class="btn-continue" id="btn-continue-ad" onclick="closeAdModal()">✓ Continue</button>
-        </div>
-    </div>
-
     <!-- ===== SPLASH PAGE ===== -->
     <div id="splash-page" class="page active">
+        <div id="pwa-prompt">
+            ✦ Προσθέστε την εφαρμογή στην αρχική οθόνη του κινητού σας για άμεση πρόσβαση ✦
+        </div>
         <div class="logo-container" onclick="goToScan()">
             <div class="logo-circle">
                 <span class="logo-hand">🖐️</span>
@@ -1083,7 +953,7 @@
             <button id="reset-lang-btn" onclick="resetToGreek()" title="Επιστροφή στα Ελληνικά">↺</button>
         </div>
         
-        <button class="btn-mystic" onclick="handleDiscoverDestiny()" data-translate="true">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
+        <button class="btn-mystic" onclick="goToScan()" data-translate="true">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
         
         <!-- FOOTER -->
         <div id="site-footer">
@@ -1092,20 +962,20 @@
                 <a href="privacy.html" class="footer-link" data-translate="true">🔒 Πολιτική Απορρήτου</a>
             </div>
         </div>
-    </div>
-
-    <!-- ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ (ΝΕΟ ΣΥΣΤΗΜΑ ΜΕ 3 ΚΙΝΗΣΕΙΣ) ===== -->
-    <div id="kafemanteia-container">
-        <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet animating" id="kafemanteia-comet">
-            <span class="comet-star">✨</span>
-            <span class="comet-star">⭐</span>
-            <span class="comet-star">💫</span>
-            <span class="comet-star">✨</span>
-            <span class="comet-star">🌟</span>
-            <span class="comet-star">💫</span>
-            <span class="comet-icon">🔮</span>
-            <span class="comet-text">Καφεμαντεία</span>
-        </a>
+        
+        <!-- ===== ΚΑΦΕΜΑΝΤΕΙΑ BANNER (ΜΟΝΟ ΣΤΟ SPLASH) ===== -->
+        <div id="kafemanteia-container">
+            <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet" id="kafemanteia-comet">
+                <span class="comet-star">✨</span>
+                <span class="comet-star">⭐</span>
+                <span class="comet-star">💫</span>
+                <span class="comet-star">✨</span>
+                <span class="comet-star">🌟</span>
+                <span class="comet-star">💫</span>
+                <span class="comet-icon">🔮</span>
+                <span class="comet-text">Καφεμαντεία</span>
+            </a>
+        </div>
     </div>
 
     <!-- ===== SCAN PAGE ===== -->
@@ -1386,13 +1256,13 @@
         }
         drawStars();
 
-        // ===== ΕΠΑΝΕΚΚΙΝΗΣΗ ΑΣΤΕΡΟΕΙΔΗ =====
-        function restartComet() {
+        // ===== ΕΠΑΝΕΚΚΙΝΗΣΗ ΑΣΤΕΡΟΕΙΔΗ BANNER =====
+        function restartCometBanner() {
             var comet = document.getElementById('kafemanteia-comet');
             if (comet) {
-                comet.classList.remove('animating');
-                void comet.offsetWidth;
-                comet.classList.add('animating');
+                comet.style.animation = 'none';
+                comet.offsetHeight; /* trigger reflow */
+                comet.style.animation = 'rollUpBanner 7s ease-in-out infinite';
             }
         }
 
@@ -1400,25 +1270,14 @@
         function goToScan() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('scan-page').classList.add('active');
-            document.getElementById('kafemanteia-container').style.display = 'none';
         }
         
         function goToSplash() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('splash-page').classList.add('active');
-            document.getElementById('kafemanteia-container').style.display = 'block';
-            restartComet();
+            restartCometBanner();
             stopCamera(); 
             resetScan();
-        }
-
-        // ===== HANDLE DISCOVER DESTINY BUTTON =====
-        function handleDiscoverDestiny() {
-            setTimeout(() => {
-                showAdModal();
-            }, 5000);
-            
-            goToScan();
         }
 
         // ===== USER SELECTIONS =====
@@ -1463,31 +1322,6 @@
             if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return 'Υδροχόος';
             if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return 'Ιχθείς';
             return 'Κριός';
-        }
-
-        // ===== AD MODAL =====
-        function showAdModal() {
-            document.getElementById('ad-modal-overlay').classList.add('active');
-            document.getElementById('btn-ad-now').style.display = 'inline-block';
-            document.getElementById('btn-continue-ad').style.display = 'none';
-        }
-
-        function showAd() {
-            document.getElementById('btn-ad-now').style.display = 'none';
-            
-            if (typeof show_11042671 === 'function') {
-                show_11042671().then(() => {
-                    document.getElementById('btn-continue-ad').style.display = 'inline-block';
-                }).catch(() => {
-                    document.getElementById('btn-continue-ad').style.display = 'inline-block';
-                });
-            } else {
-                document.getElementById('btn-continue-ad').style.display = 'inline-block';
-            }
-        }
-
-        function closeAdModal() {
-            document.getElementById('ad-modal-overlay').classList.remove('active');
         }
 
         // ===== STARS =====
