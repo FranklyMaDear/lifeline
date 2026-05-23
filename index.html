@@ -198,6 +198,7 @@
             gap: 20px;
             animation: fadeInUp 1s ease;
             position: relative;
+            padding-bottom: 120px; /* Χώρος για τον αστεροειδή */
         }
 
         @keyframes fadeInUp {
@@ -314,79 +315,178 @@
             max-width: 380px;
             position: relative;
             z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-mystic .btn-icon {
+            font-size: 1.3rem;
+            animation: pulseHand 2s infinite ease-in-out;
         }
 
         .btn-mystic:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
         .btn-mystic:active { transform: scale(0.95); }
 
         /* ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ ===== */
-        .kafemanteia-comet {
+        #kafemanteia-container {
             position: fixed;
-            z-index: 10;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            z-index: 5;
+            pointer-events: none;
+            overflow: visible;
+        }
+
+        .kafemanteia-comet {
+            position: absolute;
             cursor: pointer;
             pointer-events: auto;
-            animation: cometFloat 6s infinite ease-in-out;
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 8px;
             background: rgba(20, 10, 40, 0.7);
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(255, 215, 0, 0.4);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(155, 89, 182, 0.6);
             border-radius: 50px;
-            padding: 10px 20px;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), 0 0 60px rgba(106, 13, 173, 0.2);
-            transition: all 0.5s ease;
+            padding: 12px 22px;
+            box-shadow: 
+                0 0 30px rgba(155, 89, 182, 0.4),
+                0 0 60px rgba(106, 13, 173, 0.3),
+                0 0 100px rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+            animation: cometWander 8s infinite ease-in-out;
+            white-space: nowrap;
         }
 
         .kafemanteia-comet:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 50px rgba(255, 215, 0, 0.6), 0 0 80px rgba(106, 13, 173, 0.4);
-            border-color: var(--gold);
-            background: rgba(30, 15, 50, 0.9);
+            transform: scale(1.1) !important;
+            box-shadow: 
+                0 0 50px rgba(155, 89, 182, 0.8),
+                0 0 80px rgba(106, 13, 173, 0.6),
+                0 0 120px rgba(255, 215, 0, 0.3);
+            border-color: var(--purple-light);
+            background: rgba(30, 15, 50, 0.95);
+            animation-play-state: paused;
         }
 
         .kafemanteia-comet .comet-icon {
-            font-size: 1.8rem;
-            animation: cometSpin 2s infinite linear;
+            font-size: 1.6rem;
+            animation: crystalGlow 2s infinite ease-in-out;
         }
 
         .kafemanteia-comet .comet-text {
-            color: var(--gold);
+            color: #e0c5f0;
             font-weight: 700;
             font-size: 1rem;
             letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            text-shadow: 0 0 10px rgba(155, 89, 182, 0.5);
         }
 
-        .kafemanteia-comet .comet-tail {
+        /* Αστεράκια γύρω από τον αστεροειδή */
+        .comet-star {
             position: absolute;
-            top: 50%;
-            right: -30px;
-            width: 40px;
-            height: 3px;
-            background: linear-gradient(90deg, rgba(255,215,0,0.8), transparent);
-            transform: translateY(-50%);
-            border-radius: 50%;
-            animation: tailGlow 1.5s infinite ease-in-out;
+            color: #FFD700;
+            pointer-events: none;
+            animation: starOrbit 3s infinite ease-in-out;
+            font-size: 0.9rem;
         }
 
-        @keyframes cometFloat {
-            0% { transform: translate(0, 0) rotate(-5deg); }
-            25% { transform: translate(15px, -10px) rotate(-3deg); }
-            50% { transform: translate(10px, -20px) rotate(-1deg); }
-            75% { transform: translate(-5px, -10px) rotate(-3deg); }
-            100% { transform: translate(0, 0) rotate(-5deg); }
+        .comet-star:nth-child(2) { animation-delay: 0s; top: -15px; left: -10px; }
+        .comet-star:nth-child(3) { animation-delay: 0.5s; top: -10px; right: -15px; }
+        .comet-star:nth-child(4) { animation-delay: 1s; bottom: -15px; left: 20px; }
+        .comet-star:nth-child(5) { animation-delay: 1.5s; bottom: -10px; right: 10px; }
+        .comet-star:nth-child(6) { animation-delay: 2s; top: 5px; left: -20px; }
+        .comet-star:nth-child(7) { animation-delay: 2.5s; top: 5px; right: -20px; }
+
+        @keyframes crystalGlow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 5px rgba(155, 89, 182, 0.5));
+                transform: scale(1);
+            }
+            50% { 
+                filter: drop-shadow(0 0 15px rgba(155, 89, 182, 1));
+                transform: scale(1.2);
+            }
         }
 
-        @keyframes cometSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes starOrbit {
+            0%, 100% { 
+                opacity: 0.2;
+                transform: translate(0, 0) scale(0.8);
+            }
+            50% { 
+                opacity: 1;
+                transform: translate(5px, -8px) scale(1.3);
+            }
         }
 
-        @keyframes tailGlow {
-            0%, 100% { opacity: 0.5; width: 30px; }
-            50% { opacity: 1; width: 50px; }
+        @keyframes cometWander {
+            0% {
+                right: -200px;
+                left: auto;
+                bottom: 20px;
+                opacity: 0;
+                transform: scale(0.6) translateZ(-50px);
+                filter: blur(2px);
+            }
+            10% {
+                opacity: 1;
+                transform: scale(1) translateZ(0);
+                filter: blur(0);
+            }
+            25% {
+                right: 20%;
+                left: auto;
+                bottom: 60px;
+                opacity: 1;
+                transform: scale(1.05) translateZ(10px);
+                filter: blur(0);
+            }
+            40% {
+                right: auto;
+                left: 50%;
+                bottom: 30px;
+                opacity: 0.9;
+                transform: scale(0.95) translateZ(0);
+                filter: blur(0);
+            }
+            55% {
+                right: auto;
+                left: 20%;
+                bottom: 80px;
+                opacity: 1;
+                transform: scale(1.02) translateZ(5px);
+                filter: blur(0);
+            }
+            70% {
+                right: auto;
+                left: -200px;
+                bottom: 40px;
+                opacity: 0;
+                transform: scale(0.7) translateZ(-30px);
+                filter: blur(3px);
+            }
+            85% {
+                right: -200px;
+                left: auto;
+                bottom: 20px;
+                opacity: 0;
+                transform: scale(0.6) translateZ(-50px);
+                filter: blur(2px);
+            }
+            100% {
+                right: -200px;
+                left: auto;
+                bottom: 20px;
+                opacity: 0;
+                transform: scale(0.6) translateZ(-50px);
+                filter: blur(2px);
+            }
         }
 
         /* ===== SCAN PAGE ===== */
@@ -907,13 +1007,16 @@
             #consent-modal h2 { font-size: 1.2rem; }
             #consent-modal p { font-size: 0.85rem; }
             .kafemanteia-comet {
-                padding: 8px 15px;
+                padding: 10px 16px;
             }
             .kafemanteia-comet .comet-text {
                 font-size: 0.85rem;
             }
             .kafemanteia-comet .comet-icon {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
+            }
+            #splash-page {
+                padding-bottom: 100px;
             }
         }
     </style>
@@ -963,7 +1066,10 @@
         <div class="splash-desc">
             Τοποθέτησε την παλάμη σου μπροστά στην κάμερα. Η Aziram, η προσωπική σου Χειρομάντισσα και Αστρολόγος, θα αποκαλύψει τα μυστικά των γραμμών σου.
         </div>
-        <button class="btn-mystic" onclick="handleDiscoverDestiny()">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
+        <button class="btn-mystic" onclick="handleDiscoverDestiny()">
+            <span class="btn-icon">🔮</span>
+            Ανακάλυψε το Πεπρωμένο σου
+        </button>
         
         <!-- FOOTER -->
         <div id="site-footer">
@@ -974,12 +1080,19 @@
         </div>
     </div>
 
-    <!-- ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ (ΜΟΝΟ ΣΤΟ SPLASH) ===== -->
-    <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet" id="kafemanteia-comet" style="bottom: 100px; right: 20px;">
-        <span class="comet-icon">☄️</span>
-        <span class="comet-text">Καφεμαντεία</span>
-        <span class="comet-tail"></span>
-    </a>
+    <!-- ===== ΑΣΤΕΡΟΕΙΔΗΣ ΚΑΦΕΜΑΝΤΕΙΑ (MONO ΣΤΟ SPLASH) ===== -->
+    <div id="kafemanteia-container">
+        <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet" id="kafemanteia-comet">
+            <span class="comet-star">✨</span>
+            <span class="comet-star">⭐</span>
+            <span class="comet-star">💫</span>
+            <span class="comet-star">✨</span>
+            <span class="comet-star">🌟</span>
+            <span class="comet-star">💫</span>
+            <span class="comet-icon">🔮</span>
+            <span class="comet-text">Καφεμαντεία</span>
+        </a>
+    </div>
 
     <!-- ===== SCAN PAGE ===== -->
     <div id="scan-page" class="page">
@@ -1120,14 +1233,19 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('scan-page').classList.add('active');
             // Απόκρυψη του αστεροειδή όταν φεύγουμε από το splash
-            document.getElementById('kafemanteia-comet').style.display = 'none';
+            document.getElementById('kafemanteia-container').style.display = 'none';
         }
         
         function goToSplash() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('splash-page').classList.add('active');
             // Εμφάνιση του αστεροειδή όταν επιστρέφουμε στο splash
-            document.getElementById('kafemanteia-comet').style.display = 'flex';
+            document.getElementById('kafemanteia-container').style.display = 'block';
+            // Επανεκκίνηση του animation
+            const comet = document.getElementById('kafemanteia-comet');
+            comet.style.animation = 'none';
+            comet.offsetHeight;
+            comet.style.animation = 'cometWander 8s infinite ease-in-out';
             stopCamera(); 
             resetScan();
         }
@@ -1164,7 +1282,6 @@
             userTopic = topic;
             document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            // ΑΦΑΙΡΕΣΑΜΕ ΤΗΝ ΚΛΗΣΗ ΤΗΣ ΔΙΑΦΗΜΙΣΗΣ ΑΠΟ ΕΔΩ
         }
 
         // ===== ZODIAC =====
@@ -1362,9 +1479,7 @@
         }
 
         // ===== ΕΜΦΑΝΙΣΗ ΑΣΤΕΡΟΕΙΔΟΥΣ ΜΟΝΟ ΣΤΟ SPLASH =====
-        // Ο αστεροειδής είναι ορατός μόνο όταν το splash page είναι ενεργό
-        // και κρύβεται όταν πηγαίνουμε στο scan page
-        document.getElementById('kafemanteia-comet').style.display = 'flex';
+        document.getElementById('kafemanteia-container').style.display = 'block';
     </script>
 </body>
 </html>
