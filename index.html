@@ -290,12 +290,6 @@
             padding-top: 6px; position: relative; z-index: 2;
         }
 
-        .splash-desc {
-            color: #b8a0d0; max-width: 380px;
-            font-size: clamp(0.7rem, 1.6vw, 0.85rem);
-            line-height: 1.5; padding: 0 8px; position: relative; z-index: 2;
-        }
-
         .btn-mystic {
             background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033;
             padding: 12px 30px; border: none; border-radius: 60px;
@@ -482,19 +476,27 @@
             0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; }
         }
 
+        /* ===== CAMERA INSTRUCTION TEXT ===== */
+        .camera-instruction {
+            text-align: center; color: #b8a0d0;
+            font-size: clamp(0.65rem, 1.5vw, 0.75rem);
+            padding: 0 10px; width: 100%; max-width: 480px;
+            line-height: 1.4;
+        }
+
         /* ===== CONTROLS ===== */
         .controls-row {
-            display: flex; justify-content: center; gap: 6px;
+            display: flex; justify-content: center; gap: 5px;
             width: 100%; max-width: 480px; flex-wrap: wrap;
         }
 
         .btn {
-            padding: 9px 12px; border: none; border-radius: 50px;
-            font-weight: 700; font-size: clamp(0.68rem, 1.5vw, 0.78rem);
+            padding: 8px 10px; border: none; border-radius: 50px;
+            font-weight: 700; font-size: clamp(0.65rem, 1.4vw, 0.73rem);
             cursor: pointer; transition: all 0.4s; display: flex;
-            align-items: center; justify-content: center; gap: 4px;
+            align-items: center; justify-content: center; gap: 3px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.4); flex: 1;
-            min-width: 65px; max-width: 120px;
+            min-width: 60px; max-width: 110px;
         }
 
         .btn:active { transform: scale(0.95); }
@@ -506,8 +508,8 @@
         .btn-purple:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 0 50px rgba(155, 89, 182, 0.6); }
         .btn-green { 
             background: linear-gradient(145deg, #2ecc71, #1e8449); color: #fff;
-            width: 100%; max-width: 280px; display: none; margin: 4px auto;
-            font-size: 0.8rem; padding: 10px 14px;
+            width: 100%; max-width: 220px; display: none; margin: 4px auto;
+            font-size: 0.73rem; padding: 8px 12px;
             box-shadow: 0 0 30px rgba(46, 204, 113, 0.3);
             animation: gentlePulse 3s infinite ease-in-out;
         }
@@ -516,16 +518,16 @@
 
         /* Camera toggle buttons */
         .camera-toggle-row {
-            display: flex; justify-content: center; gap: 6px;
-            width: 100%; max-width: 480px; flex-wrap: wrap; margin-top: 2px;
+            display: flex; justify-content: center; gap: 5px;
+            width: 100%; max-width: 480px; flex-wrap: wrap; margin-top: 0;
         }
 
         .camera-toggle-btn {
-            padding: 7px 10px; border: 2px solid rgba(255,215,0,0.25);
-            border-radius: 50px; font-weight: 600; font-size: 0.68rem;
+            padding: 6px 8px; border: 2px solid rgba(255,215,0,0.25);
+            border-radius: 50px; font-weight: 600; font-size: 0.63rem;
             cursor: pointer; transition: all 0.3s;
             background: rgba(20, 10, 40, 0.6); color: #c9a0dc;
-            flex: 1; min-width: 65px; max-width: 120px; text-align: center;
+            flex: 1; min-width: 55px; max-width: 105px; text-align: center;
             display: flex; align-items: center; justify-content: center; gap: 3px;
         }
 
@@ -626,18 +628,6 @@
         }
         .btn-back:hover { background: rgba(255,215,0,0.1); border-color: var(--gold); color: var(--gold); }
 
-        /* ===== FOOTER (ΜΟΝΟ ΣΤΟ SCAN PAGE, ΚΑΤΩ ΑΠΟ ΤΟ ANALYZE BUTTON) ===== */
-        #scan-footer {
-            text-align: center; padding: 8px; margin-top: 6px; width: 100%;
-            display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;
-        }
-        #scan-footer .footer-link {
-            color: #b9a6d4; cursor: pointer; font-size: 0.7rem;
-            text-decoration: underline; transition: all 0.3s;
-            background: none; border: none; font-family: inherit; letter-spacing: 1px;
-        }
-        #scan-footer .footer-link:hover { color: #FFD700; text-shadow: 0 0 10px rgba(255,215,0,0.3); }
-
         /* ===== MEDIA QUERIES ===== */
         @media (max-width: 420px) {
             #scan-page { gap: 4px; padding-top: 3px; padding-bottom: 8px; }
@@ -648,9 +638,10 @@
             .gender-btn { padding: 5px 8px; font-size: 0.7rem; }
             .topic-btn { padding: 7px 5px; font-size: 0.6rem; min-width: 55px; max-width: 95px; }
             .controls-row { gap: 4px; }
-            .btn { padding: 8px 8px; font-size: 0.65rem; min-width: 55px; max-width: 95px; }
-            .camera-toggle-btn { padding: 6px 8px; font-size: 0.63rem; min-width: 55px; max-width: 95px; }
-            .btn-green { max-width: 240px; font-size: 0.73rem; padding: 8px 12px; }
+            .btn { padding: 7px 7px; font-size: 0.6rem; min-width: 50px; max-width: 85px; }
+            .camera-toggle-btn { padding: 5px 6px; font-size: 0.58rem; min-width: 48px; max-width: 85px; }
+            .btn-green { max-width: 180px; font-size: 0.68rem; padding: 7px 10px; }
+            .camera-instruction { font-size: 0.6rem; padding: 0 5px; }
             #camera-wrapper { max-width: 100%; }
             #consent-modal { padding: 20px 14px; }
             #consent-modal h2 { font-size: 1rem; }
@@ -701,9 +692,6 @@
         </div>
         <div class="splash-title">LiFe LiNe</div>
         <div class="splash-subtitle" data-translate="true">✦ Χειρομαντεία & Αστρολογία ✦</div>
-        <div class="splash-desc" data-translate="true">
-            Τοποθέτησε την παλάμη σου μπροστά στην κάμερα. Η Aziram θα αποκαλύψει τα μυστικά των γραμμών σου.
-        </div>
         
         <!-- ===== LANGUAGE BAR ===== -->
         <div id="language-bar">
@@ -806,31 +794,27 @@
             <img id="upload-preview-img" src="" alt="Preview">
         </div>
 
-        <!-- CAMERA CONTROLS -->
+        <!-- CAMERA CONTROLS + TOGGLE ΣΕ ΜΙΑ ΕΥΘΕΙΑ -->
         <div class="controls-row" id="controls-row">
             <button class="btn btn-gold" id="camera-btn" onclick="startCamera()" data-translate="true">📷 Έναρξη</button>
             <button class="btn btn-purple" onclick="document.getElementById('file-input').click()" data-translate="true">📁 Upload</button>
             <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUpload(event)">
-        </div>
-
-        <!-- CAMERA TOGGLE BUTTONS -->
-        <div class="camera-toggle-row" id="camera-toggle-row" style="display:none;">
-            <button class="camera-toggle-btn active" id="selfie-btn" onclick="switchCamera('user')">
+            <!-- CAMERA TOGGLE BUTTONS ΕΔΩ -->
+            <button class="camera-toggle-btn active" id="selfie-btn" onclick="switchCamera('user')" style="display:none;">
                 🤳 <span data-translate="true">Selfie</span>
             </button>
-            <button class="camera-toggle-btn" id="back-btn" onclick="switchCamera('environment')">
+            <button class="camera-toggle-btn" id="back-btn" onclick="switchCamera('environment')" style="display:none;">
                 📷 <span data-translate="true">Πίσω</span>
             </button>
         </div>
 
-        <!-- ANALYZE BUTTON -->
-        <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()" data-translate="true">🔮 Αποκάλυψε το Πεπρωμένο μου</button>
-
-        <!-- ΟΡΟΙ ΧΡΗΣΗΣ & ΠΟΛΙΤΙΚΗ ΑΠΟΡΡΗΤΟΥ (ΜΟΝΟ ΣΤΟ SCAN PAGE, ΚΑΤΩ ΑΠΟ ΤΟ ANALYZE BUTTON) -->
-        <div id="scan-footer">
-            <a href="terms.html" class="footer-link" data-translate="true">📜 Όροι Χρήσης</a>
-            <a href="privacy.html" class="footer-link" data-translate="true">🔒 Πολιτική Απορρήτου</a>
+        <!-- ΚΕΙΜΕΝΟ ΟΔΗΓΙΩΝ ΚΑΤΩ ΑΠΟ ΤΑ ΚΟΥΜΠΙΑ -->
+        <div class="camera-instruction">
+            <span data-translate="true">Τοποθέτησε την παλάμη σου μπροστά στην κάμερα. Η Aziram θα αποκαλύψει τα μυστικά των γραμμών σου.</span>
         </div>
+
+        <!-- ANALYZE BUTTON (ΜΙΚΡΟΤΕΡΟ) -->
+        <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()" data-translate="true">🔮 Αποκάλυψε το Πεπρωμένο μου</button>
 
         <!-- LOADING -->
         <div id="loading-box">
@@ -1157,7 +1141,9 @@
                 video.srcObject = currentStream;
                 resizeOverlay();
                 document.getElementById('analyze-btn').style.display = 'block';
-                document.getElementById('camera-toggle-row').style.display = 'flex';
+                // Εμφάνισε τα camera toggle buttons
+                document.getElementById('selfie-btn').style.display = 'flex';
+                document.getElementById('back-btn').style.display = 'flex';
                 document.getElementById('camera-btn').disabled = true;
                 document.getElementById('camera-btn').innerText = '✅ Ready';
                 updateCameraToggleButtons();
@@ -1196,7 +1182,8 @@
 
         function stopCamera() {
             if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); currentStream = null; }
-            document.getElementById('camera-toggle-row').style.display = 'none';
+            document.getElementById('selfie-btn').style.display = 'none';
+            document.getElementById('back-btn').style.display = 'none';
             document.getElementById('camera-btn').disabled = false;
             document.getElementById('camera-btn').innerText = '📷 Έναρξη';
         }
@@ -1248,7 +1235,6 @@
             document.getElementById('loading-box').style.display = 'block';
             document.getElementById('analyze-btn').style.display = 'none';
             document.getElementById('controls-row').style.display = 'none';
-            document.getElementById('camera-toggle-row').style.display = 'none';
             document.getElementById('topic-row').style.display = 'none';
             document.querySelector('.selectors-row').style.display = 'none';
 
@@ -1268,7 +1254,6 @@
                 var data = await response.json();
 
                 if (data.success && data.reading) {
-                    // Εμφάνιση στο popup
                     document.getElementById('result-popup-text').innerHTML = data.reading
                         .replace(/## (.*?)\n/g, '<h2>$1</h2>')
                         .replace(/### (.*?)\n/g, '<h3>$1</h3>')
@@ -1284,9 +1269,6 @@
             } finally {
                 document.getElementById('loading-box').style.display = 'none';
                 document.getElementById('controls-row').style.display = 'flex';
-                if (currentStream) {
-                    document.getElementById('camera-toggle-row').style.display = 'flex';
-                }
                 document.getElementById('topic-row').style.display = 'flex';
                 document.querySelector('.selectors-row').style.display = 'flex';
                 isAnalyzing = false;
@@ -1303,7 +1285,8 @@
             document.getElementById('loading-box').style.display = 'none';
             document.getElementById('analyze-btn').style.display = 'none';
             document.getElementById('controls-row').style.display = 'flex';
-            document.getElementById('camera-toggle-row').style.display = 'none';
+            document.getElementById('selfie-btn').style.display = 'none';
+            document.getElementById('back-btn').style.display = 'none';
             document.getElementById('topic-row').style.display = 'flex';
             document.querySelector('.selectors-row').style.display = 'flex';
             document.getElementById('upload-preview-area').style.display = 'none';
