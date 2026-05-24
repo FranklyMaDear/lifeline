@@ -38,7 +38,7 @@
     
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22LiFe%20LiNe%20-%20%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%22%2C%22short_name%22%3A%22LiFe%20LiNe%22%2C%22description%22%3A%22%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%20%CE%BC%CE%B5%20AI%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231a0033%22%2C%22theme_color%22%3A%22%231a0033%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
 
-    <!-- ===== ADSGRAM SDK ===== -->
+    <!-- AdsGram SDK -->
     <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 
     <style>
@@ -257,7 +257,6 @@
             38%, 100% { opacity: 0; transform: translateX(-50%) translateY(-15px); }
         }
 
-        /* ===== ΚΕΝΤΡΙΚΟ ΠΕΡΙΕΧΟΜΕΝΟ ===== */
         .splash-inner {
             display: flex;
             flex-direction: column;
@@ -269,7 +268,6 @@
             padding: 15px 0;
         }
 
-        /* ===== ΛΟΓΟΤΥΠΟ ===== */
         .logo-container {
             position: relative; 
             width: clamp(160px, 35vw, 210px); 
@@ -320,7 +318,6 @@
             50% { transform: scale(1.08); }
         }
 
-        /* ===== ΤΙΤΛΟΣ ===== */
         .splash-title {
             font-size: clamp(2.4rem, 8vw, 4rem); 
             font-weight: 800;
@@ -341,7 +338,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ===== ΥΠΟΤΙΤΛΟΣ ===== */
         .splash-subtitle {
             color: #c9a0dc; 
             font-size: clamp(1rem, 2.5vw, 1.4rem);
@@ -353,7 +349,6 @@
             opacity: 0.9;
         }
 
-        /* ===== ΚΟΥΜΠΙ ===== */
         .btn-mystic {
             background: linear-gradient(145deg, #FFD700, #B8860B); 
             color: #1a0033;
@@ -462,15 +457,6 @@
             padding-bottom: calc(15px + var(--safe-bottom));
         }
 
-        .scan-header { text-align: center; width: 100%; flex-shrink: 0; }
-        .scan-header h2 {
-            font-size: clamp(1.3rem, 3.5vw, 1.6rem); font-weight: 800;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text; letter-spacing: 3px; margin-bottom: 2px;
-        }
-        .scan-header p { color: #b8a0d0; font-size: clamp(0.65rem, 1.6vw, 0.78rem); }
-
         .btn-back {
             background: transparent; border: 1px solid rgba(255,215,0,0.3);
             color: #c9a0dc; padding: 5px 14px; border-radius: 50px;
@@ -482,7 +468,7 @@
         /* ===== SELECTORS ROW ===== */
         .selectors-row {
             display: flex; justify-content: center; align-items: stretch;
-            gap: 8px; flex-wrap: wrap; width: 100%; max-width: 550px;
+            gap: 8px; flex-wrap: wrap; width: 100%; max-width: 460px;
             flex-shrink: 0;
         }
 
@@ -514,43 +500,45 @@
             color: #FFD700; font-size: 0.78rem; width: 100%; text-align: center; font-weight: 500;
         }
 
-        /* ===== TOPIC BUTTONS ===== */
-        #topic-row {
-            display: flex; flex-direction: column; align-items: center;
-            gap: 6px; width: 100%; max-width: 600px;
-            flex-shrink: 0;
+        /* ===== TOPIC DROPDOWN ===== */
+        .topic-dropdown-container {
+            width: 100%;
+            max-width: 460px;
+            margin: 6px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
         }
 
-        .topic-row-top {
-            display: flex; justify-content: center; gap: 6px;
-            width: 100%; flex-wrap: wrap;
+        .topic-dropdown-container .selector-label {
+            margin-bottom: 2px;
         }
 
-        .topic-row-bottom {
-            display: flex; justify-content: center; gap: 6px;
-            width: 100%; max-width: 400px; flex-wrap: wrap;
+        #topic-select {
+            width: 100%;
+            padding: 10px 16px;
+            border-radius: 30px;
+            border: 2px solid rgba(255,215,0,0.3);
+            background: rgba(20, 10, 40, 0.9);
+            color: var(--gold);
+            font-size: 0.8rem;
+            font-weight: 600;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FFD700' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            height: 42px; /* σταθερό ύψος */
         }
 
-        .topic-btn {
-            padding: 9px 8px; font-size: clamp(0.62rem, 1.5vw, 0.72rem); font-weight: 600;
-            border: 2px solid rgba(255,215,0,0.25); background: rgba(20, 10, 40, 0.6);
-            color: #c9a0dc; border-radius: 20px; cursor: pointer; transition: all 0.3s;
-            flex: 1; min-width: 85px; max-width: 130px; text-align: center;
-            line-height: 1.3; position: relative; overflow: hidden;
-        }
-
-        .topic-btn::after {
-            content: ''; position: absolute; top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-            transition: left 0.5s;
-        }
-
-        .topic-btn:hover::after { left: 100%; }
-        .topic-btn.active {
-            background: linear-gradient(145deg, #9b59b6, #6a0dad); color: #fff;
-            border-color: var(--purple-light); box-shadow: 0 0 20px rgba(155, 89, 182, 0.4);
-            transform: scale(1.03);
+        #topic-select:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+            outline: none;
         }
 
         /* ===== CAMERA ===== */
@@ -608,67 +596,76 @@
             flex-shrink: 0;
         }
 
-        /* ===== CONTROLS ===== */
-        .controls-row {
-            display: flex; justify-content: center; gap: 6px;
-            width: 100%; max-width: 480px; flex-wrap: wrap;
-            flex-shrink: 0;
+        /* ===== UNIFORM BUTTONS ===== */
+        .btn-uniform {
+            padding: 10px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            min-width: 80px;
+            height: 42px; /* σταθερό ύψος */
         }
 
-        .btn {
-            padding: 9px 12px; border: none; border-radius: 50px;
-            font-weight: 700; font-size: clamp(0.68rem, 1.5vw, 0.76rem);
-            cursor: pointer; transition: all 0.35s; display: flex;
-            align-items: center; justify-content: center; gap: 4px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4); flex: 1;
-            min-width: 60px; max-width: 115px;
-        }
-
-        .btn:active { transform: scale(0.95); }
-        .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .btn-uniform:active { transform: scale(0.96); }
 
         .btn-gold { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; }
-        .btn-gold:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 0 45px rgba(255, 215, 0, 0.6); }
         .btn-purple { background: linear-gradient(145deg, #9b59b6, #6a0dad); color: #fff; }
-        .btn-purple:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 0 45px rgba(155, 89, 182, 0.6); }
-        .btn-green { 
-            background: linear-gradient(145deg, #2ecc71, #1e8449); color: #fff;
-            width: auto; max-width: 260px; display: none; margin: 4px auto;
-            font-size: 0.8rem; padding: 11px 28px; border-radius: 14px;
-            box-shadow: 0 0 30px rgba(46, 204, 113, 0.3);
-            animation: gentlePulse 3s infinite ease-in-out;
+        .btn-green { background: linear-gradient(145deg, #2ecc71, #1e8449); color: #fff; }
+        .btn-vip { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; }
+
+        .controls-row {
+            display: flex; justify-content: center; gap: 8px;
+            width: 100%; max-width: 460px; flex-wrap: wrap;
             flex-shrink: 0;
-        }
-        .btn-green:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 0 55px rgba(46, 204, 113, 0.6); }
-        .btn-green:active { transform: scale(0.95); }
-
-        @keyframes gentlePulse {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
+            margin: 6px auto;
         }
 
-        /* Camera toggle buttons */
         .camera-toggle-btn {
-            padding: 7px 10px; border: 2px solid rgba(255,215,0,0.25);
-            border-radius: 50px; font-weight: 600; font-size: 0.65rem;
-            cursor: pointer; transition: all 0.3s;
-            background: rgba(20, 10, 40, 0.6); color: #c9a0dc;
-            flex: 1; min-width: 55px; max-width: 105px; text-align: center;
-            display: none; align-items: center; justify-content: center; gap: 3px;
+            background: rgba(20, 10, 40, 0.7); color: #c9a0dc;
+            border: 2px solid rgba(255,215,0,0.25);
+            display: none;
         }
-
         .camera-toggle-btn.active {
             background: linear-gradient(145deg, #FFD700, #B8860B);
-            color: #1a0033; border-color: var(--gold);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            color: #1a0033;
+            border-color: var(--gold);
         }
-        .camera-toggle-btn:hover { border-color: var(--gold); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
 
-        /* ===== UPLOAD ===== */
+        /* ===== REWARDS BAR ===== */
+        #rewards-bar {
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            width: 100%; max-width: 460px; margin: 6px auto; flex-shrink: 0;
+        }
+
+        .points-badge {
+            background: rgba(20, 10, 40, 0.9); border: 1px solid var(--gold);
+            border-radius: 30px; padding: 8px 16px; color: var(--gold);
+            font-weight: bold; font-size: 0.8rem;
+        }
+
+        /* ===== ANALYSIS BUTTONS ===== */
+        .analysis-actions {
+            display: flex; gap: 10px; width: 100%; max-width: 460px;
+            justify-content: center; flex-wrap: wrap; margin: 6px auto;
+        }
+
+        .analysis-actions .btn {
+            flex: 1; max-width: 200px;
+        }
+
         #upload-preview-area { display: none; text-align: center; margin: 3px 0; flex-shrink: 0; }
         #upload-preview-img { max-width: 130px; width: 100%; border-radius: 18px; border: 2px solid var(--gold); }
 
-        /* ===== LOADING ===== */
         #loading-box {
             display: none; text-align: center; background: rgba(20, 10, 40, 0.95);
             border-radius: 24px; padding: 18px 14px; margin: 6px auto;
@@ -748,35 +745,6 @@
         #close-popup-btn:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 60px rgba(255, 215, 0, 0.6); }
         #close-popup-btn:active { transform: scale(0.95); }
 
-        /* ===== REWARDS BAR (ΝΕΟ) ===== */
-        #rewards-bar {
-            display: flex; justify-content: center; align-items: center; gap: 10px;
-            width: 100%; max-width: 460px; margin: 8px auto; flex-shrink: 0;
-        }
-        .points-badge {
-            background: rgba(20, 10, 40, 0.8); border: 1px solid var(--gold);
-            border-radius: 20px; padding: 6px 15px; color: var(--gold);
-            font-weight: bold; font-size: 0.8rem;
-        }
-        #earn-points-btn {
-            padding: 6px 12px; font-size: 0.7rem; max-width: 150px;
-        }
-
-        /* ===== ΑΝΑΛΥΣΗ ΚΟΥΜΠΙΑ (ΝΕΟ) ===== */
-        .analysis-actions {
-            display: flex; gap: 8px; width: 100%; max-width: 460px;
-            justify-content: center; flex-wrap: wrap; margin-top: 6px;
-        }
-        .btn-vip {
-            background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033;
-            font-size: 0.7rem; padding: 11px 15px; border-radius: 14px;
-            font-weight: 700; border: none; cursor: pointer;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
-            transition: all 0.3s; flex: 1; max-width: 200px;
-            display: none;
-        }
-        .btn-vip:disabled { opacity: 0.5; cursor: not-allowed; }
-
         /* ===== MEDIA QUERIES ===== */
         @media (max-width: 420px) {
             #splash-page { padding: 0 12px; }
@@ -799,12 +767,7 @@
             .selector-item { padding: 6px 8px; min-width: 90px; max-width: 160px; }
             .selector-item input { font-size: 0.72rem; padding: 6px 8px; }
             .gender-btn { padding: 6px 10px; font-size: 0.72rem; }
-            .topic-btn { padding: 8px 5px; font-size: 0.6rem; min-width: 65px; max-width: 100px; }
-            .controls-row { gap: 5px; }
-            .btn { padding: 8px 8px; font-size: 0.62rem; min-width: 50px; max-width: 90px; }
-            .camera-toggle-btn { padding: 6px 8px; font-size: 0.6rem; min-width: 50px; max-width: 85px; }
-            .btn-vip { max-width: 180px; font-size: 0.65rem; padding: 9px 10px; }
-            #camera-wrapper { max-width: 100%; }
+            .btn-uniform { font-size: 0.72rem; padding: 8px 12px; height: 38px; }
             #translate-btn { width: 30px; height: 30px; min-width: 30px; font-size: 0.8rem; }
             #reset-lang-btn { width: 30px; height: 30px; min-width: 30px; font-size: 0.8rem; }
         }
@@ -830,12 +793,10 @@
 
     <!-- ===== SPLASH PAGE ===== -->
     <div id="splash-page" class="page active">
-        <!-- PWA BANNER -->
         <div id="pwa-prompt" data-translate="true">
             ✦ Προσθέστε την εφαρμογή στην αρχική οθόνη του κινητού σας ✦
         </div>
 
-        <!-- ΚΕΝΤΡΙΚΟ ΠΕΡΙΕΧΟΜΕΝΟ -->
         <div class="splash-inner">
             <div class="logo-container" onclick="goToScan()">
                 <div class="logo-circle">
@@ -884,7 +845,6 @@
             <button class="btn-mystic" onclick="goToScan()" data-translate="true">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
         </div>
 
-        <!-- ΚΑΦΕΜΑΝΤΕΙΑ BANNER -->
         <div id="kafemanteia-container">
             <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet" id="kafemanteia-comet">
                 <span class="comet-icon">🪐</span>
@@ -897,11 +857,6 @@
     <div id="scan-page" class="page">
         <button class="btn-back" onclick="goToSplash()">☽ <span data-translate="true">Επιστροφή</span></button>
         
-        <div class="scan-header">
-            <h2>LiFe LiNe</h2>
-            <p data-translate="true">Η Aziram διαβάζει την παλάμη σου</p>
-        </div>
-
         <div class="selectors-row">
             <div class="selector-item">
                 <span class="selector-label" data-translate="true">Φύλο</span>
@@ -916,24 +871,22 @@
             </div>
         </div>
 
-        <div id="topic-row">
-            <div class="topic-row-top">
-                <button class="topic-btn active" onclick="selectTopic('Έρωτας & Σχέσεις', this)" data-translate="true">❤️<br>Έρωτας & Σχέσεις</button>
-                <button class="topic-btn" onclick="selectTopic('Καριέρα & Οικονομικά', this)" data-translate="true">💼<br>Καριέρα & Οικονομικά</button>
-                <button class="topic-btn" onclick="selectTopic('Υγεία & Ζωτικότητα', this)" data-translate="true">🌱<br>Υγεία & Ζωτικότητα</button>
-            </div>
-            <div class="topic-row-bottom">
-                <button class="topic-btn" onclick="selectTopic('Κρυφά Ταλέντα & Προσωπικότητα', this)" data-translate="true">🧠<br>Κρυφά Ταλέντα</button>
-                <button class="topic-btn" onclick="selectTopic('Κάρμα & Μελλοντικές Προκλήσεις', this)" data-translate="true">🌀<br>Κάρμα & Προκλήσεις</button>
-            </div>
+        <div class="topic-dropdown-container">
+            <span class="selector-label" data-translate="true">Θέμα Ανάλυσης</span>
+            <select id="topic-select" onchange="selectTopic(this.value)">
+                <option value="Έρωτας & Σχέσεις" data-translate="true">❤️ Έρωτας & Σχέσεις</option>
+                <option value="Καριέρα & Οικονομικά" data-translate="true">💼 Καριέρα & Οικονομικά</option>
+                <option value="Υγεία & Ζωτικότητα" data-translate="true">🌱 Υγεία & Ζωτικότητα</option>
+                <option value="Κρυφά Ταλέντα & Προσωπικότητα" data-translate="true">🧠 Κρυφά Ταλέντα</option>
+                <option value="Κάρμα & Μελλοντικές Προκλήσεις" data-translate="true">🌀 Κάρμα & Προκλήσεις</option>
+            </select>
         </div>
 
-        <!-- ===== ΝΕΟ: REWARDS BAR ===== -->
         <div id="rewards-bar">
             <div class="points-badge">
                 🪙 <span id="points-display">0</span> Πόντοι
             </div>
-            <button id="earn-points-btn" class="btn btn-purple" onclick="earnPoints()">
+            <button id="earn-points-btn" class="btn btn-purple btn-uniform" onclick="earnPoints()">
                 🎁 Κέρδισε Πόντους
             </button>
         </div>
@@ -951,13 +904,13 @@
         </div>
 
         <div class="controls-row" id="controls-row">
-            <button class="btn btn-gold" id="camera-btn" onclick="startCamera()" data-translate="true">📷 Έναρξη</button>
-            <button class="btn btn-purple" onclick="document.getElementById('file-input').click()" data-translate="true">📁 Upload</button>
+            <button class="btn btn-gold btn-uniform" id="camera-btn" onclick="startCamera()" data-translate="true">📷 Έναρξη</button>
+            <button class="btn btn-purple btn-uniform" onclick="document.getElementById('file-input').click()" data-translate="true">📁 Upload</button>
             <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUpload(event)">
-            <button class="camera-toggle-btn active" id="selfie-btn" onclick="switchCamera('user')">
+            <button class="camera-toggle-btn btn-uniform active" id="selfie-btn" onclick="switchCamera('user')">
                 🤳 <span data-translate="true">Selfie</span>
             </button>
-            <button class="camera-toggle-btn" id="back-btn" onclick="switchCamera('environment')">
+            <button class="camera-toggle-btn btn-uniform" id="back-btn" onclick="switchCamera('environment')">
                 📷 <span data-translate="true">Πίσω</span>
             </button>
         </div>
@@ -966,12 +919,11 @@
             <span data-translate="true">Τοποθέτησε την παλάμη σου μπροστά στην κάμερα.<br>Η Aziram θα αποκαλύψει τα μυστικά των γραμμών σου.</span>
         </div>
 
-        <!-- ===== ΝΕΟ: ΚΟΥΜΠΙΑ ΑΝΑΛΥΣΗΣ ===== -->
         <div class="analysis-actions">
-            <button class="btn btn-green" id="analyze-btn" onclick="startAnalysisFlow(false)" style="display: none;">
+            <button class="btn btn-green btn-uniform" id="analyze-btn" onclick="startAnalysisFlow(false)" style="display: none;">
                 🔮 Ανάλυση (με Διαφήμιση)
             </button>
-            <button class="btn-vip" id="analyze-vip-btn" onclick="startAnalysisFlow(true)" style="display: none;" disabled>
+            <button class="btn btn-vip btn-uniform" id="analyze-vip-btn" onclick="startAnalysisFlow(true)" style="display: none;" disabled>
                 ⚡ VIP (5 Πόντοι)
             </button>
         </div>
@@ -992,16 +944,16 @@
     </div>
 
     <script>
-        // ===== ADSGRAM ΡΥΘΜΙΣΕΙΣ (ΤΟ ΔΙΚΟ ΣΟΥ BLOCK ID) =====
+        // ===== ADSGRAM ΡΥΘΜΙΣΕΙΣ =====
         const ADSGRAM_BLOCK_ID = '32221'; 
         let AdController = null;
 
         function initAdsgram() {
             if (typeof window.Adsgram !== 'undefined') {
                 AdController = window.Adsgram.init({ blockId: ADSGRAM_BLOCK_ID });
-                console.log('✅ Adsgram SDK initialized with blockId:', ADSGRAM_BLOCK_ID);
+                console.log('✅ Adsgram SDK initialized');
             } else {
-                console.warn('⏳ Adsgram SDK not loaded yet. Retrying...');
+                console.warn('⏳ Adsgram SDK not loaded, retrying...');
                 setTimeout(initAdsgram, 1000);
             }
         }
@@ -1115,17 +1067,13 @@
 
         async function translateBatch(texts, targetLang) {
             var url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=el&tl=' + targetLang + '&dt=t&q=' + encodeURIComponent(texts.join('|||'));
-            
             var response = await fetch(url);
             var data = await response.json();
-            
             var translations = [];
             if (data && data[0]) {
                 var translatedText = '';
                 for (var i = 0; i < data[0].length; i++) {
-                    if (data[0][i][0]) {
-                        translatedText += data[0][i][0];
-                    }
+                    if (data[0][i][0]) translatedText += data[0][i][0];
                 }
                 translations = translatedText.split('|||');
             }
@@ -1160,10 +1108,7 @@
                 'th': 'th', 'id': 'id', 'he': 'iw', 'iw': 'iw'
             };
             var mappedLang = langMap[langCode] || 'el';
-            
-            var langSelect = document.getElementById('language-select');
-            if (langSelect) { langSelect.value = mappedLang; }
-            
+            document.getElementById('language-select').value = mappedLang;
             var labelMap = {
                 'el': '🌐 Γλώσσα', 'en': '🌐 Language', 'de': '🌐 Sprache',
                 'fr': '🌐 Langue', 'es': '🌐 Idioma', 'it': '🌐 Lingua',
@@ -1176,9 +1121,7 @@
                 'vi': '🌐 Ngôn ngữ', 'th': '🌐 ภาษา', 'id': '🌐 Bahasa',
                 'iw': '🌐 שפה'
             };
-            var label = document.getElementById('lang-label');
-            if (label) { label.textContent = labelMap[mappedLang] || '🌐 Language'; }
-            
+            document.getElementById('lang-label').textContent = labelMap[mappedLang] || '🌐 Language';
             if (mappedLang !== 'el') {
                 setTimeout(function() { startTranslation(); }, 1000);
             }
@@ -1222,7 +1165,6 @@
         }
         drawStars();
 
-        // ===== ΕΠΑΝΕΚΚΙΝΗΣΗ BANNERS =====
         function restartCometBanner() {
             var comet = document.getElementById('kafemanteia-comet');
             if (comet) {
@@ -1243,9 +1185,10 @@
             document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
             document.getElementById('scan-page').classList.add('active');
             updatePointsDisplay();
-            // Δείξε και τα δύο κουμπιά ανάλυσης μόλις είναι διαθέσιμη κάμερα/εικόνα
-            document.getElementById('analyze-btn').style.display = 'block';
-            document.getElementById('analyze-vip-btn').style.display = 'block';
+            if (capturedImage || currentStream) {
+                document.getElementById('analyze-btn').style.display = 'block';
+                document.getElementById('analyze-vip-btn').style.display = 'block';
+            }
         }
         
         function goToSplash() {
@@ -1273,13 +1216,10 @@
             userZodiac = getZodiacFromDate(date);
         }
 
-        function selectTopic(topic, btn) {
+        function selectTopic(topic) {
             userTopic = topic;
-            document.querySelectorAll('.topic-btn').forEach(function(b) { b.classList.remove('active'); });
-            btn.classList.add('active');
         }
 
-        // ===== ZODIAC =====
         function getZodiacFromDate(dateString) {
             if (!dateString) return 'Κριός';
             var date = new Date(dateString);
@@ -1298,23 +1238,6 @@
             if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return 'Υδροχόος';
             if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return 'Ιχθείς';
             return 'Κριός';
-        }
-
-        // ===== POPUP STARS =====
-        function addStarsToPopup() {
-            var popup = document.getElementById('result-popup');
-            popup.querySelectorAll('.popup-star').forEach(function(s) { s.remove(); });
-            var emojis = ['✨', '⭐', '💫', '🌟', '✨', '🔮', '💖', '🌙', '☽', '✧'];
-            for (var i = 0; i < 20; i++) {
-                var star = document.createElement('span');
-                star.className = 'popup-star';
-                star.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                star.style.left = Math.random() * 90 + '%';
-                star.style.top = Math.random() * 90 + '%';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                star.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
-                popup.appendChild(star);
-            }
         }
 
         // ===== CAMERA =====
@@ -1356,12 +1279,7 @@
         async function switchCamera(facingMode) {
             if (currentFacingMode === facingMode) return;
             currentFacingMode = facingMode;
-            
-            if (currentStream) {
-                currentStream.getTracks().forEach(function(t) { t.stop(); });
-                currentStream = null;
-            }
-            
+            if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); currentStream = null; }
             try {
                 currentStream = await navigator.mediaDevices.getUserMedia({
                     video: { facingMode: currentFacingMode, width: { ideal: 640 }, height: { ideal: 480 } }
@@ -1395,7 +1313,6 @@
             canvas.width = video.videoWidth || 640;
             canvas.height = video.videoHeight || 480;
             var ctx = canvas.getContext('2d');
-            
             if (currentFacingMode === 'user') {
                 ctx.save(); ctx.scale(-1, 1);
                 ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
@@ -1403,7 +1320,6 @@
             } else {
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
             }
-            
             return canvas.toDataURL('image/jpeg', 0.8);
         }
 
@@ -1438,7 +1354,7 @@
             document.getElementById('analyze-btn').style.display = 'none';
             document.getElementById('analyze-vip-btn').style.display = 'none';
             document.getElementById('controls-row').style.display = 'none';
-            document.getElementById('topic-row').style.display = 'none';
+            document.querySelector('.topic-dropdown-container').style.display = 'none';
             document.querySelector('.selectors-row').style.display = 'none';
             document.querySelector('.camera-instruction').style.display = 'none';
 
@@ -1473,7 +1389,7 @@
             } finally {
                 document.getElementById('loading-box').style.display = 'none';
                 document.getElementById('controls-row').style.display = 'flex';
-                document.getElementById('topic-row').style.display = 'flex';
+                document.querySelector('.topic-dropdown-container').style.display = 'flex';
                 document.querySelector('.selectors-row').style.display = 'flex';
                 document.querySelector('.camera-instruction').style.display = 'block';
                 document.getElementById('analyze-btn').style.display = 'block';
@@ -1496,7 +1412,7 @@
             document.getElementById('controls-row').style.display = 'flex';
             document.getElementById('selfie-btn').style.display = 'none';
             document.getElementById('back-btn').style.display = 'none';
-            document.getElementById('topic-row').style.display = 'flex';
+            document.querySelector('.topic-dropdown-container').style.display = 'flex';
             document.querySelector('.selectors-row').style.display = 'flex';
             document.querySelector('.camera-instruction').style.display = 'block';
             document.getElementById('upload-preview-area').style.display = 'none';
@@ -1506,7 +1422,23 @@
             isAnalyzing = false;
         }
 
-        // ===== ΝΕΟ: ΣΥΣΤΗΜΑ ΠΟΝΤΩΝ & ΡΟΗ ΔΙΑΦΗΜΙΣΕΩΝ =====
+        function addStarsToPopup() {
+            var popup = document.getElementById('result-popup');
+            popup.querySelectorAll('.popup-star').forEach(function(s) { s.remove(); });
+            var emojis = ['✨', '⭐', '💫', '🌟', '✨', '🔮', '💖', '🌙', '☽', '✧'];
+            for (var i = 0; i < 20; i++) {
+                var star = document.createElement('span');
+                star.className = 'popup-star';
+                star.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                star.style.left = Math.random() * 90 + '%';
+                star.style.top = Math.random() * 90 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
+                popup.appendChild(star);
+            }
+        }
+
+        // ===== ΣΥΣΤΗΜΑ ΠΟΝΤΩΝ & ΡΟΗ ΔΙΑΦΗΜΙΣΕΩΝ =====
         const POINTS_KEY = 'lifeline_user_points';
         const VIP_COST = 5;
 
@@ -1562,17 +1494,29 @@
                 } else {
                     alert(`Δεν έχεις αρκετούς πόντους. Χρειάζεσαι ${VIP_COST}. Κέρδισε πόντους βλέποντας μια διαφήμιση!`);
                 }
-            } else {
-                showRewardedAd()
-                    .then((result) => {
-                        if (result.done) addPoints(2);
-                        performAnalysis();
-                    })
-                    .catch((err) => {
-                        console.warn('Ad error, proceeding without reward:', err);
-                        performAnalysis();
-                    });
+                return;
             }
+
+            // Ανάλυση με διαφήμιση: πρώτα εξασφάλισε εικόνα
+            if (!capturedImage) {
+                if (currentStream) {
+                    capturedImage = capturePhoto();
+                    console.log('Φωτογραφία τραβήχτηκε αυτόματα.');
+                } else {
+                    alert('Παρακαλώ πρώτα άνοιξε την κάμερα ή ανέβασε μια φωτογραφία του χεριού σου.');
+                    return;
+                }
+            }
+
+            showRewardedAd()
+                .then((result) => {
+                    if (result.done) addPoints(2);
+                    performAnalysis();
+                })
+                .catch((err) => {
+                    console.warn('Ad error, proceeding anyway:', err);
+                    performAnalysis();
+                });
         }
     </script>
 </body>
