@@ -381,7 +381,7 @@
         .btn-mystic:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
         .btn-mystic:active { transform: scale(0.95); }
 
-        /* ===== ΚΑΦΕΜΑΝΤΕΙΑ BANNER - ΕΜΦΑΝΙΣΗ ΑΠΟ ΚΑΤΩ ΚΑΙ ΑΝΑΒΟΣΒΗΝΕΙ ===== */
+        /* ===== ΚΑΦΕΜΑΝΤΕΙΑ BANNER ===== */
         #kafemanteia-container {
             position: absolute;
             bottom: calc(25px + var(--safe-bottom));
@@ -392,7 +392,6 @@
             max-width: 500px;
             display: flex;
             justify-content: center;
-            /* Το container δεν έχει transform, το μεταφέρουμε στο link */
         }
 
         .kafemanteia-comet {
@@ -410,12 +409,10 @@
             transition: all 0.3s ease;
             white-space: normal;
             text-align: center;
-            width: 100%;
-            /* Νέο animation: slideUp και μετά cometPulse */
             animation: slideUp 0.8s ease-out forwards, cometPulse 2s ease-in-out 0.8s infinite;
-            /* Θέση εκκίνησης πριν το animation */
             transform: translateX(-50%) translateY(80px);
             opacity: 0;
+            width: 100%;
         }
         .kafemanteia-comet:hover {
             transform: scale(1.05) translateX(-50%);
@@ -802,7 +799,7 @@
     <!-- ===== SPLASH PAGE ===== -->
     <div id="splash-page" class="page active">
         <!-- PWA BANNER -->
-        <div id="pwa-prompt">
+        <div id="pwa-prompt" data-translate="true">
             ✦ Προσθέστε την εφαρμογή στην αρχική οθόνη του κινητού σας ✦
         </div>
 
@@ -817,7 +814,7 @@
             <div class="splash-subtitle" data-translate="true">Χειρομαντεία & Αστρολογία</div>
             
             <div id="language-bar">
-                <span class="lang-label" id="lang-label">🌐 Γλώσσα</span>
+                <span class="lang-label" id="lang-label">🌐 Language</span>
                 <select id="language-select">
                     <option value="el">🇬🇷 Ελληνικά</option>
                     <option value="en">🇬🇧 English</option>
@@ -859,7 +856,7 @@
         <div id="kafemanteia-container">
             <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet" id="kafemanteia-comet">
                 <span class="comet-icon">🪐</span>
-                <span class="comet-text">Omen-Καφεμαντεία☕️ - Κλικ Εδώ 🆕</span>
+                <span class="comet-text" data-translate="true">Omen-Καφεμαντεία☕️ - Κλικ Εδώ 🆕</span>
             </a>
         </div>
     </div>
