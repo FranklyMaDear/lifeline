@@ -38,6 +38,9 @@
     
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22LiFe%20LiNe%20-%20%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%22%2C%22short_name%22%3A%22LiFe%20LiNe%22%2C%22description%22%3A%22%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%20%CE%BC%CE%B5%20AI%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231a0033%22%2C%22theme_color%22%3A%22%231a0033%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
 
+    <!-- ===== ADSGRAM SDK ===== -->
+    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+
     <style>
         :root {
             --gold: #FFD700;
@@ -745,6 +748,35 @@
         #close-popup-btn:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 60px rgba(255, 215, 0, 0.6); }
         #close-popup-btn:active { transform: scale(0.95); }
 
+        /* ===== REWARDS BAR (ΝΕΟ) ===== */
+        #rewards-bar {
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            width: 100%; max-width: 460px; margin: 8px auto; flex-shrink: 0;
+        }
+        .points-badge {
+            background: rgba(20, 10, 40, 0.8); border: 1px solid var(--gold);
+            border-radius: 20px; padding: 6px 15px; color: var(--gold);
+            font-weight: bold; font-size: 0.8rem;
+        }
+        #earn-points-btn {
+            padding: 6px 12px; font-size: 0.7rem; max-width: 150px;
+        }
+
+        /* ===== ΑΝΑΛΥΣΗ ΚΟΥΜΠΙΑ (ΝΕΟ) ===== */
+        .analysis-actions {
+            display: flex; gap: 8px; width: 100%; max-width: 460px;
+            justify-content: center; flex-wrap: wrap; margin-top: 6px;
+        }
+        .btn-vip {
+            background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033;
+            font-size: 0.7rem; padding: 11px 15px; border-radius: 14px;
+            font-weight: 700; border: none; cursor: pointer;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s; flex: 1; max-width: 200px;
+            display: none;
+        }
+        .btn-vip:disabled { opacity: 0.5; cursor: not-allowed; }
+
         /* ===== MEDIA QUERIES ===== */
         @media (max-width: 420px) {
             #splash-page { padding: 0 12px; }
@@ -771,7 +803,7 @@
             .controls-row { gap: 5px; }
             .btn { padding: 8px 8px; font-size: 0.62rem; min-width: 50px; max-width: 90px; }
             .camera-toggle-btn { padding: 6px 8px; font-size: 0.6rem; min-width: 50px; max-width: 85px; }
-            .btn-green { max-width: 220px; font-size: 0.74rem; padding: 9px 22px; }
+            .btn-vip { max-width: 180px; font-size: 0.65rem; padding: 9px 10px; }
             #camera-wrapper { max-width: 100%; }
             #translate-btn { width: 30px; height: 30px; min-width: 30px; font-size: 0.8rem; }
             #reset-lang-btn { width: 30px; height: 30px; min-width: 30px; font-size: 0.8rem; }
@@ -896,6 +928,16 @@
             </div>
         </div>
 
+        <!-- ===== ΝΕΟ: REWARDS BAR ===== -->
+        <div id="rewards-bar">
+            <div class="points-badge">
+                🪙 <span id="points-display">0</span> Πόντοι
+            </div>
+            <button id="earn-points-btn" class="btn btn-purple" onclick="earnPoints()">
+                🎁 Κέρδισε Πόντους
+            </button>
+        </div>
+
         <div id="camera-wrapper">
             <video id="webcam" playsinline autoplay></video>
             <canvas id="overlay-canvas"></canvas>
@@ -924,7 +966,15 @@
             <span data-translate="true">Τοποθέτησε την παλάμη σου μπροστά στην κάμερα.<br>Η Aziram θα αποκαλύψει τα μυστικά των γραμμών σου.</span>
         </div>
 
-        <button class="btn btn-green" id="analyze-btn" onclick="performAnalysis()" data-translate="true">🔮 Αποκάλυψε το Πεπρωμένο μου</button>
+        <!-- ===== ΝΕΟ: ΚΟΥΜΠΙΑ ΑΝΑΛΥΣΗΣ ===== -->
+        <div class="analysis-actions">
+            <button class="btn btn-green" id="analyze-btn" onclick="startAnalysisFlow(false)" style="display: none;">
+                🔮 Ανάλυση (με Διαφήμιση)
+            </button>
+            <button class="btn-vip" id="analyze-vip-btn" onclick="startAnalysisFlow(true)" style="display: none;" disabled>
+                ⚡ VIP (5 Πόντοι)
+            </button>
+        </div>
 
         <div id="loading-box">
             <div class="loading-text" data-translate="true">🔮 Η Aziram διαβάζει τις γραμμές σου...</div>
@@ -942,6 +992,38 @@
     </div>
 
     <script>
+        // ===== ADSGRAM ΡΥΘΜΙΣΕΙΣ (ΤΟ ΔΙΚΟ ΣΟΥ BLOCK ID) =====
+        const ADSGRAM_BLOCK_ID = '32221'; 
+        let AdController = null;
+
+        function initAdsgram() {
+            if (typeof window.Adsgram !== 'undefined') {
+                AdController = window.Adsgram.init({ blockId: ADSGRAM_BLOCK_ID });
+                console.log('✅ Adsgram SDK initialized with blockId:', ADSGRAM_BLOCK_ID);
+            } else {
+                console.warn('⏳ Adsgram SDK not loaded yet. Retrying...');
+                setTimeout(initAdsgram, 1000);
+            }
+        }
+
+        window.addEventListener('load', initAdsgram);
+
+        function showRewardedAd() {
+            if (!AdController) {
+                alert('Οι διαφημίσεις δεν είναι ακόμα διαθέσιμες. Δοκίμασε ξανά σε λίγο.');
+                return Promise.reject('not_ready');
+            }
+            return AdController.show()
+                .then((result) => {
+                    console.log('✅ Ad finished:', result);
+                    return result;
+                })
+                .catch((result) => {
+                    console.warn('⚠️ Ad error or skipped:', result);
+                    throw result;
+                });
+        }
+
         // ===== CONSENT =====
         function checkConsent() {
             var consent = localStorage.getItem('lifeline_consent');
@@ -1160,6 +1242,10 @@
         function goToScan() {
             document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
             document.getElementById('scan-page').classList.add('active');
+            updatePointsDisplay();
+            // Δείξε και τα δύο κουμπιά ανάλυσης μόλις είναι διαθέσιμη κάμερα/εικόνα
+            document.getElementById('analyze-btn').style.display = 'block';
+            document.getElementById('analyze-vip-btn').style.display = 'block';
         }
         
         function goToSplash() {
@@ -1256,6 +1342,7 @@
                 video.srcObject = currentStream;
                 resizeOverlay();
                 document.getElementById('analyze-btn').style.display = 'block';
+                document.getElementById('analyze-vip-btn').style.display = 'block';
                 document.getElementById('selfie-btn').style.display = 'flex';
                 document.getElementById('back-btn').style.display = 'flex';
                 document.getElementById('camera-btn').disabled = true;
@@ -1330,6 +1417,7 @@
                 document.getElementById('upload-preview-img').src = capturedImage;
                 document.getElementById('upload-preview-area').style.display = 'block';
                 document.getElementById('analyze-btn').style.display = 'block';
+                document.getElementById('analyze-vip-btn').style.display = 'block';
             };
             reader.readAsDataURL(file);
         }
@@ -1348,6 +1436,7 @@
             isAnalyzing = true;
             document.getElementById('loading-box').style.display = 'block';
             document.getElementById('analyze-btn').style.display = 'none';
+            document.getElementById('analyze-vip-btn').style.display = 'none';
             document.getElementById('controls-row').style.display = 'none';
             document.getElementById('topic-row').style.display = 'none';
             document.querySelector('.selectors-row').style.display = 'none';
@@ -1387,6 +1476,9 @@
                 document.getElementById('topic-row').style.display = 'flex';
                 document.querySelector('.selectors-row').style.display = 'flex';
                 document.querySelector('.camera-instruction').style.display = 'block';
+                document.getElementById('analyze-btn').style.display = 'block';
+                document.getElementById('analyze-vip-btn').style.display = 'block';
+                updatePointsDisplay();
                 isAnalyzing = false;
             }
         }
@@ -1400,6 +1492,7 @@
         function resetScan() {
             document.getElementById('loading-box').style.display = 'none';
             document.getElementById('analyze-btn').style.display = 'none';
+            document.getElementById('analyze-vip-btn').style.display = 'none';
             document.getElementById('controls-row').style.display = 'flex';
             document.getElementById('selfie-btn').style.display = 'none';
             document.getElementById('back-btn').style.display = 'none';
@@ -1411,6 +1504,75 @@
             document.getElementById('camera-btn').innerText = '📷 Έναρξη';
             capturedImage = null;
             isAnalyzing = false;
+        }
+
+        // ===== ΝΕΟ: ΣΥΣΤΗΜΑ ΠΟΝΤΩΝ & ΡΟΗ ΔΙΑΦΗΜΙΣΕΩΝ =====
+        const POINTS_KEY = 'lifeline_user_points';
+        const VIP_COST = 5;
+
+        function getUserPoints() {
+            return parseInt(localStorage.getItem(POINTS_KEY) || '0', 10);
+        }
+
+        function addPoints(amount) {
+            let current = getUserPoints();
+            localStorage.setItem(POINTS_KEY, (current + amount).toString());
+            updatePointsDisplay();
+        }
+
+        function spendPoints(amount) {
+            let current = getUserPoints();
+            if (current >= amount) {
+                localStorage.setItem(POINTS_KEY, (current - amount).toString());
+                updatePointsDisplay();
+                return true;
+            }
+            return false;
+        }
+
+        function updatePointsDisplay() {
+            let display = document.getElementById('points-display');
+            if (display) display.textContent = getUserPoints();
+            let vipBtn = document.getElementById('analyze-vip-btn');
+            if (vipBtn) {
+                let pts = getUserPoints();
+                vipBtn.textContent = `⚡ VIP (${VIP_COST} Πόντοι) - Έχεις ${pts}`;
+                vipBtn.disabled = pts < VIP_COST;
+                vipBtn.style.opacity = pts < VIP_COST ? '0.5' : '1';
+            }
+        }
+
+        function earnPoints() {
+            showRewardedAd()
+                .then((result) => {
+                    if (result.done) {
+                        addPoints(10);
+                        alert('🎉 Κέρδισες 10 πόντους! Μπορείς να τους χρησιμοποιήσεις για VIP αναλύσεις.');
+                    }
+                })
+                .catch((err) => {
+                    alert('Δεν ήταν δυνατή η προβολή διαφήμισης. Δοκίμασε αργότερα.');
+                });
+        }
+
+        function startAnalysisFlow(isVip = false) {
+            if (isVip) {
+                if (spendPoints(VIP_COST)) {
+                    performAnalysis();
+                } else {
+                    alert(`Δεν έχεις αρκετούς πόντους. Χρειάζεσαι ${VIP_COST}. Κέρδισε πόντους βλέποντας μια διαφήμιση!`);
+                }
+            } else {
+                showRewardedAd()
+                    .then((result) => {
+                        if (result.done) addPoints(2);
+                        performAnalysis();
+                    })
+                    .catch((err) => {
+                        console.warn('Ad error, proceeding without reward:', err);
+                        performAnalysis();
+                    });
+            }
         }
     </script>
 </body>
