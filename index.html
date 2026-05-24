@@ -222,7 +222,7 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== PWA BANNER - ΣΤΑΘΕΡΟ ΠΑΝΩ ΜΕ ΑΣΦΑΛΗ ΑΠΟΣΤΑΣΗ ===== */
+        /* ===== PWA BANNER ===== */
         #pwa-prompt {
             position: absolute;
             top: calc(25px + var(--safe-top));
@@ -254,7 +254,7 @@
             38%, 100% { opacity: 0; transform: translateX(-50%) translateY(-15px); }
         }
 
-        /* ===== ΚΕΝΤΡΙΚΟ ΠΕΡΙΕΧΟΜΕΝΟ - ΑΠΟΛΥΤΟ ΚΕΝΤΡΑΡΙΣΜΑ ===== */
+        /* ===== ΚΕΝΤΡΙΚΟ ΠΕΡΙΕΧΟΜΕΝΟ ===== */
         .splash-inner {
             display: flex;
             flex-direction: column;
@@ -389,7 +389,7 @@
         .btn-mystic:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
         .btn-mystic:active { transform: scale(0.95); }
 
-        /* ===== ΚΑΦΕΜΑΝΤΕΙΑ BANNER - ΣΤΑΘΕΡΟ ΚΑΤΩ ΜΕ ΑΣΦΑΛΗ ΑΠΟΣΤΑΣΗ ===== */
+        /* ===== ΚΑΦΕΜΑΝΤΕΙΑ BANNER - ΣΤΟ ΚΕΝΤΡΟ ΚΑΤΩ ===== */
         #kafemanteia-container {
             position: absolute;
             bottom: calc(25px + var(--safe-bottom));
@@ -397,10 +397,15 @@
             transform: translateX(-50%);
             z-index: 25;
             pointer-events: auto;
+            width: auto;
+            display: flex;
+            justify-content: center;
         }
 
         .kafemanteia-comet {
-            display: flex; align-items: center; gap: 10px;
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
             text-decoration: none;
             background: rgba(20, 10, 40, 0.92); 
             backdrop-filter: blur(12px);
@@ -419,12 +424,15 @@
             background: rgba(30, 15, 50, 0.95);
         }
         .kafemanteia-comet .comet-icon { 
-            font-size: 1.6rem; 
+            font-size: 1.4rem; 
             animation: crystalGlow 2s infinite ease-in-out; 
         }
         .kafemanteia-comet .comet-text {
-            color: var(--gold); font-weight: 700; font-size: 0.95rem;
-            letter-spacing: 2px; text-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+            color: var(--gold); 
+            font-weight: 700; 
+            font-size: 0.9rem;
+            letter-spacing: 1.5px; 
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
         }
 
         @keyframes kafemanteiaPop {
@@ -748,8 +756,8 @@
             .btn-mystic { min-width: 200px; padding: 10px 24px; font-size: 0.8rem; }
             #pwa-prompt { font-size: 0.78rem; padding: 10px 18px; max-width: 280px; top: calc(20px + var(--safe-top)); }
             .kafemanteia-comet { padding: 10px 20px; }
-            .kafemanteia-comet .comet-text { font-size: 0.85rem; }
-            .kafemanteia-comet .comet-icon { font-size: 1.3rem; }
+            .kafemanteia-comet .comet-text { font-size: 0.8rem; }
+            .kafemanteia-comet .comet-icon { font-size: 1.2rem; }
             #kafemanteia-container { bottom: calc(20px + var(--safe-bottom)); }
             
             #scan-page { gap: 4px; padding: 8px 10px; }
@@ -796,7 +804,7 @@
             ✦ Προσθέστε την εφαρμογή στην αρχική οθόνη του κινητού σας ✦
         </div>
 
-        <!-- ΚΕΝΤΡΙΚΟ ΠΕΡΙΕΧΟΜΕΝΟ - ΑΠΟΛΥΤΑ ΚΕΝΤΡΑΡΙΣΜΕΝΟ -->
+        <!-- ΚΕΝΤΡΙΚΟ ΠΕΡΙΕΧΟΜΕΝΟ -->
         <div class="splash-inner">
             <div class="logo-container" onclick="goToScan()">
                 <div class="logo-circle">
@@ -845,11 +853,11 @@
             <button class="btn-mystic" onclick="goToScan()" data-translate="true">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
         </div>
 
-        <!-- ΚΑΦΕΜΑΝΤΕΙΑ BANNER -->
+        <!-- ΚΑΦΕΜΑΝΤΕΙΑ BANNER - ΝΕΟ ΚΕΙΜΕΝΟ -->
         <div id="kafemanteia-container">
             <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet" id="kafemanteia-comet">
-                <span class="comet-icon">🔮</span>
-                <span class="comet-text">🪐Omen-Καφεμαντεία✨Κλικ εδώ-</span>
+                <span class="comet-icon">🪐</span>
+                <span class="comet-text">Omen-Καφεμαντεία☕️ - Κλικ Εδώ 🆕</span>
             </a>
         </div>
     </div>
