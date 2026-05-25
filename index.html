@@ -44,12 +44,23 @@
                               radial-gradient(ellipse at 50% 80%, rgba(255,215,0,0.12) 0%, transparent 55%);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             touch-action: manipulation;
+            min-height: 100vh;
+            min-height: 100dvh;
         }
 
         #starfield { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
-        .page { position: absolute; top: 0; left: 0; z-index: 1; display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; height: 100dvh; padding: 0; overflow: hidden; }
+        .page { 
+            position: absolute; top: 0; left: 0; z-index: 1; display: none; 
+            flex-direction: column; align-items: center; justify-content: center;
+            width: 100%; height: 100%; height: 100dvh; padding: 0; overflow: hidden;
+            min-height: 100vh; min-height: 100dvh;
+        }
         .page.active { display: flex; }
+
+        /* TELEGRAM WEBVIEW FIX */
+        #splash-page { justify-content: center; }
+        #scan-page { justify-content: flex-start; }
 
         /* LANGUAGE BAR */
         #language-bar { display: flex; align-items: center; gap: 8px; background: rgba(20,10,40,0.85); backdrop-filter: blur(12px); border: 1.5px solid rgba(255,215,0,0.35); border-radius: 30px; padding: 10px 14px; position: relative; z-index: 10; width: 90%; max-width: 380px; margin: 0 auto; box-shadow: 0 0 25px rgba(255,215,0,0.08); flex-shrink: 0; }
@@ -64,9 +75,14 @@
         #consent-overlay.hidden { display: none; }
         #consent-modal { background: linear-gradient(145deg, #1a0e2a, #2a1a3a); border: 3px solid var(--gold); border-radius: 25px; padding: 25px 20px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 0 60px rgba(255,215,0,0.4); animation: modalFadeIn 0.5s ease; }
         @keyframes modalFadeIn { 0% { opacity: 0; transform: scale(0.9) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+        #consent-modal .consent-icon { font-size: 2.8rem; margin-bottom: 8px; animation: floatIcon 2s infinite ease-in-out; }
+        @keyframes floatIcon { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         #consent-modal h2 { color: var(--gold); font-size: 1.2rem; margin-bottom: 8px; }
         #consent-modal p { color: #d5c8e8; font-size: 0.8rem; line-height: 1.5; margin-bottom: 12px; }
+        #consent-modal .consent-email { color: #c9a0dc; font-size: 0.75rem; margin-bottom: 12px; }
+        #consent-modal .consent-email strong { color: #FFD700; }
         #consent-btn { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; padding: 12px 20px; border: none; border-radius: 60px; font-size: 0.9rem; font-weight: 700; cursor: pointer; box-shadow: 0 0 30px rgba(255,215,0,0.3); transition: all 0.4s; letter-spacing: 1px; width: 100%; }
+        #consent-btn:hover { transform: scale(1.04) translateY(-3px); box-shadow: 0 0 50px rgba(255,215,0,0.6); }
 
         /* SPLASH PAGE */
         #splash-page { text-align: center; animation: fadeInUp 0.8s ease; padding: 0 15px; padding-top: calc(12px + var(--safe-top)); padding-bottom: calc(70px + var(--safe-bottom)); }
@@ -143,7 +159,6 @@
         #global-footer a { color: var(--gold); text-decoration: none; font-weight: 600; cursor: pointer; transition: all 0.3s; }
         #global-footer a:hover { text-decoration: underline; color: #fff; }
         #global-footer .footer-sep { color: rgba(255,215,0,0.5); }
-        #global-footer .footer-email { color: #c9a0dc; font-size: 0.68rem; font-weight: 500; }
 
         /* TERMS MODAL */
         #terms-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(15px); z-index: 10001; align-items: center; justify-content: center; padding: 15px; }
@@ -152,6 +167,12 @@
         #terms-modal h2 { color: var(--gold); text-align: center; margin-bottom: 15px; font-size: 1.2rem; }
         #terms-modal h3 { color: #FFD700; margin: 14px 0 6px; font-size: 0.95rem; }
         #close-terms-btn { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; padding: 10px 22px; border: none; border-radius: 30px; font-size: 0.85rem; font-weight: 700; cursor: pointer; display: block; margin: 18px auto 0; box-shadow: 0 0 20px rgba(255,215,0,0.3); transition: all 0.3s; }
+
+        /* TELEGRAM & MOBILE CENTERING FIX */
+        @supports (-webkit-touch-callout: none) {
+            body { min-height: -webkit-fill-available; }
+            .page { min-height: -webkit-fill-available; }
+        }
 
         @media (max-width: 420px) {
             #splash-page { padding: 0 12px; padding-bottom: calc(65px + var(--safe-bottom)); }
@@ -171,12 +192,19 @@
 
     <canvas id="starfield"></canvas>
 
-    <!-- CONSENT OVERLAY -->
+    <!-- CONSENT OVERLAY - ΕΜΦΑΝΙΖΕΤΑΙ ΚΑΘΕ ΦΟΡΑ -->
     <div id="consent-overlay">
         <div id="consent-modal">
             <div class="consent-icon">🖐️</div>
             <h2 data-translate="true">Καλώς ήρθατε στο LiFe LiNe!</h2>
-            <p data-translate="true">Για να συνεχίσετε, πρέπει να επιβεβαιώσετε ότι είστε <strong>άνω των 18 ετών</strong> και ότι αποδέχεστε πως η εφαρμογή χρησιμοποιεί Τεχνητή Νοημοσύνη για να παράγει αποτελέσματα με καθαρά <strong>ψυχαγωγικό και μη κατευθυντικό χαρακτήρα</strong>.</p>
+            <p data-translate="true">
+                Για να συνεχίσετε, πρέπει να επιβεβαιώσετε ότι είστε <strong>άνω των 18 ετών</strong> 
+                και ότι αποδέχεστε πως η εφαρμογή χρησιμοποιεί Τεχνητή Νοημοσύνη για να παράγει 
+                αποτελέσματα με καθαρά <strong>ψυχαγωγικό και μη κατευθυντικό χαρακτήρα</strong>.
+            </p>
+            <p class="consent-email">
+                📧 Επικοινωνία: <strong>info.franklydear@gmail.com</strong>
+            </p>
             <button id="consent-btn" onclick="acceptConsent()" data-translate="true">Αποδέχομαι & Είμαι άνω των 18 ετών</button>
         </div>
     </div>
@@ -307,13 +335,11 @@
         <div id="terms-modal"></div>
     </div>
 
-    <!-- GLOBAL FOOTER -->
+    <!-- GLOBAL FOOTER (χωρίς email - το email είναι στο Consent Modal) -->
     <div id="global-footer">
         <a onclick="showTerms('terms')" data-translate="true">Όροι Χρήσης</a>
         <span class="footer-sep">|</span>
         <a onclick="showTerms('privacy')" data-translate="true">Πολιτική Απορρήτου</a>
-        <span class="footer-sep">|</span>
-        <span class="footer-email">📧 info.franklydear@gmail.com</span>
     </div>
 
     <!-- EXTERNAL SCRIPT -->
