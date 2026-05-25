@@ -6,50 +6,26 @@
     <title>LiFe LiNe - Χειρομαντεία με AI</title>
     
     <meta name="description" content="🖐️ Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου με Χειρομαντεία & Αστρολογία.">
-    
     <meta property="og:title" content="🖐️ LiFe LiNe - Χειρομαντεία με AI">
-    <meta property="og:description" content="Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου με Χειρομαντεία & Αστρολογία.">
+    <meta property="og:description" content="Η Aziram διαβάζει την παλάμη σου!">
     <meta property="og:image" content="https://lifeline.franklymadear.com/lifeline.png">
-    <meta property="og:image:width" content="512">
-    <meta property="og:image:height" content="512">
-    <meta property="og:image:type" content="image/png">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lifeline.franklymadear.com">
-    <meta property="og:site_name" content="LiFe LiNe - Χειρομαντεία">
-    <meta property="og:locale" content="el_GR">
-    
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="🖐️ LiFe LiNe - Χειρομαντεία με AI">
-    <meta name="twitter:description" content="Η Aziram διαβάζει την παλάμη σου! Ανακάλυψε τα μυστικά των γραμμών του χεριού σου.">
     <meta name="twitter:image" content="https://lifeline.franklymadear.com/lifeline.png">
-    <meta name="twitter:image:alt" content="LiFe LiNe - Χειρομαντεία">
-    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="LiFe LiNe">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#1a0033">
-    <link rel="apple-touch-icon" sizes="180x180" href="lifeline.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="lifeline.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="lifeline.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="lifeline.png">
-    <link rel="shortcut icon" href="lifeline.png">
-    
-    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22LiFe%20LiNe%20-%20%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%22%2C%22short_name%22%3A%22LiFe%20LiNe%22%2C%22description%22%3A%22%CE%A7%CE%B5%CE%B9%CF%81%CE%BF%CE%BC%CE%B1%CE%BD%CF%84%CE%B5%CE%AF%CE%B1%20%CE%BC%CE%B5%20AI%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231a0033%22%2C%22theme_color%22%3A%22%231a0033%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22lifeline.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
+    <link rel="icon" href="lifeline.png">
+    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22LiFe%20LiNe%22%2C%22short_name%22%3A%22LiFe%20LiNe%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231a0033%22%2C%22theme_color%22%3A%22%231a0033%22%7D">
 
-    <!-- AdsGram SDK -->
     <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 
     <style>
         :root {
-            --gold: #FFD700;
-            --gold-dark: #B8860B;
-            --purple: #6a0dad;
-            --purple-dark: #1a0033;
-            --purple-light: #9b59b6;
-            --bg: #0a0015;
-            --card: rgba(30, 10, 60, 0.9);
+            --gold: #FFD700; --gold-dark: #B8860B; --purple: #6a0dad;
+            --purple-dark: #1a0033; --purple-light: #9b59b6; --bg: #0a0015;
             --safe-top: env(safe-area-inset-top, 0px);
             --safe-bottom: env(safe-area-inset-bottom, 0px);
         }
@@ -57,719 +33,137 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         html, body {
-            position: fixed;
-            overflow: hidden;
-            width: 100%;
-            height: 100%;
-            height: 100vh;
-            height: 100dvh;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-overflow-scrolling: auto;
-            overscroll-behavior: none;
+            position: fixed; overflow: hidden; width: 100%; height: 100%; height: 100dvh;
+            -webkit-tap-highlight-color: transparent; overscroll-behavior: none;
         }
 
         body {
             font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
-            background: var(--bg);
-            color: #f0e6ff;
-            background-image: 
-                radial-gradient(ellipse at 50% 20%, rgba(106, 13, 173, 0.35) 0%, transparent 55%),
-                radial-gradient(ellipse at 50% 80%, rgba(255, 215, 0, 0.12) 0%, transparent 55%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background: var(--bg); color: #f0e6ff;
+            background-image: radial-gradient(ellipse at 50% 20%, rgba(106,13,173,0.35) 0%, transparent 55%),
+                              radial-gradient(ellipse at 50% 80%, rgba(255,215,0,0.12) 0%, transparent 55%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             touch-action: manipulation;
         }
 
-        #starfield {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
+        #starfield { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
-        .page {
-            position: absolute;
-            top: 0; left: 0;
-            z-index: 1;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            height: 100dvh;
-            padding: 0;
-            overflow: hidden;
-        }
+        .page { position: absolute; top: 0; left: 0; z-index: 1; display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; height: 100dvh; padding: 0; overflow: hidden; }
         .page.active { display: flex; }
 
-        /* ===== LANGUAGE BAR ===== */
-        #language-bar {
-            display: flex; align-items: center; gap: 8px;
-            background: rgba(20, 10, 40, 0.85); backdrop-filter: blur(12px);
-            border: 1.5px solid rgba(255, 215, 0, 0.35); border-radius: 30px;
-            padding: 10px 14px; position: relative; z-index: 10;
-            width: 90%; max-width: 380px; margin: 0 auto;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.08);
-            flex-shrink: 0;
-        }
-        #language-bar .lang-label {
-            color: var(--gold); font-size: 0.8rem; font-weight: 700;
-            letter-spacing: 1px; white-space: nowrap; min-width: 55px; text-align: center;
-        }
-        #language-bar select {
-            flex: 1; min-width: 90px;
-            background: rgba(10, 5, 25, 0.9); color: var(--gold);
-            border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 20px;
-            padding: 8px 28px 8px 10px; font-size: 0.8rem; font-weight: 600;
-            cursor: pointer;
-            appearance: none; -webkit-appearance: none; -moz-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23FFD700' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 8px center;
-            outline: none; font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
-        }
-        #language-bar select:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
-        #language-bar select option { background: #1a0a2e; color: #e0c5f0; }
-        #translate-btn {
-            background: linear-gradient(145deg, #FFD700, #B8860B);
-            color: #1a0033; border: none; border-radius: 50%;
-            width: 34px; height: 34px; min-width: 34px;
-            font-size: 0.9rem; cursor: pointer; font-weight: 700;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-            transition: all 0.3s; flex-shrink: 0;
-        }
-        #translate-btn:hover { transform: scale(1.1); box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
-        #translate-btn:active { transform: scale(0.9); }
-        #translate-btn.translating { animation: spin 0.8s linear infinite; pointer-events: none; opacity: 0.7; }
-        #reset-lang-btn {
-            background: linear-gradient(145deg, #9b59b6, #6a0dad);
-            color: #fff; border: none; border-radius: 50%;
-            width: 34px; height: 34px; min-width: 34px;
-            font-size: 0.9rem; cursor: pointer; font-weight: 700;
-            display: none; align-items: center; justify-content: center;
-            box-shadow: 0 0 15px rgba(155, 89, 182, 0.3);
-            transition: all 0.3s; flex-shrink: 0;
-        }
-        #reset-lang-btn:hover { transform: scale(1.1); box-shadow: 0 0 25px rgba(155, 89, 182, 0.6); }
+        /* LANGUAGE BAR */
+        #language-bar { display: flex; align-items: center; gap: 8px; background: rgba(20,10,40,0.85); backdrop-filter: blur(12px); border: 1.5px solid rgba(255,215,0,0.35); border-radius: 30px; padding: 10px 14px; position: relative; z-index: 10; width: 90%; max-width: 380px; margin: 0 auto; box-shadow: 0 0 25px rgba(255,215,0,0.08); flex-shrink: 0; }
+        #language-bar .lang-label { color: var(--gold); font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; white-space: nowrap; min-width: 55px; text-align: center; }
+        #language-bar select { flex: 1; min-width: 90px; background: rgba(10,5,25,0.9); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); border-radius: 20px; padding: 8px 28px 8px 10px; font-size: 0.8rem; font-weight: 600; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23FFD700' d='M5 7L1 3h8z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; outline: none; }
+        #translate-btn, #reset-lang-btn { width: 34px; height: 34px; min-width: 34px; border-radius: 50%; font-size: 0.9rem; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; border: none; flex-shrink: 0; transition: all 0.3s; }
+        #translate-btn { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; box-shadow: 0 0 15px rgba(255,215,0,0.3); }
+        #reset-lang-btn { background: linear-gradient(145deg, #9b59b6, #6a0dad); color: #fff; display: none; box-shadow: 0 0 15px rgba(155,89,182,0.3); }
 
-        /* ===== CONSENT MODAL ===== */
-        #consent-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.88);
-            backdrop-filter: blur(12px);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+        /* CONSENT MODAL */
+        #consent-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); backdrop-filter: blur(12px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
         #consent-overlay.hidden { display: none; }
-
-        #consent-modal {
-            background: linear-gradient(145deg, #1a0e2a, #2a1a3a);
-            border: 3px solid var(--gold);
-            border-radius: 25px;
-            padding: 25px 20px;
-            max-width: 450px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 
-                0 0 60px rgba(255, 215, 0, 0.4),
-                0 0 100px rgba(106, 13, 173, 0.3);
-            animation: modalFadeIn 0.5s ease;
-        }
-
-        @keyframes modalFadeIn {
-            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        #consent-modal .consent-icon { font-size: 2.8rem; margin-bottom: 8px; animation: floatIcon 2s infinite ease-in-out; }
-
-        @keyframes floatIcon {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        #consent-modal h2 { color: var(--gold); font-size: 1.2rem; margin-bottom: 8px; letter-spacing: 2px; }
+        #consent-modal { background: linear-gradient(145deg, #1a0e2a, #2a1a3a); border: 3px solid var(--gold); border-radius: 25px; padding: 25px 20px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 0 60px rgba(255,215,0,0.4); animation: modalFadeIn 0.5s ease; }
+        @keyframes modalFadeIn { 0% { opacity: 0; transform: scale(0.9) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+        #consent-modal h2 { color: var(--gold); font-size: 1.2rem; margin-bottom: 8px; }
         #consent-modal p { color: #d5c8e8; font-size: 0.8rem; line-height: 1.5; margin-bottom: 12px; }
-        #consent-btn {
-            background: linear-gradient(145deg, #FFD700, #B8860B);
-            color: #1a0033; padding: 12px 20px; border: none; border-radius: 60px;
-            font-size: 0.9rem; font-weight: 700; cursor: pointer;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3); transition: all 0.4s;
-            letter-spacing: 1px; width: 100%;
-        }
-        #consent-btn:hover { transform: scale(1.04) translateY(-3px); box-shadow: 0 0 50px rgba(255, 215, 0, 0.6); }
+        #consent-btn { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; padding: 12px 20px; border: none; border-radius: 60px; font-size: 0.9rem; font-weight: 700; cursor: pointer; box-shadow: 0 0 30px rgba(255,215,0,0.3); transition: all 0.4s; letter-spacing: 1px; width: 100%; }
 
-        /* ===== SPLASH PAGE ===== */
-        #splash-page {
-            text-align: center; 
-            animation: fadeInUp 0.8s ease;
-            position: relative; 
-            justify-content: center;
-            gap: 0;
-            padding: 0 15px;
-            padding-top: calc(12px + var(--safe-top));
-            padding-bottom: calc(12px + var(--safe-bottom));
-        }
+        /* SPLASH PAGE */
+        #splash-page { text-align: center; animation: fadeInUp 0.8s ease; padding: 0 15px; padding-top: calc(12px + var(--safe-top)); padding-bottom: calc(70px + var(--safe-bottom)); }
+        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        .splash-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(2vh,3vh,3.5vh); width: 100%; height: 100%; padding: 15px 0; }
+        .logo-container { width: clamp(160px,35vw,210px); height: clamp(160px,35vw,210px); margin: 0 auto; animation: floatLogo 5s infinite ease-in-out; cursor: pointer; flex-shrink: 0; }
+        @keyframes floatLogo { 0%,100% { transform: translateY(0px); } 30% { transform: translateY(-8px); } 60% { transform: translateY(-14px); } }
+        .logo-circle { width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(145deg, #2a0040, #1a0030, #0d0020); border: 3px solid var(--gold); box-shadow: 0 0 60px rgba(255,215,0,0.35), 0 0 100px rgba(106,13,173,0.3); display: flex; align-items: center; justify-content: center; }
+        .logo-hand { font-size: clamp(4.5rem,11vw,6.5rem); filter: drop-shadow(0 0 25px rgba(255,215,0,0.5)); animation: pulseHand 2.5s infinite ease-in-out; }
+        @keyframes pulseHand { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        .splash-title { font-size: clamp(2.4rem,8vw,4rem); font-weight: 800; background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700, #FFA500); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 6px; animation: shimmer 3.5s infinite; flex-shrink: 0; line-height: 1.1; }
+        @keyframes shimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .splash-subtitle { color: #c9a0dc; font-size: clamp(1rem,2.5vw,1.4rem); font-weight: 500; letter-spacing: 4px; text-transform: uppercase; flex-shrink: 0; opacity: 0.9; }
+        .btn-mystic { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; padding: 15px 30px; border: none; border-radius: 60px; font-size: clamp(0.95rem,2vw,1.15rem); font-weight: 700; cursor: pointer; box-shadow: 0 0 40px rgba(255,215,0,0.3), 0 8px 25px rgba(0,0,0,0.5); transition: all 0.4s ease; letter-spacing: 2px; min-width: 260px; max-width: 85%; min-height: 60px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; white-space: nowrap; }
+        .btn-mystic:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 80px rgba(255,215,0,0.6); }
 
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
+        /* KAFEMANTEIA BANNER */
+        #kafemanteia-container { position: absolute; bottom: calc(70px + var(--safe-bottom)); left: 50%; transform: translateX(-50%); z-index: 25; width: 92%; max-width: 500px; }
+        .kafemanteia-comet { display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; background: rgba(20,10,40,0.92); backdrop-filter: blur(12px); border: 2px solid rgba(255,215,0,0.5); border-radius: 50px; padding: 14px 20px; box-shadow: 0 0 35px rgba(255,215,0,0.25); transition: all 0.3s ease; animation: slideUp 0.8s ease-out forwards, cometPulse 2s ease-in-out 0.8s infinite; width: 100%; text-align: center; }
+        .kafemanteia-comet .comet-text { color: var(--gold); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; }
+        @keyframes slideUp { 0% { transform: translateY(80px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+        @keyframes cometPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
 
-        /* ===== PWA BANNER ===== */
-        #pwa-prompt {
-            position: absolute;
-            top: calc(25px + var(--safe-top));
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 25;
-            background: rgba(255, 215, 0, 0.18);
-            border: 1.5px solid rgba(255, 215, 0, 0.5);
-            border-radius: 30px;
-            padding: 12px 24px;
-            color: var(--gold);
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.8px;
-            backdrop-filter: blur(10px);
-            text-align: center;
-            line-height: 1.4;
-            max-width: 360px;
-            width: 88%;
-            animation: pwaFlash 8s ease-in-out infinite;
-            pointer-events: none;
-            box-shadow: 0 4px 25px rgba(255, 215, 0, 0.2);
-            white-space: normal;
-        }
-
-        @keyframes pwaFlash {
-            0%, 100% { opacity: 0; transform: translateX(-50%) translateY(-15px); }
-            6%, 28% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            38%, 100% { opacity: 0; transform: translateX(-50%) translateY(-15px); }
-        }
-
-        .splash-inner {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: clamp(2vh, 3vh, 3.5vh);
-            width: 100%;
-            height: 100%;
-            padding: 15px 0;
-        }
-
-        .logo-container {
-            position: relative; 
-            width: clamp(160px, 35vw, 210px); 
-            height: clamp(160px, 35vw, 210px); 
-            margin: 0 auto;
-            animation: floatLogo 5s infinite ease-in-out; 
-            cursor: pointer; 
-            z-index: 2;
-            flex-shrink: 0;
-        }
-
-        @keyframes floatLogo {
-            0%, 100% { transform: translateY(0px); }
-            30% { transform: translateY(-8px); }
-            60% { transform: translateY(-14px); }
-        }
-
-        .logo-circle {
-            width: 100%; height: 100%; border-radius: 50%;
-            background: linear-gradient(145deg, #2a0040, #1a0030, #0d0020);
-            border: 3px solid var(--gold);
-            box-shadow: 0 0 60px rgba(255, 215, 0, 0.35), 0 0 100px rgba(106, 13, 173, 0.3), inset 0 0 60px rgba(255, 215, 0, 0.08);
-            display: flex; align-items: center; justify-content: center;
-            position: relative; overflow: hidden;
-        }
-
-        .logo-circle::before {
-            content: ''; position: absolute; top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,215,0,0.2) 0%, transparent 60%);
-            animation: rotateGlow 10s linear infinite;
-        }
-
-        @keyframes rotateGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .logo-hand {
-            position: relative; z-index: 1;
-            font-size: clamp(4.5rem, 11vw, 6.5rem);
-            filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.5));
-            animation: pulseHand 2.5s infinite ease-in-out;
-        }
-
-        @keyframes pulseHand {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-        }
-
-        .splash-title {
-            font-size: clamp(2.4rem, 8vw, 4rem); 
-            font-weight: 800;
-            background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700, #FFA500);
-            background-size: 300% 300%;
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text; 
-            letter-spacing: 6px;
-            animation: shimmer 3.5s infinite; 
-            position: relative; z-index: 2;
-            flex-shrink: 0;
-            line-height: 1.1;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .splash-subtitle {
-            color: #c9a0dc; 
-            font-size: clamp(1rem, 2.5vw, 1.4rem);
-            font-weight: 500;
-            letter-spacing: 4px; 
-            text-transform: uppercase;
-            position: relative; z-index: 2;
-            flex-shrink: 0; 
-            opacity: 0.9;
-        }
-
-        .btn-mystic {
-            background: linear-gradient(145deg, #FFD700, #B8860B); 
-            color: #1a0033;
-            padding: 15px 30px; 
-            border: none; 
-            border-radius: 60px;
-            font-size: clamp(0.95rem, 2vw, 1.15rem); 
-            font-weight: 700; 
-            cursor: pointer;
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), 0 8px 25px rgba(0,0,0,0.5);
-            transition: all 0.4s ease; 
-            letter-spacing: 2px;
-            width: auto;
-            min-width: 260px;
-            max-width: 85%;
-            min-height: 60px;
-            line-height: 1.2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative; 
-            z-index: 2;
-            flex-shrink: 0;
-            white-space: nowrap;
-        }
-
-        .btn-mystic:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
-        .btn-mystic:active { transform: scale(0.95); }
-
-        /* ===== ΚΑΦΕΜΑΝΤΕΙΑ BANNER ===== */
-        #kafemanteia-container {
-            position: absolute;
-            bottom: calc(25px + var(--safe-bottom));
-            left: 50%;
-            z-index: 25;
-            pointer-events: auto;
-            width: 92%;
-            max-width: 500px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .kafemanteia-comet {
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            gap: 6px;
-            text-decoration: none;
-            background: rgba(20, 10, 40, 0.92); 
-            backdrop-filter: blur(12px);
-            border: 2px solid rgba(255, 215, 0, 0.5); 
-            border-radius: 50px;
-            padding: 14px 20px;
-            box-shadow: 0 0 35px rgba(255, 215, 0, 0.25), 0 0 70px rgba(155, 89, 182, 0.25);
-            transition: all 0.3s ease;
-            white-space: normal;
-            text-align: center;
-            animation: slideUp 0.8s ease-out forwards, cometPulse 2s ease-in-out 0.8s infinite;
-            transform: translateX(-50%) translateY(80px);
-            opacity: 0;
-            width: 100%;
-        }
-        .kafemanteia-comet:hover {
-            transform: scale(1.05) translateX(-50%);
-            box-shadow: 0 0 55px rgba(255, 215, 0, 0.55), 0 0 90px rgba(155, 89, 182, 0.4);
-            border-color: var(--gold); 
-            background: rgba(30, 15, 50, 0.95);
-        }
-        .kafemanteia-comet .comet-icon { 
-            font-size: 1.3rem; 
-            flex-shrink: 0;
-            animation: crystalGlow 2s infinite ease-in-out; 
-        }
-        .kafemanteia-comet .comet-text {
-            color: var(--gold); 
-            font-weight: 700; 
-            font-size: 0.85rem;
-            letter-spacing: 1px; 
-            text-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
-        }
-
-        @keyframes slideUp {
-            0% { transform: translateX(-50%) translateY(80px); opacity: 0; }
-            100% { transform: translateX(-50%) translateY(0); opacity: 1; }
-        }
-
-        @keyframes cometPulse {
-            0%, 100% { transform: translateX(-50%) scale(1); opacity: 1; }
-            50% { transform: translateX(-50%) scale(1.04); opacity: 0.9; }
-        }
-
-        @keyframes crystalGlow {
-            0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)); transform: scale(1); }
-            50% { filter: drop-shadow(0 0 18px rgba(255, 215, 0, 1)); transform: scale(1.2); }
-        }
-
-        /* ===== SCAN PAGE ===== */
-        #scan-page { 
-            justify-content: flex-start;
-            overflow-y: auto; overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-            gap: 6px;
-            padding: 10px 15px;
-            padding-top: calc(10px + var(--safe-top));
-            padding-bottom: calc(15px + var(--safe-bottom));
-        }
-
-        .btn-back {
-            background: transparent; border: 1px solid rgba(255,215,0,0.3);
-            color: #c9a0dc; padding: 5px 14px; border-radius: 50px;
-            font-size: 0.75rem; cursor: pointer; transition: all 0.3s; 
-            margin-bottom: 4px; flex-shrink: 0; align-self: flex-start;
-        }
-        .btn-back:hover { background: rgba(255,215,0,0.1); border-color: var(--gold); color: var(--gold); }
-
-        /* ===== SELECTORS ROW ===== */
-        .selectors-row {
-            display: flex; justify-content: center; align-items: stretch;
-            gap: 8px; flex-wrap: wrap; width: 100%; max-width: 460px;
-            flex-shrink: 0;
-        }
-
-        .selector-item {
-            display: flex; flex-direction: column; align-items: center; gap: 4px;
-            background: rgba(20, 10, 40, 0.8); padding: 8px 10px; border-radius: 20px;
-            border: 1px solid rgba(255,215,0,0.25); flex: 1; min-width: 110px; max-width: 220px;
-        }
-
-        .selector-label {
-            color: var(--gold); font-size: 0.65rem; font-weight: 700;
-            letter-spacing: 1px; text-transform: uppercase; text-align: center;
-        }
-
+        /* SCAN PAGE */
+        #scan-page { justify-content: flex-start; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; gap: 6px; padding: 10px 15px; padding-top: calc(10px + var(--safe-top)); padding-bottom: calc(70px + var(--safe-bottom)); }
+        .btn-back { background: transparent; border: 1px solid rgba(255,215,0,0.3); color: #c9a0dc; padding: 5px 14px; border-radius: 50px; font-size: 0.75rem; cursor: pointer; transition: all 0.3s; margin-bottom: 4px; flex-shrink: 0; align-self: flex-start; }
+        .selectors-row { display: flex; justify-content: center; align-items: stretch; gap: 8px; flex-wrap: wrap; width: 100%; max-width: 460px; flex-shrink: 0; }
+        .selector-item { display: flex; flex-direction: column; align-items: center; gap: 4px; background: rgba(20,10,40,0.8); padding: 8px 10px; border-radius: 20px; border: 1px solid rgba(255,215,0,0.25); flex: 1; min-width: 110px; }
+        .selector-label { color: var(--gold); font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; text-align: center; }
         .gender-btns { display: flex; gap: 0; width: 100%; border-radius: 14px; overflow: hidden; border: 2px solid rgba(255,215,0,0.3); }
-        .gender-btn {
-            padding: 8px 14px; font-size: 0.78rem; font-weight: 700; border: none;
-            background: rgba(20, 10, 40, 0.6); color: #b9a6d4;
-            cursor: pointer; transition: all 0.3s; flex: 1; text-align: center;
-        }
-        .gender-btn.active {
-            background: linear-gradient(145deg, #FFD700, #B8860B);
-            color: #1a0033; box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
-        }
-
-        .selector-item input {
-            padding: 8px 10px; border-radius: 14px;
-            border: 2px solid rgba(255,215,0,0.3); background: #1a0a2e;
-            color: #FFD700; font-size: 0.78rem; width: 100%; text-align: center; font-weight: 500;
-        }
-
-        /* ===== TOPIC DROPDOWN ===== */
-        .topic-dropdown-container {
-            width: 100%;
-            max-width: 460px;
-            margin: 6px auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .topic-dropdown-container .selector-label {
-            margin-bottom: 2px;
-        }
-
-        #topic-select {
-            width: 100%;
-            padding: 10px 16px;
-            border-radius: 30px;
-            border: 2px solid rgba(255,215,0,0.3);
-            background: rgba(20, 10, 40, 0.9);
-            color: var(--gold);
-            font-size: 0.8rem;
-            font-weight: 600;
-            appearance: none;
-            -webkit-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FFD700' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: all 0.3s;
-            height: 42px; /* σταθερό ύψος */
-        }
-
-        #topic-select:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 20px rgba(255,215,0,0.3);
-            outline: none;
-        }
-
-        /* ===== CAMERA ===== */
-        #camera-wrapper {
-            position: relative; width: 100%; max-width: 460px; margin: 4px auto;
-            border-radius: 24px; overflow: hidden; border: 3px solid var(--gold);
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); background: #0a0015;
-            aspect-ratio: 4 / 3;
-            flex-shrink: 0;
-        }
-
+        .gender-btn { padding: 8px 14px; font-size: 0.78rem; font-weight: 700; border: none; background: rgba(20,10,40,0.6); color: #b9a6d4; cursor: pointer; transition: all 0.3s; flex: 1; text-align: center; }
+        .gender-btn.active { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; }
+        .selector-item input { padding: 8px 10px; border-radius: 14px; border: 2px solid rgba(255,215,0,0.3); background: #1a0a2e; color: #FFD700; font-size: 0.78rem; width: 100%; text-align: center; font-weight: 500; }
+        .topic-dropdown-container { width: 100%; max-width: 460px; margin: 6px auto; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        #topic-select { width: 100%; padding: 10px 16px; border-radius: 30px; border: 2px solid rgba(255,215,0,0.3); background: rgba(20,10,40,0.9); color: var(--gold); font-size: 0.8rem; font-weight: 600; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FFD700' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: all 0.3s; height: 42px; }
+        #camera-wrapper { position: relative; width: 100%; max-width: 460px; margin: 4px auto; border-radius: 24px; overflow: hidden; border: 3px solid var(--gold); box-shadow: 0 0 40px rgba(255,215,0,0.3); background: #0a0015; aspect-ratio: 4 / 3; flex-shrink: 0; }
         #webcam { width: 100%; height: 100%; display: block; object-fit: contain; transform: scaleX(-1); }
-        #overlay-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: scaleX(-1); pointer-events: none; }
-
-        .scan-frame {
-            position: absolute; top: 6%; left: 6%; width: 88%; height: 88%;
-            border: 2px solid rgba(255, 215, 0, 0.5); border-radius: 28px;
-            pointer-events: none; animation: framePulse 2s infinite ease-in-out;
-        }
-
-        .scan-frame::before {
-            content: ''; position: absolute; top: -2px; left: -2px;
-            width: 22px; height: 22px; border-top: 4px solid var(--gold);
-            border-left: 4px solid var(--gold); border-radius: 5px 0 0 0;
-        }
-
-        .scan-frame::after {
-            content: ''; position: absolute; bottom: -2px; right: -2px;
-            width: 22px; height: 22px; border-bottom: 4px solid var(--gold);
-            border-right: 4px solid var(--gold); border-radius: 0 0 5px 0;
-        }
-
-        @keyframes framePulse {
-            0%, 100% { border-color: rgba(255, 215, 0, 0.5); }
-            50% { border-color: rgba(255, 215, 0, 0.9); }
-        }
-
-        .scan-line {
-            position: absolute; top: 0; left: 0; width: 100%; height: 3px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            animation: scanMove 3s infinite ease-in-out; pointer-events: none;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-        }
-
-        @keyframes scanMove {
-            0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; }
-        }
-
-        /* ===== CAMERA INSTRUCTION ===== */
-        .camera-instruction {
-            text-align: center; color: #d5c8e8;
-            font-size: clamp(0.73rem, 1.6vw, 0.82rem);
-            padding: 0 15px; width: 100%; max-width: 480px;
-            line-height: 1.5; font-weight: 500;
-            flex-shrink: 0;
-        }
-
-        /* ===== UNIFORM BUTTONS ===== */
-        .btn-uniform {
-            padding: 10px 16px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border-radius: 30px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-            min-width: 80px;
-            height: 42px; /* σταθερό ύψος */
-        }
-
-        .btn-uniform:active { transform: scale(0.96); }
-
+        .scan-frame { position: absolute; top: 6%; left: 6%; width: 88%; height: 88%; border: 2px solid rgba(255,215,0,0.5); border-radius: 28px; pointer-events: none; animation: framePulse 2s infinite ease-in-out; }
+        @keyframes framePulse { 0%,100% { border-color: rgba(255,215,0,0.5); } 50% { border-color: rgba(255,215,0,0.9); } }
+        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: scanMove 3s infinite ease-in-out; pointer-events: none; }
+        @keyframes scanMove { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        .camera-instruction { text-align: center; color: #d5c8e8; font-size: clamp(0.73rem,1.6vw,0.82rem); padding: 0 15px; width: 100%; max-width: 480px; line-height: 1.5; font-weight: 500; flex-shrink: 0; }
+        .btn-uniform { padding: 10px 16px; font-size: 0.8rem; font-weight: 600; border-radius: 30px; border: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); letter-spacing: 0.5px; white-space: nowrap; min-width: 80px; height: 42px; }
         .btn-gold { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; }
         .btn-purple { background: linear-gradient(145deg, #9b59b6, #6a0dad); color: #fff; }
         .btn-green { background: linear-gradient(145deg, #2ecc71, #1e8449); color: #fff; }
         .btn-vip { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; }
-
-        .controls-row {
-            display: flex; justify-content: center; gap: 8px;
-            width: 100%; max-width: 460px; flex-wrap: wrap;
-            flex-shrink: 0;
-            margin: 6px auto;
-        }
-
-        .camera-toggle-btn {
-            background: rgba(20, 10, 40, 0.7); color: #c9a0dc;
-            border: 2px solid rgba(255,215,0,0.25);
-            display: none;
-        }
-        .camera-toggle-btn.active {
-            background: linear-gradient(145deg, #FFD700, #B8860B);
-            color: #1a0033;
-            border-color: var(--gold);
-        }
-
-        /* ===== REWARDS BAR ===== */
-        #rewards-bar {
-            display: flex; justify-content: center; align-items: center; gap: 10px;
-            width: 100%; max-width: 460px; margin: 6px auto; flex-shrink: 0;
-        }
-
-        .points-badge {
-            background: rgba(20, 10, 40, 0.9); border: 1px solid var(--gold);
-            border-radius: 30px; padding: 8px 16px; color: var(--gold);
-            font-weight: bold; font-size: 0.8rem;
-        }
-
-        /* ===== ANALYSIS BUTTONS ===== */
-        .analysis-actions {
-            display: flex; gap: 10px; width: 100%; max-width: 460px;
-            justify-content: center; flex-wrap: wrap; margin: 6px auto;
-        }
-
-        .analysis-actions .btn {
-            flex: 1; max-width: 200px;
-        }
-
+        .controls-row { display: flex; justify-content: center; gap: 8px; width: 100%; max-width: 460px; flex-wrap: wrap; flex-shrink: 0; margin: 6px auto; }
+        .camera-toggle-btn { background: rgba(20,10,40,0.7); color: #c9a0dc; border: 2px solid rgba(255,215,0,0.25); display: none; }
+        .camera-toggle-btn.active { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; border-color: var(--gold); }
+        #rewards-bar { display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 460px; margin: 6px auto; flex-shrink: 0; }
+        .points-badge { background: rgba(20,10,40,0.9); border: 1px solid var(--gold); border-radius: 30px; padding: 8px 16px; color: var(--gold); font-weight: bold; font-size: 0.8rem; }
+        .analysis-actions { display: flex; gap: 10px; width: 100%; max-width: 460px; justify-content: center; flex-wrap: wrap; margin: 6px auto; }
         #upload-preview-area { display: none; text-align: center; margin: 3px 0; flex-shrink: 0; }
         #upload-preview-img { max-width: 130px; width: 100%; border-radius: 18px; border: 2px solid var(--gold); }
-
-        #loading-box {
-            display: none; text-align: center; background: rgba(20, 10, 40, 0.95);
-            border-radius: 24px; padding: 18px 14px; margin: 6px auto;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            box-shadow: 0 0 60px rgba(255, 215, 0, 0.2);
-            width: 100%; max-width: 350px;
-            flex-shrink: 0;
-        }
-
-        .loading-spinner {
-            width: 35px; height: 35px; border: 3px solid rgba(255, 215, 0, 0.2);
-            border-top: 3px solid var(--gold); border-radius: 50%;
-            animation: spin 1s linear infinite; margin: 8px auto;
-        }
-
+        #loading-box { display: none; text-align: center; background: rgba(20,10,40,0.95); border-radius: 24px; padding: 18px 14px; margin: 6px auto; border: 2px solid rgba(255,215,0,0.3); box-shadow: 0 0 60px rgba(255,215,0,0.2); width: 100%; max-width: 350px; flex-shrink: 0; }
+        .loading-spinner { width: 35px; height: 35px; border: 3px solid rgba(255,215,0,0.2); border-top: 3px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 8px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loading-text { font-size: 0.85rem; color: #c9a0dc; letter-spacing: 2px; animation: mysticPulse 2s infinite ease-in-out; }
+        @keyframes mysticPulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-        .loading-text {
-            font-size: 0.85rem; color: #c9a0dc; letter-spacing: 2px;
-            animation: mysticPulse 2s infinite ease-in-out;
-        }
-
-        @keyframes mysticPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
-
-        /* ===== RESULT POPUP ===== */
-        #result-popup-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(15px);
-            z-index: 10000; align-items: center; justify-content: center; padding: 15px;
-        }
+        /* RESULT POPUP */
+        #result-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(15px); z-index: 10000; align-items: center; justify-content: center; padding: 15px; }
         #result-popup-overlay.active { display: flex; }
+        #result-popup { background: linear-gradient(145deg, #1a0e2a, #2a1a3a); border: 3px solid var(--gold); border-radius: 25px; padding: 25px 18px; max-width: 550px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 0 80px rgba(255,215,0,0.5); animation: modalFadeIn 0.5s ease; }
+        #result-popup h2 { color: var(--gold); text-align: center; font-size: 1.3rem; margin-bottom: 15px; }
+        #result-popup-text { color: #e6d5f5; font-size: 0.9rem; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; }
+        .popup-star { position: absolute; color: #FFD700; opacity: 0.5; animation: floatStar 3s infinite ease-in-out; pointer-events: none; font-size: 1rem; z-index: 0; }
+        @keyframes floatStar { 0% { transform: translateY(0) rotate(0deg); opacity: 0.3; } 50% { transform: translateY(-15px) rotate(180deg); opacity: 0.8; } 100% { transform: translateY(0) rotate(360deg); opacity: 0.3; } }
+        #close-popup-btn { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; padding: 12px 25px; border: none; border-radius: 60px; font-size: 0.9rem; font-weight: 700; cursor: pointer; box-shadow: 0 0 30px rgba(255,215,0,0.3); transition: all 0.4s; letter-spacing: 1px; display: block; margin: 20px auto 0; width: 80%; max-width: 250px; }
 
-        #result-popup {
-            background: linear-gradient(145deg, #1a0e2a, #2a1a3a);
-            border: 3px solid var(--gold); border-radius: 25px;
-            padding: 25px 18px; max-width: 550px; width: 100%; max-height: 85vh;
-            overflow-y: auto; position: relative;
-            box-shadow: 0 0 80px rgba(255, 215, 0, 0.5), 0 0 120px rgba(106, 13, 173, 0.4);
-            animation: modalFadeIn 0.5s ease;
-        }
+        /* FOOTER */
+        #global-footer { position: fixed; bottom: 0; left: 0; z-index: 50; width: 100%; background: rgba(10,0,20,0.92); backdrop-filter: blur(12px); border-top: 1px solid rgba(255,215,0,0.35); padding: 10px 12px; display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.7rem; padding-bottom: calc(10px + var(--safe-bottom)); }
+        #global-footer a { color: var(--gold); text-decoration: none; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        #global-footer a:hover { text-decoration: underline; color: #fff; }
+        #global-footer .footer-sep { color: rgba(255,215,0,0.5); }
+        #global-footer .footer-email { color: #c9a0dc; font-size: 0.68rem; font-weight: 500; }
 
-        #result-popup h2 {
-            color: var(--gold); text-align: center; font-size: 1.3rem;
-            margin-bottom: 15px; letter-spacing: 2px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+        /* TERMS MODAL */
+        #terms-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(15px); z-index: 10001; align-items: center; justify-content: center; padding: 15px; }
+        #terms-modal-overlay.active { display: flex; }
+        #terms-modal { background: linear-gradient(145deg, #1a0e2a, #2a1a3a); border: 2px solid var(--gold); border-radius: 20px; padding: 22px 18px; max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto; color: #e6d5f5; font-size: 0.8rem; line-height: 1.7; box-shadow: 0 0 60px rgba(255,215,0,0.4); animation: modalFadeIn 0.5s ease; }
+        #terms-modal h2 { color: var(--gold); text-align: center; margin-bottom: 15px; font-size: 1.2rem; }
+        #terms-modal h3 { color: #FFD700; margin: 14px 0 6px; font-size: 0.95rem; }
+        #close-terms-btn { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; padding: 10px 22px; border: none; border-radius: 30px; font-size: 0.85rem; font-weight: 700; cursor: pointer; display: block; margin: 18px auto 0; box-shadow: 0 0 20px rgba(255,215,0,0.3); transition: all 0.3s; }
 
-        #result-popup-text {
-            color: #e6d5f5; font-size: 0.9rem; line-height: 1.8;
-            white-space: pre-wrap; word-wrap: break-word; position: relative; z-index: 1;
-        }
-
-        #result-popup-text h2 { font-size: 1.1rem; margin: 15px 0 10px; color: var(--gold); -webkit-text-fill-color: var(--gold); }
-        #result-popup-text h3 { font-size: 0.95rem; margin: 10px 0 8px; color: #FFD700; }
-
-        .popup-star {
-            position: absolute; color: #FFD700; opacity: 0.5;
-            animation: floatStar 3s infinite ease-in-out;
-            pointer-events: none; font-size: 1rem; z-index: 0;
-        }
-
-        @keyframes floatStar {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
-            50% { transform: translateY(-15px) rotate(180deg); opacity: 0.8; }
-            100% { transform: translateY(0) rotate(360deg); opacity: 0.3; }
-        }
-
-        #close-popup-btn {
-            background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033;
-            padding: 12px 25px; border: none; border-radius: 60px;
-            font-size: 0.9rem; font-weight: 700; cursor: pointer;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3); transition: all 0.4s;
-            letter-spacing: 1px; display: block; margin: 20px auto 0; width: 80%; max-width: 250px;
-        }
-        #close-popup-btn:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 60px rgba(255, 215, 0, 0.6); }
-        #close-popup-btn:active { transform: scale(0.95); }
-
-        /* ===== MEDIA QUERIES ===== */
         @media (max-width: 420px) {
-            #splash-page { padding: 0 12px; }
-            .splash-inner { gap: 2.5vh; }
+            #splash-page { padding: 0 12px; padding-bottom: calc(65px + var(--safe-bottom)); }
+            #scan-page { gap: 4px; padding: 8px 10px; padding-bottom: calc(65px + var(--safe-bottom)); }
             .logo-container { width: 140px; height: 140px; }
             .logo-hand { font-size: 3.8rem; }
             .splash-title { font-size: 2rem; letter-spacing: 4px; }
-            .splash-subtitle { font-size: 0.9rem; letter-spacing: 3px; }
             .btn-mystic { min-width: 220px; padding: 14px 24px; font-size: 0.9rem; min-height: 55px; }
-            #pwa-prompt { font-size: 0.78rem; padding: 10px 18px; max-width: 280px; top: calc(20px + var(--safe-top)); }
             #language-bar { padding: 9px 12px; }
-            #language-bar select { font-size: 0.75rem; }
-            .kafemanteia-comet { padding: 12px 16px; }
-            .kafemanteia-comet .comet-text { font-size: 0.78rem; }
-            .kafemanteia-comet .comet-icon { font-size: 1.2rem; }
-            #kafemanteia-container { bottom: calc(18px + var(--safe-bottom)); width: 90%; }
-            
-            #scan-page { gap: 4px; padding: 8px 10px; }
-            .selectors-row { gap: 6px; }
-            .selector-item { padding: 6px 8px; min-width: 90px; max-width: 160px; }
-            .selector-item input { font-size: 0.72rem; padding: 6px 8px; }
-            .gender-btn { padding: 6px 10px; font-size: 0.72rem; }
+            #kafemanteia-container { bottom: calc(65px + var(--safe-bottom)); width: 90%; }
             .btn-uniform { font-size: 0.72rem; padding: 8px 12px; height: 38px; }
-            #translate-btn { width: 30px; height: 30px; min-width: 30px; font-size: 0.8rem; }
-            #reset-lang-btn { width: 30px; height: 30px; min-width: 30px; font-size: 0.8rem; }
+            #global-footer { padding: 8px 10px; gap: 6px; font-size: 0.65rem; }
         }
     </style>
 </head>
@@ -777,37 +171,27 @@
 
     <canvas id="starfield"></canvas>
 
-    <!-- ===== CONSENT OVERLAY ===== -->
+    <!-- CONSENT OVERLAY -->
     <div id="consent-overlay">
         <div id="consent-modal">
             <div class="consent-icon">🖐️</div>
             <h2 data-translate="true">Καλώς ήρθατε στο LiFe LiNe!</h2>
-            <p data-translate="true">
-                Για να συνεχίσετε, πρέπει να επιβεβαιώσετε ότι είστε <strong>άνω των 18 ετών</strong> 
-                και ότι αποδέχεστε πως η εφαρμογή χρησιμοποιεί Τεχνητή Νοημοσύνη για να παράγει 
-                αποτελέσματα με καθαρά <strong>ψυχαγωγικό και μη κατευθυντικό χαρακτήρα</strong>.
-            </p>
+            <p data-translate="true">Για να συνεχίσετε, πρέπει να επιβεβαιώσετε ότι είστε <strong>άνω των 18 ετών</strong> και ότι αποδέχεστε πως η εφαρμογή χρησιμοποιεί Τεχνητή Νοημοσύνη για να παράγει αποτελέσματα με καθαρά <strong>ψυχαγωγικό και μη κατευθυντικό χαρακτήρα</strong>.</p>
             <button id="consent-btn" onclick="acceptConsent()" data-translate="true">Αποδέχομαι & Είμαι άνω των 18 ετών</button>
         </div>
     </div>
 
-    <!-- ===== SPLASH PAGE ===== -->
+    <!-- SPLASH PAGE -->
     <div id="splash-page" class="page active">
-        <div id="pwa-prompt" data-translate="true">
-            ✦ Προσθέστε την εφαρμογή στην αρχική οθόνη του κινητού σας ✦
-        </div>
-
         <div class="splash-inner">
             <div class="logo-container" onclick="goToScan()">
-                <div class="logo-circle">
-                    <span class="logo-hand">🖐️</span>
-                </div>
+                <div class="logo-circle"><span class="logo-hand">🖐️</span></div>
             </div>
             <div class="splash-title">LiFe LiNe</div>
             <div class="splash-subtitle" data-translate="true">Χειρομαντεία & Αστρολογία</div>
             
             <div id="language-bar">
-                <span class="lang-label" id="lang-label">🌐 Language</span>
+                <span class="lang-label" id="lang-label" data-translate="true">🌐 Γλώσσα</span>
                 <select id="language-select">
                     <option value="el">🇬🇷 Ελληνικά</option>
                     <option value="en">🇬🇧 English</option>
@@ -844,7 +228,6 @@
             
             <button class="btn-mystic" onclick="goToScan()" data-translate="true">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
         </div>
-
         <div id="kafemanteia-container">
             <a href="https://omen.franklymadear.com/index.html" target="_blank" class="kafemanteia-comet" id="kafemanteia-comet">
                 <span class="comet-icon">🪐</span>
@@ -853,10 +236,9 @@
         </div>
     </div>
 
-    <!-- ===== SCAN PAGE ===== -->
+    <!-- SCAN PAGE -->
     <div id="scan-page" class="page">
         <button class="btn-back" onclick="goToSplash()">☽ <span data-translate="true">Επιστροφή</span></button>
-        
         <div class="selectors-row">
             <div class="selector-item">
                 <span class="selector-label" data-translate="true">Φύλο</span>
@@ -866,11 +248,10 @@
                 </div>
             </div>
             <div class="selector-item">
-                <span class="selector-label" data-translate="true">Ημερομηνία Γέννησης</span>
+                <span class="selector-label" data-translate="true">Ημ. Γέννησης</span>
                 <input type="date" id="birthdate-input" onchange="setBirthdate(this.value)">
             </div>
         </div>
-
         <div class="topic-dropdown-container">
             <span class="selector-label" data-translate="true">Θέμα Ανάλυσης</span>
             <select id="topic-select" onchange="selectTopic(this.value)">
@@ -881,60 +262,38 @@
                 <option value="Κάρμα & Μελλοντικές Προκλήσεις" data-translate="true">🌀 Κάρμα & Προκλήσεις</option>
             </select>
         </div>
-
         <div id="rewards-bar">
-            <div class="points-badge">
-                🪙 <span id="points-display">0</span> Πόντοι
-            </div>
-            <button id="earn-points-btn" class="btn btn-purple btn-uniform" onclick="earnPoints()">
-                🎁 Κέρδισε Πόντους
-            </button>
+            <div class="points-badge">🪙 <span id="points-display">0</span> Πόντοι</div>
+            <button id="earn-points-btn" class="btn btn-purple btn-uniform" onclick="earnPoints()" data-translate="true">🎁 Κέρδισε Πόντους</button>
         </div>
-
         <div id="camera-wrapper">
             <video id="webcam" playsinline autoplay></video>
-            <canvas id="overlay-canvas"></canvas>
             <div class="scan-frame"></div>
             <div class="scan-line"></div>
         </div>
-
         <div id="upload-preview-area">
             <p style="color:var(--gold); font-size:0.8rem;" data-translate="true">✧ Η φωτογραφία είναι έτοιμη ✧</p>
             <img id="upload-preview-img" src="" alt="Preview">
         </div>
-
         <div class="controls-row" id="controls-row">
-            <button class="btn btn-gold btn-uniform" id="camera-btn" onclick="startCamera()" data-translate="true">📷 Έναρξη</button>
+            <button class="btn btn-gold btn-uniform" id="camera-btn" onclick="toggleCamera()" data-translate="true">📷 Έναρξη</button>
             <button class="btn btn-purple btn-uniform" onclick="document.getElementById('file-input').click()" data-translate="true">📁 Upload</button>
             <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUpload(event)">
-            <button class="camera-toggle-btn btn-uniform active" id="selfie-btn" onclick="switchCamera('user')">
-                🤳 <span data-translate="true">Selfie</span>
-            </button>
-            <button class="camera-toggle-btn btn-uniform" id="back-btn" onclick="switchCamera('environment')">
-                📷 <span data-translate="true">Πίσω</span>
-            </button>
+            <button class="camera-toggle-btn btn-uniform active" id="selfie-btn" onclick="switchCamera('user')">🤳 <span data-translate="true">Selfie</span></button>
+            <button class="camera-toggle-btn btn-uniform" id="back-btn" onclick="switchCamera('environment')">📷 <span data-translate="true">Πίσω</span></button>
         </div>
-
-        <div class="camera-instruction">
-            <span data-translate="true">Τοποθέτησε την παλάμη σου μπροστά στην κάμερα.<br>Η Aziram θα αποκαλύψει τα μυστικά των γραμμών σου.</span>
-        </div>
-
+        <div class="camera-instruction"><span data-translate="true">Τοποθέτησε την παλάμη σου μπροστά στην κάμερα. Η Aziram θα αποκαλύψει τα μυστικά των γραμμών σου.</span></div>
         <div class="analysis-actions">
-            <button class="btn btn-green btn-uniform" id="analyze-btn" onclick="startAnalysisFlow(false)" style="display: none;">
-                🔮 Ανάλυση (με Διαφήμιση)
-            </button>
-            <button class="btn btn-vip btn-uniform" id="analyze-vip-btn" onclick="startAnalysisFlow(true)" style="display: none;" disabled>
-                ⚡ VIP (5 Πόντοι)
-            </button>
+            <button class="btn btn-green btn-uniform" id="analyze-btn" onclick="startAnalysisFlow(false)" style="display: none;" data-translate="true">🔮 Ανάλυση (με Διαφήμιση)</button>
+            <button class="btn btn-vip btn-uniform" id="analyze-vip-btn" onclick="startAnalysisFlow(true)" style="display: none;" disabled>⚡ VIP (<span id="vip-cost">5</span> Πόντοι) - Έχεις <span id="vip-points">0</span></button>
         </div>
-
         <div id="loading-box">
             <div class="loading-text" data-translate="true">🔮 Η Aziram διαβάζει τις γραμμές σου...</div>
             <div class="loading-spinner"></div>
         </div>
     </div>
 
-    <!-- ===== RESULT POPUP ===== -->
+    <!-- RESULT POPUP -->
     <div id="result-popup-overlay">
         <div id="result-popup">
             <h2>☽ Η Αποκάλυψη της Aziram ☾</h2>
@@ -943,581 +302,21 @@
         </div>
     </div>
 
-    <script>
-        // ===== ADSGRAM ΡΥΘΜΙΣΕΙΣ =====
-        const ADSGRAM_BLOCK_ID = '32221'; 
-        let AdController = null;
+    <!-- TERMS MODAL -->
+    <div id="terms-modal-overlay">
+        <div id="terms-modal"></div>
+    </div>
 
-        function initAdsgram() {
-            if (typeof window.Adsgram !== 'undefined') {
-                AdController = window.Adsgram.init({ blockId: ADSGRAM_BLOCK_ID });
-                console.log('✅ Adsgram SDK initialized');
-            } else {
-                console.warn('⏳ Adsgram SDK not loaded, retrying...');
-                setTimeout(initAdsgram, 1000);
-            }
-        }
+    <!-- GLOBAL FOOTER -->
+    <div id="global-footer">
+        <a onclick="showTerms('terms')" data-translate="true">Όροι Χρήσης</a>
+        <span class="footer-sep">|</span>
+        <a onclick="showTerms('privacy')" data-translate="true">Πολιτική Απορρήτου</a>
+        <span class="footer-sep">|</span>
+        <span class="footer-email">📧 info.franklydear@gmail.com</span>
+    </div>
 
-        window.addEventListener('load', initAdsgram);
-
-        function showRewardedAd() {
-            if (!AdController) {
-                alert('Οι διαφημίσεις δεν είναι ακόμα διαθέσιμες. Δοκίμασε ξανά σε λίγο.');
-                return Promise.reject('not_ready');
-            }
-            return AdController.show()
-                .then((result) => {
-                    console.log('✅ Ad finished:', result);
-                    return result;
-                })
-                .catch((result) => {
-                    console.warn('⚠️ Ad error or skipped:', result);
-                    throw result;
-                });
-        }
-
-        // ===== CONSENT =====
-        function checkConsent() {
-            var consent = localStorage.getItem('lifeline_consent');
-            if (consent === 'true') {
-                document.getElementById('consent-overlay').classList.add('hidden');
-            } else {
-                document.getElementById('consent-overlay').classList.remove('hidden');
-            }
-        }
-
-        function acceptConsent() {
-            localStorage.setItem('lifeline_consent', 'true');
-            document.getElementById('consent-overlay').classList.add('hidden');
-        }
-
-        checkConsent();
-
-        // ===== ΜΕΤΑΦΡΑΣΗ =====
-        var originalTexts = {};
-        var currentLang = 'el';
-
-        function saveOriginalTexts() {
-            document.querySelectorAll('[data-translate="true"]').forEach(function(el) {
-                var key = el.outerHTML;
-                if (!originalTexts[key]) {
-                    originalTexts[key] = el.textContent.trim();
-                }
-            });
-        }
-        saveOriginalTexts();
-
-        function startTranslation() {
-            var lang = document.getElementById('language-select').value;
-            if (lang === 'el') {
-                restoreOriginalTexts();
-                currentLang = 'el';
-                document.getElementById('reset-lang-btn').style.display = 'none';
-                return;
-            }
-            
-            var btn = document.getElementById('translate-btn');
-            btn.classList.add('translating');
-            btn.textContent = '⟳';
-            
-            translatePage(lang);
-        }
-
-        async function translatePage(targetLang) {
-            var elements = document.querySelectorAll('[data-translate="true"]');
-            var textsToTranslate = [];
-            var elementsToUpdate = [];
-            
-            elements.forEach(function(el) {
-                var text = el.textContent.trim();
-                if (text.length > 0 && text.length < 500) {
-                    textsToTranslate.push(text);
-                    elementsToUpdate.push(el);
-                }
-            });
-            
-            if (textsToTranslate.length === 0) {
-                document.getElementById('translate-btn').classList.remove('translating');
-                document.getElementById('translate-btn').textContent = '▶';
-                return;
-            }
-
-            var batchSize = 10;
-            for (var i = 0; i < textsToTranslate.length; i += batchSize) {
-                var batch = textsToTranslate.slice(i, i + batchSize);
-                var batchElements = elementsToUpdate.slice(i, i + batchSize);
-                
-                try {
-                    var translatedTexts = await translateBatch(batch, targetLang);
-                    for (var j = 0; j < batchElements.length; j++) {
-                        if (translatedTexts[j]) {
-                            batchElements[j].textContent = translatedTexts[j];
-                        }
-                    }
-                } catch (e) {
-                    console.log('Σφάλμα μετάφρασης:', e);
-                }
-            }
-            
-            currentLang = targetLang;
-            document.getElementById('translate-btn').classList.remove('translating');
-            document.getElementById('translate-btn').textContent = '▶';
-            document.getElementById('reset-lang-btn').style.display = 'flex';
-        }
-
-        async function translateBatch(texts, targetLang) {
-            var url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=el&tl=' + targetLang + '&dt=t&q=' + encodeURIComponent(texts.join('|||'));
-            var response = await fetch(url);
-            var data = await response.json();
-            var translations = [];
-            if (data && data[0]) {
-                var translatedText = '';
-                for (var i = 0; i < data[0].length; i++) {
-                    if (data[0][i][0]) translatedText += data[0][i][0];
-                }
-                translations = translatedText.split('|||');
-            }
-            return translations;
-        }
-
-        function restoreOriginalTexts() {
-            document.querySelectorAll('[data-translate="true"]').forEach(function(el) {
-                var key = el.outerHTML;
-                if (originalTexts[key]) {
-                    el.textContent = originalTexts[key];
-                }
-            });
-        }
-
-        function resetToGreek() {
-            restoreOriginalTexts();
-            currentLang = 'el';
-            document.getElementById('language-select').value = 'el';
-            document.getElementById('reset-lang-btn').style.display = 'none';
-        }
-
-        function detectLanguage() {
-            var userLang = navigator.language || navigator.userLanguage;
-            var langCode = userLang.split('-')[0];
-            var langMap = {
-                'el': 'el', 'en': 'en', 'de': 'de', 'fr': 'fr', 'es': 'es',
-                'it': 'it', 'ar': 'ar', 'zh': 'zh-CN', 'ja': 'ja', 'ru': 'ru',
-                'tr': 'tr', 'nl': 'nl', 'pt': 'pt', 'sv': 'sv', 'no': 'no',
-                'da': 'da', 'fi': 'fi', 'pl': 'pl', 'cs': 'cs', 'ro': 'ro',
-                'bg': 'bg', 'uk': 'uk', 'ko': 'ko', 'hi': 'hi', 'vi': 'vi',
-                'th': 'th', 'id': 'id', 'he': 'iw', 'iw': 'iw'
-            };
-            var mappedLang = langMap[langCode] || 'el';
-            document.getElementById('language-select').value = mappedLang;
-            var labelMap = {
-                'el': '🌐 Γλώσσα', 'en': '🌐 Language', 'de': '🌐 Sprache',
-                'fr': '🌐 Langue', 'es': '🌐 Idioma', 'it': '🌐 Lingua',
-                'ar': '🌐 اللغة', 'zh-CN': '🌐 语言', 'ja': '🌐 言語',
-                'ru': '🌐 Язык', 'tr': '🌐 Dil', 'nl': '🌐 Taal',
-                'pt': '🌐 Idioma', 'sv': '🌐 Språk', 'no': '🌐 Språk',
-                'da': '🌐 Sprog', 'fi': '🌐 Kieli', 'pl': '🌐 Język',
-                'cs': '🌐 Jazyk', 'ro': '🌐 Limbă', 'bg': '🌐 Език',
-                'uk': '🌐 Мова', 'ko': '🌐 언어', 'hi': '🌐 भाषा',
-                'vi': '🌐 Ngôn ngữ', 'th': '🌐 ภาษา', 'id': '🌐 Bahasa',
-                'iw': '🌐 שפה'
-            };
-            document.getElementById('lang-label').textContent = labelMap[mappedLang] || '🌐 Language';
-            if (mappedLang !== 'el') {
-                setTimeout(function() { startTranslation(); }, 1000);
-            }
-        }
-        detectLanguage();
-
-        // ===== STARFIELD =====
-        var starCanvas = document.getElementById('starfield');
-        var starCtx = starCanvas.getContext('2d');
-        var stars = [];
-        function resizeStarfield() { starCanvas.width = window.innerWidth; starCanvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeStarfield);
-        resizeStarfield();
-        function createStars(count) {
-            count = count || 150;
-            stars = [];
-            for (var i = 0; i < count; i++) {
-                stars.push({
-                    x: Math.random() * starCanvas.width, y: Math.random() * starCanvas.height,
-                    r: Math.random() * 2 + 0.5,
-                    dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.3,
-                    alpha: Math.random() * 0.8 + 0.2,
-                    color: Math.random() > 0.7 ? '#FFD700' : '#c9a0dc'
-                });
-            }
-        }
-        createStars();
-        function drawStars() {
-            starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
-            stars.forEach(function(s) {
-                s.x += s.dx; s.y += s.dy;
-                if (s.x < 0 || s.x > starCanvas.width) s.dx *= -1;
-                if (s.y < 0 || s.y > starCanvas.height) s.dy *= -1;
-                starCtx.beginPath();
-                starCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-                var rgb = s.color === '#FFD700' ? '255,215,0' : '201,160,220';
-                starCtx.fillStyle = 'rgba(' + rgb + ', ' + (s.alpha * 0.6) + ')';
-                starCtx.fill();
-            });
-            requestAnimationFrame(drawStars);
-        }
-        drawStars();
-
-        function restartCometBanner() {
-            var comet = document.getElementById('kafemanteia-comet');
-            if (comet) {
-                comet.style.animation = 'none';
-                comet.offsetHeight;
-                comet.style.animation = 'slideUp 0.8s ease-out forwards, cometPulse 2s ease-in-out 0.8s infinite';
-            }
-            var pwaBanner = document.getElementById('pwa-prompt');
-            if (pwaBanner) {
-                pwaBanner.style.animation = 'none';
-                pwaBanner.offsetHeight;
-                pwaBanner.style.animation = 'pwaFlash 8s ease-in-out infinite';
-            }
-        }
-
-        // ===== NAVIGATION =====
-        function goToScan() {
-            document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-            document.getElementById('scan-page').classList.add('active');
-            updatePointsDisplay();
-            if (capturedImage || currentStream) {
-                document.getElementById('analyze-btn').style.display = 'block';
-                document.getElementById('analyze-vip-btn').style.display = 'block';
-            }
-        }
-        
-        function goToSplash() {
-            document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-            document.getElementById('splash-page').classList.add('active');
-            restartCometBanner();
-            stopCamera(); 
-            resetScan();
-        }
-
-        // ===== USER SELECTIONS =====
-        var userGender = 'male';
-        var userZodiac = 'Κριός';
-        var userBirthdate = '';
-        var userTopic = 'Έρωτας & Σχέσεις';
-
-        function setGender(gender) {
-            userGender = gender;
-            document.getElementById('maleBtn').classList.toggle('active', gender === 'male');
-            document.getElementById('femaleBtn').classList.toggle('active', gender === 'female');
-        }
-
-        function setBirthdate(date) {
-            userBirthdate = date;
-            userZodiac = getZodiacFromDate(date);
-        }
-
-        function selectTopic(topic) {
-            userTopic = topic;
-        }
-
-        function getZodiacFromDate(dateString) {
-            if (!dateString) return 'Κριός';
-            var date = new Date(dateString);
-            var day = date.getDate();
-            var month = date.getMonth() + 1;
-            if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return 'Κριός';
-            if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return 'Ταύρος';
-            if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return 'Δίδυμοι';
-            if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return 'Καρκίνος';
-            if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return 'Λέων';
-            if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return 'Παρθένος';
-            if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return 'Ζυγός';
-            if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return 'Σκορπιός';
-            if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return 'Τοξότης';
-            if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return 'Αιγόκερως';
-            if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return 'Υδροχόος';
-            if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return 'Ιχθείς';
-            return 'Κριός';
-        }
-
-        // ===== CAMERA =====
-        var video = document.getElementById('webcam');
-        var overlayCanvas = document.getElementById('overlay-canvas');
-        var overlayCtx = overlayCanvas.getContext('2d');
-        var currentStream = null;
-        var capturedImage = null;
-        var isAnalyzing = false;
-        var currentFacingMode = 'user';
-
-        function resizeOverlay() {
-            var wrapper = document.getElementById('camera-wrapper');
-            overlayCanvas.width = wrapper.clientWidth;
-            overlayCanvas.height = wrapper.clientHeight;
-        }
-        window.addEventListener('resize', resizeOverlay);
-
-        async function startCamera() {
-            try {
-                if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); }
-                currentStream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: currentFacingMode, width: { ideal: 640 }, height: { ideal: 480 } }
-                });
-                video.srcObject = currentStream;
-                resizeOverlay();
-                document.getElementById('analyze-btn').style.display = 'block';
-                document.getElementById('analyze-vip-btn').style.display = 'block';
-                document.getElementById('selfie-btn').style.display = 'flex';
-                document.getElementById('back-btn').style.display = 'flex';
-                document.getElementById('camera-btn').disabled = true;
-                document.getElementById('camera-btn').innerText = '✅ Ready';
-                updateCameraToggleButtons();
-            } catch (err) {
-                alert('Δεν μπόρεσα να ανοίξω την κάμερα. Δοκίμασε το Upload.');
-            }
-        }
-
-        async function switchCamera(facingMode) {
-            if (currentFacingMode === facingMode) return;
-            currentFacingMode = facingMode;
-            if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); currentStream = null; }
-            try {
-                currentStream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: currentFacingMode, width: { ideal: 640 }, height: { ideal: 480 } }
-                });
-                video.srcObject = currentStream;
-                resizeOverlay();
-                updateCameraToggleButtons();
-                document.getElementById('camera-btn').disabled = true;
-                document.getElementById('camera-btn').innerText = '✅ Ready';
-            } catch (err) {
-                alert('Δεν ήταν δυνατή η εναλλαγή κάμερας.');
-            }
-        }
-
-        function updateCameraToggleButtons() {
-            document.getElementById('selfie-btn').classList.toggle('active', currentFacingMode === 'user');
-            document.getElementById('back-btn').classList.toggle('active', currentFacingMode === 'environment');
-        }
-
-        function stopCamera() {
-            if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); currentStream = null; }
-            document.getElementById('selfie-btn').style.display = 'none';
-            document.getElementById('back-btn').style.display = 'none';
-            document.getElementById('camera-btn').disabled = false;
-            document.getElementById('camera-btn').innerText = '📷 Έναρξη';
-        }
-
-        function capturePhoto() {
-            if (!currentStream) return null;
-            var canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth || 640;
-            canvas.height = video.videoHeight || 480;
-            var ctx = canvas.getContext('2d');
-            if (currentFacingMode === 'user') {
-                ctx.save(); ctx.scale(-1, 1);
-                ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
-                ctx.restore();
-            } else {
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            }
-            return canvas.toDataURL('image/jpeg', 0.8);
-        }
-
-        // ===== UPLOAD =====
-        function handleUpload(event) {
-            var file = event.target.files[0];
-            if (!file) return;
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                capturedImage = e.target.result;
-                document.getElementById('upload-preview-img').src = capturedImage;
-                document.getElementById('upload-preview-area').style.display = 'block';
-                document.getElementById('analyze-btn').style.display = 'block';
-                document.getElementById('analyze-vip-btn').style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // ===== API =====
-        var API_URL = 'https://franklymadear-lifeline.hf.space/analyze';
-
-        async function performAnalysis() {
-            if (isAnalyzing) return;
-            if (currentStream && !capturedImage) { capturedImage = capturePhoto(); }
-            if (!capturedImage) {
-                alert('Παρακαλώ πρώτα άνοιξε την κάμερα ή ανέβασε φωτογραφία.');
-                return;
-            }
-
-            isAnalyzing = true;
-            document.getElementById('loading-box').style.display = 'block';
-            document.getElementById('analyze-btn').style.display = 'none';
-            document.getElementById('analyze-vip-btn').style.display = 'none';
-            document.getElementById('controls-row').style.display = 'none';
-            document.querySelector('.topic-dropdown-container').style.display = 'none';
-            document.querySelector('.selectors-row').style.display = 'none';
-            document.querySelector('.camera-instruction').style.display = 'none';
-
-            try {
-                var response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        image: capturedImage,
-                        gender: userGender,
-                        zodiac: userZodiac,
-                        birthdate: userBirthdate,
-                        topic: userTopic
-                    })
-                });
-
-                var data = await response.json();
-
-                if (data.success && data.reading) {
-                    document.getElementById('result-popup-text').innerHTML = data.reading
-                        .replace(/## (.*?)\n/g, '<h2>$1</h2>')
-                        .replace(/### (.*?)\n/g, '<h3>$1</h3>')
-                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                        .replace(/\n/g, '<br>');
-                    document.getElementById('result-popup-overlay').classList.add('active');
-                    addStarsToPopup();
-                } else {
-                    alert('Η Aziram συνάντησε ένα εμπόδιο. Δοκίμασε ξανά.');
-                }
-            } catch (error) {
-                alert('Σφάλμα σύνδεσης. Έλεγξε τη σύνδεσή σου.');
-            } finally {
-                document.getElementById('loading-box').style.display = 'none';
-                document.getElementById('controls-row').style.display = 'flex';
-                document.querySelector('.topic-dropdown-container').style.display = 'flex';
-                document.querySelector('.selectors-row').style.display = 'flex';
-                document.querySelector('.camera-instruction').style.display = 'block';
-                document.getElementById('analyze-btn').style.display = 'block';
-                document.getElementById('analyze-vip-btn').style.display = 'block';
-                updatePointsDisplay();
-                isAnalyzing = false;
-            }
-        }
-
-        function closeResultPopup() {
-            document.getElementById('result-popup-overlay').classList.remove('active');
-            document.getElementById('result-popup').querySelectorAll('.popup-star').forEach(function(s) { s.remove(); });
-            resetScan();
-        }
-
-        function resetScan() {
-            document.getElementById('loading-box').style.display = 'none';
-            document.getElementById('analyze-btn').style.display = 'none';
-            document.getElementById('analyze-vip-btn').style.display = 'none';
-            document.getElementById('controls-row').style.display = 'flex';
-            document.getElementById('selfie-btn').style.display = 'none';
-            document.getElementById('back-btn').style.display = 'none';
-            document.querySelector('.topic-dropdown-container').style.display = 'flex';
-            document.querySelector('.selectors-row').style.display = 'flex';
-            document.querySelector('.camera-instruction').style.display = 'block';
-            document.getElementById('upload-preview-area').style.display = 'none';
-            document.getElementById('camera-btn').disabled = false;
-            document.getElementById('camera-btn').innerText = '📷 Έναρξη';
-            capturedImage = null;
-            isAnalyzing = false;
-        }
-
-        function addStarsToPopup() {
-            var popup = document.getElementById('result-popup');
-            popup.querySelectorAll('.popup-star').forEach(function(s) { s.remove(); });
-            var emojis = ['✨', '⭐', '💫', '🌟', '✨', '🔮', '💖', '🌙', '☽', '✧'];
-            for (var i = 0; i < 20; i++) {
-                var star = document.createElement('span');
-                star.className = 'popup-star';
-                star.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                star.style.left = Math.random() * 90 + '%';
-                star.style.top = Math.random() * 90 + '%';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                star.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
-                popup.appendChild(star);
-            }
-        }
-
-        // ===== ΣΥΣΤΗΜΑ ΠΟΝΤΩΝ & ΡΟΗ ΔΙΑΦΗΜΙΣΕΩΝ =====
-        const POINTS_KEY = 'lifeline_user_points';
-        const VIP_COST = 5;
-
-        function getUserPoints() {
-            return parseInt(localStorage.getItem(POINTS_KEY) || '0', 10);
-        }
-
-        function addPoints(amount) {
-            let current = getUserPoints();
-            localStorage.setItem(POINTS_KEY, (current + amount).toString());
-            updatePointsDisplay();
-        }
-
-        function spendPoints(amount) {
-            let current = getUserPoints();
-            if (current >= amount) {
-                localStorage.setItem(POINTS_KEY, (current - amount).toString());
-                updatePointsDisplay();
-                return true;
-            }
-            return false;
-        }
-
-        function updatePointsDisplay() {
-            let display = document.getElementById('points-display');
-            if (display) display.textContent = getUserPoints();
-            let vipBtn = document.getElementById('analyze-vip-btn');
-            if (vipBtn) {
-                let pts = getUserPoints();
-                vipBtn.textContent = `⚡ VIP (${VIP_COST} Πόντοι) - Έχεις ${pts}`;
-                vipBtn.disabled = pts < VIP_COST;
-                vipBtn.style.opacity = pts < VIP_COST ? '0.5' : '1';
-            }
-        }
-
-        function earnPoints() {
-            showRewardedAd()
-                .then((result) => {
-                    if (result.done) {
-                        addPoints(10);
-                        alert('🎉 Κέρδισες 10 πόντους! Μπορείς να τους χρησιμοποιήσεις για VIP αναλύσεις.');
-                    }
-                })
-                .catch((err) => {
-                    alert('Δεν ήταν δυνατή η προβολή διαφήμισης. Δοκίμασε αργότερα.');
-                });
-        }
-
-        function startAnalysisFlow(isVip = false) {
-            if (isVip) {
-                if (spendPoints(VIP_COST)) {
-                    performAnalysis();
-                } else {
-                    alert(`Δεν έχεις αρκετούς πόντους. Χρειάζεσαι ${VIP_COST}. Κέρδισε πόντους βλέποντας μια διαφήμιση!`);
-                }
-                return;
-            }
-
-            // Ανάλυση με διαφήμιση: πρώτα εξασφάλισε εικόνα
-            if (!capturedImage) {
-                if (currentStream) {
-                    capturedImage = capturePhoto();
-                    console.log('Φωτογραφία τραβήχτηκε αυτόματα.');
-                } else {
-                    alert('Παρακαλώ πρώτα άνοιξε την κάμερα ή ανέβασε μια φωτογραφία του χεριού σου.');
-                    return;
-                }
-            }
-
-            showRewardedAd()
-                .then((result) => {
-                    if (result.done) addPoints(2);
-                    performAnalysis();
-                })
-                .catch((err) => {
-                    console.warn('Ad error, proceeding anyway:', err);
-                    performAnalysis();
-                });
-        }
-    </script>
+    <!-- EXTERNAL SCRIPT -->
+    <script src="script.js"></script>
 </body>
 </html>
