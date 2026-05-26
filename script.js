@@ -30,7 +30,7 @@ function showRewardedAd() {
         });
 }
 
-// ===== CONSENT - ΕΜΦΑΝΙΖΕΤΑΙ ΚΑΘΕ ΦΟΡΑ =====
+// ===== CONSENT =====
 function checkConsent() {
     document.getElementById('consent-overlay').classList.remove('hidden');
 }
@@ -42,46 +42,52 @@ function acceptConsent() {
 
 checkConsent();
 
-// ===== TERMS & PRIVACY =====
-const TERMS_TEXT = {
-    terms: `<h2>📜 Όροι Χρήσης LiFe LiNe</h2>
-<h3>1. Όριο Ηλικίας (Αυστηρά 18+)</h3>
-<p>Η χρήση της εφαρμογής <strong>LiFe LiNe</strong> επιτρέπεται αποκλειστικά και μόνο σε άτομα που έχουν συμπληρώσει το 18ο έτος της ηλικίας τους (ενήλικες).</p>
-<p>Με την αποδοχή των όρων και την επιλογή του σχετικού πλαισίου, ο χρήστης δηλώνει υπεύθυνα ότι είναι ενήλικος.</p>
-<p>Οι διαχειριστές του LiFe LiNe δεν φέρουν καμία ευθύνη για ψευδείς δηλώσεις ηλικίας από πλευράς των επισκεπτών.</p>
-<h3>2. Ψυχαγωγικός Χαρακτήρας</h3>
-<p>Το LiFe LiNe είναι μια ψηφιακή εφαρμογή που χρησιμοποιεί αλγόριθμους τεχνητής νοημοσύνης (AI) για να αναλύει τα χαρακτηριστικά του χεριού του χρήστη (γραμμές, σχήματα) μέσω σάρωσης και να παράγει κείμενα βασισμένα σε ένα παραδοσιακό λεξικό συμβόλων.</p>
-<p>Η υπηρεσία παρέχεται αποκλειστικά και μόνο για σκοπούς χιούμορ, διασκέδασης και ψυχαγωγίας.</p>
-<p>Τα αποτελέσματα της ανάλυσης <strong>δεν αποτελούν σε καμία περίπτωση</strong> πραγματικές, επιστημονικές, ιατρικές, ψυχολογικές, νομικές ή χρηματοοικονομικές προβλέψεις και συμβουλές.</p>
-<h3>3. Περιορισμός Ευθύνης</h3>
-<p>Ο χρήστης συμφωνεί ότι χρησιμοποιεί την εφαρμογή με δική του αποκλειστική ευθύνη.</p>
-<p>Οι δημιουργοί, οι ιδιοκτήτες και οι συνεργάτες του LiFe LiNe δεν φέρουν καμία απολύτως αστική ή ποινική ευθύνη για οποιαδήποτε πράξη, απόφαση, απώλεια, ζημία (άμεση ή έμμεση) ή ψυχική αναστάτωση προκύψει από την ανάγνωση, την παρερμηνεία ή την εφαρμογή των χιουμοριστικών αποτελεσμάτων της χειρομαντείας στην πραγματική ζωή.</p>
-<h3>4. Πνευματική Ιδιοκτησία</h3>
-<p>Όλο το περιεχόμενο του ιστοτόπου (συμπεριλαμβανομένων των κειμένων, του λογότυπου, των γραφικών, των κωδίκων της εφαρμογής και του λεξικού συμβόλων) αποτελεί πνευματική ιδιοκτησία του LiFe LiNe και προστατεύεται από τις σχετικές διατάξεις του ελληνικού και ευρωπαϊκού δικαίου.</p>
-<p style="text-align:center;margin-top:18px;">📧 <strong>info.franklydear@gmail.com</strong></p>`,
-
-    privacy: `<h2>🔒 Πολιτική Απορρήτου LiFe LiNe</h2>
-<p>Στο <strong>LiFe LiNe</strong>, η ιδιωτικότητα και η ασφάλεια των δεδομένων σας είναι η απόλυτη προτεραιότητά μας. Η παρούσα πολιτική εξηγεί πώς διαχειριζόμαστε τις πληροφορίες σας σύμφωνα με τον Γενικό Κανονισμό Προστασίας Δεδομένων της ΕΕ (<strong>GDPR</strong>).</p>
-<h3>1. Πώς Διαχειριζόμαστε τα Δεδομένα της Σάρωσης του Χεριού σας</h3>
-<p><strong>Δεν Αποθηκεύουμε τις Σαρώσεις:</strong> Όταν σκανάρετε το χέρι σας, η εικόνα μετατρέπεται σε προσωρινή μορφή κώδικα (Base64) στη συσκευή σας και στέλνεται στον server μας αποκλειστικά και μόνο για να μεταφερθεί στο Gemini API της Google για την οπτική ανάλυση.</p>
-<p><strong>Καμία Μόνιμη Αποθήκευση:</strong> Οι σαρώσεις του χεριού σας ΔΕΝ αποθηκεύονται σε καμία βάση δεδομένων, ΔΕΝ κρατούνται στον server μας και διαγράφονται οριστικά από τη μνήμη αμέσως μόλις ολοκληρωθεί η ανάλυση.</p>
-<h3>2. Δεδομένα που Συλλέγουμε Αυτόματα (Cookies & Διαφημίσεις)</h3>
-<p>• <strong>Cookies:</strong> Χρησιμοποιούμε cookies για να θυμόμαστε τις προτιμήσεις σας.</p>
-<p>• <strong>Διαφημίσεις Τρίτων:</strong> Οι διαφημιστές ενδέχεται να χρησιμοποιούν cookies για να προβάλλουν διαφημίσεις που σχετίζονται με τα ενδιαφέροντά σας.</p>
-<p>• <strong>Τοπική Αποθήκευση (Local Storage):</strong> Η εφαρμογή χρησιμοποιεί τοπική μνήμη στη συσκευή σας για να μετράει τις ημερήσιες προσπάθειές σας.</p>
-<h3>3. Δικαιώματα των Χρηστών (GDPR)</h3>
-<p>• Το δικαίωμα να γνωρίζετε ποια δεδομένα σας επεξεργαζόμαστε.</p>
-<p>• Το δικαίωμα να διαγράψετε τα cookies και το ιστορικό του LiFe LiNe από τον browser σας ανά πάσα στιγμή.</p>
-<h3>4. Αλλαγές στους Όρους και την Πολιτική Απορρήτου</h3>
-<p>Το LiFe LiNe διατηρεί το δικαίωμα να αλλάξει ή να επικαιροποιήσει αυτούς τους όρους και την πολιτική απορρήτου οποιαδήποτε στιγμή.</p>
-<p style="text-align:center;margin-top:18px;">📧 <strong>info.franklydear@gmail.com</strong></p>`
+// ===== TERMS & PRIVACY ΔΟΜΗ (ελληνικά πρωτότυπα) =====
+const TERMS_STRUCTURE = {
+    terms: {
+        title: '📜 Όροι Χρήσης LiFe LiNe',
+        sections: [
+            { heading: '1. Όριο Ηλικίας (Αυστηρά 18+)', body: 'Η χρήση της εφαρμογής <strong>LiFe LiNe</strong> επιτρέπεται αποκλειστικά και μόνο σε άτομα που έχουν συμπληρώσει το 18ο έτος της ηλικίας τους (ενήλικες). Με την αποδοχή των όρων και την επιλογή του σχετικού πλαισίου, ο χρήστης δηλώνει υπεύθυνα ότι είναι ενήλικος. Οι διαχειριστές του LiFe LiNe δεν φέρουν καμία ευθύνη για ψευδείς δηλώσεις ηλικίας από πλευράς των επισκεπτών.' },
+            { heading: '2. Ψυχαγωγικός Χαρακτήρας', body: 'Το LiFe LiNe είναι μια ψηφιακή εφαρμογή που χρησιμοποιεί αλγόριθμους τεχνητής νοημοσύνης (AI) για να αναλύει τα χαρακτηριστικά του χεριού του χρήστη (γραμμές, σχήματα) μέσω σάρωσης και να παράγει κείμενα βασισμένα σε ένα παραδοσιακό λεξικό συμβόλων. Η υπηρεσία παρέχεται αποκλειστικά και μόνο για σκοπούς χιούμορ, διασκέδασης και ψυχαγωγίας. Τα αποτελέσματα της ανάλυσης <strong>δεν αποτελούν σε καμία περίπτωση</strong> πραγματικές, επιστημονικές, ιατρικές, ψυχολογικές, νομικές ή χρηματοοικονομικές προβλέψεις και συμβουλές.' },
+            { heading: '3. Περιορισμός Ευθύνης', body: 'Ο χρήστης συμφωνεί ότι χρησιμοποιεί την εφαρμογή με δική του αποκλειστική ευθύνη. Οι δημιουργοί, οι ιδιοκτήτες και οι συνεργάτες του LiFe LiNe δεν φέρουν καμία απολύτως αστική ή ποινική ευθύνη για οποιαδήποτε πράξη, απόφαση, απώλεια, ζημία (άμεση ή έμμεση) ή ψυχική αναστάτωση προκύψει από την ανάγνωση, την παρερμηνεία ή την εφαρμογή των χιουμοριστικών αποτελεσμάτων της χειρομαντείας στην πραγματική ζωή.' },
+            { heading: '4. Πνευματική Ιδιοκτησία', body: 'Όλο το περιεχόμενο του ιστοτόπου (συμπεριλαμβανομένων των κειμένων, του λογότυπου, των γραφικών, των κωδίκων της εφαρμογής και του λεξικού συμβόλων) αποτελεί πνευματική ιδιοκτησία του LiFe LiNe και προστατεύεται από τις σχετικές διατάξεις του ελληνικού και ευρωπαϊκού δικαίου.' }
+        ],
+        footer: '📧 <strong>info.franklydear@gmail.com</strong>'
+    },
+    privacy: {
+        title: '🔒 Πολιτική Απορρήτου LiFe LiNe',
+        sections: [
+            { heading: '1. Πώς Διαχειριζόμαστε τα Δεδομένα της Σάρωσης του Χεριού σας', body: '<strong>Δεν Αποθηκεύουμε τις Σαρώσεις:</strong> Όταν σκανάρετε το χέρι σας, η εικόνα μετατρέπεται σε προσωρινή μορφή κώδικα (Base64) στη συσκευή σας και στέλνεται στον server μας αποκλειστικά και μόνο για να μεταφερθεί στο Gemini API της Google για την οπτική ανάλυση. <strong>Καμία Μόνιμη Αποθήκευση:</strong> Οι σαρώσεις του χεριού σας ΔΕΝ αποθηκεύονται σε καμία βάση δεδομένων, ΔΕΝ κρατούνται στον server μας και διαγράφονται οριστικά από τη μνήμη αμέσως μόλις ολοκληρωθεί η ανάλυση.' },
+            { heading: '2. Δεδομένα που Συλλέγουμε Αυτόματα (Cookies & Διαφημίσεις)', body: '• <strong>Cookies:</strong> Χρησιμοποιούμε cookies για να θυμόμαστε τις προτιμήσεις σας και για να αναλύουμε την επισκεψιμότητα (μέσω Google Analytics). • <strong>Διαφημίσεις Τρίτων (AdSense / Monetag):</strong> Οι διαφημιστές ενδέχεται να χρησιμοποιούν cookies για να προβάλλουν διαφημίσεις που σχετίζονται με τα ενδιαφέροντά σας. • <strong>Τοπική Αποθήκευση (Local Storage):</strong> Η εφαρμογή χρησιμοποιεί τοπική μνήμη στη συσκευή σας για να μετράει τις ημερήσιες προσπάθειές σας.' },
+            { heading: '3. Δικαιώματα των Χρηστών (GDPR)', body: 'Σύμφωνα με τον ευρωπαϊκό νόμο, έχετε τα εξής δικαιώματα: • Το δικαίωμα να γνωρίζετε ποια δεδομένα σας επεξεργαζόμαστε. • Το δικαίωμα να διαγράψετε τα cookies και το ιστορικό του LiFe LiNe από τον browser σας ανά πάσα στιγμή.' },
+            { heading: '4. Αλλαγές στους Όρους και την Πολιτική Απορρήτου', body: 'Το LiFe LiNe διατηρεί το δικαίωμα να αλλάξει ή να επικαιροποιήσει αυτούς τους όρους και την πολιτική απορρήτου οποιαδήποτε στιγμή, προκειμένου να συμμορφώνεται με νέους νόμους ή τεχνικές αναβαθμίσεις. Οι αλλαγές θα εμφανίζονται σε αυτή τη σελίδα.' }
+        ],
+        footer: '📧 <strong>info.franklydear@gmail.com</strong>'
+    }
 };
 
-function showTerms(type) {
+async function showTerms(type) {
     var modal = document.getElementById('terms-modal');
-    modal.innerHTML = (type === 'terms' ? TERMS_TEXT.terms : TERMS_TEXT.privacy)
-        + '<button id="close-terms-btn" onclick="closeTerms()" data-translate="true">✕ Κλείσιμο</button>';
+    var structure = TERMS_STRUCTURE[type];
+    if (!structure) return;
+
+    // Δημιουργία HTML δομής με data-translate
+    var html = `<h2 data-translate="true">${structure.title}</h2>`;
+    structure.sections.forEach(function(sec) {
+        html += `<h3 data-translate="true">${sec.heading}</h3>`;
+        html += `<p data-translate="true">${sec.body}</p>`;
+    });
+    html += `<p data-translate="true" style="text-align:center;margin-top:18px;">${structure.footer}</p>`;
+    html += '<button id="close-terms-btn" onclick="closeTerms()" data-translate="true">✕ Κλείσιμο</button>';
+
+    modal.innerHTML = html;
     document.getElementById('terms-modal-overlay').classList.add('active');
+
+    // Αν η τρέχουσα γλώσσα δεν είναι ελληνικά, μετάφρασε τα νέα στοιχεία
+    if (currentLang !== 'el') {
+        var elements = modal.querySelectorAll('[data-translate="true"]');
+        await translateElements(elements, currentLang);
+    }
 }
 
 function closeTerms() {
@@ -92,7 +98,7 @@ document.getElementById('terms-modal-overlay').addEventListener('click', functio
     if (e.target === this) closeTerms();
 });
 
-// ===== ΜΕΤΑΦΡΑΣΗ =====
+// ===== ΜΕΤΑΦΡΑΣΗ (ΒΕΛΤΙΩΜΕΝΗ ΜΕ translateElements) =====
 var originalTexts = {};
 var currentLang = 'el';
 var translationsCache = {};
@@ -119,6 +125,30 @@ function updateLangLabel() {
     if (label) label.textContent = labelMap[currentLang] || '🌐 Language';
 }
 
+async function translateElements(elements, targetLang) {
+    var textsToTranslate = [];
+    var elementsToUpdate = [];
+    elements.forEach(function(el) {
+        var text = el.textContent.trim();
+        if (text.length > 0 && text.length < 1500) {
+            textsToTranslate.push(text);
+            elementsToUpdate.push(el);
+        }
+    });
+    if (textsToTranslate.length === 0) return;
+    var batchSize = 10;
+    for (var i = 0; i < textsToTranslate.length; i += batchSize) {
+        var batch = textsToTranslate.slice(i, i + batchSize);
+        var batchElements = elementsToUpdate.slice(i, i + batchSize);
+        try {
+            var translatedTexts = await translateBatch(batch, targetLang);
+            for (var j = 0; j < batchElements.length; j++) {
+                if (translatedTexts[j]) batchElements[j].textContent = translatedTexts[j];
+            }
+        } catch (e) { console.log('Translation error:', e); }
+    }
+}
+
 function startTranslation() {
     var lang = document.getElementById('language-select').value;
     if (lang === 'el') {
@@ -138,27 +168,7 @@ function startTranslation() {
 
 async function translatePage(targetLang) {
     var elements = document.querySelectorAll('[data-translate="true"]');
-    var textsToTranslate = [];
-    var elementsToUpdate = [];
-    elements.forEach(function(el) {
-        var text = el.textContent.trim();
-        if (text.length > 0 && text.length < 500) {
-            textsToTranslate.push(text);
-            elementsToUpdate.push(el);
-        }
-    });
-    if (textsToTranslate.length === 0) { finishTranslation(); return; }
-    var batchSize = 10;
-    for (var i = 0; i < textsToTranslate.length; i += batchSize) {
-        var batch = textsToTranslate.slice(i, i + batchSize);
-        var batchElements = elementsToUpdate.slice(i, i + batchSize);
-        try {
-            var translatedTexts = await translateBatch(batch, targetLang);
-            for (var j = 0; j < batchElements.length; j++) {
-                if (translatedTexts[j]) batchElements[j].textContent = translatedTexts[j];
-            }
-        } catch (e) { console.log('Translation error:', e); }
-    }
+    await translateElements(elements, targetLang);
     currentLang = targetLang;
     finishTranslation();
     updateLangLabel();
@@ -432,8 +442,6 @@ async function performAnalysis() {
                 .replace(/\n/g, '<br>');
             document.getElementById('result-popup-overlay').classList.add('active');
             addStarsToPopup();
-
-            // 🔥 ΕΠΙΒΡΑΒΕΥΣΗ REFERRER
             rewardReferrerIfFirstAnalysis();
         } else {
             alert('Η Aziram συνάντησε εμπόδιο. Δοκίμασε ξανά.');
@@ -615,7 +623,6 @@ async function rewardReferrerIfFirstAnalysis() {
     } catch (e) {}
 }
 
-// Προσθήκη κουμπιού στη γραμμή rewards
 function addInviteButton() {
     var bar = document.getElementById('rewards-bar');
     if (!bar || document.getElementById('invite-friends-btn')) return;
