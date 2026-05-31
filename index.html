@@ -203,7 +203,7 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            padding-bottom: 160px !important; /* Χώρος για να μην κρύβεται περιεχόμενο πίσω από τα fixed κουμπιά */
+            padding-bottom: 160px !important;
         }
 
         .selectors-grid {
@@ -265,7 +265,7 @@
             height: 100%;
             object-fit: cover;
             border-radius: 50%;
-            transform: scaleX(-1); /* Mirror εφέ για φυσική κίνηση */
+            transform: scaleX(-1);
         }
 
         #scan-hand-overlay {
@@ -499,9 +499,7 @@
 
             <div id="scan-container">
                 <canvas id="camera-canvas" style="display:none;"></canvas>
-                
                 <video id="camera-preview" autoplay playsinline muted></video>
-                
                 <div id="scan-hand-overlay"></div>
                 <div id="scan-line"></div>
             </div>
@@ -517,8 +515,8 @@
             </div>
 
             <div class="analysis-actions">
-                <button class="btn btn-green btn-uniform" id="analyze-btn" onclick=\"startAnalysisFlow(false)\" style="display: none;" data-translate="true">🔮 Ανάλυση (με Διαφήμιση)</button>
-                <button class="btn btn-vip btn-uniform" id="analyze-vip-btn" onclick=\"startAnalysisFlow(true)\" style="display: none;" disabled>⚡ VIP (<span id=\"vip-cost\">5</span> Πόντοι) - Έχεις <span id=\"vip-points\">0</span></button>
+                <button class="btn btn-green btn-uniform" id="analyze-btn" onclick="startAnalysisFlow(false)" style="display: none;" data-translate="true">🔮 Ανάλυση (με Διαφήμιση)</button>
+                <button class="btn btn-vip btn-uniform" id="analyze-vip-btn" onclick="startAnalysisFlow(true)" style="display: none;" disabled>⚡ VIP (<span id="vip-cost">5</span> Πόντοι) - Έχεις <span id="vip-points">0</span></button>
             </div>
 
             <div id="loading-box">
