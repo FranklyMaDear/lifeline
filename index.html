@@ -124,6 +124,49 @@
         @keyframes framePulse { 0%,100% { border-color: rgba(255,215,0,0.5); } 50% { border-color: rgba(255,215,0,0.9); } }
         .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: scanMove 3s infinite ease-in-out; pointer-events: none; }
         @keyframes scanMove { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        
+        /* PALM GUIDE OVERLAY */
+        #palm-guide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 5;
+            transition: opacity 0.3s ease;
+        }
+        .palm-guide-hidden { opacity: 0; }
+        .palm-guide-visible { opacity: 1; }
+        .palm-guide-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 3px dashed rgba(255, 215, 0, 0.7);
+            border-radius: 24px;
+            padding: 20px 30px;
+            backdrop-filter: blur(4px);
+        }
+        .palm-guide-icon {
+            font-size: 3rem;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+            animation: pulseHand 2s infinite ease-in-out;
+        }
+        .palm-guide-content p {
+            color: var(--gold);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
         .camera-instruction { text-align: center; color: #d5c8e8; font-size: clamp(0.73rem,1.6vw,0.82rem); padding: 0 15px; width: 100%; max-width: 480px; line-height: 1.5; font-weight: 500; flex-shrink: 0; }
         .btn-uniform { padding: 10px 16px; font-size: 0.8rem; font-weight: 600; border-radius: 30px; border: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); letter-spacing: 0.5px; white-space: nowrap; min-width: 80px; height: 42px; }
         .btn-gold { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; }
@@ -257,8 +300,6 @@
             <div class="splash-title">LiFe LiNe</div>
             <div class="splash-subtitle" data-translate="true">Χειρομαντεία & Αστρολογία</div>
             
-            <!-- Το language bar αφαιρέθηκε από εδώ και μεταφέρθηκε στο consent modal -->
-            
             <button class="btn-mystic" onclick="goToScan()" data-translate="true">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
         </div>
         <div id="kafemanteia-container">
@@ -308,24 +349,30 @@
             <video id="webcam" playsinline autoplay></video>
             <div class="scan-frame"></div>
             <div class="scan-line"></div>
+            <!-- Νέο overlay οδηγός παλάμης -->
+            <div id="palm-guide-overlay" class="palm-guide-hidden">
+                <div class="palm-guide-content">
+                    <span class="palm-guide-icon">🖐️</span>
+                    <p data-translate="true">Τοποθέτησε την παλάμη σου εδώ</p>
+                </div>
+            </div>
         </div>
         <div id="upload-preview-area">
             <p style="color:var(--gold); font-size:0.8rem;" data-translate="true">✧ Η φωτογραφία είναι έτοιμη ✧</p>
-            <!-- Εφέ σκαναρίσματος πάνω από την ακίνητη φωτογραφία -->
             <div style="position:relative; display:inline-block;">
                 <img id="upload-preview-img" src="" alt="Preview">
                 <div class="scan-line preview-scan-line"></div>
             </div>
         </div>
         <div class="controls-row" id="controls-row">
-            <button class="btn btn-gold btn-uniform" id="camera-btn" onclick="toggleCamera()" data-translate="true">📷 Έναρξη</button>
+            <button class="btn btn-gold btn-uniform" id="camera-btn" onclick="toggleCamera()" data-translate="true">📷 Άνοιγμα Κάμερας</button>
+            <button class="btn btn-purple btn-uniform" id="capture-btn" onclick="capturePhotoFromCamera()" style="display:none;" data-translate="true">📸 Λήψη Φωτογραφίας</button>
             <button class="btn btn-purple btn-uniform" onclick="document.getElementById('file-input').click()" data-translate="true">📁 Upload</button>
             <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUpload(event)">
             <button class="camera-toggle-btn btn-uniform active" id="selfie-btn" onclick="switchCamera('user')">🤳 <span data-translate="true">Selfie</span></button>
             <button class="camera-toggle-btn btn-uniform" id="back-btn" onclick="switchCamera('environment')">📷 <span data-translate="true">Πίσω</span></button>
         </div>
         <div class="camera-instruction"><span data-translate="true">Τοποθέτησε την παλάμη σου μπροστά στην κάμερα. Η Aziram θα αποκαλύψει τα μυστικά των γραμμών σου.</span></div>
-        <!-- Το κουμπί "Ανάλυση με Διαφήμιση" έχει αφαιρεθεί εντελώς -->
         <div id="loading-box">
             <div class="loading-text" data-translate="true">🔮 Η Aziram διαβάζει τις γραμμές σου...</div>
             <div class="loading-spinner"></div>
