@@ -63,7 +63,7 @@
         #scan-page { justify-content: flex-start; }
 
         /* LANGUAGE BAR */
-        #language-bar { display: flex; align-items: center; gap: 8px; background: rgba(20,10,40,0.85); backdrop-filter: blur(12px); border: 1.5px solid rgba(255,215,0,0.35); border-radius: 30px; padding: 10px 14px; position: relative; z-index: 10; width: 90%; max-width: 380px; margin: 0 auto; box-shadow: 0 0 25px rgba(255,215,0,0.08); flex-shrink: 0; }
+        #language-bar { display: flex; align-items: center; gap: 8px; background: rgba(20,10,40,0.85); backdrop-filter: blur(12px); border: 1.5px solid rgba(255,215,0,0.35); border-radius: 30px; padding: 10px 14px; position: relative; z-index: 10; width: 90%; max-width: 380px; margin: 10px auto; box-shadow: 0 0 25px rgba(255,215,0,0.08); flex-shrink: 0; }
         #language-bar .lang-label { color: var(--gold); font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; white-space: nowrap; min-width: 55px; text-align: center; }
         #language-bar select { flex: 1; min-width: 90px; background: rgba(10,5,25,0.9); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); border-radius: 20px; padding: 8px 28px 8px 10px; font-size: 0.8rem; font-weight: 600; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23FFD700' d='M5 7L1 3h8z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; outline: none; }
         #translate-btn, #reset-lang-btn { width: 34px; height: 34px; min-width: 34px; border-radius: 50%; font-size: 0.9rem; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; border: none; flex-shrink: 0; transition: all 0.3s; }
@@ -73,13 +73,13 @@
         /* CONSENT MODAL */
         #consent-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); backdrop-filter: blur(12px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
         #consent-overlay.hidden { display: none; }
-        #consent-modal { background: linear-gradient(145deg, #1a0e2a, #2a1a3a); border: 3px solid var(--gold); border-radius: 25px; padding: 25px 20px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 0 60px rgba(255,215,0,0.4); animation: modalFadeIn 0.5s ease; }
+        #consent-modal { background: linear-gradient(145deg, #1a0e2a, #2a1a3a); border: 3px solid var(--gold); border-radius: 25px; padding: 20px 20px 25px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 0 60px rgba(255,215,0,0.4); animation: modalFadeIn 0.5s ease; display: flex; flex-direction: column; align-items: center; gap: 10px; }
         @keyframes modalFadeIn { 0% { opacity: 0; transform: scale(0.9) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-        #consent-modal .consent-icon { font-size: 2.8rem; margin-bottom: 8px; animation: floatIcon 2s infinite ease-in-out; }
+        #consent-modal .consent-icon { font-size: 2.8rem; margin-bottom: 0; animation: floatIcon 2s infinite ease-in-out; }
         @keyframes floatIcon { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        #consent-modal h2 { color: var(--gold); font-size: 1.2rem; margin-bottom: 8px; }
-        #consent-modal p { color: #d5c8e8; font-size: 0.8rem; line-height: 1.5; margin-bottom: 12px; }
-        #consent-modal .consent-email { color: #c9a0dc; font-size: 0.75rem; margin-bottom: 12px; }
+        #consent-modal h2 { color: var(--gold); font-size: 1.2rem; margin-bottom: 4px; }
+        #consent-modal p { color: #d5c8e8; font-size: 0.8rem; line-height: 1.5; margin-bottom: 6px; }
+        #consent-modal .consent-email { color: #c9a0dc; font-size: 0.75rem; margin-bottom: 8px; }
         #consent-modal .consent-email strong { color: #FFD700; }
         #consent-btn { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; padding: 12px 20px; border: none; border-radius: 60px; font-size: 0.9rem; font-weight: 700; cursor: pointer; box-shadow: 0 0 30px rgba(255,215,0,0.3); transition: all 0.4s; letter-spacing: 1px; width: 100%; }
         #consent-btn:hover { transform: scale(1.04) translateY(-3px); box-shadow: 0 0 50px rgba(255,215,0,0.6); }
@@ -136,8 +136,9 @@
         #rewards-bar { display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 460px; margin: 6px auto; flex-shrink: 0; }
         .points-badge { background: rgba(20,10,40,0.9); border: 1px solid var(--gold); border-radius: 30px; padding: 8px 16px; color: var(--gold); font-weight: bold; font-size: 0.8rem; }
         .analysis-actions { display: flex; gap: 10px; width: 100%; max-width: 460px; justify-content: center; flex-wrap: wrap; margin: 6px auto; }
-        #upload-preview-area { display: none; text-align: center; margin: 3px 0; flex-shrink: 0; }
+        #upload-preview-area { display: none; text-align: center; margin: 3px 0; flex-shrink: 0; position: relative; }
         #upload-preview-img { max-width: 130px; width: 100%; border-radius: 18px; border: 2px solid var(--gold); }
+        .preview-scan-line { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 130px; max-width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: scanMove 3s infinite ease-in-out; pointer-events: none; }
         #loading-box { display: none; text-align: center; background: rgba(20,10,40,0.95); border-radius: 24px; padding: 18px 14px; margin: 6px auto; border: 2px solid rgba(255,215,0,0.3); box-shadow: 0 0 60px rgba(255,215,0,0.2); width: 100%; max-width: 350px; flex-shrink: 0; }
         .loading-spinner { width: 35px; height: 35px; border: 3px solid rgba(255,215,0,0.2); border-top: 3px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 8px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -194,28 +195,11 @@
 
     <div id="consent-overlay">
         <div id="consent-modal">
-            <div class="consent-icon">🖐️</div>
-            <h2 data-translate="true">Καλώς ήρθατε στο LiFe LiNe!</h2>
-            <p data-translate="true">
-                Για να συνεχίσετε, πρέπει να επιβεβαιώσετε ότι είστε <strong>άνω των 18 ετών</strong> 
-                και ότι αποδέχεστε πως η εφαρμογή χρησιμοποιεί Τεχνητή Νοημοσύνη για να παράγει 
-                αποτελέσματα με καθαρά <strong>ψυχαγωγικό και μη κατευθυντικό χαρακτήρα</strong>.
-            </p>
-            <p class="consent-email" data-translate="true">
-                📧 Επικοινωνία: <strong>info.franklydear@gmail.com</strong>
-            </p>
-            <button id="consent-btn" onclick="acceptConsent()" data-translate="true">Αποδέχομαι & Είμαι άνω των 18 ετών</button>
-        </div>
-    </div>
-
-    <div id="splash-page" class="page active">
-        <div class="splash-inner">
-            <div class="logo-container" onclick="goToScan()">
+            <!-- Εφέ στρογγυλού χεριού -->
+            <div class="logo-container" style="width:130px; height:130px; margin-bottom:5px;">
                 <div class="logo-circle"><span class="logo-hand">🖐️</span></div>
             </div>
-            <div class="splash-title">LiFe LiNe</div>
-            <div class="splash-subtitle" data-translate="true">Χειρομαντεία & Αστρολογία</div>
-            
+            <!-- Γραμμή επιλογής γλώσσας (μεταφέρθηκε εδώ) -->
             <div id="language-bar">
                 <span class="lang-label" id="lang-label" data-translate="true">🌐 Γλώσσα</span>
                 <select id="language-select">
@@ -251,6 +235,29 @@
                 <button id="translate-btn" onclick="startTranslation()" title="Μετάφραση">▶</button>
                 <button id="reset-lang-btn" onclick="resetToGreek()" title="Επιστροφή στα Ελληνικά">↺</button>
             </div>
+
+            <h2 data-translate="true">Καλώς ήρθατε στο LiFe LiNe!</h2>
+            <p data-translate="true">
+                Για να συνεχίσετε, πρέπει να επιβεβαιώσετε ότι είστε <strong>άνω των 18 ετών</strong> 
+                και ότι αποδέχεστε πως η εφαρμογή χρησιμοποιεί Τεχνητή Νοημοσύνη για να παράγει 
+                αποτελέσματα με καθαρά <strong>ψυχαγωγικό και μη κατευθυντικό χαρακτήρα</strong>.
+            </p>
+            <p class="consent-email" data-translate="true">
+                📧 Επικοινωνία: <strong>info.franklydear@gmail.com</strong>
+            </p>
+            <button id="consent-btn" onclick="acceptConsent()" data-translate="true">Αποδέχομαι & Είμαι άνω των 18 ετών</button>
+        </div>
+    </div>
+
+    <div id="splash-page" class="page active">
+        <div class="splash-inner">
+            <div class="logo-container" onclick="goToScan()">
+                <div class="logo-circle"><span class="logo-hand">🖐️</span></div>
+            </div>
+            <div class="splash-title">LiFe LiNe</div>
+            <div class="splash-subtitle" data-translate="true">Χειρομαντεία & Αστρολογία</div>
+            
+            <!-- Το language bar αφαιρέθηκε από εδώ και μεταφέρθηκε στο consent modal -->
             
             <button class="btn-mystic" onclick="goToScan()" data-translate="true">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
         </div>
@@ -291,6 +298,12 @@
             <div class="points-badge">🪙 <span id="points-display">0</span> Πόντοι</div>
             <button id="earn-points-btn" class="btn btn-purple btn-uniform" onclick="earnPoints()" data-translate="true">🎁 Κέρδισε Πόντους</button>
         </div>
+
+        <!-- VIP κουμπί τοποθετημένο πάνω από τα κουμπιά κάμερας -->
+        <div class="analysis-actions" style="margin-bottom:4px;">
+            <button class="btn btn-vip btn-uniform" id="analyze-vip-btn" onclick="startAnalysisFlow()" disabled data-translate="true">⚡ VIP Ανάλυση (<span id="vip-cost">15</span> Πόντοι) - Έχεις <span id="vip-points">0</span></button>
+        </div>
+
         <div id="camera-wrapper">
             <video id="webcam" playsinline autoplay></video>
             <div class="scan-frame"></div>
@@ -298,7 +311,11 @@
         </div>
         <div id="upload-preview-area">
             <p style="color:var(--gold); font-size:0.8rem;" data-translate="true">✧ Η φωτογραφία είναι έτοιμη ✧</p>
-            <img id="upload-preview-img" src="" alt="Preview">
+            <!-- Εφέ σκαναρίσματος πάνω από την ακίνητη φωτογραφία -->
+            <div style="position:relative; display:inline-block;">
+                <img id="upload-preview-img" src="" alt="Preview">
+                <div class="scan-line preview-scan-line"></div>
+            </div>
         </div>
         <div class="controls-row" id="controls-row">
             <button class="btn btn-gold btn-uniform" id="camera-btn" onclick="toggleCamera()" data-translate="true">📷 Έναρξη</button>
@@ -308,10 +325,7 @@
             <button class="camera-toggle-btn btn-uniform" id="back-btn" onclick="switchCamera('environment')">📷 <span data-translate="true">Πίσω</span></button>
         </div>
         <div class="camera-instruction"><span data-translate="true">Τοποθέτησε την παλάμη σου μπροστά στην κάμερα. Η Aziram θα αποκαλύψει τα μυστικά των γραμμών σου.</span></div>
-        <div class="analysis-actions">
-            <button class="btn btn-green btn-uniform" id="analyze-btn" onclick="startAnalysisFlow(false)" style="display: none;" data-translate="true">🔮 Ανάλυση (με Διαφήμιση)</button>
-            <button class="btn btn-vip btn-uniform" id="analyze-vip-btn" onclick="startAnalysisFlow(true)" style="display: none;" disabled>⚡ VIP (<span id="vip-cost">5</span> Πόντοι) - Έχεις <span id="vip-points">0</span></button>
-        </div>
+        <!-- Το κουμπί "Ανάλυση με Διαφήμιση" έχει αφαιρεθεί εντελώς -->
         <div id="loading-box">
             <div class="loading-text" data-translate="true">🔮 Η Aziram διαβάζει τις γραμμές σου...</div>
             <div class="loading-spinner"></div>
