@@ -58,6 +58,7 @@
         }
         .page.active { display: flex; }
 
+        /* TELEGRAM WEBVIEW FIX */
         #splash-page { justify-content: center; }
         #scan-page { justify-content: flex-start; }
 
@@ -196,6 +197,11 @@
         .popup-star { position: absolute; color: #FFD700; opacity: 0.5; animation: floatStar 3s infinite ease-in-out; pointer-events: none; font-size: 1rem; z-index: 0; }
         @keyframes floatStar { 0% { transform: translateY(0) rotate(0deg); opacity: 0.3; } 50% { transform: translateY(-15px) rotate(180deg); opacity: 0.8; } 100% { transform: translateY(0) rotate(360deg); opacity: 0.3; } }
         #close-popup-btn { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; padding: 12px 25px; border: none; border-radius: 60px; font-size: 0.9rem; font-weight: 700; cursor: pointer; box-shadow: 0 0 30px rgba(255,215,0,0.3); transition: all 0.4s; letter-spacing: 1px; display: block; margin: 20px auto 0; width: 80%; max-width: 250px; }
+
+        /* RESULT TRANSLATION BAR */
+        .result-lang-bar { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        .result-lang-bar select { background: rgba(20,10,40,0.9); color: var(--gold); border: 1px solid rgba(255,215,0,0.4); border-radius: 20px; padding: 6px 12px; font-size: 0.75rem; font-weight: 600; }
+        .result-lang-bar button { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; border: none; border-radius: 20px; padding: 6px 14px; font-size: 0.75rem; font-weight: 700; cursor: pointer; box-shadow: 0 0 10px rgba(255,215,0,0.3); white-space: nowrap; }
 
         /* FOOTER */
         #global-footer { position: fixed; bottom: 0; left: 0; z-index: 50; width: 100%; background: rgba(10,0,20,0.92); backdrop-filter: blur(12px); border-top: 1px solid rgba(255,215,0,0.35); padding: 10px 12px; display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.7rem; padding-bottom: calc(10px + var(--safe-bottom)); }
@@ -380,6 +386,40 @@
     <div id="result-popup-overlay">
         <div id="result-popup">
             <h2>☽ Η Αποκάλυψη της Aziram ☾</h2>
+            <!-- Μικρή μπάρα γλώσσας μέσα στο popup -->
+            <div class="result-lang-bar">
+                <select id="result-lang-select">
+                    <option value="el">🇬🇷 Ελληνικά</option>
+                    <option value="en">🇬🇧 English</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr">🇫🇷 Français</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="it">🇮🇹 Italiano</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="zh-CN">🇨🇳 中文</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="tr">🇹🇷 Türkçe</option>
+                    <option value="nl">🇳🇱 Nederlands</option>
+                    <option value="pt">🇵🇹 Português</option>
+                    <option value="sv">🇸🇪 Svenska</option>
+                    <option value="no">🇳🇴 Norsk</option>
+                    <option value="da">🇩🇰 Dansk</option>
+                    <option value="fi">🇫🇮 Suomi</option>
+                    <option value="pl">🇵🇱 Polski</option>
+                    <option value="cs">🇨🇿 Čeština</option>
+                    <option value="ro">🇷🇴 Română</option>
+                    <option value="bg">🇧🇬 Български</option>
+                    <option value="uk">🇺🇦 Українська</option>
+                    <option value="ko">🇰🇷 한국어</option>
+                    <option value="hi">🇮🇳 हिन्दी</option>
+                    <option value="vi">🇻🇳 Tiếng Việt</option>
+                    <option value="th">🇹🇭 ไทย</option>
+                    <option value="id">🇮🇩 Indonesia</option>
+                    <option value="iw">🇮🇱 עברית</option>
+                </select>
+                <button id="translate-result-btn" onclick="translateResultFromPopup()">🌐 Μετάφραση</button>
+            </div>
             <div id="result-popup-text"></div>
             <button id="close-popup-btn" onclick="closeResultPopup()" data-translate="true">🔄 Σκανάρισε άλλο χέρι</button>
         </div>
