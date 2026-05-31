@@ -19,7 +19,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Comfortaa:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700&family=Comfortaa:wght@400;600&display=swap" rel="stylesheet">
     
     <script src="https://jscolor.com/release/2.4.7/jscolor.js"></script>
     <script src="https://adsgram.org/sdk/v1/adsgram.js" async></script>
@@ -84,7 +84,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             z-index: 10;
         }
 
@@ -107,7 +107,16 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* REWARDS BAR */
+        /* REWARDS BAR & ADS BUTTON */
+        .rewards-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-end;
+            margin-bottom: 25px;
+        }
+
         #rewards-bar {
             background: var(--bg-card);
             border: 1px solid rgba(155, 89, 182, 0.2);
@@ -122,6 +131,17 @@
 
         .points-icon { color: var(--gold-glow); font-weight: bold; }
         .points-count { font-weight: 600; color: #fff; }
+
+        .btn-earn-ads {
+            background: linear-gradient(135deg, #16a085, #1abc9c);
+            font-size: 11px !important;
+            padding: 6px 12px !important;
+            border-radius: 8px !important;
+            width: auto !important;
+            font-family: 'Comfortaa', sans-serif;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(26, 188, 156, 0.3);
+        }
 
         /* BUTTONS */
         .btn {
@@ -355,22 +375,30 @@
 
         #result-popup h2 { font-size: 20px; text-align: center; color: var(--gold-glow); }
         #result-popup-text { font-size: 14px; line-height: 1.7; color: #ece5f5; }
-        #result-popup-text h2 { font-size: 17px; text-align: left; margin: 18px 0 8px 0; color: var(--purple-gold); }
-        #result-popup-text h3 { font-size: 15px; text-align: left; margin: 14px 0 6px 0; color: #dfcbe8; }
 
-        /* GENERAL MODALS & OVERLAYS */
+        /* MANDATORY CONSENT OVERLAY (GATEKEEPER) */
         #consent-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-dark); z-index: 10001;
+            background: var(--bg-dark); z-index: 99999;
             display: flex; justify-content: center; align-items: center; padding: 20px;
         }
 
         .consent-box {
             background: var(--bg-card); border: 1px solid rgba(155,89,182,0.3);
-            border-radius: 20px; padding: 30px 20px; width: 100%; max-width: 400px;
-            text-align: center; display: flex; flex-direction: column; gap: 20px;
+            border-radius: 20px; padding: 25px 20px; width: 100%; max-width: 420px;
+            max-height: 90vh; display: flex; flex-direction: column; gap: 15px;
+            box-shadow: 0 0 30px rgba(155,89,182,0.5);
         }
 
+        .consent-scrollable {
+            overflow-y: auto; text-align: left; padding-right: 5px;
+            font-size: 12px; color: var(--text-muted); line-height: 1.6;
+            border-bottom: 1px solid rgba(155,89,182,0.15);
+            border-top: 1px solid rgba(155,89,182,0.15);
+            padding: 10px 0;
+        }
+
+        /* MODAL OVERLAY FOR FOOTER LINKS */
         #terms-modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(10,5,20,0.85); z-index: 10005;
@@ -384,20 +412,23 @@
         }
 
         /* LANGUAGE SELECTOR */
-        #lang-selector-container {
-            background: var(--bg-card);
-            border: 1px solid rgba(155, 89, 182, 0.2);
+        .lang-selector-inline {
+            background: var(--bg-dark);
+            border: 1px solid rgba(155, 89, 182, 0.3);
             border-radius: 10px;
-            padding: 4px 8px;
-            display: flex;
+            padding: 6px 12px;
+            display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+            width: fit-content;
+            margin: 0 auto;
         }
-        #lang-select {
+        
+        .lang-selector-inline select {
             background: transparent; border: none; color: #fff;
-            font-family: inherit; font-size: 12px; outline: none; cursor: pointer;
+            font-family: inherit; font-size: 13px; outline: none; cursor: pointer;
         }
-        #lang-select option { background: var(--bg-card); color: #fff; }
+        .lang-selector-inline select option { background: var(--bg-card); color: #fff; }
 
         /* FOOTER */
         #global-footer {
@@ -408,46 +439,66 @@
         #global-footer a { color: var(--text-muted); text-decoration: underline; cursor: pointer; }
 
         /* ANIMATIONS */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; filter: drop-shadow(0 0 8px var(--purple-gold)); } 100% { opacity: 0.8; } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes scanMove {
-            0% { top: 0%; }
-            50% { top: 100%; }
-            100% { top: 0%; }
-        }
+        @keyframes scanMove { 0% { top: 0%; } 50% { top: 100%; } 100% { top: 0%; } }
     </style>
 </head>
 <body>
 
+    <!-- MANDATORY OVERLAY WITH TRANSLATION & GATEKEEPER -->
     <div id="consent-overlay" class="hidden">
         <div class="consent-box">
-            <h2 data-translate="true">☽ Πολιτική Απορρήτου ☾</h2>
-            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;" data-translate="true">
-                Η εφαρμογή χρησιμοποιεί την κάμερά σας αποκλειστικά για τη λήψη μιας φωτογραφίας της παλάμης σας. Η φωτογραφία αποστέλλεται με ασφάλεια στο API μας και διαγράφεται αμέσως μετά την ολοκλήρωση της ανάλυσης. Δεν αποθηκεύουμε ούτε μοιραζόμαστε τα βιομετρικά σας δεδομένα.
-            </p>
-            <button class="btn btn-purple" onclick="acceptConsent()" data-translate="true">Συμφωνώ & Συνέχεια</button>
+            <h2 style="text-align: center; font-size: 18px;" data-translate="true">☽ Όροι Χρήσης & Πολιτική Απορρήτου ☾</h2>
+            
+            <!-- Language Selector inside the gating popup -->
+            <div class="lang-selector-inline">
+                <span>🌐 Language:</span>
+                <select onchange="changeLanguage(this.value)">
+                    <option value="el">Ελληνικά</option>
+                    <option value="en">English</option>
+                    <option value="ru">Русский</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="it">Italiano</option>
+                    <option value="ar">العربية</option>
+                </select>
+            </div>
+
+            <div class="consent-scrollable">
+                <p style="font-weight: bold; color: var(--gold-glow); margin-bottom: 8px;" data-translate="true">1. Όροι Χρήσης & Προϋποθέσεις</p>
+                <p style="margin-bottom: 12px;" data-translate="true">Η εφαρμογή παρέχει αναλύσεις χειρομαντείας και αστρολογίας με τη χρήση Τεχνητής Νοημοσύνης (AI) αποκλειστικά και μόνο για σκοπούς ψυχαγωγίας. Καμία πληροφορία ή πρόβλεψη δεν πρέπει να εκλαμβάνεται ως ιατρική, νομική, οικονομική ή επαγγελματική συμβουλή. Δεν φέρουμε καμία ευθύνη για τυχόν αποφάσεις ή πράξεις που βασίζονται στα αποτελέσματα των αναλύσεων.</p>
+                
+                <p style="font-weight: bold; color: var(--gold-glow); margin-bottom: 8px;" data-translate="true">2. Πολιτική Απορρήτου & Βιομετρικά Δεδομένα</p>
+                <p data-translate="true">Η εφαρμογή ζητά πρόσβαση στην κάμερά σας αποκλειστικά για τη λήψη φωτογραφίας της παλάμης σας. Η επεξεργασία της εικόνας γίνεται σε πραγματικό χρόνο. Η φωτογραφία αποστέλλεται με ασφάλεια στο API μας και ΔΕΝ αποθηκεύεται μόνιμα στους διακομιστές μας. Διαγράφεται αμέσως μετά την έκδοση της πρόβλεψης. Αποθηκεύουμε το Telegram User ID σας αποκλειστικά για τη διαχείριση των πόντων σας.</p>
+            </div>
+
+            <button class="btn btn-purple" onclick="acceptConsent()" data-translate="true">✅ Αποδοχή & Είσοδος στο Παιχνίδι</button>
         </div>
     </div>
 
     <div class="app-container">
         
+        <!-- GLOBAL HEADER -->
         <header>
             <div class="brand">
                 <span class="brand-logo">👁️</span>
                 <span class="brand-title">LiFe LiNe</span>
             </div>
-            <div id="rewards-bar">
-                <span class="points-icon">🌟</span>
-                <span class="points-count" id="user-points-display">0</span>
+            <div class="rewards-container">
+                <div id="rewards-bar">
+                    <span class="points-icon">🌟</span>
+                    <span class="points-count" id="user-points-display">15</span>
+                </div>
+                <!-- ADSGRAM FREE POINTS BUTTON -->
+                <button class="btn btn-earn-ads" onclick="watchAdForPoints()" data-translate="true">📺 Δες διαφήμιση (+10 Πόντοι)</button>
             </div>
         </header>
 
+        <!-- SPLASH PAGE -->
         <div id="splash-page">
             <div class="mystic-eye-container">
                 <div class="mystic-ring"></div>
@@ -460,8 +511,10 @@
             <button class="btn btn-purple" onclick="navigateToScanPage()" data-translate="true">✨ Έναρξη Χειρομαντείας</button>
         </div>
 
+        <!-- SCAN PAGE (MAIN WORKSPACE) -->
         <div id="scan-page" class="hidden">
             
+            <!-- SELECTORS GRID -->
             <div class="selectors-grid">
                 <div class="select-wrapper">
                     <select id="gender-select">
@@ -497,6 +550,7 @@
                 </div>
             </div>
 
+            <!-- SCAN WINDOW (LIVE PREVIEW VIDEO) -->
             <div id="scan-container">
                 <canvas id="camera-canvas" style="display:none;"></canvas>
                 <video id="camera-preview" autoplay playsinline muted></video>
@@ -504,6 +558,7 @@
                 <div id="scan-line"></div>
             </div>
 
+            <!-- CAMERA CONTROL BUTTONS -->
             <div class="camera-controls">
                 <button class="btn btn-purple" id="start-camera-btn" onclick="initCamera()" data-translate="true">📷 Άνοιξε Κάμερα</button>
                 <button class="btn btn-purple" id="switch-camera-btn" onclick="switchCamera()" style="display: none; width: auto; padding: 14px;" title="Αλλαγή Κάμερας">🔄</button>
@@ -514,17 +569,19 @@
                 </label>
             </div>
 
+            <!-- ΚΑΡΦΩΜΕΝΑ ΚΟΥΜΠΙΑ ΣΤΟ ΚΑΤΩ ΜΕΡΟΣ (FIXED) -->
             <div class="analysis-actions">
-                <button class="btn btn-green btn-uniform" id="analyze-btn" onclick="startAnalysisFlow(false)" style="display: none;" data-translate="true">🔮 Ανάλυση (με Διαφήμιση)</button>
-                <button class="btn btn-vip btn-uniform" id="analyze-vip-btn" onclick="startAnalysisFlow(true)" style="display: none;" disabled>⚡ VIP (<span id="vip-cost">5</span> Πόντοι) - Έχεις <span id="vip-points">0</span></button>
+                <button class="btn btn-green btn-uniform" id="analyze-btn" onclick="startAnalysisFlow()" style="display: none;" data-translate="true">🔮 Ανάλυση Παλάμης (<span id="btn-cost-display">15</span> Πόντοι)</button>
             </div>
 
+            <!-- LOADING BOX -->
             <div id="loading-box">
                 <div class="loading-text" data-translate="true">🔮 Η Aziram διαβάζει τις γραμμές σου...</div>
                 <div class="loading-spinner"></div>
             </div>
         </div>
 
+        <!-- RESULT POPUP OVERLAY -->
         <div id="result-popup-overlay">
             <div id="result-popup">
                 <h2>☽ Η Αποκάλυψη της Aziram ☾</h2>
@@ -533,28 +590,16 @@
             </div>
         </div>
 
+        <!-- TERMS & PRIVACY MODAL FOR FOOTER -->
         <div id="terms-modal-overlay">
             <div id="terms-modal"></div>
         </div>
 
+        <!-- GLOBAL FOOTER -->
         <div id="global-footer">
             <a onclick="showTerms('terms')" data-translate="true">Όροι Χρήσης</a>
             <span class="footer-divider">|</span>
             <a onclick="showTerms('privacy')" data-translate="true">Απόρρητο</a>
-            <span class="footer-divider">|</span>
-            <div id="lang-selector-container">
-                <span>🌐</span>
-                <select id="lang-select" onchange="changeLanguage(this.value)">
-                    <option value="el">Ελληνικά</option>
-                    <option value="en">English</option>
-                    <option value="ru">Русский</option>
-                    <option value="es">Español</option>
-                    <option value="fr">Français</option>
-                    <option value="de">Deutsch</option>
-                    <option value="it">Italiano</option>
-                    <option value="ar">العربية</option>
-                </select>
-            </div>
         </div>
 
     </div>
