@@ -42,6 +42,15 @@ function acceptConsent() {
 
 checkConsent();
 
+// ===== WELCOME BONUS (15 πόντοι για νέους χρήστες) =====
+function grantWelcomeBonus() {
+    if (!localStorage.getItem('lifeline_welcome_bonus_given')) {
+        addPoints(15);
+        localStorage.setItem('lifeline_welcome_bonus_given', 'true');
+        console.log('🎁 Welcome bonus 15 points granted');
+    }
+}
+
 // ===== TERMS & PRIVACY ΔΟΜΗ (ελληνικά πρωτότυπα) =====
 const TERMS_STRUCTURE = {
     terms: {
@@ -273,7 +282,6 @@ function goToScan() {
     document.getElementById('scan-page').classList.add('active');
     updatePointsDisplay();
     if (capturedImage || currentStream) {
-        document.getElementById('analyze-btn').style.display = 'inline-flex';
         document.getElementById('analyze-vip-btn').style.display = 'inline-flex';
     }
 }
@@ -336,7 +344,6 @@ async function startCamera() {
         });
         video.srcObject = currentStream;
         cameraActive = true;
-        document.getElementById('analyze-btn').style.display = 'inline-flex';
         document.getElementById('analyze-vip-btn').style.display = 'inline-flex';
         document.getElementById('selfie-btn').style.display = 'inline-flex';
         document.getElementById('back-btn').style.display = 'inline-flex';
@@ -392,8 +399,7 @@ function capturePhotoFromCamera() {
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     }
     capturedImage = canvas.toDataURL('image/jpeg', 0.8);
-    document.getElementById('upload-preview-img').src = capturedImage;
-    document.getElementById('upload-preview-area').style.display = 'block';
+    showPhotoPreview(capturedImage);
 }
 
 function handleUpload(event) {
@@ -402,12 +408,15 @@ function handleUpload(event) {
     var reader = new FileReader();
     reader.onload = function(e) {
         capturedImage = e.target.result;
-        document.getElementById('upload-preview-img').src = capturedImage;
-        document.getElementById('upload-preview-area').style.display = 'block';
-        document.getElementById('analyze-btn').style.display = 'inline-flex';
-        document.getElementById('analyze-vip-btn').style.display = 'inline-flex';
+        showPhotoPreview(capturedImage);
     };
     reader.readAsDataURL(file);
+}
+
+function showPhotoPreview(imageSrc) {
+    document.getElementById('upload-preview-img').src = imageSrc;
+    document.getElementById('upload-preview-area').style.display = 'block';
+    document.getElementById('analyze-vip-btn').style.display = 'inline-flex';
 }
 
 // ===== API & ANALYSIS =====
@@ -418,7 +427,6 @@ async function performAnalysis() {
     if (!capturedImage) { alert('Παρακαλώ τράβηξε ή ανέβασε φωτογραφία.'); return; }
     isAnalyzing = true;
     document.getElementById('loading-box').style.display = 'block';
-    document.getElementById('analyze-btn').style.display = 'none';
     document.getElementById('analyze-vip-btn').style.display = 'none';
     try {
         var response = await fetch(API_URL, {
@@ -435,11 +443,18 @@ async function performAnalysis() {
         });
         var data = await response.json();
         if (data.success && data.reading) {
-            document.getElementById('result-popup-text').innerHTML = data.reading
+            var resultDiv = document.getElementById('result-popup-text');
+            resultDiv.innerHTML = data.reading
                 .replace(/## (.*?)\n/g, '<h2>$1</h2>')
                 .replace(/### (.*?)\n/g, '<h3>$1</h3>')
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\n/g, '<br>');
+
+            // Μετάφραση αποτελέσματος αν η γλώσσα δεν είναι ελληνικά
+            if (currentLang !== 'el') {
+                await translateResultText(resultDiv);
+            }
+
             document.getElementById('result-popup-overlay').classList.add('active');
             addStarsToPopup();
             rewardReferrerIfFirstAnalysis();
@@ -450,11 +465,25 @@ async function performAnalysis() {
         alert('Σφάλμα σύνδεσης.');
     } finally {
         document.getElementById('loading-box').style.display = 'none';
-        document.getElementById('analyze-btn').style.display = 'inline-flex';
         document.getElementById('analyze-vip-btn').style.display = 'inline-flex';
         updatePointsDisplay();
         isAnalyzing = false;
     }
+}
+
+async function translateResultText(container) {
+    // Συλλέγουμε όλα τα text nodes ή κάνουμε translate όλο το innerText
+    // Χρησιμοποιούμε translateElements για όλα τα child elements με κείμενο
+    var elements = container.querySelectorAll('h2, h3, strong, p, div');
+    // Αν δεν υπάρχουν child elements, προσθέτουμε ένα span για να πιάσουμε το κείμενο
+    if (elements.length === 0) {
+        var span = document.createElement('span');
+        span.textContent = container.innerText;
+        container.innerHTML = '';
+        container.appendChild(span);
+        elements = [span];
+    }
+    await translateElements(elements, currentLang);
 }
 
 function addStarsToPopup() {
@@ -480,7 +509,6 @@ function closeResultPopup() {
 
 function resetScan() {
     document.getElementById('loading-box').style.display = 'none';
-    document.getElementById('analyze-btn').style.display = 'none';
     document.getElementById('analyze-vip-btn').style.display = 'none';
     document.getElementById('upload-preview-area').style.display = 'none';
     document.getElementById('camera-btn').innerText = '📷 Έναρξη';
@@ -490,7 +518,7 @@ function resetScan() {
 
 // ===== POINTS SYSTEM =====
 const POINTS_KEY = 'lifeline_user_points';
-const VIP_COST = 5;
+const VIP_COST = 15;   // Αλλαγή από 5 σε 15
 
 function getUserPoints() { return parseInt(localStorage.getItem(POINTS_KEY) || '0', 10); }
 function addPoints(amount) { localStorage.setItem(POINTS_KEY, (getUserPoints() + amount).toString()); updatePointsDisplay(); }
@@ -517,16 +545,13 @@ function earnPoints() {
         .catch(function(err) { alert('Δεν ήταν δυνατή η προβολή διαφήμισης.'); });
 }
 
-function startAnalysisFlow(isVip) {
-    if (isVip) {
-        if (spendPoints(VIP_COST)) { performAnalysis(); }
-        else { alert('Δεν έχεις αρκετούς πόντους. Χρειάζεσαι ' + VIP_COST + '.'); }
-        return;
+// Η startAnalysisFlow τώρα δέχεται μόνο VIP (χωρίς παράμετρο)
+function startAnalysisFlow() {
+    if (spendPoints(VIP_COST)) {
+        performAnalysis();
+    } else {
+        alert('Δεν έχεις αρκετούς πόντους. Χρειάζεσαι ' + VIP_COST + ' πόντους. Κέρδισε πόντους βλέποντας διαφημίσεις.');
     }
-    if (!capturedImage) { alert('Παρακαλώ τράβηξε ή ανέβασε φωτογραφία.'); return; }
-    showRewardedAd()
-        .then(function(result) { if (result.done) addPoints(2); performAnalysis(); })
-        .catch(function(err) { performAnalysis(); });
 }
 
 // ===== REFERRAL SYSTEM =====
@@ -558,7 +583,8 @@ function getReferralLink() {
     return 'https://t.me/' + OFFICIAL_BOT_USERNAME + '?start=' + getCurrentUserId();
 }
 
-function createInviteModal() {
+// Δημιουργία modal με data-translate και αυτόματη μετάφραση
+async function createInviteModal() {
     var existing = document.getElementById('invite-modal');
     if (existing) existing.remove();
 
@@ -570,22 +596,29 @@ function createInviteModal() {
         <div id="invite-modal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;display:flex;align-items:center;justify-content:center;">
             <div style="background:linear-gradient(145deg,#1a0e2a,#2a1a3a);border:2px solid #FFD700;border-radius:20px;padding:25px;max-width:450px;width:90%;text-align:center;">
                 <button onclick="closeInviteModal()" style="float:right;background:rgba(255,215,0,0.2);border:none;color:#FFD700;font-size:1.2rem;cursor:pointer;border-radius:50%;width:30px;height:30px;">✕</button>
-                <div style="font-size:3rem;margin-bottom:10px;">🎁</div>
-                <h2 style="color:#FFD700;">Κάλεσε Φίλους & Κέρδισε!</h2>
-                <p style="color:#d5c8e8;margin:15px 0;">Κέρδισε <strong style="color:#FFD700;">20 πόντους</strong> για κάθε φίλο που κάνει την πρώτη του ανάλυση χειρομαντείας!</p>
-                <p style="background:rgba(255,215,0,0.2);padding:8px 15px;border-radius:20px;display:inline-block;">👥 ${invites}/${maxInvites} επιτυχημένες προσκλήσεις</p>
+                <div style="font-size:3rem;margin-bottom:10px;" data-translate="true">🎁</div>
+                <h2 style="color:#FFD700;" data-translate="true">Κάλεσε Φίλους & Κέρδισε!</h2>
+                <p style="color:#d5c8e8;margin:15px 0;" data-translate="true">Κέρδισε <strong style="color:#FFD700;">20 πόντους</strong> για κάθε φίλο που κάνει την πρώτη του ανάλυση χειρομαντείας!</p>
+                <p style="background:rgba(255,215,0,0.2);padding:8px 15px;border-radius:20px;display:inline-block;" data-translate="true">👥 ${invites}/${maxInvites} επιτυχημένες προσκλήσεις</p>
                 <div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:15px;margin:15px 0;word-break:break-all;">
-                    <p style="color:#FFD700;font-size:0.85rem;">Το link σου:</p>
+                    <p style="color:#FFD700;font-size:0.85rem;" data-translate="true">Το link σου:</p>
                     <code style="color:#b9a6d4;font-size:0.8rem;">${referralLink}</code>
-                    <button onclick="copyReferralLink()" style="margin-top:10px;width:100%;padding:10px;background:linear-gradient(145deg,#FFD700,#B8860B);border:none;border-radius:30px;font-weight:bold;cursor:pointer;">📋 Αντιγραφή Link</button>
+                    <button onclick="copyReferralLink()" style="margin-top:10px;width:100%;padding:10px;background:linear-gradient(145deg,#FFD700,#B8860B);border:none;border-radius:30px;font-weight:bold;cursor:pointer;" data-translate="true">📋 Αντιγραφή Link</button>
                 </div>
-                <button onclick="shareViaTelegram()" style="width:100%;margin-top:10px;padding:12px;background:linear-gradient(145deg,#9b59b6,#6a0dad);border:none;border-radius:30px;color:#fff;font-weight:bold;cursor:pointer;">📤 Μοιράσου στο Telegram</button>
-                <button onclick="shareViaWhatsApp()" style="width:100%;margin-top:10px;padding:12px;background:linear-gradient(145deg,#FFD700,#B8860B);border:none;border-radius:30px;font-weight:bold;cursor:pointer;">💬 Μοιράσου στο WhatsApp</button>
-                <p style="color:#b9a6d4;font-size:0.8rem;margin-top:15px;">ℹ️ Οι πόντοι αποδίδονται μετά την πρώτη ανάλυση του φίλου σου.</p>
+                <button onclick="shareViaTelegram()" style="width:100%;margin-top:10px;padding:12px;background:linear-gradient(145deg,#9b59b6,#6a0dad);border:none;border-radius:30px;color:#fff;font-weight:bold;cursor:pointer;" data-translate="true">📤 Μοιράσου στο Telegram</button>
+                <button onclick="shareViaWhatsApp()" style="width:100%;margin-top:10px;padding:12px;background:linear-gradient(145deg,#FFD700,#B8860B);border:none;border-radius:30px;font-weight:bold;cursor:pointer;" data-translate="true">💬 Μοιράσου στο WhatsApp</button>
+                <p style="color:#b9a6d4;font-size:0.8rem;margin-top:15px;" data-translate="true">ℹ️ Οι πόντοι αποδίδονται μετά την πρώτη ανάλυση του φίλου σου.</p>
             </div>
         </div>
     `;
     document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // Αν η γλώσσα δεν είναι ελληνικά, μετάφρασε τα στοιχεία του modal
+    if (currentLang !== 'el') {
+        var modalEl = document.getElementById('invite-modal');
+        var translatable = modalEl.querySelectorAll('[data-translate="true"]');
+        await translateElements(translatable, currentLang);
+    }
 }
 
 function showInviteModal() { createInviteModal(); }
@@ -636,6 +669,7 @@ function addInviteButton() {
 }
 
 // ===== INITIALIZE =====
+grantWelcomeBonus();   // Δώσε 15 πόντους καλωσορίσματος αν είναι νέος χρήστης
 updatePointsDisplay();
 addInviteButton();
 detectReferral();
