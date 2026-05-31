@@ -30,9 +30,11 @@ function showRewardedAd() {
         });
 }
 
-// ===== CONSENT =====
+// ===== CONSENT / GDPR =====
 function checkConsent() {
-    document.getElementById('consent-overlay').classList.remove('hidden');
+    if (!localStorage.getItem('lifeline_consent')) {
+        document.getElementById('consent-overlay').classList.remove('hidden');
+    }
 }
 
 function acceptConsent() {
@@ -40,560 +42,415 @@ function acceptConsent() {
     document.getElementById('consent-overlay').classList.add('hidden');
 }
 
-checkConsent();
-
-// ===== TERMS & PRIVACY ΔΟΜΗ (ελληνικά πρωτότυπα) =====
+// ===== TERMS & PRIVACY STRUCTURE =====
 const TERMS_STRUCTURE = {
     terms: {
-        title: '📜 Όροι Χρήσης LiFe LiNe',
-        sections: [
-            { heading: '1. Όριο Ηλικίας (Αυστηρά 18+)', body: 'Η χρήση της εφαρμογής <strong>LiFe LiNe</strong> επιτρέπεται αποκλειστικά και μόνο σε άτομα που έχουν συμπληρώσει το 18ο έτος της ηλικίας τους (ενήλικες). Με την αποδοχή των όρων και την επιλογή του σχετικού πλαισίου, ο χρήστης δηλώνει υπεύθυνα ότι είναι ενήλικος. Οι διαχειριστές του LiFe LiNe δεν φέρουν καμία ευθύνη για ψευδείς δηλώσεις ηλικίας από πλευράς των επισκεπτών.' },
-            { heading: '2. Ψυχαγωγικός Χαρακτήρας', body: 'Το LiFe LiNe είναι μια ψηφιακή εφαρμογή που χρησιμοποιεί αλγόριθμους τεχνητής νοημοσύνης (AI) για να αναλύει τα χαρακτηριστικά του χεριού του χρήστη (γραμμές, σχήματα) μέσω σάρωσης και να παράγει κείμενα βασισμένα σε ένα παραδοσιακό λεξικό συμβόλων. Η υπηρεσία παρέχεται αποκλειστικά και μόνο για σκοπούς χιούμορ, διασκέδασης και ψυχαγωγίας. Τα αποτελέσματα της ανάλυσης <strong>δεν αποτελούν σε καμία περίπτωση</strong> πραγματικές, επιστημονικές, ιατρικές, ψυχολογικές, νομικές ή χρηματοοικονομικές προβλέψεις και συμβουλές.' },
-            { heading: '3. Περιορισμός Ευθύνης', body: 'Ο χρήστης συμφωνεί ότι χρησιμοποιεί την εφαρμογή με δική του αποκλειστική ευθύνη. Οι δημιουργοί, οι ιδιοκτήτες και οι συνεργάτες του LiFe LiNe δεν φέρουν καμία απολύτως αστική ή ποινική ευθύνη για οποιαδήποτε πράξη, απόφαση, απώλεια, ζημία (άμεση ή έμμεση) ή ψυχική αναστάτωση προκύψει από την ανάγνωση, την παρερμηνεία ή την εφαρμογή των χιουμοριστικών αποτελεσμάτων της χειρομαντείας στην πραγματική ζωή.' },
-            { heading: '4. Πνευματική Ιδιοκτησία', body: 'Όλο το περιεχόμενο του ιστοτόπου (συμπεριλαμβανομένων των κειμένων, του λογότυπου, των γραφικών, των κωδίκων της εφαρμογής και του λεξικού συμβόλων) αποτελεί πνευματική ιδιοκτησία του LiFe LiNe και προστατεύεται από τις σχετικές διατάξεις του ελληνικού και ευρωπαϊκού δικαίου.' }
-        ],
-        footer: '📧 <strong>info.franklydear@gmail.com</strong>'
+        title: 'Όροι Χρήσης & Προϋποθέσεις',
+        content: `Καλώς ήρθατε στο LiFe LiNe. Η εφαρμογή παρέχει ψυχαγωγικές αναλύσεις χειρομαντείας και αστρολογίας μέσω AI. Χρησιμοποιώντας την εφαρμογή, συμφωνείτε ότι:
+        1. Οι προβλέψεις έχουν καθαρά ψυχαγωγικό χαρακτήρα.
+        2. Δεν αντικαθιστούν επαγγελματικές ιατρικές, νομικές ή οικονομικές συμβουλές.
+        3. Η χρήση της κάμερας γίνεται με τη συγκατάθεσή σας για την επεξεργασία της εικόνας.`
     },
     privacy: {
-        title: '🔒 Πολιτική Απορρήτου LiFe LiNe',
-        sections: [
-            { heading: '1. Πώς Διαχειριζόμαστε τα Δεδομένα της Σάρωσης του Χεριού σας', body: '<strong>Δεν Αποθηκεύουμε τις Σαρώσεις:</strong> Όταν σκανάρετε το χέρι σας, η εικόνα μετατρέπεται σε προσωρινή μορφή κώδικα (Base64) στη συσκευή σας και στέλνεται στον server μας αποκλειστικά και μόνο για να μεταφερθεί στο Gemini API της Google για την οπτική ανάλυση. <strong>Καμία Μόνιμη Αποθήκευση:</strong> Οι σαρώσεις του χεριού σας ΔΕΝ αποθηκεύονται σε καμία βάση δεδομένων, ΔΕΝ κρατούνται στον server μας και διαγράφονται οριστικά από τη μνήμη αμέσως μόλις ολοκληρωθεί η ανάλυση.' },
-            { heading: '2. Δεδομένα που Συλλέγουμε Αυτόματα (Cookies & Διαφημίσεις)', body: '• <strong>Cookies:</strong> Χρησιμοποιούμε cookies για να θυμόμαστε τις προτιμήσεις σας και για να αναλύουμε την επισκεψιμότητα (μέσω Google Analytics). • <strong>Διαφημίσεις Τρίτων (AdSense / Monetag):</strong> Οι διαφημιστές ενδέχεται να χρησιμοποιούν cookies για να προβάλλουν διαφημίσεις που σχετίζονται με τα ενδιαφέροντά σας. • <strong>Τοπική Αποθήκευση (Local Storage):</strong> Η εφαρμογή χρησιμοποιεί τοπική μνήμη στη συσκευή σας για να μετράει τις ημερήσιες προσπάθειές σας.' },
-            { heading: '3. Δικαιώματα των Χρηστών (GDPR)', body: 'Σύμφωνα με τον ευρωπαϊκό νόμο, έχετε τα εξής δικαιώματα: • Το δικαίωμα να γνωρίζετε ποια δεδομένα σας επεξεργαζόμαστε. • Το δικαίωμα να διαγράψετε τα cookies και το ιστορικό του LiFe LiNe από τον browser σας ανά πάσα στιγμή.' },
-            { heading: '4. Αλλαγές στους Όρους και την Πολιτική Απορρήτου', body: 'Το LiFe LiNe διατηρεί το δικαίωμα να αλλάξει ή να επικαιροποιήσει αυτούς τους όρους και την πολιτική απορρήτου οποιαδήποτε στιγμή, προκειμένου να συμμορφώνεται με νέους νόμους ή τεχνικές αναβαθμίσεις. Οι αλλαγές θα εμφανίζονται σε αυτή τη σελίδα.' }
-        ],
-        footer: '📧 <strong>info.franklydear@gmail.com</strong>'
+        title: 'Πολιτική Απορρήτου',
+        content: `Η προστασία των δεδομένων σας είναι προτεραιότητά μας:
+        1. Η φωτογραφία της παλάμης σας υποβάλλεται σε επεξεργασία σε πραγματικό χρόνο και ΔΕΝ αποθηκεύεται μόνιμα στους διακομιστές μας.
+        2. Συλλέγουμε το Telegram User ID σας αποκλειστικά για τη διαχείριση των πόντων σας.
+        3. Δεν μοιραζόμαστε τα δεδομένα σας με τρίτα μέρη, εκτός από τις απαραίτητες κλήσεις API για την ανάλυση.`
     }
 };
 
-async function showTerms(type) {
-    var modal = document.getElementById('terms-modal');
-    var structure = TERMS_STRUCTURE[type];
-    if (!structure) return;
-
-    // Δημιουργία HTML δομής με data-translate
-    var html = `<h2 data-translate="true">${structure.title}</h2>`;
-    structure.sections.forEach(function(sec) {
-        html += `<h3 data-translate="true">${sec.heading}</h3>`;
-        html += `<p data-translate="true">${sec.body}</p>`;
-    });
-    html += `<p data-translate="true" style="text-align:center;margin-top:18px;">${structure.footer}</p>`;
-    html += '<button id="close-terms-btn" onclick="closeTerms()" data-translate="true">✕ Κλείσιμο</button>';
-
-    modal.innerHTML = html;
-    document.getElementById('terms-modal-overlay').classList.add('active');
-
-    // Αν η τρέχουσα γλώσσα δεν είναι ελληνικά, μετάφρασε τα νέα στοιχεία
-    if (currentLang !== 'el') {
-        var elements = modal.querySelectorAll('[data-translate="true"]');
-        await translateElements(elements, currentLang);
+function showTerms(type) {
+    const data = TERMS_STRUCTURE[type];
+    if (!data) return;
+    
+    const overlay = document.getElementById('terms-modal-overlay');
+    const container = document.getElementById('terms-modal');
+    
+    container.innerHTML = `
+        <h2 style="margin-bottom:15px; color:var(--gold-glow);" data-translate="true">${data.title}</h2>
+        <p style="margin-bottom:20px; white-space:pre-line; color:#ece5f5;" data-translate="true">${data.content}</p>
+        <button class="btn btn-purple" onclick="closeTerms()" data-translate="true">Κλείσιμο</button>
+    `;
+    
+    // Αποθήκευση του νέου δυναμικού κειμένου για τη μετάφραση
+    if (typeof saveOriginalTexts === 'function') {
+        saveOriginalTexts();
     }
+    
+    // Εφαρμογή της τρέχουσας γλώσσας αν δεν είναι ελληνικά
+    if (currentLang !== 'el' && typeof translatePage === 'function') {
+        translatePage(currentLang);
+    }
+    
+    overlay.style.display = 'flex';
 }
 
 function closeTerms() {
-    document.getElementById('terms-modal-overlay').classList.remove('active');
+    document.getElementById('terms-modal-overlay').style.display = 'none';
 }
 
-document.getElementById('terms-modal-overlay').addEventListener('click', function(e) {
-    if (e.target === this) closeTerms();
-});
-
-// ===== ΜΕΤΑΦΡΑΣΗ (ΒΕΛΤΙΩΜΕΝΗ ΜΕ translateElements) =====
-var originalTexts = {};
-var currentLang = 'el';
-var translationsCache = {};
-
-function saveOriginalTexts() {
-    document.querySelectorAll('[data-translate="true"]').forEach(function(el) {
-        var key = el.outerHTML;
-        if (!originalTexts[key]) originalTexts[key] = el.textContent.trim();
-    });
-}
-saveOriginalTexts();
-
-function updateLangLabel() {
-    var labelMap = {
-        'el': '🌐 Γλώσσα', 'en': '🌐 Language', 'de': '🌐 Sprache', 'fr': '🌐 Langue',
-        'es': '🌐 Idioma', 'it': '🌐 Lingua', 'ar': '🌐 اللغة', 'zh-CN': '🌐 语言',
-        'ja': '🌐 言語', 'ru': '🌐 Язык', 'tr': '🌐 Dil', 'nl': '🌐 Taal',
-        'pt': '🌐 Idioma', 'sv': '🌐 Språk', 'no': '🌐 Språk', 'da': '🌐 Sprog',
-        'fi': '🌐 Kieli', 'pl': '🌐 Język', 'cs': '🌐 Jazyk', 'ro': '🌐 Limbă',
-        'bg': '🌐 Език', 'uk': '🌐 Мова', 'ko': '🌐 언어', 'hi': '🌐 भाषा',
-        'vi': '🌐 Ngôn ngữ', 'th': '🌐 ภาษา', 'id': '🌐 Bahasa', 'iw': '🌐 שפה'
-    };
-    var label = document.getElementById('lang-label');
-    if (label) label.textContent = labelMap[currentLang] || '🌐 Language';
-}
-
-async function translateElements(elements, targetLang) {
-    var textsToTranslate = [];
-    var elementsToUpdate = [];
-    elements.forEach(function(el) {
-        var text = el.textContent.trim();
-        if (text.length > 0 && text.length < 1500) {
-            textsToTranslate.push(text);
-            elementsToUpdate.push(el);
-        }
-    });
-    if (textsToTranslate.length === 0) return;
-    var batchSize = 10;
-    for (var i = 0; i < textsToTranslate.length; i += batchSize) {
-        var batch = textsToTranslate.slice(i, i + batchSize);
-        var batchElements = elementsToUpdate.slice(i, i + batchSize);
-        try {
-            var translatedTexts = await translateBatch(batch, targetLang);
-            for (var j = 0; j < batchElements.length; j++) {
-                if (translatedTexts[j]) batchElements[j].textContent = translatedTexts[j];
-            }
-        } catch (e) { console.log('Translation error:', e); }
+// ===== TELEGRAM INTEGRATION & POINTS =====
+function getCurrentUserId() {
+    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
+        return window.Telegram.WebApp.initDataUnsafe.user.id;
     }
+    return 999999; // Fallback ID για δοκιμές εκτός Telegram
 }
 
-function startTranslation() {
-    var lang = document.getElementById('language-select').value;
-    if (lang === 'el') {
-        restoreOriginalTexts();
-        currentLang = 'el';
-        document.getElementById('reset-lang-btn').style.display = 'none';
-        updateLangLabel();
-        updatePointsDisplay();
-        return;
+function getUserPoints() {
+    var uid = getCurrentUserId();
+    var pts = localStorage.getItem('lifeline_pts_' + uid);
+    if (pts === null) {
+        localStorage.setItem('lifeline_pts_' + uid, '10'); // 10 δωρεάν αρχικοί πόντοι
+        return 10;
     }
-    var btn = document.getElementById('translate-btn');
-    btn.classList.add('translating');
-    btn.textContent = '⟳';
-    btn.disabled = true;
-    translatePage(lang);
+    return parseInt(pts, 10);
 }
 
-async function translatePage(targetLang) {
-    var elements = document.querySelectorAll('[data-translate="true"]');
-    await translateElements(elements, targetLang);
-    currentLang = targetLang;
-    finishTranslation();
-    updateLangLabel();
-    updatePointsDisplay();
+function updateUserPoints(amount) {
+    var uid = getCurrentUserId();
+    var current = getUserPoints();
+    var updated = Math.max(0, current + amount);
+    localStorage.setItem('lifeline_pts_' + uid, updated.toString());
+    updatePointsUI();
+    return updated;
 }
 
-function finishTranslation() {
-    var btn = document.getElementById('translate-btn');
-    btn.classList.remove('translating');
-    btn.textContent = '▶';
-    btn.disabled = false;
-    document.getElementById('reset-lang-btn').style.display = 'flex';
-}
-
-async function translateBatch(texts, targetLang) {
-    var cacheKey = targetLang + '|||' + texts.join('|||');
-    if (translationsCache[cacheKey]) return translationsCache[cacheKey].split('|||');
-    var url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=el&tl=' + targetLang + '&dt=t&q=' + encodeURIComponent(texts.join('|||'));
-    var response = await fetch(url);
-    var data = await response.json();
-    var translatedText = '';
-    if (data && data[0]) {
-        for (var i = 0; i < data[0].length; i++) { if (data[0][i][0]) translatedText += data[0][i][0]; }
-    }
-    var translations = translatedText.split('|||');
-    translationsCache[cacheKey] = translations.join('|||');
-    return translations;
-}
-
-function restoreOriginalTexts() {
-    document.querySelectorAll('[data-translate="true"]').forEach(function(el) {
-        var key = el.outerHTML;
-        if (originalTexts[key]) el.textContent = originalTexts[key];
-    });
-}
-
-function resetToGreek() {
-    restoreOriginalTexts();
-    currentLang = 'el';
-    document.getElementById('language-select').value = 'el';
-    document.getElementById('reset-lang-btn').style.display = 'none';
-    updateLangLabel();
-    updatePointsDisplay();
-}
-
-function detectLanguage() {
-    var userLang = (navigator.language || navigator.userLanguage).split('-')[0];
-    var langMap = {
-        'el':'el','en':'en','de':'de','fr':'fr','es':'es','it':'it','ar':'ar','zh':'zh-CN',
-        'ja':'ja','ru':'ru','tr':'tr','nl':'nl','pt':'pt','sv':'sv','no':'no','da':'da',
-        'fi':'fi','pl':'pl','cs':'cs','ro':'ro','bg':'bg','uk':'uk','ko':'ko','hi':'hi',
-        'vi':'vi','th':'th','id':'id','he':'iw','iw':'iw'
-    };
-    var mapped = langMap[userLang] || 'el';
-    document.getElementById('language-select').value = mapped;
-    currentLang = mapped;
-    updateLangLabel();
-    if (mapped !== 'el') { setTimeout(function() { startTranslation(); }, 1000); }
-}
-detectLanguage();
-
-// ===== STARFIELD =====
-var starCanvas = document.getElementById('starfield');
-var starCtx = starCanvas.getContext('2d');
-var stars = [];
-function resizeStarfield() { starCanvas.width = window.innerWidth; starCanvas.height = window.innerHeight; }
-window.addEventListener('resize', resizeStarfield);
-resizeStarfield();
-function createStars(count) {
-    count = count || 150;
-    stars = [];
-    for (var i = 0; i < count; i++) {
-        stars.push({
-            x: Math.random() * starCanvas.width, y: Math.random() * starCanvas.height,
-            r: Math.random() * 2 + 0.5,
-            dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.3,
-            alpha: Math.random() * 0.8 + 0.2,
-            color: Math.random() > 0.7 ? '#FFD700' : '#c9a0dc'
-        });
-    }
-}
-createStars();
-function drawStars() {
-    starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
-    stars.forEach(function(s) {
-        s.x += s.dx; s.y += s.dy;
-        if (s.x < 0 || s.x > starCanvas.width) s.dx *= -1;
-        if (s.y < 0 || s.y > starCanvas.height) s.dy *= -1;
-        starCtx.beginPath();
-        starCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        var rgb = s.color === '#FFD700' ? '255,215,0' : '201,160,220';
-        starCtx.fillStyle = 'rgba(' + rgb + ', ' + (s.alpha * 0.6) + ')';
-        starCtx.fill();
-    });
-    requestAnimationFrame(drawStars);
-}
-drawStars();
-
-// ===== NAVIGATION =====
-function goToScan() {
-    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-    document.getElementById('scan-page').classList.add('active');
-    updatePointsDisplay();
-    if (capturedImage || currentStream) {
-        document.getElementById('analyze-btn').style.display = 'inline-flex';
-        document.getElementById('analyze-vip-btn').style.display = 'inline-flex';
-    }
-}
-
-function goToSplash() {
-    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-    document.getElementById('splash-page').classList.add('active');
-    stopCamera();
-    resetScan();
-}
-
-// ===== USER PREFERENCES =====
-var userGender = 'male';
-var userZodiac = 'Κριός';
-var userBirthdate = '';
-var userTopic = 'Έρωτας & Σχέσεις';
-
-function setGender(gender) {
-    userGender = gender;
-    document.getElementById('maleBtn').classList.toggle('active', gender === 'male');
-    document.getElementById('femaleBtn').classList.toggle('active', gender === 'female');
-}
-
-function setBirthdate(date) {
-    userBirthdate = date;
-    if (date) {
-        var dt = new Date(date);
-        var day = dt.getDate();
-        var m = dt.getMonth() + 1;
-        if ((m===3&&day>=21)||(m===4&&day<=19)) userZodiac='Κριός';
-        else if ((m===4&&day>=20)||(m===5&&day<=20)) userZodiac='Ταύρος';
-        else if ((m===5&&day>=21)||(m===6&&day<=20)) userZodiac='Δίδυμοι';
-        else if ((m===6&&day>=21)||(m===7&&day<=22)) userZodiac='Καρκίνος';
-        else if ((m===7&&day>=23)||(m===8&&day<=22)) userZodiac='Λέων';
-        else if ((m===8&&day>=23)||(m===9&&day<=22)) userZodiac='Παρθένος';
-        else if ((m===9&&day>=23)||(m===10&&day<=22)) userZodiac='Ζυγός';
-        else if ((m===10&&day>=23)||(m===11&&day<=21)) userZodiac='Σκορπιός';
-        else if ((m===11&&day>=22)||(m===12&&day<=21)) userZodiac='Τοξότης';
-        else if ((m===12&&day>=22)||(m===1&&day<=19)) userZodiac='Αιγόκερως';
-        else if ((m===1&&day>=20)||(m===2&&day<=18)) userZodiac='Υδροχόος';
-        else userZodiac='Ιχθείς';
-    }
-}
-
-function selectTopic(topic) { userTopic = topic; }
-
-// ===== CAMERA =====
-var video = document.getElementById('webcam');
-var currentStream = null;
-var capturedImage = null;
-var isAnalyzing = false;
-var cameraActive = false;
-var currentFacingMode = 'user';
-
-async function startCamera() {
-    try {
-        if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); }
-        currentStream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: currentFacingMode, width: { ideal: 640 }, height: { ideal: 480 } }
-        });
-        video.srcObject = currentStream;
-        cameraActive = true;
-        document.getElementById('analyze-btn').style.display = 'inline-flex';
-        document.getElementById('analyze-vip-btn').style.display = 'inline-flex';
-        document.getElementById('selfie-btn').style.display = 'inline-flex';
-        document.getElementById('back-btn').style.display = 'inline-flex';
-        document.getElementById('camera-btn').innerText = '📸 Φωτογραφία';
-        updateCameraToggleButtons();
-    } catch (err) {
-        alert('Δεν μπόρεσα να ανοίξω την κάμερα. Δοκίμασε το Upload.');
-    }
-}
-
-function toggleCamera() {
-    if (cameraActive) {
-        capturePhotoFromCamera();
-        stopCamera();
-        document.getElementById('camera-btn').innerText = '📷 Έναρξη';
+function updatePointsUI() {
+    var pts = getUserPoints();
+    document.getElementById('user-points-display').innerText = pts;
+    document.getElementById('vip-points').innerText = pts;
+    
+    var vipBtn = document.getElementById('analyze-vip-btn');
+    if (pts >= 5) {
+        vipBtn.disabled = false;
+        vipBtn.style.boxShadow = '0 0 15px rgba(230, 126, 34, 0.4)';
     } else {
-        startCamera();
+        vipBtn.disabled = true;
+        vipBtn.style.boxShadow = 'none';
     }
 }
 
-async function switchCamera(facingMode) {
-    if (currentFacingMode === facingMode) return;
-    currentFacingMode = facingMode;
-    if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); currentStream = null; }
-    cameraActive = false;
-    startCamera();
-}
+// ===== CAMERA & LIVE PREVIEW MANAGEMENT =====
+let localStream = null;
+let currentFacingMode = 'user'; // 'user' (μπροστινή) ή 'environment' (πίσω)
+let uploadedImageBase64 = null;
 
-function updateCameraToggleButtons() {
-    document.getElementById('selfie-btn').classList.toggle('active', currentFacingMode === 'user');
-    document.getElementById('back-btn').classList.toggle('active', currentFacingMode === 'environment');
+async function initCamera() {
+    uploadedImageBase64 = null; // Καθαρισμός προηγούμενου upload
+    var constraint = currentFacingMode === 'user' ? { facingMode: 'user' } : { facingMode: { exact: 'environment' } };
+    
+    // Εμφάνιση κατάλληλων κουμπιών ελέγχου
+    document.getElementById('start-camera-btn').style.display = 'none';
+    document.getElementById('switch-camera-btn').style.display = 'block';
+    
+    try {
+        localStream = await navigator.mediaDevices.getUserMedia({
+            video: constraint,
+            audio: false
+        });
+        
+        // ΣΥΝΔΕΣΗ STREAM ΜΕ ΤΟ LIVE PREVIEW VIDEO
+        var videoPreview = document.getElementById('camera-preview');
+        if (videoPreview) {
+            videoPreview.srcObject = localStream;
+            // Mirror εφέ μόνο στην μπροστινή κάμερα
+            videoPreview.style.transform = currentFacingMode === 'user' ? 'scaleX(-1)' : 'none';
+        }
+        
+        document.getElementById('scan-line').style.display = 'block';
+        updateActionButtonsVisibility();
+        console.log("✅ Κάμερα αρχικοποιήθηκε με Live Preview");
+    } catch (e) {
+        console.warn('⚠️ Αποτυχία με συγκεκριμένο facingMode, δοκιμή γενικού constraint...', e);
+        try {
+            localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+            var videoPreview = document.getElementById('camera-preview');
+            if (videoPreview) {
+                videoPreview.srcObject = localStream;
+                videoPreview.style.transform = 'scaleX(-1)';
+            }
+            document.getElementById('scan-line').style.display = 'block';
+            updateActionButtonsVisibility();
+        } catch (err) {
+            alert('Δεν ήταν δυνατή η πρόσβαση στην κάμερα. Παρακαλώ δώστε δικαιώματα ή κάντε Upload φωτογραφίας.');
+            console.error('❌ Καθολικό σφάλμα κάμερας:', err);
+            // Επαναφορά κουμπιού κάμερας
+            document.getElementById('start-camera-btn').style.display = 'block';
+            document.getElementById('switch-camera-btn').style.display = 'none';
+        }
+    }
 }
 
 function stopCamera() {
-    if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); currentStream = null; }
-    cameraActive = false;
-    document.getElementById('selfie-btn').style.display = 'none';
-    document.getElementById('back-btn').style.display = 'none';
-    document.getElementById('camera-btn').innerText = '📷 Έναρξη';
-}
-
-function capturePhotoFromCamera() {
-    if (!currentStream) return;
-    var canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth || 640;
-    canvas.height = video.videoHeight || 480;
-    var ctx = canvas.getContext('2d');
-    if (currentFacingMode === 'user') {
-        ctx.save(); ctx.scale(-1, 1);
-        ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
-        ctx.restore();
-    } else {
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+        localStream = null;
     }
-    capturedImage = canvas.toDataURL('image/jpeg', 0.8);
-    document.getElementById('upload-preview-img').src = capturedImage;
-    document.getElementById('upload-preview-area').style.display = 'block';
+    var videoPreview = document.getElementById('camera-preview');
+    if (videoPreview) {
+        videoPreview.srcObject = null;
+    }
+    document.getElementById('scan-line').style.display = 'none';
 }
 
-function handleUpload(event) {
+function switchCamera() {
+    currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
+    stopCamera();
+    initCamera();
+}
+
+function updateActionButtonsVisibility() {
+    var hasSource = (localStream !== null || uploadedImageBase64 !== null);
+    var analyzeBtn = document.getElementById('analyze-btn');
+    var vipBtn = document.getElementById('analyze-vip-btn');
+    
+    if (hasSource) {
+        analyzeBtn.style.display = 'inline-flex';
+        vipBtn.style.display = 'inline-flex';
+    } else {
+        analyzeBtn.style.display = 'none';
+        vipBtn.style.display = 'none';
+    }
+}
+
+function handleFileUpload(event) {
     var file = event.target.files[0];
     if (!file) return;
+    
+    stopCamera(); // Αν η κάμερα ήταν ανοιχτή, την κλείνουμε
+    document.getElementById('start-camera-btn').style.display = 'block';
+    document.getElementById('switch-camera-btn').style.display = 'none';
+    
     var reader = new FileReader();
     reader.onload = function(e) {
-        capturedImage = e.target.result;
-        document.getElementById('upload-preview-img').src = capturedImage;
-        document.getElementById('upload-preview-area').style.display = 'block';
-        document.getElementById('analyze-btn').style.display = 'inline-flex';
-        document.getElementById('analyze-vip-btn').style.display = 'inline-flex';
+        uploadedImageBase64 = e.target.result;
+        
+        // Προβολή της στατικής εικόνας του χρήστη στο στρογγυλό πλαίσιο
+        var videoPreview = document.getElementById('camera-preview');
+        if (videoPreview) {
+            videoPreview.srcObject = null;
+            videoPreview.style.transform = 'none';
+            // Χρησιμοποιούμε το poster ή inline CSS φόντο για την προβολή
+            videoPreview.style.background = `url('${uploadedImageBase64}') center center / cover no-repeat`;
+        }
+        
+        updateActionButtonsVisibility();
+        console.log("✅ Φωτογραφία μετακινήθηκε επιτυχώς μέσω Upload");
     };
     reader.readAsDataURL(file);
 }
 
-// ===== API & ANALYSIS =====
-var API_URL = 'https://franklymadear-lifeline.hf.space/analyze';
+// ΤΡΑΒΑΕΙ ΦΩΤΟΓΡΑΦΙΑ ΤΟ LIVE FRAME ΤΟΥ VIDEO
+function captureImage() {
+    if (uploadedImageBase64) return uploadedImageBase64; // Αν έγινε upload, στέλνουμε αυτήν
+    
+    var video = document.getElementById('camera-preview');
+    var canvas = document.getElementById('camera-canvas');
+    if (!video || !canvas || !localStream) return null;
+    
+    var ctx = canvas.getContext('2d');
+    canvas.width = video.videoWidth || 640;
+    canvas.height = video.videoHeight || 480;
+    
+    // Σχεδίαση του τρέχοντος frame του βίντεο στο canvas
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+    // Αν είναι η μπροστινή κάμερα, κάνουμε flip οριζόντια για να μην βγει ανάποδα στο backend
+    if (currentFacingMode === 'user') {
+        ctx.save();
+        ctx.scale(-1, 1);
+        ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+        ctx.restore();
+    }
+    
+    return canvas.toDataURL('image/jpeg', 0.85);
+}
 
-async function performAnalysis() {
-    if (isAnalyzing) return;
-    if (!capturedImage) { alert('Παρακαλώ τράβηξε ή ανέβασε φωτογραφία.'); return; }
-    isAnalyzing = true;
-    document.getElementById('loading-box').style.display = 'block';
-    document.getElementById('analyze-btn').style.display = 'none';
-    document.getElementById('analyze-vip-btn').style.display = 'none';
-    try {
-        var response = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                image: capturedImage,
-                gender: userGender,
-                zodiac: userZodiac,
-                birthdate: userBirthdate,
-                topic: userTopic,
-                user_id: getCurrentUserId()
-            })
-        });
-        var data = await response.json();
-        if (data.success && data.reading) {
-            document.getElementById('result-popup-text').innerHTML = data.reading
-                .replace(/## (.*?)\n/g, '<h2>$1</h2>')
-                .replace(/### (.*?)\n/g, '<h3>$1</h3>')
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\n/g, '<br>');
-            document.getElementById('result-popup-overlay').classList.add('active');
-            addStarsToPopup();
-            rewardReferrerIfFirstAnalysis();
-        } else {
-            alert('Η Aziram συνάντησε εμπόδιο. Δοκίμασε ξανά.');
+// ===== ANALYSIS FLOW & FLOW LOGIC =====
+async function startAnalysisFlow(isVip) {
+    var image = captureImage();
+    if (!image) {
+        alert('Παρακαλώ ανοίξτε την κάμερα ή κάντε upload μια φωτογραφία της παλάμης σας πρώτα!');
+        return;
+    }
+    
+    if (isVip) {
+        if (getUserPoints() < 5) {
+            alert('Δεν έχετε αρκετούς πόντους για VIP ανάλυση!');
+            return;
         }
-    } catch (error) {
-        alert('Σφάλμα σύνδεσης.');
-    } finally {
-        document.getElementById('loading-box').style.display = 'none';
-        document.getElementById('analyze-btn').style.display = 'inline-flex';
-        document.getElementById('analyze-vip-btn').style.display = 'inline-flex';
-        updatePointsDisplay();
-        isAnalyzing = false;
+        // Εκτέλεση VIP
+        executeAnalysis(image, true);
+    } else {
+        // Εκτέλεση με Διαφήμιση Adsgram
+        document.getElementById('loading-box').style.display = 'flex';
+        showRewardedAd()
+            .then(() => {
+                // Επιτυχής ολοκλήρωση διαφήμισης
+                updateUserPoints(2); // Επιβράβευση +2 πόντους επειδή είδε τη διαφήμιση
+                executeAnalysis(image, false);
+            })
+            .catch((err) => {
+                document.getElementById('loading-box').style.display = 'none';
+                if (err !== 'not_ready') {
+                    alert('Πρέπει να παρακολουθήσετε τη διαφήμιση για να λάβετε τη δωρεάν ανάλυση.');
+                }
+            });
     }
 }
 
-function addStarsToPopup() {
-    var popup = document.getElementById('result-popup');
-    popup.querySelectorAll('.popup-star').forEach(function(s) { s.remove(); });
-    var emojis = ['✨', '⭐', '💫', '🌟', '🔮', '💖', '🌙'];
-    for (var i = 0; i < 15; i++) {
-        var star = document.createElement('span');
-        star.className = 'popup-star';
-        star.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        star.style.left = Math.random() * 85 + '%';
-        star.style.top = Math.random() * 85 + '%';
-        star.style.animationDelay = Math.random() * 3 + 's';
-        popup.appendChild(star);
+async function executeAnalysis(imageBase64, isVip) {
+    document.getElementById('loading-box').style.display = 'flex';
+    
+    var gender = document.getElementById('gender-select').value;
+    var zodiac = document.getElementById('zodiac-select').value;
+    var topic = document.getElementById('topic-select').value;
+    var userId = getCurrentUserId();
+    
+    // Προετοιμασία Payload για το backend app.py
+    var payload = {
+        image: imageBase64,
+        user_id: userId,
+        gender: gender,
+        zodiac: zodiac,
+        topic: topic,
+        is_vip: isVip
+    };
+    
+    try {
+        // Κλήση στο backend Flask Hugging Face Space
+        var response = await fetch('https://franklymadear-lifeline.hf.space/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        
+        var data = await response.json();
+        document.getElementById('loading-box').style.display = 'none';
+        
+        if (data.success && data.reading) {
+            if (isVip) {
+                updateUserPoints(-5); // Αφαίρεση πόντων μόνο μετά από επιτυχία
+            }
+            
+            // Εμφάνιση Αποτελέσματος
+            showResultPopup(data.reading);
+            rewardReferrerIfFirstAnalysis();
+        } else {
+            alert('Σφάλμα κατά την ανάλυση: ' + (data.error || 'Άγνωστο σφάλμα'));
+        }
+    } catch (error) {
+        document.getElementById('loading-box').style.display = 'none';
+        console.error('Analysis API Error:', error);
+        alert('Αποτυχία σύνδεσης με τον διακομιστή της Aziram. Δοκιμάστε ξανά.');
     }
+}
+
+function showResultPopup(markdownText) {
+    var htmlContent = markdownText
+        .replace(/## (.*?)(?:\n|$)/g, '<h2>$1</h2>')
+        .replace(/### (.*?)(?:\n|$)/g, '<h3>$1</h3>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br>');
+        
+    document.getElementById('result-popup-text').innerHTML = htmlContent;
+    document.getElementById('result-popup-overlay').style.display = 'flex';
 }
 
 function closeResultPopup() {
-    document.getElementById('result-popup-overlay').classList.remove('active');
-    document.querySelectorAll('.popup-star').forEach(function(s) { s.remove(); });
-    resetScan();
+    document.getElementById('result-popup-overlay').style.display = 'none';
+    // Καθαρισμός και επαναφορά
+    uploadedImageBase64 = null;
+    var videoPreview = document.getElementById('camera-preview');
+    if (videoPreview) videoPreview.style.background = 'none';
+    stopCamera();
+    document.getElementById('start-camera-btn').style.display = 'block';
+    document.getElementById('switch-camera-btn').style.display = 'none';
+    updateActionButtonsVisibility();
 }
 
-function resetScan() {
-    document.getElementById('loading-box').style.display = 'none';
-    document.getElementById('analyze-btn').style.display = 'none';
-    document.getElementById('analyze-vip-btn').style.display = 'none';
-    document.getElementById('upload-preview-area').style.display = 'none';
-    document.getElementById('camera-btn').innerText = '📷 Έναρξη';
-    capturedImage = null;
-    isAnalyzing = false;
+// ===== NAVIGATION =====
+function navigateToScanPage() {
+    document.getElementById('splash-page').classList.add('hidden');
+    document.getElementById('scan-page').classList.remove('hidden');
 }
 
-// ===== POINTS SYSTEM =====
-const POINTS_KEY = 'lifeline_user_points';
-const VIP_COST = 5;
+// ===== MULTILANGUAGE TRANSLATION SYSTEM =====
+let currentLang = 'el';
+const originalTexts = new Map();
 
-function getUserPoints() { return parseInt(localStorage.getItem(POINTS_KEY) || '0', 10); }
-function addPoints(amount) { localStorage.setItem(POINTS_KEY, (getUserPoints() + amount).toString()); updatePointsDisplay(); }
-function spendPoints(amount) { var c = getUserPoints(); if (c >= amount) { localStorage.setItem(POINTS_KEY, (c - amount).toString()); updatePointsDisplay(); return true; } return false; }
-
-function updatePointsDisplay() {
-    var display = document.getElementById('points-display');
-    var pts = getUserPoints();
-    if (display) display.textContent = pts;
-    var vipBtn = document.getElementById('analyze-vip-btn');
-    if (vipBtn) {
-        var vipCostEl = document.getElementById('vip-cost');
-        var vipPointsEl = document.getElementById('vip-points');
-        if (vipCostEl) vipCostEl.textContent = VIP_COST;
-        if (vipPointsEl) vipPointsEl.textContent = pts;
-        vipBtn.disabled = pts < VIP_COST;
-        vipBtn.style.opacity = pts < VIP_COST ? '0.5' : '1';
-    }
+function saveOriginalTexts() {
+    const elements = document.querySelectorAll('[data-translate="true"]');
+    elements.forEach((el, index) => {
+        if (!el.getAttribute('data-text-id')) {
+            const id = 'text_' + index + '_' + el.innerText.substring(0, 10).replace(/[^a-zA-Z0-9]/g, '');
+            el.setAttribute('data-text-id', id);
+            originalTexts.set(id, el.innerHTML);
+        } else {
+            // Αν υπάρχει ήδη ID, ανανεώνουμε το περιεχόμενο (χρήσιμο για Terms)
+            originalTexts.set(el.getAttribute('data-text-id'), el.innerHTML);
+        }
+    });
 }
 
-function earnPoints() {
-    showRewardedAd()
-        .then(function(result) { if (result.done) { addPoints(10); alert('🎉 Κέρδισες 10 πόντους!'); } })
-        .catch(function(err) { alert('Δεν ήταν δυνατή η προβολή διαφήμισης.'); });
+function restoreOriginalTexts() {
+    const elements = document.querySelectorAll('[data-translate="true"]');
+    elements.forEach(el => {
+        const id = el.getAttribute('data-text-id');
+        if (originalTexts.has(id)) {
+            el.innerHTML = originalTexts.get(id);
+        }
+    });
 }
 
-function startAnalysisFlow(isVip) {
-    if (isVip) {
-        if (spendPoints(VIP_COST)) { performAnalysis(); }
-        else { alert('Δεν έχεις αρκετούς πόντους. Χρειάζεσαι ' + VIP_COST + '.'); }
+async function translatePage(targetLang) {
+    if (targetLang === 'el') {
+        restoreOriginalTexts();
         return;
     }
-    if (!capturedImage) { alert('Παρακαλώ τράβηξε ή ανέβασε φωτογραφία.'); return; }
-    showRewardedAd()
-        .then(function(result) { if (result.done) addPoints(2); performAnalysis(); })
-        .catch(function(err) { performAnalysis(); });
-}
-
-// ===== REFERRAL SYSTEM =====
-const OFFICIAL_BOT_USERNAME = 'lifeline2026_bot';
-const REFERRAL_REWARD = 20;
-const MAX_INVITES = 10;
-
-function detectReferral() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var startParam = urlParams.get('start');
-    if (startParam) {
-        localStorage.setItem('lifeline_referrer', startParam);
+    
+    const elements = Array.from(document.querySelectorAll('[data-translate="true"]'));
+    if (elements.length === 0) return;
+    
+    // Ομαδοποίηση ανά 10 στοιχεία για αποφυγή μεγάλων URLs στο Google API
+    const batchSize = 10;
+    for (let i = 0; i < elements.length; i += batchSize) {
+        const batch = elements.slice(i, i + batchSize);
+        const promises = batch.map(async (el) => {
+            const id = el.getAttribute('data-text-id');
+            const sourceText = originalTexts.get(id) || el.innerHTML;
+            
+            // Παράκαμψη αν είναι κενό ή περιέχει μόνο tags
+            if (!sourceText.trim() || sourceText.startsWith('<div class="loading')) return;
+            
+            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=el&tl=${targetLang}&dt=t&q=${encodeURIComponent(sourceText)}`;
+            
+            try {
+                const res = await fetch(url);
+                const json = await res.json();
+                if (json && json[0]) {
+                    let translatedText = json[0].map(item => item[0]).join('');
+                    el.innerHTML = translatedText;
+                }
+            } catch (err) {
+                console.error('Translation error for element:', err);
+            }
+        });
+        await Promise.all(promises);
     }
 }
 
-function getCurrentUserId() {
-    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
-        return window.Telegram.WebApp.initDataUnsafe.user.id.toString();
-    }
-    var testId = localStorage.getItem('lifeline_test_user_id');
-    if (!testId) {
-        testId = 'test_' + Date.now();
-        localStorage.setItem('lifeline_test_user_id', testId);
-    }
-    return testId;
+function changeLanguage(lang) {
+    currentLang = lang;
+    translatePage(lang);
 }
 
+// ===== REFERRALS & SHARING =====
 function getReferralLink() {
-    return 'https://t.me/' + OFFICIAL_BOT_USERNAME + '?start=' + getCurrentUserId();
-}
-
-function createInviteModal() {
-    var existing = document.getElementById('invite-modal');
-    if (existing) existing.remove();
-
-    var referralLink = getReferralLink();
-    var invites = parseInt(localStorage.getItem('lifeline_invites_count') || '0');
-    var maxInvites = MAX_INVITES;
-
-    var modalHTML = `
-        <div id="invite-modal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;display:flex;align-items:center;justify-content:center;">
-            <div style="background:linear-gradient(145deg,#1a0e2a,#2a1a3a);border:2px solid #FFD700;border-radius:20px;padding:25px;max-width:450px;width:90%;text-align:center;">
-                <button onclick="closeInviteModal()" style="float:right;background:rgba(255,215,0,0.2);border:none;color:#FFD700;font-size:1.2rem;cursor:pointer;border-radius:50%;width:30px;height:30px;">✕</button>
-                <div style="font-size:3rem;margin-bottom:10px;">🎁</div>
-                <h2 style="color:#FFD700;">Κάλεσε Φίλους & Κέρδισε!</h2>
-                <p style="color:#d5c8e8;margin:15px 0;">Κέρδισε <strong style="color:#FFD700;">20 πόντους</strong> για κάθε φίλο που κάνει την πρώτη του ανάλυση χειρομαντείας!</p>
-                <p style="background:rgba(255,215,0,0.2);padding:8px 15px;border-radius:20px;display:inline-block;">👥 ${invites}/${maxInvites} επιτυχημένες προσκλήσεις</p>
-                <div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:15px;margin:15px 0;word-break:break-all;">
-                    <p style="color:#FFD700;font-size:0.85rem;">Το link σου:</p>
-                    <code style="color:#b9a6d4;font-size:0.8rem;">${referralLink}</code>
-                    <button onclick="copyReferralLink()" style="margin-top:10px;width:100%;padding:10px;background:linear-gradient(145deg,#FFD700,#B8860B);border:none;border-radius:30px;font-weight:bold;cursor:pointer;">📋 Αντιγραφή Link</button>
-                </div>
-                <button onclick="shareViaTelegram()" style="width:100%;margin-top:10px;padding:12px;background:linear-gradient(145deg,#9b59b6,#6a0dad);border:none;border-radius:30px;color:#fff;font-weight:bold;cursor:pointer;">📤 Μοιράσου στο Telegram</button>
-                <button onclick="shareViaWhatsApp()" style="width:100%;margin-top:10px;padding:12px;background:linear-gradient(145deg,#FFD700,#B8860B);border:none;border-radius:30px;font-weight:bold;cursor:pointer;">💬 Μοιράσου στο WhatsApp</button>
-                <p style="color:#b9a6d4;font-size:0.8rem;margin-top:15px;">ℹ️ Οι πόντοι αποδίδονται μετά την πρώτη ανάλυση του φίλου σου.</p>
-            </div>
-        </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-}
-
-function showInviteModal() { createInviteModal(); }
-function closeInviteModal() { var m = document.getElementById('invite-modal'); if (m) m.remove(); }
-
-function copyReferralLink() {
-    var link = getReferralLink();
-    navigator.clipboard.writeText(link).then(function() { alert('✅ Αντιγράφηκε!'); });
+    var uid = getCurrentUserId();
+    return 'https://t.me/lifeline2026_bot?start=ref_' + uid;
 }
 
 function shareViaTelegram() {
@@ -626,16 +483,23 @@ async function rewardReferrerIfFirstAnalysis() {
 function addInviteButton() {
     var bar = document.getElementById('rewards-bar');
     if (!bar || document.getElementById('invite-friends-btn')) return;
+    
     var btn = document.createElement('button');
     btn.id = 'invite-friends-btn';
-    btn.className = 'btn btn-purple btn-uniform';
-    btn.style.marginLeft = '8px';
-    btn.textContent = '👥 Κάλεσε Φίλους';
-    btn.onclick = showInviteModal;
+    btn.className = 'btn btn-purple';
+    btn.style.padding = '4px 8px';
+    btn.style.fontSize = '11px';
+    btn.style.width = 'auto';
+    btn.style.borderRadius = '8px';
+    btn.innerText = '➕ Πρόσκληση';
+    btn.onclick = shareViaTelegram;
     bar.appendChild(btn);
 }
 
-// ===== INITIALIZE =====
-updatePointsDisplay();
-addInviteButton();
-detectReferral();
+// ===== INITIALIZATION ON LOAD =====
+window.addEventListener('DOMContentLoaded', () => {
+    checkConsent();
+    saveOriginalTexts();
+    updatePointsUI();
+    addInviteButton();
+});
