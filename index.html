@@ -336,7 +336,7 @@
             </select>
         </div>
         <div id="rewards-bar">
-            <div class="points-badge">🪙 <span id="points-display">0</span> Πόντοι</div>
+            <div class="points-badge">🪙 <span id="points-display">0</span> <span id="points-label" data-translate="true">Πόντοι</span></div>
             <button id="earn-points-btn" class="btn btn-purple btn-uniform" onclick="earnPoints()" data-translate="true">🎁 Κέρδισε Πόντους</button>
         </div>
 
@@ -349,7 +349,7 @@
             <video id="webcam" playsinline autoplay></video>
             <div class="scan-frame"></div>
             <div class="scan-line"></div>
-            <!-- Νέο overlay οδηγός παλάμης -->
+            <!-- Νέο overlay οδηγός παλάμης με αντίστροφη μέτρηση -->
             <div id="palm-guide-overlay" class="palm-guide-hidden">
                 <div class="palm-guide-content">
                     <span class="palm-guide-icon">🖐️</span>
@@ -366,7 +366,6 @@
         </div>
         <div class="controls-row" id="controls-row">
             <button class="btn btn-gold btn-uniform" id="camera-btn" onclick="toggleCamera()" data-translate="true">📷 Άνοιγμα Κάμερας</button>
-            <button class="btn btn-purple btn-uniform" id="capture-btn" onclick="capturePhotoFromCamera()" style="display:none;" data-translate="true">📸 Λήψη Φωτογραφίας</button>
             <button class="btn btn-purple btn-uniform" onclick="document.getElementById('file-input').click()" data-translate="true">📁 Upload</button>
             <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUpload(event)">
             <button class="camera-toggle-btn btn-uniform active" id="selfie-btn" onclick="switchCamera('user')">🤳 <span data-translate="true">Selfie</span></button>
