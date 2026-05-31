@@ -45,36 +45,46 @@ function acceptConsent() {
 // ===== TERMS & PRIVACY ΔΟΜΗ (ΤΑ ΔΙΚΑ ΣΟΥ ΑΥΘΕΝΤΙΚΑ ΚΕΙΜΕΝΑ) =====
 const TERMS_STRUCTURE = {
     terms: {
-        title: 'Όροι Χρήσης & Προϋποθέσεις',
-        content: `Καλώς ήρθατε στο LiFe LiNe! Χρησιμοποιώντας την εφαρμογή μας, αποδέχεστε πλήρως τους παρακάτω όρους:\n\n1. Η εφαρμογή παρέχει αναλύσεις χειρομαντείας και αστρολογίας με τη χρήση Τεχνητής Νοημοσύνης (AI) αποκλειστικά και μόνο για σκοπούς ψυχαγωγίας. Καμία πληροφορία ή πρόβλεψη δεν πρέπει να εκλαμβάνεται ως ιατρική, νομική, οικονομική ή επαγγελματική συμβουλή.\n\n2. Δεν φέρουμε καμία ευθύνη για τυχόν αποφάσεις ή πράξεις που βασίζονται στα αποτελέσματα των αναλύσεων της εφαρμογής.\n\n3. Η χρήση της εφαρμογής επιτρέπεται μόνο σε άτομα άνω των 18 ετών ή με τη συγκατάθεση κηδεμόνα.\n\n4. Διατηρούμε το δικαίωμα να τροποποιήσουμε τους όρους ή να διακόψουμε τη λειτουργία της εφαρμογής ανά πάσα στιγμή χωρίς προειδοποίηση.`
+        title: '📜 Όροι Χρήσης LiFe LiNe',
+        sections: [
+            { heading: '1. Όριο Ηλικίας (Αυστηρά 18+)', body: 'Η χρήση της εφαρμογής <strong>LiFe LiNe</strong> επιτρέπεται αποκλειστικά και μόνο σε άτομα που έχουν συμπληρώσει το 18ο έτος της ηλικίας τους (ενήλικες). Με την αποδοχή των όρων και την επιλογή του σχετικού πλαισίου, ο χρήστης δηλώνει υπεύθυνα ότι είναι ενήλικος. Οι διαχειριστές του LiFe LiNe δεν φέρουν καμία ευθύνη για ψευδείς δηλώσεις ηλικίας από πλευράς των επισκεπτών.' },
+            { heading: '2. Ψυχαγωγικός Χαρακτήρας', body: 'Το LiFe LiNe είναι μια ψηφιακή εφαρμογή που χρησιμοποιεί αλγόριθμους τεχνητής νοημοσύνης (AI) για να αναλύει τα χαρακτηριστικά του χεριού του χρήστη (γραμμές, σχήματα) μέσω σάρωσης και να παράγει κείμενα βασισμένα σε ένα παραδοσιακό λεξικό συμβόλων. Η υπηρεσία παρέχεται αποκλειστικά και μόνο για σκοπούς χιούμορ, διασκέδασης και ψυχαγωγίας. Τα αποτελέσματα της ανάλυσης <strong>δεν αποτελούν σε καμία περίπτωση</strong> πραγματικές, επιστημονικές, ιατρικές, ψυχολογικές, νομικές ή χρηματοοικονομικές προβλέψεις και συμβουλές.' },
+            { heading: '3. Περιορισμός Ευθύνης', body: 'Ο χρήστης συμφωνεί ότι χρησιμοποιεί την εφαρμογή με δική του αποκλειστική ευθύνη. Οι δημιουργοί, οι ιδιοκτήτες και οι συνεργάτες του LiFe LiNe δεν φέρουν καμία απολύτως αστική ή ποινική ευθύνη για οποιαδήποτε πράξη, απόφαση, απώλεια, ζημία (άμεση ή έμμεση) ή ψυχική αναστάτωση προκύψει από την ανάγνωση, την παρερμηνεία ή την εφαρμογή των χιουμοριστικών αποτελεσμάτων της χειρομαντείας στην πραγματική ζωή.' },
+            { heading: '4. Πνευματική Ιδιοκτησία', body: 'Όλο το περιεχόμενο του ιστοτόπου (συμπεριλαμβανομένων των κειμένων, του λογότυπου, των γραφικών, των κωδίκων της εφαρμογής και του λεξικού συμβόλων) αποτελεί πνευματική ιδιοκτησία του LiFe LiNe και προστατεύεται από τις σχετικές διατάξεις του ελληνικού και ευρωπαϊκού δικαίου.' }
+        ],
+        footer: '📧 <strong>info.franklydear@gmail.com</strong>'
     },
     privacy: {
-        title: 'Πολιτική Απορρήτου & Προστασία Δεδομένων',
-        content: `Στο LiFe LiNe σεβόμαστε απόλυτα την ιδιωτικότητά σας:\n\n1. Χρήση Κάμερας & Εικόνων: Η εφαρμογή ζητά πρόσβαση στην κάμερά σας αποκλειστικά για τη λήψη φωτογραφίας της παλάμης σας. Η επεξεργασία της εικόνας γίνεται σε πραγματικό χρόνο. Η φωτογραφία αποστέλλεται με ασφάλεια στο API μας και ΔΕΝ αποθηκεύεται μόνιμα στους διακομιστές μας. Διαγράφεται αμέσως μετά την έκδοση της πρόβλεψης.\n\n2. Συλλογή Δεδομένων: Δεν συλλέγουμε προσωπικά στοιχεία όπως ονοματεπώνυμο ή email. Αποθηκεύουμε το Telegram User ID σας αποκλειστικά για τη διαχείριση και την ασφάλεια των πόντων VIP και των referrals.\n\n3. Cookies & Τοπική Αποθήκευση: Χρησιμοποιούμε το LocalStorage της συσκευής σας για να θυμόμαστε τις ρυθμίσεις σας και το υπόλοιπο των πόντων σας.\n\n4. Κοινοποίηση Δεδομένων: Δεν πουλάμε ούτε μοιραζόμαστε τα δεδομένα σας με τρίτες διαφημιστικές εταιρείες.`
+        title: '🔒 Πολιτική Απορρήτου LiFe LiNe',
+        sections: [
+            { heading: '1. Πώς Διαχειριζόμαστε τα Δεδομένα της Σάρωσης του Χεριού σας', body: '<strong>Δεν Αποθηκεύουμε τις Σαρώσεις:</strong> Όταν σκανάρετε το χέρι σας, η εικόνα μετατρέπεται σε προσωρινή μορφή κώδικα (Base64) στη συσκευή σας και στέλνεται στον server μας αποκλειστικά και μόνο για να μεταφερθεί στο Gemini API της Google για την οπτική ανάλυση. <strong>Καμία Μόνιμη Αποθήκευση:</strong> Οι σαρώσεις του χεριού σας ΔΕΝ αποθηκεύονται σε καμία βάση δεδομένων, ΔΕΝ κρατούνται στον server μας και διαγράφονται οριστικά από τη μνήμη αμέσως μόλις ολοκληρωθεί η ανάλυση.' },
+            { heading: '2. Δεδομένα που Συλλέγουμε Αυτόματα (Cookies & Διαφημίσεις)', body: '• <strong>Cookies:</strong> Χρησιμοποιούμε cookies για να θυμόμαστε τις προτιμήσεις σας και για να αναλύουμε την επισκεψιμότητα (μέσω Google Analytics). • <strong>Διαφημίσεις Τρίτων (AdSense / Monetag):</strong> Οι διαφημιστές ενδέχεται να χρησιμοποιούν cookies για να προβάλλουν διαφημίσεις που σχετίζονται με τα ενδιαφέροντά σας. • <strong>Τοπική Αποθήκευση (Local Storage):</strong> Η εφαρμογή χρησιμοποιεί τοπική μνήμη στη συσκευή σας για να μετράει τις ημερήσιες προσπάθειές σας.' },
+            { heading: '3. Δικαιώματα των Χρηστών (GDPR)', body: 'Σύμφωνα με τον ευρωπαϊκό νόμο, έχετε τα εξής δικαιώματα: • Το δικαίωμα να γνωρίζετε ποια δεδομένα σας επεξεργαζόμαστε. • Το δικαίωμα να διαγράψετε τα cookies και το ιστορικό του LiFe LiNe από τον browser σας ανά πάσα στιγμή.' },
+            { heading: '4. Αλλαγές στους Όρους και την Πολιτική Απορρήτου', body: 'Το LiFe LiNe διατηρεί το δικαίωμα να αλλάξει ή να επικαιροποιήσει αυτούς τους όρους και την πολιτική απορρήτου οποιαδήποτε στιγμή, προκειμένου να συμμορφώνεται με νέους νόμους ή τεχνικές αναβαθμίσεις. Οι αλλαγές θα εμφανίζονται σε αυτή τη σελίδα.' }
+        ],
+        footer: '📧 <strong>info.franklydear@gmail.com</strong>'
     }
 };
 
-function showTerms(type) {
-    const data = TERMS_STRUCTURE[type];
-    if (!data) return;
-    
-    const overlay = document.getElementById('terms-modal-overlay');
-    const container = document.getElementById('terms-modal');
-    
-    container.innerHTML = `
-        <h2 style="margin-bottom:15px; color:var(--gold-glow);" data-translate="true">${data.title}</h2>
-        <p style="margin-bottom:20px; white-space:pre-line; color:#ece5f5; text-align:left; font-size:13px;" data-translate="true">${data.content}</p>
-        <button class="btn btn-purple" onclick="closeTerms()" data-translate="true">Κλείσιμο</button>
-    `;
-    
-    if (typeof saveOriginalTexts === 'function') {
-        saveOriginalTexts();
-    }
+async function showTerms(type) {
+    var modal = document.getElementById('terms-modal');
+    var structure = TERMS_STRUCTURE[type];
+    if (!structure) return;
+
+    var html = `<h2 data-translate="true">${structure.title}</h2>`;
+    structure.sections.forEach(function(sec) {
+        html += `<h3 data-translate="true" style="margin-top:12px;color:var(--purple-gold);">${sec.heading}</h3>`;
+        html += `<p data-translate="true" style="margin-bottom:8px;text-align:left;">${sec.body}</p>`;
+    });
+    html += `<p data-translate="true" style="text-align:center;margin-top:18px;">${structure.footer}</p>`;
+    html += '<button id="close-terms-btn" class="btn btn-purple" onclick="closeTerms()" data-translate="true" style="margin-top:15px;">✕ Κλείσιμο</button>';
+
+    modal.innerHTML = html;
+    document.getElementById('terms-modal-overlay').style.display = 'flex';
+
     if (currentLang !== 'el' && typeof translatePage === 'function') {
         translatePage(currentLang);
     }
-    
-    overlay.style.display = 'flex';
 }
 
 function closeTerms() {
@@ -82,44 +92,61 @@ function closeTerms() {
 }
 
 // ===== TELEGRAM INTEGRATION & POINTS =====
+const POINTS_KEY = 'lifeline_user_points';
+const VIP_COST = 5;
+
 function getCurrentUserId() {
     if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
-        return window.Telegram.WebApp.initDataUnsafe.user.id;
+        return window.Telegram.WebApp.initDataUnsafe.user.id.toString();
     }
-    return 999999;
-}
-
-function getUserPoints() {
-    var uid = getCurrentUserId();
-    var pts = localStorage.getItem('lifeline_pts_' + uid);
-    if (pts === null) {
-        localStorage.setItem('lifeline_pts_' + uid, '15'); // 15 δωρεάν αρχικοί πόντοι βάσει backend
-        return 15;
+    var testId = localStorage.getItem('lifeline_test_user_id');
+    if (!testId) {
+        testId = 'test_' + Date.now();
+        localStorage.setItem('lifeline_test_user_id', testId);
     }
-    return parseInt(pts, 10);
+    return testId;
 }
 
-function updateUserPoints(amount) {
-    var uid = getCurrentUserId();
-    var current = getUserPoints();
-    var updated = Math.max(0, current + amount);
-    localStorage.setItem('lifeline_pts_' + uid, updated.toString());
-    updatePointsUI();
-    return updated;
+function getUserPoints() { 
+    return parseInt(localStorage.getItem(POINTS_KEY) || '15', 10); // 15 δωρεάν αρχικοί πόντοι
 }
 
-function updatePointsUI() {
+function addPoints(amount) { 
+    localStorage.setItem(POINTS_KEY, (getUserPoints() + amount).toString()); 
+    updatePointsDisplay(); 
+}
+
+function spendPoints(amount) { 
+    var c = getUserPoints(); 
+    if (c >= amount) { 
+        localStorage.setItem(POINTS_KEY, (c - amount).toString()); 
+        updatePointsDisplay(); 
+        return true; 
+    } 
+    return false; 
+}
+
+function updatePointsDisplay() {
     var pts = getUserPoints();
-    document.getElementById('user-points-display').innerText = pts;
-    document.getElementById('vip-points').innerText = pts;
+    var display = document.getElementById('user-points-display');
+    if (display) display.textContent = pts;
     
     var vipBtn = document.getElementById('analyze-vip-btn');
-    if (pts >= 5) {
-        vipBtn.disabled = false;
-        vipBtn.style.boxShadow = '0 0 15px rgba(230, 126, 34, 0.4)';
-    } else {
-        vipBtn.disabled = true;
-        vipBtn.style.boxShadow = 'none';
+    if (vipBtn) {
+        var vipCostEl = document.getElementById('vip-cost');
+        var vipPointsEl = document.getElementById('vip-points');
+        if (vipCostEl) vipCostEl.textContent = VIP_COST;
+        if (vipPointsEl) vipPointsEl.textContent = pts;
+        
+        if (pts >= VIP_COST) {
+            vipBtn.disabled = false;
+            vipBtn.style.opacity = '1';
+            vipBtn.style.boxShadow = '0 0 15px rgba(230, 126, 34, 0.4)';
+        } else {
+            vipBtn.disabled = true;
+            vipBtn.style.opacity = '0.5';
+            vipBtn.style.boxShadow = 'none';
+        }
     }
 }
 
@@ -261,16 +288,16 @@ async function startAnalysisFlow(isVip) {
     }
     
     if (isVip) {
-        if (getUserPoints() < 5) {
-            alert('Δεν έχετε αρκετούς πόντους για VIP ανάλυση!');
+        if (getUserPoints() < VIP_COST) {
+            alert('Δεν έχεις αρκετούς πόντους. Χρειάζεσαι ' + VIP_COST + '.');
             return;
         }
         executeAnalysis(image, true);
     } else {
         document.getElementById('loading-box').style.display = 'flex';
         showRewardedAd()
-            .then(() => {
-                updateUserPoints(2); // Κέρδος 2 πόντων από τη διαφήμιση
+            .then((result) => {
+                addPoints(2); // Κέρδος 2 πόντων από τη διαφήμιση
                 executeAnalysis(image, false);
             })
             .catch((err) => {
@@ -284,6 +311,8 @@ async function startAnalysisFlow(isVip) {
 
 async function executeAnalysis(imageBase64, isVip) {
     document.getElementById('loading-box').style.display = 'flex';
+    document.getElementById('analyze-btn').style.display = 'none';
+    document.getElementById('analyze-vip-btn').style.display = 'none';
     
     var gender = document.getElementById('gender-select').value;
     var zodiac = document.getElementById('zodiac-select').value;
@@ -311,17 +340,21 @@ async function executeAnalysis(imageBase64, isVip) {
         
         if (data.success && data.reading) {
             if (isVip) {
-                updateUserPoints(-5); // Αφαίρεση πόντων VIP μόνο μετά από επιτυχία
+                spendPoints(VIP_COST); // Αφαίρεση πόντων VIP μόνο μετά από επιτυχία
             }
             showResultPopup(data.reading);
             rewardReferrerIfFirstAnalysis();
         } else {
-            alert('Σφάλμα κατά την ανάλυση: ' + (data.error || 'Άγνωστο σφάλμα'));
+            alert('Η Aziram συνάντησε εμπόδιο. Δοκίμασε ξανά.');
         }
     } catch (error) {
         document.getElementById('loading-box').style.display = 'none';
         console.error('Analysis API Error:', error);
-        alert('Αποτυχία σύνδεσης με τον διακομιστή της Aziram. Δοκιμάστε ξανά.');
+        alert('Σφάλμα σύνδεσης. Δοκιμάστε ξανά.');
+    } {
+        document.getElementById('analyze-btn').style.display = 'inline-flex';
+        document.getElementById('analyze-vip-btn').style.display = 'inline-flex';
+        updatePointsDisplay();
     }
 }
 
@@ -334,6 +367,23 @@ function showResultPopup(markdownText) {
         
     document.getElementById('result-popup-text').innerHTML = htmlContent;
     document.getElementById('result-popup-overlay').style.display = 'flex';
+    addStarsToPopup();
+}
+
+function addStarsToPopup() {
+    var popup = document.getElementById('result-popup');
+    popup.querySelectorAll('.popup-star').forEach(function(s) { s.remove(); });
+    var emojis = ['✨', '⭐', '💫', '🌟', '🔮', '💖', '🌙'];
+    for (var i = 0; i < 15; i++) {
+        var star = document.createElement('span');
+        star.className = 'popup-star';
+        star.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        star.style.position = 'absolute';
+        star.style.left = Math.random() * 85 + '%';
+        star.style.top = Math.random() * 85 + '%';
+        star.style.pointerEvents = 'none';
+        popup.appendChild(star);
+    }
 }
 
 function closeResultPopup() {
@@ -351,6 +401,7 @@ function closeResultPopup() {
 function navigateToScanPage() {
     document.getElementById('splash-page').classList.add('hidden');
     document.getElementById('scan-page').classList.remove('hidden');
+    updatePointsDisplay();
 }
 
 // ===== MULTILANGUAGE TRANSLATION SYSTEM =====
@@ -408,7 +459,7 @@ async function translatePage(targetLang) {
                     el.innerHTML = translatedText;
                 }
             } catch (err) {
-                console.error('Translation error for element:', err);
+                console.error('Translation error:', err);
             }
         });
         await Promise.all(promises);
@@ -421,9 +472,18 @@ function changeLanguage(lang) {
 }
 
 // ===== REFERRALS & SHARING =====
+const OFFICIAL_BOT_USERNAME = 'lifeline2026_bot';
+
+function detectReferral() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var startParam = urlParams.get('start');
+    if (startParam) {
+        localStorage.setItem('lifeline_referrer', startParam);
+    }
+}
+
 function getReferralLink() {
-    var uid = getCurrentUserId();
-    return 'https://t.me/lifeline2026_bot?start=ref_' + uid;
+    return 'https://t.me/' + OFFICIAL_BOT_USERNAME + '?start=' + getCurrentUserId();
 }
 
 function shareViaTelegram() {
@@ -473,6 +533,7 @@ function addInviteButton() {
 window.addEventListener('DOMContentLoaded', () => {
     checkConsent();
     saveOriginalTexts();
-    updatePointsUI();
+    updatePointsDisplay();
     addInviteButton();
+    detectReferral();
 });
