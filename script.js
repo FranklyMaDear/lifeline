@@ -51,6 +51,37 @@ function grantWelcomeBonus() {
     }
 }
 
+// ===== CUSTOM MODAL ΓΙΑ ΣΦΑΛΜΑ ΠΟΝΤΩΝ =====
+function showPointsErrorModal() {
+    // Αφαίρεση τυχόν υπάρχοντος modal
+    var existing = document.getElementById('points-error-modal');
+    if (existing) existing.remove();
+
+    var modalHTML = `
+        <div id="points-error-modal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:10002;display:flex;align-items:center;justify-content:center;padding:20px;">
+            <div style="background:linear-gradient(145deg,#1a0e2a,#2a1a3a);border:3px solid #FFD700;border-radius:25px;padding:25px 20px;max-width:420px;width:100%;text-align:center;box-shadow:0 0 60px rgba(255,215,0,0.4);animation:modalFadeIn 0.5s ease;">
+                <div style="font-size:3rem;margin-bottom:10px;">💎</div>
+                <h2 style="color:#FFD700;font-size:1.2rem;margin-bottom:12px;" data-translate="true">Ανεπαρκή Διαμάντια!</h2>
+                <p style="color:#d5c8e8;font-size:0.85rem;line-height:1.6;margin-bottom:20px;" data-translate="true">Χρειάζεσαι 15 διαμάντια για μία VIP ανάλυση. Πάτα "Κέρδισε Πόντους" για να δεις μία διαφήμιση (+10).</p>
+                <button onclick="closePointsErrorModal()" style="background:linear-gradient(145deg,#FFD700,#B8860B);color:#1a0033;padding:12px 25px;border:none;border-radius:30px;font-size:0.9rem;font-weight:700;cursor:pointer;box-shadow:0 0 20px rgba(255,215,0,0.3);letter-spacing:1px;width:100%;" data-translate="true">Κατάλαβα, πάω για διαφημίσεις!</button>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // Μετάφραση αν η γλώσσα δεν είναι ελληνικά
+    if (currentLang !== 'el') {
+        var modalEl = document.getElementById('points-error-modal');
+        var translatable = modalEl.querySelectorAll('[data-translate="true"]');
+        translateElements(translatable, currentLang);
+    }
+}
+
+function closePointsErrorModal() {
+    var modal = document.getElementById('points-error-modal');
+    if (modal) modal.remove();
+}
+
 // ===== TERMS & PRIVACY ΔΟΜΗ (ελληνικά πρωτότυπα) =====
 const TERMS_STRUCTURE = {
     terms: {
@@ -348,11 +379,10 @@ function showPalmGuideOverlay(show, customText) {
         var textElement = overlay.querySelector('p');
         if (textElement && customText) {
             textElement.textContent = customText;
-            textElement.removeAttribute('data-translate'); // αφαιρούμε το data-translate προσωρινά
+            textElement.removeAttribute('data-translate');
         } else if (textElement) {
             textElement.textContent = 'Τοποθέτησε την παλάμη σου εδώ';
             textElement.setAttribute('data-translate', 'true');
-            // επαναφορά μετάφρασης αν χρειαστεί
             if (currentLang !== 'el') {
                 translateElements([textElement], currentLang);
             }
@@ -365,7 +395,7 @@ function showPalmGuideOverlay(show, customText) {
 async function startCamera() {
     // Έλεγχος πόντων πριν το άνοιγμα κάμερας
     if (getUserPoints() < VIP_COST) {
-        alert('Χρειάζεσαι τουλάχιστον ' + VIP_COST + ' πόντους για ανάλυση. Κέρδισε πόντους βλέποντας διαφημίσεις.');
+        showPointsErrorModal();
         return;
     }
 
@@ -392,7 +422,6 @@ async function startCamera() {
 }
 
 function startCountdown() {
-    // Καθαρισμός τυχόν προηγούμενων timers
     clearCountdown();
 
     countdownSeconds = 8;
@@ -429,10 +458,9 @@ function clearCountdown() {
 }
 
 function autoCaptureAndAnalyze() {
-    if (!cameraActive) return; // ακυρώθηκε
+    if (!cameraActive) return;
     capturePhotoFromCamera();
     stopCamera();
-    // Ξεκίνησε ανάλυση αμέσως
     performAnalysis();
 }
 
@@ -461,7 +489,7 @@ async function switchCamera(facingMode) {
     if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); currentStream = null; }
     cameraActive = false;
     clearCountdown();
-    await startCamera(); // θα ξεκινήσει νέα αντίστροφη μέτρηση
+    await startCamera();
 }
 
 function updateCameraToggleButtons() {
@@ -486,7 +514,16 @@ function capturePhotoFromCamera() {
     showPhotoPreview(capturedImage);
 }
 
+// ===== UPLOAD ΜΕ ΕΛΕΓΧΟ ΠΟΝΤΩΝ =====
 function handleUpload(event) {
+    // Πρώτα έλεγχος αν έχει αρκετούς πόντους
+    if (getUserPoints() < VIP_COST) {
+        // Καθαρισμός του input για να επιτρέψει νέα επιλογή αργότερα
+        event.target.value = '';
+        showPointsErrorModal();
+        return;
+    }
+
     var file = event.target.files[0];
     if (!file) return;
     var reader = new FileReader();
@@ -524,6 +561,7 @@ async function performAnalysis() {
                 zodiac: userZodiac,
                 birthdate: userBirthdate,
                 topic: userTopic,
+                language: currentLang,  // Προσθήκη γλώσσας για το Gemini API
                 user_id: getCurrentUserId()
             })
         });
@@ -646,7 +684,7 @@ function startAnalysisFlow() {
         document.getElementById('analyze-vip-btn').style.opacity = '0.5';
         performAnalysis();
     } else {
-        alert('Δεν έχεις αρκετούς πόντους. Χρειάζεσαι ' + VIP_COST + ' πόντους. Κέρδισε πόντους βλέποντας διαφημίσεις.');
+        showPointsErrorModal();
     }
 }
 
