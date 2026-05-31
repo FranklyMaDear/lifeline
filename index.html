@@ -151,12 +151,7 @@
         .btn-vip { background: linear-gradient(135deg, #d35400, #e67e22); border: 1px solid rgba(241, 196, 15, 0.3); }
         .btn-vip:hover { box-shadow: 0 0 25px rgba(230, 126, 34, 0.7); }
 
-        .btn-ad-earning {
-            background: linear-gradient(135deg, #2980b9, #3498db);
-            margin-top: 10px;
-            border: 1px solid rgba(52, 152, 219, 0.4);
-            animation: softPulse 2s infinite;
-        }
+        .btn-uniform { height: 50px; padding: 0 20px; font-size: 14px; border-radius: 12px; }
 
         #splash-page {
             display: flex;
@@ -197,7 +192,7 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            padding-bottom: 180px !important;
+            padding-bottom: 140px !important;
         }
 
         .selectors-grid {
@@ -288,7 +283,6 @@
             gap: 10px;
         }
 
-        /* STICKY BOTTOM ACTIONS */
         .analysis-actions {
             position: fixed !important;
             bottom: calc(20px + env(safe-area-inset-bottom)) !important;
@@ -305,9 +299,11 @@
             box-shadow: 0px -8px 30px rgba(0, 0, 0, 0.7) !important;
             border: 1px solid rgba(155, 89, 182, 0.3) !important;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: 10px;
         }
+
+        .analysis-actions .btn { flex: 1; min-width: 0; }
 
         #loading-box {
             display: none;
@@ -348,35 +344,16 @@
         #result-popup h2 { font-size: 20px; text-align: center; color: var(--gold-glow); }
         #result-popup-text { font-size: 14px; line-height: 1.7; color: #ece5f5; }
 
-        /* MANDATORY STARTUP MODAL */
         #consent-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 5, 20, 0.98); z-index: 10001;
+            background: rgba(10, 5, 20, 0.95); z-index: 10001;
             display: flex; justify-content: center; align-items: center; padding: 20px;
         }
 
         .consent-box {
             background: var(--bg-card); border: 1px solid rgba(155,89,182,0.4);
-            border-radius: 20px; padding: 25px 20px; width: 100%; max-width: 420px;
+            border-radius: 20px; padding: 25px 20px; width: 100%; max-width: 400px;
             text-align: center; display: flex; flex-direction: column; gap: 15px;
-            max-height: 90vh;
-        }
-
-        .consent-scrollable-terms {
-            background: rgba(0,0,0,0.3);
-            border-radius: 10px;
-            padding: 15px;
-            overflow-y: auto;
-            max-height: 45vh;
-            text-align: left;
-            font-size: 12px;
-            line-height: 1.6;
-            color: #d1c9dc;
-            border: 1px solid rgba(155, 89, 182, 0.15);
-        }
-
-        .consent-scrollable-terms h3 {
-            font-size: 14px; color: var(--purple-gold); margin: 12px 0 4px 0;
         }
 
         #terms-modal-overlay {
@@ -406,47 +383,22 @@
         }
         #global-footer a { color: var(--text-muted); text-decoration: underline; cursor: pointer; }
 
-        .referral-stats-box {
-            background: rgba(155, 89, 182, 0.1);
-            border: 1px dashed rgba(155, 89, 182, 0.3);
-            border-radius: 10px;
-            padding: 10px;
-            width: 100%;
-            font-size: 12px;
-            text-align: center;
-            color: #dfcbe8;
-            margin-top: 5px;
-        }
-
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes pulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; filter: drop-shadow(0 0 8px var(--purple-gold)); } }
-        @keyframes softPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); box-shadow: 0 0 15px rgba(52, 152, 219, 0.4); } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes scanMove { 0%, 100% { top: 0%; } 50% { top: 100%; } }
     </style>
 </head>
 <body>
 
-    <div id="consent-overlay">
+    <div id="consent-overlay" class="hidden">
         <div class="consent-box">
-            <h2 data-translate="true">☽ Όροι Χρήσης & Απορρήτου ☾</h2>
-            
-            <div class="consent-scrollable-terms">
-                <strong>ΑΥΣΤΗΡΩΣ ΚΑΤΑΛΛΗΛΟ ΓΙΑ 18+</strong>
-                <p>Καλώς ήρθατε στο LiFe LiNe. Για να χρησιμοποιήσετε την εφαρμογή μας, πρέπει να αποδεχτείτε πλήρως τους παρακάτω όρους:</p>
-                
-                <h3>1. Ψυχαγωγικός & Χιουμοριστικός Χαρακτήρας</h3>
-                <p>Η εφαρμογή παρέχει αναλύσεις χειρομαντείας και αστρολογίας με τη χρήση Τεχνητής Νοημοσύνης (AI) αποκλειστικά για σκοπούς ψυχαγωγίας. Καμία πληροφορία ή πρόβλεψη δεν αποτελεί ιατρική, νομική, οικονομική, ψυχολογική ή επαγγελματική συμβουλή.</p>
-                
-                <h3>2. Διαχείριση Κάμερας & Σάρωσης Παλάμης</h3>
-                <p>Η εφαρμογή ζητά πρόσβαση στην κάμερά σας αποκλειστικά για τη λήψη φωτογραφίας της παλάμης σας. Η φωτογραφία μετατρέπεται σε προσωρινό κώδικα στη συσκευή σας και στέλνεται με ασφάλεια στο API μας για οπτική ανάλυση. ΔΕΝ αποθηκεύουμε μόνιμα τις φωτογραφίες σας, ούτε συλλέγουμε βιομετρικά δεδομένα. Διαγράφονται οριστικά αμέσως μετά την έκδοση της πρόβλεψης.</p>
-                
-                <h3>3. Περιορισμός Ευθύνης</h3>
-                <p>Δεν φέρουμε καμία απολύτως αστική ή ποινική ευθύνη για τυχόν αποφάσεις, πράξεις, ζημίες ή ψυχική αναστάτωση που βασίζονται στα αποτελέσματα των αναλύσεων της εφαρμογής στην πραγματική ζωή.</p>
-            </div>
-
-            <button class="btn btn-purple" onclick="acceptConsent()" data-translate="true">👍 Συμφωνώ & Είσοδος</button>
+            <h2 data-translate="true">☽ Συγκατάθεση Χρήστη ☾</h2>
+            <p data-translate="true" style="font-size:13px; line-height:1.6; color:var(--text-muted);">
+                Με την είσοδό σας, συμφωνείτε με τους <strong>Όρους Χρήσης</strong> και την <strong>Πολιτική Απορρήτου</strong>. Επιτρέπετε στην εφαρμογή να χρησιμοποιήσει την κάμερα για την ανάλυση της παλάμης. Η εικόνα σας μεταφέρεται με ασφάλεια και <strong>δεν αποθηκεύεται μόνιμα</strong>. Κατάλληλο αυστηρά για άτομα άνω των 18 ετών.
+            </p>
+            <button class="btn btn-purple" onclick="acceptConsent()" data-translate="true">👍 Συμφωνώ & Συνέχεια</button>
         </div>
     </div>
 
@@ -459,7 +411,7 @@
             </div>
             <div id="rewards-bar">
                 <span class="points-icon">🌟</span>
-                <span class="points-count" id="user-points-display">15</span>
+                <span class="points-count" id="user-points-display">0</span>
             </div>
         </header>
 
@@ -528,55 +480,48 @@
                     <input type="file" id="file-upload" accept="image/*" style="display:none;" onchange="handleFileUpload(event)">
                 </label>
             </div>
-
-            <button class="btn btn-ad-earning" onclick="watchAdForPoints()">📺 Δες διαφήμιση & Κέρδισε +10 Πόντους</button>
-
-            <div class="referral-stats-box">
-                👥 Φίλοι: <span id="ref-count-text">0</span>/15 (Στους 15 φίλους κερδίζεις 🎁 100 Πόντους!)
-            </div>
-
-            <div class="analysis-actions">
-                <button class="btn btn-green btn-uniform" id="analyze-btn" onclick="startAnalysisFlow()" style="display: none;"><span id="btn-text-cost">🔮 Ανάλυση Παλάμης (Κόστος: 15 Πόντοι)</span></button>
-            </div>
-
-            <div id="loading-box">
-                <div class="loading-text" data-translate="true">🔮 Η Aziram διαβάζει τις γραμμές σου αντικειμενικά...</div>
-                <div class="loading-spinner"></div>
-            </div>
         </div>
 
-        <div id="result-popup-overlay">
-            <div id="result-popup">
-                <h2>☽ Η Αποκάλυψη της Aziram ☾</h2>
-                <div id="result-popup-text"></div>
-                <button id="close-popup-btn" onclick="closeResultPopup()" data-translate="true">🔄 Σκανάρισε άλλο χέρι</button>
-            </div>
+        <div class="analysis-actions">
+            <button class="btn btn-green btn-uniform" id="analyze-btn" onclick="startAnalysisFlow(false)" style="display: none;" data-translate="true">🔮 Ανάλυση (με Διαφήμιση)</button>
+            <button class="btn btn-vip btn-uniform" id="analyze-vip-btn" onclick="startAnalysisFlow(true)" style="display: none;" disabled>⚡ VIP (<span id="vip-cost">5</span> Πόντοι) - Έχεις <span id="vip-points">0</span></button>
         </div>
-
-        <div id="terms-modal-overlay">
-            <div id="terms-modal"></div>
+        <div id="loading-box">
+            <div class="loading-text" data-translate="true">🔮 Η Aziram διαβάζει τις γραμμές σου...</div>
+            <div class="loading-spinner"></div>
         </div>
+    </div>
 
-        <div id="global-footer">
-            <a onclick="showTerms('terms')" data-translate="true">Όροι Χρήσης</a>
-            <span class="footer-divider">|</span>
-            <a onclick="showTerms('privacy')" data-translate="true">Απόρρητο</a>
-            <span class="footer-divider">|</span>
-            <div id="lang-selector-container">
-                <span>🌐</span>
-                <select id="lang-select" onchange="changeLanguage(this.value)">
-                    <option value="el">Ελληνικά</option>
-                    <option value="en">English</option>
-                    <option value="ru">Русский</option>
-                    <option value="es">Español</option>
-                    <option value="fr">Français</option>
-                    <option value="de">Deutsch</option>
-                    <option value="it">Italiano</option>
-                    <option value="ar">العربية</option>
-                </select>
-            </div>
+    <div id="result-popup-overlay">
+        <div id="result-popup">
+            <h2>☽ Η Αποκάλυψη της Aziram ☾</h2>
+            <div id="result-popup-text"></div>
+            <button id="close-popup-btn" onclick="closeResultPopup()" data-translate="true">🔄 Σκανάρισε άλλο χέρι</button>
         </div>
+    </div>
 
+    <div id="terms-modal-overlay">
+        <div id="terms-modal"></div>
+    </div>
+
+    <div id="global-footer">
+        <a onclick="showTerms('terms')" data-translate="true">Όροι Χρήσης</a>
+        <span class="footer-divider">|</span>
+        <a onclick="showTerms('privacy')" data-translate="true">Απόρρητο</a>
+        <span class="footer-divider">|</span>
+        <div id="lang-selector-container">
+            <span>🌐</span>
+            <select id="lang-select" onchange="changeLanguage(this.value)">
+                <option value="el">Ελληνικά</option>
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="ar">العربية</option>
+            </select>
+        </div>
     </div>
 
     <script src="script.js"></script>
