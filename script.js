@@ -42,21 +42,15 @@ function acceptConsent() {
     document.getElementById('consent-overlay').classList.add('hidden');
 }
 
-// ===== TERMS & PRIVACY STRUCTURE =====
+// ===== TERMS & PRIVACY ΔΟΜΗ (ΤΑ ΔΙΚΑ ΣΟΥ ΑΥΘΕΝΤΙΚΑ ΚΕΙΜΕΝΑ) =====
 const TERMS_STRUCTURE = {
     terms: {
         title: 'Όροι Χρήσης & Προϋποθέσεις',
-        content: `Καλώς ήρθατε στο LiFe LiNe. Η εφαρμογή παρέχει ψυχαγωγικές αναλύσεις χειρομαντείας και αστρολογίας μέσω AI. Χρησιμοποιώντας την εφαρμογή, συμφωνείτε ότι:
-        1. Οι προβλέψεις έχουν καθαρά ψυχαγωγικό χαρακτήρα.
-        2. Δεν αντικαθιστούν επαγγελματικές ιατρικές, νομικές ή οικονομικές συμβουλές.
-        3. Η χρήση της κάμερας γίνεται με τη συγκατάθεσή σας για την επεξεργασία της εικόνας.`
+        content: `Καλώς ήρθατε στο LiFe LiNe! Χρησιμοποιώντας την εφαρμογή μας, αποδέχεστε πλήρως τους παρακάτω όρους:\n\n1. Η εφαρμογή παρέχει αναλύσεις χειρομαντείας και αστρολογίας με τη χρήση Τεχνητής Νοημοσύνης (AI) αποκλειστικά και μόνο για σκοπούς ψυχαγωγίας. Καμία πληροφορία ή πρόβλεψη δεν πρέπει να εκλαμβάνεται ως ιατρική, νομική, οικονομική ή επαγγελματική συμβουλή.\n\n2. Δεν φέρουμε καμία ευθύνη για τυχόν αποφάσεις ή πράξεις που βασίζονται στα αποτελέσματα των αναλύσεων της εφαρμογής.\n\n3. Η χρήση της εφαρμογής επιτρέπεται μόνο σε άτομα άνω των 18 ετών ή με τη συγκατάθεση κηδεμόνα.\n\n4. Διατηρούμε το δικαίωμα να τροποποιήσουμε τους όρους ή να διακόψουμε τη λειτουργία της εφαρμογής ανά πάσα στιγμή χωρίς προειδοποίηση.`
     },
     privacy: {
-        title: 'Πολιτική Απορρήτου',
-        content: `Η προστασία των δεδομένων σας είναι προτεραιότητά μας:
-        1. Η φωτογραφία της παλάμης σας υποβάλλεται σε επεξεργασία σε πραγματικό χρόνο και ΔΕΝ αποθηκεύεται μόνιμα στους διακομιστές μας.
-        2. Συλλέγουμε το Telegram User ID σας αποκλειστικά για τη διαχείριση των πόντων σας.
-        3. Δεν μοιραζόμαστε τα δεδομένα σας με τρίτα μέρη, εκτός από τις απαραίτητες κλήσεις API για την ανάλυση.`
+        title: 'Πολιτική Απορρήτου & Προστασία Δεδομένων',
+        content: `Στο LiFe LiNe σεβόμαστε απόλυτα την ιδιωτικότητά σας:\n\n1. Χρήση Κάμερας & Εικόνων: Η εφαρμογή ζητά πρόσβαση στην κάμερά σας αποκλειστικά για τη λήψη φωτογραφίας της παλάμης σας. Η επεξεργασία της εικόνας γίνεται σε πραγματικό χρόνο. Η φωτογραφία αποστέλλεται με ασφάλεια στο API μας και ΔΕΝ αποθηκεύεται μόνιμα στους διακομιστές μας. Διαγράφεται αμέσως μετά την έκδοση της πρόβλεψης.\n\n2. Συλλογή Δεδομένων: Δεν συλλέγουμε προσωπικά στοιχεία όπως ονοματεπώνυμο ή email. Αποθηκεύουμε το Telegram User ID σας αποκλειστικά για τη διαχείριση και την ασφάλεια των πόντων VIP και των referrals.\n\n3. Cookies & Τοπική Αποθήκευση: Χρησιμοποιούμε το LocalStorage της συσκευής σας για να θυμόμαστε τις ρυθμίσεις σας και το υπόλοιπο των πόντων σας.\n\n4. Κοινοποίηση Δεδομένων: Δεν πουλάμε ούτε μοιραζόμαστε τα δεδομένα σας με τρίτες διαφημιστικές εταιρείες.`
     }
 };
 
@@ -69,16 +63,13 @@ function showTerms(type) {
     
     container.innerHTML = `
         <h2 style="margin-bottom:15px; color:var(--gold-glow);" data-translate="true">${data.title}</h2>
-        <p style="margin-bottom:20px; white-space:pre-line; color:#ece5f5;" data-translate="true">${data.content}</p>
+        <p style="margin-bottom:20px; white-space:pre-line; color:#ece5f5; text-align:left; font-size:13px;" data-translate="true">${data.content}</p>
         <button class="btn btn-purple" onclick="closeTerms()" data-translate="true">Κλείσιμο</button>
     `;
     
-    // Αποθήκευση του νέου δυναμικού κειμένου για τη μετάφραση
     if (typeof saveOriginalTexts === 'function') {
         saveOriginalTexts();
     }
-    
-    // Εφαρμογή της τρέχουσας γλώσσας αν δεν είναι ελληνικά
     if (currentLang !== 'el' && typeof translatePage === 'function') {
         translatePage(currentLang);
     }
@@ -95,15 +86,15 @@ function getCurrentUserId() {
     if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
         return window.Telegram.WebApp.initDataUnsafe.user.id;
     }
-    return 999999; // Fallback ID για δοκιμές εκτός Telegram
+    return 999999;
 }
 
 function getUserPoints() {
     var uid = getCurrentUserId();
     var pts = localStorage.getItem('lifeline_pts_' + uid);
     if (pts === null) {
-        localStorage.setItem('lifeline_pts_' + uid, '10'); // 10 δωρεάν αρχικοί πόντοι
-        return 10;
+        localStorage.setItem('lifeline_pts_' + uid, '15'); // 15 δωρεάν αρχικοί πόντοι βάσει backend
+        return 15;
     }
     return parseInt(pts, 10);
 }
@@ -134,16 +125,15 @@ function updatePointsUI() {
 
 // ===== CAMERA & LIVE PREVIEW MANAGEMENT =====
 let localStream = null;
-let currentFacingMode = 'user'; // 'user' (μπροστινή) ή 'environment' (πίσω)
+let currentFacingMode = 'user';
 let uploadedImageBase64 = null;
 
 async function initCamera() {
-    uploadedImageBase64 = null; // Καθαρισμός προηγούμενου upload
-    var constraint = currentFacingMode === 'user' ? { facingMode: 'user' } : { facingMode: { exact: 'environment' } };
-    
-    // Εμφάνιση κατάλληλων κουμπιών ελέγχου
+    uploadedImageBase64 = null;
     document.getElementById('start-camera-btn').style.display = 'none';
     document.getElementById('switch-camera-btn').style.display = 'block';
+    
+    var constraint = currentFacingMode === 'user' ? { facingMode: 'user' } : { facingMode: { exact: 'environment' } };
     
     try {
         localStream = await navigator.mediaDevices.getUserMedia({
@@ -151,32 +141,31 @@ async function initCamera() {
             audio: false
         });
         
-        // ΣΥΝΔΕΣΗ STREAM ΜΕ ΤΟ LIVE PREVIEW VIDEO
         var videoPreview = document.getElementById('camera-preview');
         if (videoPreview) {
             videoPreview.srcObject = localStream;
-            // Mirror εφέ μόνο στην μπροστινή κάμερα
             videoPreview.style.transform = currentFacingMode === 'user' ? 'scaleX(-1)' : 'none';
+            videoPreview.style.background = 'none';
         }
         
         document.getElementById('scan-line').style.display = 'block';
         updateActionButtonsVisibility();
         console.log("✅ Κάμερα αρχικοποιήθηκε με Live Preview");
     } catch (e) {
-        console.warn('⚠️ Αποτυχία με συγκεκριμένο facingMode, δοκιμή γενικού constraint...', e);
+        console.warn('⚠️ Δοκιμή γενικού constraint κάμερας λόγω facingMode σφάλματος...', e);
         try {
             localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
             var videoPreview = document.getElementById('camera-preview');
             if (videoPreview) {
                 videoPreview.srcObject = localStream;
                 videoPreview.style.transform = 'scaleX(-1)';
+                videoPreview.style.background = 'none';
             }
             document.getElementById('scan-line').style.display = 'block';
             updateActionButtonsVisibility();
         } catch (err) {
             alert('Δεν ήταν δυνατή η πρόσβαση στην κάμερα. Παρακαλώ δώστε δικαιώματα ή κάντε Upload φωτογραφίας.');
             console.error('❌ Καθολικό σφάλμα κάμερας:', err);
-            // Επαναφορά κουμπιού κάμερας
             document.getElementById('start-camera-btn').style.display = 'block';
             document.getElementById('switch-camera-btn').style.display = 'none';
         }
@@ -219,7 +208,7 @@ function handleFileUpload(event) {
     var file = event.target.files[0];
     if (!file) return;
     
-    stopCamera(); // Αν η κάμερα ήταν ανοιχτή, την κλείνουμε
+    stopCamera();
     document.getElementById('start-camera-btn').style.display = 'block';
     document.getElementById('switch-camera-btn').style.display = 'none';
     
@@ -227,24 +216,21 @@ function handleFileUpload(event) {
     reader.onload = function(e) {
         uploadedImageBase64 = e.target.result;
         
-        // Προβολή της στατικής εικόνας του χρήστη στο στρογγυλό πλαίσιο
         var videoPreview = document.getElementById('camera-preview');
         if (videoPreview) {
             videoPreview.srcObject = null;
             videoPreview.style.transform = 'none';
-            // Χρησιμοποιούμε το poster ή inline CSS φόντο για την προβολή
             videoPreview.style.background = `url('${uploadedImageBase64}') center center / cover no-repeat`;
         }
         
         updateActionButtonsVisibility();
-        console.log("✅ Φωτογραφία μετακινήθηκε επιτυχώς μέσω Upload");
+        console.log("✅ Επιτυχές Upload φωτογραφίας");
     };
     reader.readAsDataURL(file);
 }
 
-// ΤΡΑΒΑΕΙ ΦΩΤΟΓΡΑΦΙΑ ΤΟ LIVE FRAME ΤΟΥ VIDEO
 function captureImage() {
-    if (uploadedImageBase64) return uploadedImageBase64; // Αν έγινε upload, στέλνουμε αυτήν
+    if (uploadedImageBase64) return uploadedImageBase64;
     
     var video = document.getElementById('camera-preview');
     var canvas = document.getElementById('camera-canvas');
@@ -254,10 +240,8 @@ function captureImage() {
     canvas.width = video.videoWidth || 640;
     canvas.height = video.videoHeight || 480;
     
-    // Σχεδίαση του τρέχοντος frame του βίντεο στο canvas
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     
-    // Αν είναι η μπροστινή κάμερα, κάνουμε flip οριζόντια για να μην βγει ανάποδα στο backend
     if (currentFacingMode === 'user') {
         ctx.save();
         ctx.scale(-1, 1);
@@ -281,15 +265,12 @@ async function startAnalysisFlow(isVip) {
             alert('Δεν έχετε αρκετούς πόντους για VIP ανάλυση!');
             return;
         }
-        // Εκτέλεση VIP
         executeAnalysis(image, true);
     } else {
-        // Εκτέλεση με Διαφήμιση Adsgram
         document.getElementById('loading-box').style.display = 'flex';
         showRewardedAd()
             .then(() => {
-                // Επιτυχής ολοκλήρωση διαφήμισης
-                updateUserPoints(2); // Επιβράβευση +2 πόντους επειδή είδε τη διαφήμιση
+                updateUserPoints(2); // Κέρδος 2 πόντων από τη διαφήμιση
                 executeAnalysis(image, false);
             })
             .catch((err) => {
@@ -309,7 +290,6 @@ async function executeAnalysis(imageBase64, isVip) {
     var topic = document.getElementById('topic-select').value;
     var userId = getCurrentUserId();
     
-    // Προετοιμασία Payload για το backend app.py
     var payload = {
         image: imageBase64,
         user_id: userId,
@@ -320,7 +300,6 @@ async function executeAnalysis(imageBase64, isVip) {
     };
     
     try {
-        // Κλήση στο backend Flask Hugging Face Space
         var response = await fetch('https://franklymadear-lifeline.hf.space/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -332,10 +311,8 @@ async function executeAnalysis(imageBase64, isVip) {
         
         if (data.success && data.reading) {
             if (isVip) {
-                updateUserPoints(-5); // Αφαίρεση πόντων μόνο μετά από επιτυχία
+                updateUserPoints(-5); // Αφαίρεση πόντων VIP μόνο μετά από επιτυχία
             }
-            
-            // Εμφάνιση Αποτελέσματος
             showResultPopup(data.reading);
             rewardReferrerIfFirstAnalysis();
         } else {
@@ -361,7 +338,6 @@ function showResultPopup(markdownText) {
 
 function closeResultPopup() {
     document.getElementById('result-popup-overlay').style.display = 'none';
-    // Καθαρισμός και επαναφορά
     uploadedImageBase64 = null;
     var videoPreview = document.getElementById('camera-preview');
     if (videoPreview) videoPreview.style.background = 'none';
@@ -389,7 +365,6 @@ function saveOriginalTexts() {
             el.setAttribute('data-text-id', id);
             originalTexts.set(id, el.innerHTML);
         } else {
-            // Αν υπάρχει ήδη ID, ανανεώνουμε το περιεχόμενο (χρήσιμο για Terms)
             originalTexts.set(el.getAttribute('data-text-id'), el.innerHTML);
         }
     });
@@ -414,7 +389,6 @@ async function translatePage(targetLang) {
     const elements = Array.from(document.querySelectorAll('[data-translate="true"]'));
     if (elements.length === 0) return;
     
-    // Ομαδοποίηση ανά 10 στοιχεία για αποφυγή μεγάλων URLs στο Google API
     const batchSize = 10;
     for (let i = 0; i < elements.length; i += batchSize) {
         const batch = elements.slice(i, i + batchSize);
@@ -422,7 +396,6 @@ async function translatePage(targetLang) {
             const id = el.getAttribute('data-text-id');
             const sourceText = originalTexts.get(id) || el.innerHTML;
             
-            // Παράκαμψη αν είναι κενό ή περιέχει μόνο tags
             if (!sourceText.trim() || sourceText.startsWith('<div class="loading')) return;
             
             const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=el&tl=${targetLang}&dt=t&q=${encodeURIComponent(sourceText)}`;
