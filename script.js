@@ -53,7 +53,6 @@ function grantWelcomeBonus() {
 
 // ===== CUSTOM MODAL ΓΙΑ ΣΦΑΛΜΑ ΠΟΝΤΩΝ =====
 function showPointsErrorModal() {
-    // Αφαίρεση τυχόν υπάρχοντος modal
     var existing = document.getElementById('points-error-modal');
     if (existing) existing.remove();
 
@@ -69,7 +68,6 @@ function showPointsErrorModal() {
     `;
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-    // Μετάφραση αν η γλώσσα δεν είναι ελληνικά
     if (currentLang !== 'el') {
         var modalEl = document.getElementById('points-error-modal');
         var translatable = modalEl.querySelectorAll('[data-translate="true"]');
@@ -82,7 +80,7 @@ function closePointsErrorModal() {
     if (modal) modal.remove();
 }
 
-// ===== TERMS & PRIVACY ΔΟΜΗ (ελληνικά πρωτότυπα) =====
+// ===== TERMS & PRIVACY ΔΟΜΗ =====
 const TERMS_STRUCTURE = {
     terms: {
         title: '📜 Όροι Χρήσης LiFe LiNe',
@@ -140,6 +138,10 @@ document.getElementById('terms-modal-overlay').addEventListener('click', functio
 var originalTexts = {};
 var currentLang = 'el';
 var translationsCache = {};
+
+// Για το popup αποτελέσματος
+var originalResultText = '';
+var resultTranslationLang = '';
 
 function saveOriginalTexts() {
     document.querySelectorAll('[data-translate="true"]').forEach(function(el) {
@@ -393,7 +395,6 @@ function showPalmGuideOverlay(show, customText) {
 }
 
 async function startCamera() {
-    // Έλεγχος πόντων πριν το άνοιγμα κάμερας
     if (getUserPoints() < VIP_COST) {
         showPointsErrorModal();
         return;
@@ -407,7 +408,6 @@ async function startCamera() {
         video.srcObject = currentStream;
         cameraActive = true;
 
-        // Εμφάνιση οδηγού και έναρξη αντίστροφης μέτρησης
         showPalmGuideOverlay(true);
         startCountdown();
 
@@ -516,9 +516,7 @@ function capturePhotoFromCamera() {
 
 // ===== UPLOAD ΜΕ ΕΛΕΓΧΟ ΠΟΝΤΩΝ =====
 function handleUpload(event) {
-    // Πρώτα έλεγχος αν έχει αρκετούς πόντους
     if (getUserPoints() < VIP_COST) {
-        // Καθαρισμός του input για να επιτρέψει νέα επιλογή αργότερα
         event.target.value = '';
         showPointsErrorModal();
         return;
@@ -561,24 +559,31 @@ async function performAnalysis() {
                 zodiac: userZodiac,
                 birthdate: userBirthdate,
                 topic: userTopic,
-                language: currentLang,  // Προσθήκη γλώσσας για το Gemini API
+                language: currentLang,
                 user_id: getCurrentUserId()
             })
         });
         var data = await response.json();
         if (data.success && data.reading) {
-            // Αφαίρεση πόντων μόνο μετά την επιτυχή ανάλυση
             spendPoints(VIP_COST);
 
             var resultDiv = document.getElementById('result-popup-text');
-            resultDiv.innerHTML = data.reading
+            originalResultText = data.reading;
+            resultTranslationLang = '';
+
+            resultDiv.innerHTML = originalResultText
                 .replace(/## (.*?)\n/g, '<h2>$1</h2>')
                 .replace(/### (.*?)\n/g, '<h3>$1</h3>')
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\n/g, '<br>');
 
+            // Θέτουμε την αρχική τιμή του dropdown γλώσσας του popup
+            var resultLangSelect = document.getElementById('result-lang-select');
+            if (resultLangSelect) resultLangSelect.value = currentLang;
+
+            // Αυτόματη μετάφραση αν η συσκευή δεν είναι Ελληνικά
             if (currentLang !== 'el') {
-                await translateResultText(resultDiv);
+                await translateResultTo(currentLang);
             }
 
             document.getElementById('result-popup-overlay').classList.add('active');
@@ -597,13 +602,30 @@ async function performAnalysis() {
     }
 }
 
-async function translateResultText(container) {
+// ===== ΣΥΝΑΡΤΗΣΕΙΣ ΜΕΤΑΦΡΑΣΗΣ ΑΠΟΤΕΛΕΣΜΑΤΟΣ =====
+async function translateResultTo(targetLang) {
+    if (!originalResultText) return;
+    var resultDiv = document.getElementById('result-popup-text');
+    
     var tempSpan = document.createElement('span');
-    tempSpan.textContent = container.innerText;
-    container.innerHTML = '';
-    container.appendChild(tempSpan);
-    await translateElements([tempSpan], currentLang);
-    container.innerHTML = container.innerText.replace(/\n/g, '<br>');
+    tempSpan.textContent = resultDiv.innerText;
+    resultDiv.innerHTML = '';
+    resultDiv.appendChild(tempSpan);
+    
+    if (resultTranslationLang !== targetLang) {
+        await translateElements([tempSpan], targetLang);
+        resultTranslationLang = targetLang;
+    }
+    
+    resultDiv.innerHTML = resultDiv.innerText.replace(/\n/g, '<br>');
+    
+    var selectEl = document.getElementById('result-lang-select');
+    if (selectEl) selectEl.value = targetLang;
+}
+
+function translateResultFromPopup() {
+    var lang = document.getElementById('result-lang-select').value;
+    translateResultTo(lang);
 }
 
 function addStarsToPopup() {
