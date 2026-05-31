@@ -16,472 +16,298 @@
     <meta name="twitter:image" content="https://lifeline.franklymadear.com/lifeline.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a0033">
+    <link rel="icon" href="lifeline.png">
+    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22LiFe%20LiNe%22%2C%22short_name%22%3A%22LiFe%20LiNe%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231a0033%22%2C%22theme_color%22%3A%22%231a0033%22%7D">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Comfortaa:wght@400;600&display=swap" rel="stylesheet">
-    
-    <script src="https://jscolor.com/release/2.4.7/jscolor.js"></script>
-    <script src="https://adsgram.org/sdk/v1/adsgram.js" async></script>
+    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 
     <style>
         :root {
-            --bg-dark: #0f0a1c;
-            --bg-card: #191323;
-            --purple-gold: #9b59b6;
-            --gold-glow: #f1c40f;
-            --text-light: #f5f0ff;
-            --text-muted: #a49cb3;
-            --neon-green: #2ecc71;
+            --gold: #FFD700; --gold-dark: #B8860B; --purple: #6a0dad;
+            --purple-dark: #1a0033; --purple-light: #9b59b6; --bg: #0a0015;
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            position: fixed; overflow: hidden; width: 100%; height: 100%; height: 100dvh;
+            -webkit-tap-highlight-color: transparent; overscroll-behavior: none;
         }
 
         body {
-            font-family: 'Comfortaa', cursive, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            background: var(--bg); color: #f0e6ff;
+            background-image: radial-gradient(ellipse at 50% 20%, rgba(106,13,173,0.35) 0%, transparent 55%),
+                              radial-gradient(ellipse at 50% 80%, rgba(255,215,0,0.12) 0%, transparent 55%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            touch-action: manipulation;
             min-height: 100vh;
-            min-height: -webkit-fill-available;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-            padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;
+            min-height: 100dvh;
         }
 
-        html {
-            height: -webkit-fill-available;
+        #starfield { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
+        .page { 
+            position: absolute; top: 0; left: 0; z-index: 1; display: none; 
+            flex-direction: column; align-items: center; justify-content: center;
+            width: 100%; height: 100%; height: 100dvh; padding: 0; overflow: hidden;
+            min-height: 100vh; min-height: 100dvh;
         }
+        .page.active { display: flex; }
 
-        h1, h2, h3, .brand-title {
-            font-family: 'Cinzel', serif;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(155, 89, 182, 0.5);
-        }
+        /* TELEGRAM WEBVIEW FIX */
+        #splash-page { justify-content: center; }
+        #scan-page { justify-content: flex-start; }
 
-        .hidden { display: none !important; }
+        /* LANGUAGE BAR */
+        #language-bar { display: flex; align-items: center; gap: 8px; background: rgba(20,10,40,0.85); backdrop-filter: blur(12px); border: 1.5px solid rgba(255,215,0,0.35); border-radius: 30px; padding: 10px 14px; position: relative; z-index: 10; width: 90%; max-width: 380px; margin: 0 auto; box-shadow: 0 0 25px rgba(255,215,0,0.08); flex-shrink: 0; }
+        #language-bar .lang-label { color: var(--gold); font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; white-space: nowrap; min-width: 55px; text-align: center; }
+        #language-bar select { flex: 1; min-width: 90px; background: rgba(10,5,25,0.9); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); border-radius: 20px; padding: 8px 28px 8px 10px; font-size: 0.8rem; font-weight: 600; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23FFD700' d='M5 7L1 3h8z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; outline: none; }
+        #translate-btn, #reset-lang-btn { width: 34px; height: 34px; min-width: 34px; border-radius: 50%; font-size: 0.9rem; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; border: none; flex-shrink: 0; transition: all 0.3s; }
+        #translate-btn { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; box-shadow: 0 0 15px rgba(255,215,0,0.3); }
+        #reset-lang-btn { background: linear-gradient(145deg, #9b59b6, #6a0dad); color: #fff; display: none; box-shadow: 0 0 15px rgba(155,89,182,0.3); }
 
-        .app-container {
-            width: 100%;
-            max-width: 480px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-            position: relative;
-        }
+        /* CONSENT MODAL */
+        #consent-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); backdrop-filter: blur(12px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        #consent-overlay.hidden { display: none; }
+        #consent-modal { background: linear-gradient(145deg, #1a0e2a, #2a1a3a); border: 3px solid var(--gold); border-radius: 25px; padding: 25px 20px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 0 60px rgba(255,215,0,0.4); animation: modalFadeIn 0.5s ease; }
+        @keyframes modalFadeIn { 0% { opacity: 0; transform: scale(0.9) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+        #consent-modal .consent-icon { font-size: 2.8rem; margin-bottom: 8px; animation: floatIcon 2s infinite ease-in-out; }
+        @keyframes floatIcon { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        #consent-modal h2 { color: var(--gold); font-size: 1.2rem; margin-bottom: 8px; }
+        #consent-modal p { color: #d5c8e8; font-size: 0.8rem; line-height: 1.5; margin-bottom: 12px; }
+        #consent-modal .consent-email { color: #c9a0dc; font-size: 0.75rem; margin-bottom: 12px; }
+        #consent-modal .consent-email strong { color: #FFD700; }
+        #consent-btn { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; padding: 12px 20px; border: none; border-radius: 60px; font-size: 0.9rem; font-weight: 700; cursor: pointer; box-shadow: 0 0 30px rgba(255,215,0,0.3); transition: all 0.4s; letter-spacing: 1px; width: 100%; }
+        #consent-btn:hover { transform: scale(1.04) translateY(-3px); box-shadow: 0 0 50px rgba(255,215,0,0.6); }
 
-        header {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            z-index: 10;
-        }
+        /* SPLASH PAGE */
+        #splash-page { text-align: center; animation: fadeInUp 0.8s ease; padding: 0 15px; padding-top: calc(12px + var(--safe-top)); padding-bottom: calc(70px + var(--safe-bottom)); }
+        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        .splash-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(2vh,3vh,3.5vh); width: 100%; height: 100%; padding: 15px 0; }
+        .logo-container { width: clamp(160px,35vw,210px); height: clamp(160px,35vw,210px); margin: 0 auto; animation: floatLogo 5s infinite ease-in-out; cursor: pointer; flex-shrink: 0; }
+        @keyframes floatLogo { 0%,100% { transform: translateY(0px); } 30% { transform: translateY(-8px); } 60% { transform: translateY(-14px); } }
+        .logo-circle { width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(145deg, #2a0040, #1a0030, #0d0020); border: 3px solid var(--gold); box-shadow: 0 0 60px rgba(255,215,0,0.35), 0 0 100px rgba(106,13,173,0.3); display: flex; align-items: center; justify-content: center; }
+        .logo-hand { font-size: clamp(4.5rem,11vw,6.5rem); filter: drop-shadow(0 0 25px rgba(255,215,0,0.5)); animation: pulseHand 2.5s infinite ease-in-out; }
+        @keyframes pulseHand { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        .splash-title { font-size: clamp(2.4rem,8vw,4rem); font-weight: 800; background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700, #FFA500); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 6px; animation: shimmer 3.5s infinite; flex-shrink: 0; line-height: 1.1; }
+        @keyframes shimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .splash-subtitle { color: #c9a0dc; font-size: clamp(1rem,2.5vw,1.4rem); font-weight: 500; letter-spacing: 4px; text-transform: uppercase; flex-shrink: 0; opacity: 0.9; }
+        .btn-mystic { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; padding: 15px 30px; border: none; border-radius: 60px; font-size: clamp(0.95rem,2vw,1.15rem); font-weight: 700; cursor: pointer; box-shadow: 0 0 40px rgba(255,215,0,0.3), 0 8px 25px rgba(0,0,0,0.5); transition: all 0.4s ease; letter-spacing: 2px; min-width: 260px; max-width: 85%; min-height: 60px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; white-space: nowrap; }
+        .btn-mystic:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 0 80px rgba(255,215,0,0.6); }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        /* KAFEMANTEIA BANNER */
+        #kafemanteia-container { position: absolute; bottom: calc(70px + var(--safe-bottom)); left: 50%; transform: translateX(-50%); z-index: 25; width: 92%; max-width: 500px; }
+        .kafemanteia-comet { display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; background: rgba(20,10,40,0.92); backdrop-filter: blur(12px); border: 2px solid rgba(255,215,0,0.5); border-radius: 50px; padding: 14px 20px; box-shadow: 0 0 35px rgba(255,215,0,0.25); transition: all 0.3s ease; animation: slideUp 0.8s ease-out forwards, cometPulse 2s ease-in-out 0.8s infinite; width: 100%; text-align: center; }
+        .kafemanteia-comet .comet-text { color: var(--gold); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; }
+        @keyframes slideUp { 0% { transform: translateY(80px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+        @keyframes cometPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
 
-        .brand-logo {
-            font-size: 28px;
-            animation: pulse 3s infinite;
-        }
-
-        .brand-title {
-            font-size: 20px;
-            font-weight: 700;
-            background: linear-gradient(45deg, #fff, #d2b4de);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        #rewards-bar {
-            background: var(--bg-card);
-            border: 1px solid rgba(155, 89, 182, 0.2);
-            border-radius: 12px;
-            padding: 6px 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        .points-icon { color: var(--gold-glow); font-weight: bold; }
-        .points-count { font-weight: 600; color: #fff; }
-
-        .btn {
-            font-family: 'Comfortaa', sans-serif;
-            padding: 14px 24px;
-            border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 100%;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            color: #fff;
-        }
-
-        .btn:active { transform: scale(0.97); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
-
-        .btn-purple { background: linear-gradient(135deg, #8e44ad, #9b59b6); border: 1px solid rgba(255,255,255,0.1); }
-        .btn-purple:hover { box-shadow: 0 0 20px rgba(155, 89, 182, 0.6); }
-
-        .btn-green { background: linear-gradient(135deg, #27ae60, #2ecc71); }
-        .btn-green:hover { box-shadow: 0 0 20px rgba(46, 204, 113, 0.6); }
-
-        .btn-vip { background: linear-gradient(135deg, #d35400, #e67e22); border: 1px solid rgba(241, 196, 15, 0.3); }
-        .btn-vip:hover { box-shadow: 0 0 25px rgba(230, 126, 34, 0.7); }
-
-        .btn-uniform { height: 50px; padding: 0 20px; font-size: 14px; border-radius: 12px; }
-
-        #splash-page {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            flex: 1;
-            gap: 25px;
-        }
-
-        .mystic-eye-container {
-            position: relative;
-            width: 130px;
-            height: 130px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle, rgba(155,89,182,0.2) 0%, transparent 70%);
-        }
-
-        .mystic-eye { font-size: 65px; animation: float 4s ease-in-out infinite; z-index: 2; }
-        .mystic-ring {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 1px dashed rgba(155,89,182,0.4);
-            border-radius: 50%;
-            animation: rotate 20s linear infinite;
-        }
-
-        .splash-intro h2 { font-size: 24px; margin-bottom: 10px; color: #fff; }
-        .splash-intro p { font-size: 14px; color: var(--text-muted); line-height: 1.6; max-width: 320px; }
-
-        #scan-page {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            padding-bottom: 140px !important;
-        }
-
-        .selectors-grid {
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .select-wrapper {
-            position: relative;
-            background: var(--bg-card);
-            border: 1px solid rgba(155, 89, 182, 0.2);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .select-wrapper select {
-            width: 100%;
-            padding: 12px 15px;
-            background: transparent;
-            border: none;
-            color: var(--text-light);
-            font-family: 'Comfortaa', sans-serif;
-            font-size: 13px;
-            outline: none;
-            cursor: pointer;
-            -webkit-appearance: none;
-        }
-
-        .select-wrapper::after {
-            content: '▼';
-            font-size: 10px;
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--purple-gold);
-            pointer-events: none;
-        }
-
-        .full-width-select { grid-column: span 2; }
-
-        #scan-container {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            border: 2px solid var(--purple-gold);
-            position: relative;
-            box-shadow: 0 0 30px rgba(155, 89, 182, 0.4), inset 0 0 20px rgba(0,0,0,0.8);
-            overflow: hidden;
-            background: #000;
-            margin: 5px 0;
-        }
-
-        #camera-preview {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            transform: scaleX(-1);
-        }
-
-        #scan-hand-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" stroke="rgba(155,89,182,0.25)" stroke-width="1"><path d="M50,90 C35,90 25,75 25,55 C25,45 28,35 32,25 C33,22 36,22 37,25 C39,32 41,35 43,30 C44,22 46,12 48,15 C49,17 50,30 52,30 C53,20 56,10 58,12 C59,13 60,28 62,32 C63,25 66,20 68,22 C69,23 69,35 68,45 C67,55 71,65 65,78 C60,86 58,90 50,90 Z"/></svg>') center center no-repeat;
-            background-size: 75%;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        #scan-line {
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(to right, transparent, var(--purple-gold), var(--gold-glow), var(--purple-gold), transparent);
-            box-shadow: 0 0 12px var(--purple-gold);
-            top: 0;
-            z-index: 3;
-            display: none;
-            animation: scanMove 4s linear infinite;
-        }
-
-        .camera-controls {
-            width: 100%;
-            display: flex;
-            gap: 10px;
-        }
-
-        .analysis-actions {
-            position: fixed !important;
-            bottom: calc(20px + env(safe-area-inset-bottom)) !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-            width: 90% !important;
-            max-width: 420px !important;
-            z-index: 9999 !important;
-            background: rgba(25, 19, 35, 0.96) !important;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 12px !important;
-            border-radius: 20px !important;
-            box-shadow: 0px -8px 30px rgba(0, 0, 0, 0.7) !important;
-            border: 1px solid rgba(155, 89, 182, 0.3) !important;
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-        }
-
-        .analysis-actions .btn { flex: 1; min-width: 0; }
-
-        #loading-box {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .loading-text { font-size: 14px; color: var(--gold-glow); text-align: center; }
-        .loading-spinner {
-            width: 40px; height: 40px;
-            border: 3px solid rgba(155,89,182,0.2);
-            border-top: 3px solid var(--purple-gold);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        #result-popup-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10,5,20,0.9);
-            z-index: 10000; display: none;
-            justify-content: center; align-items: center; padding: 20px;
-        }
-
-        #result-popup {
-            background: var(--bg-card);
-            border: 1px solid var(--purple-gold);
-            border-radius: 20px;
-            padding: 25px;
-            width: 100%; max-width: 420px;
-            max-height: 80vh; overflow-y: auto;
-            box-shadow: 0 0 40px rgba(155,89,182,0.4);
-            display: flex; flex-direction: column; gap: 20px;
-            position: relative;
-        }
-
-        #result-popup h2 { font-size: 20px; text-align: center; color: var(--gold-glow); }
-        #result-popup-text { font-size: 14px; line-height: 1.7; color: #ece5f5; }
-
-        #consent-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 5, 20, 0.95); z-index: 10001;
-            display: flex; justify-content: center; align-items: center; padding: 20px;
-        }
-
-        .consent-box {
-            background: var(--bg-card); border: 1px solid rgba(155,89,182,0.4);
-            border-radius: 20px; padding: 25px 20px; width: 100%; max-width: 400px;
-            text-align: center; display: flex; flex-direction: column; gap: 15px;
-        }
-
-        #terms-modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10,5,20,0.85); z-index: 10005;
-            display: none; justify-content: center; align-items: center; padding: 20px;
-        }
-
-        #terms-modal {
-            background: var(--bg-card); border: 1px solid var(--purple-gold);
-            border-radius: 20px; padding: 25px; width: 100%; max-width: 440px;
-            max-height: 75vh; overflow-y: auto; font-size: 13px; line-height: 1.6;
-        }
-
-        #lang-selector-container {
-            background: var(--bg-card); border: 1px solid rgba(155, 89, 182, 0.2);
-            border-radius: 10px; padding: 4px 8px; display: flex; align-items: center; gap: 5px;
-        }
-        #lang-select {
-            background: transparent; border: none; color: #fff; font-family: inherit; font-size: 12px; outline: none; cursor: pointer;
-        }
-
-        #global-footer {
-            width: 100%; max-width: 480px; text-align: center;
-            padding: 15px 0; font-size: 11px; color: var(--text-muted);
-            margin-top: auto; display: flex; justify-content: center; align-items: center; gap: 15px;
-        }
-        #global-footer a { color: var(--text-muted); text-decoration: underline; cursor: pointer; }
-
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes pulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; filter: drop-shadow(0 0 8px var(--purple-gold)); } }
+        /* SCAN PAGE */
+        #scan-page { justify-content: flex-start; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; gap: 6px; padding: 10px 15px; padding-top: calc(10px + var(--safe-top)); padding-bottom: calc(70px + var(--safe-bottom)); }
+        .btn-back { background: transparent; border: 1px solid rgba(255,215,0,0.3); color: #c9a0dc; padding: 5px 14px; border-radius: 50px; font-size: 0.75rem; cursor: pointer; transition: all 0.3s; margin-bottom: 4px; flex-shrink: 0; align-self: flex-start; }
+        .selectors-row { display: flex; justify-content: center; align-items: stretch; gap: 8px; flex-wrap: wrap; width: 100%; max-width: 460px; flex-shrink: 0; }
+        .selector-item { display: flex; flex-direction: column; align-items: center; gap: 4px; background: rgba(20,10,40,0.8); padding: 8px 10px; border-radius: 20px; border: 1px solid rgba(255,215,0,0.25); flex: 1; min-width: 110px; }
+        .selector-label { color: var(--gold); font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; text-align: center; }
+        .gender-btns { display: flex; gap: 0; width: 100%; border-radius: 14px; overflow: hidden; border: 2px solid rgba(255,215,0,0.3); }
+        .gender-btn { padding: 8px 14px; font-size: 0.78rem; font-weight: 700; border: none; background: rgba(20,10,40,0.6); color: #b9a6d4; cursor: pointer; transition: all 0.3s; flex: 1; text-align: center; }
+        .gender-btn.active { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; }
+        .selector-item input { padding: 8px 10px; border-radius: 14px; border: 2px solid rgba(255,215,0,0.3); background: #1a0a2e; color: #FFD700; font-size: 0.78rem; width: 100%; text-align: center; font-weight: 500; }
+        .topic-dropdown-container { width: 100%; max-width: 460px; margin: 6px auto; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        #topic-select { width: 100%; padding: 10px 16px; border-radius: 30px; border: 2px solid rgba(255,215,0,0.3); background: rgba(20,10,40,0.9); color: var(--gold); font-size: 0.8rem; font-weight: 600; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FFD700' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: all 0.3s; height: 42px; }
+        #camera-wrapper { position: relative; width: 100%; max-width: 460px; margin: 4px auto; border-radius: 24px; overflow: hidden; border: 3px solid var(--gold); box-shadow: 0 0 40px rgba(255,215,0,0.3); background: #0a0015; aspect-ratio: 4 / 3; flex-shrink: 0; }
+        #webcam { width: 100%; height: 100%; display: block; object-fit: contain; transform: scaleX(-1); }
+        .scan-frame { position: absolute; top: 6%; left: 6%; width: 88%; height: 88%; border: 2px solid rgba(255,215,0,0.5); border-radius: 28px; pointer-events: none; animation: framePulse 2s infinite ease-in-out; }
+        @keyframes framePulse { 0%,100% { border-color: rgba(255,215,0,0.5); } 50% { border-color: rgba(255,215,0,0.9); } }
+        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: scanMove 3s infinite ease-in-out; pointer-events: none; }
+        @keyframes scanMove { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        .camera-instruction { text-align: center; color: #d5c8e8; font-size: clamp(0.73rem,1.6vw,0.82rem); padding: 0 15px; width: 100%; max-width: 480px; line-height: 1.5; font-weight: 500; flex-shrink: 0; }
+        .btn-uniform { padding: 10px 16px; font-size: 0.8rem; font-weight: 600; border-radius: 30px; border: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); letter-spacing: 0.5px; white-space: nowrap; min-width: 80px; height: 42px; }
+        .btn-gold { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; }
+        .btn-purple { background: linear-gradient(145deg, #9b59b6, #6a0dad); color: #fff; }
+        .btn-green { background: linear-gradient(145deg, #2ecc71, #1e8449); color: #fff; }
+        .btn-vip { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; }
+        .controls-row { display: flex; justify-content: center; gap: 8px; width: 100%; max-width: 460px; flex-wrap: wrap; flex-shrink: 0; margin: 6px auto; }
+        .camera-toggle-btn { background: rgba(20,10,40,0.7); color: #c9a0dc; border: 2px solid rgba(255,215,0,0.25); display: none; }
+        .camera-toggle-btn.active { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; border-color: var(--gold); }
+        #rewards-bar { display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 460px; margin: 6px auto; flex-shrink: 0; }
+        .points-badge { background: rgba(20,10,40,0.9); border: 1px solid var(--gold); border-radius: 30px; padding: 8px 16px; color: var(--gold); font-weight: bold; font-size: 0.8rem; }
+        .analysis-actions { display: flex; gap: 10px; width: 100%; max-width: 460px; justify-content: center; flex-wrap: wrap; margin: 6px auto; }
+        #upload-preview-area { display: none; text-align: center; margin: 3px 0; flex-shrink: 0; }
+        #upload-preview-img { max-width: 130px; width: 100%; border-radius: 18px; border: 2px solid var(--gold); }
+        #loading-box { display: none; text-align: center; background: rgba(20,10,40,0.95); border-radius: 24px; padding: 18px 14px; margin: 6px auto; border: 2px solid rgba(255,215,0,0.3); box-shadow: 0 0 60px rgba(255,215,0,0.2); width: 100%; max-width: 350px; flex-shrink: 0; }
+        .loading-spinner { width: 35px; height: 35px; border: 3px solid rgba(255,215,0,0.2); border-top: 3px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 8px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes scanMove { 0%, 100% { top: 0%; } 50% { top: 100%; } }
+        .loading-text { font-size: 0.85rem; color: #c9a0dc; letter-spacing: 2px; animation: mysticPulse 2s infinite ease-in-out; }
+        @keyframes mysticPulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+        /* RESULT POPUP */
+        #result-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(15px); z-index: 10000; align-items: center; justify-content: center; padding: 15px; }
+        #result-popup-overlay.active { display: flex; }
+        #result-popup { background: linear-gradient(145deg, #1a0e2a, #2a1a3a); border: 3px solid var(--gold); border-radius: 25px; padding: 25px 18px; max-width: 550px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 0 80px rgba(255,215,0,0.5); animation: modalFadeIn 0.5s ease; }
+        #result-popup h2 { color: var(--gold); text-align: center; font-size: 1.3rem; margin-bottom: 15px; }
+        #result-popup-text { color: #e6d5f5; font-size: 0.9rem; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; }
+        .popup-star { position: absolute; color: #FFD700; opacity: 0.5; animation: floatStar 3s infinite ease-in-out; pointer-events: none; font-size: 1rem; z-index: 0; }
+        @keyframes floatStar { 0% { transform: translateY(0) rotate(0deg); opacity: 0.3; } 50% { transform: translateY(-15px) rotate(180deg); opacity: 0.8; } 100% { transform: translateY(0) rotate(360deg); opacity: 0.3; } }
+        #close-popup-btn { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; padding: 12px 25px; border: none; border-radius: 60px; font-size: 0.9rem; font-weight: 700; cursor: pointer; box-shadow: 0 0 30px rgba(255,215,0,0.3); transition: all 0.4s; letter-spacing: 1px; display: block; margin: 20px auto 0; width: 80%; max-width: 250px; }
+
+        /* FOOTER */
+        #global-footer { position: fixed; bottom: 0; left: 0; z-index: 50; width: 100%; background: rgba(10,0,20,0.92); backdrop-filter: blur(12px); border-top: 1px solid rgba(255,215,0,0.35); padding: 10px 12px; display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.7rem; padding-bottom: calc(10px + var(--safe-bottom)); }
+        #global-footer a { color: var(--gold); text-decoration: none; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        #global-footer a:hover { text-decoration: underline; color: #fff; }
+        #global-footer .footer-sep { color: rgba(255,215,0,0.5); }
+
+        /* TERMS MODAL */
+        #terms-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(15px); z-index: 10001; align-items: center; justify-content: center; padding: 15px; }
+        #terms-modal-overlay.active { display: flex; }
+        #terms-modal { background: linear-gradient(145deg, #1a0e2a, #2a1a3a); border: 2px solid var(--gold); border-radius: 20px; padding: 22px 18px; max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto; color: #e6d5f5; font-size: 0.8rem; line-height: 1.7; box-shadow: 0 0 60px rgba(255,215,0,0.4); animation: modalFadeIn 0.5s ease; }
+        #terms-modal h2 { color: var(--gold); text-align: center; margin-bottom: 15px; font-size: 1.2rem; }
+        #terms-modal h3 { color: #FFD700; margin: 14px 0 6px; font-size: 0.95rem; }
+        #close-terms-btn { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; padding: 10px 22px; border: none; border-radius: 30px; font-size: 0.85rem; font-weight: 700; cursor: pointer; display: block; margin: 18px auto 0; box-shadow: 0 0 20px rgba(255,215,0,0.3); transition: all 0.3s; }
+
+        /* TELEGRAM & MOBILE CENTERING FIX */
+        @supports (-webkit-touch-callout: none) {
+            body { min-height: -webkit-fill-available; }
+            .page { min-height: -webkit-fill-available; }
+        }
+
+        @media (max-width: 420px) {
+            #splash-page { padding: 0 12px; padding-bottom: calc(65px + var(--safe-bottom)); }
+            #scan-page { gap: 4px; padding: 8px 10px; padding-bottom: calc(65px + var(--safe-bottom)); }
+            .logo-container { width: 140px; height: 140px; }
+            .logo-hand { font-size: 3.8rem; }
+            .splash-title { font-size: 2rem; letter-spacing: 4px; }
+            .btn-mystic { min-width: 220px; padding: 14px 24px; font-size: 0.9rem; min-height: 55px; }
+            #language-bar { padding: 9px 12px; }
+            #kafemanteia-container { bottom: calc(65px + var(--safe-bottom)); width: 90%; }
+            .btn-uniform { font-size: 0.72rem; padding: 8px 12px; height: 38px; }
+            #global-footer { padding: 8px 10px; gap: 6px; font-size: 0.65rem; }
+        }
     </style>
 </head>
 <body>
 
-    <div id="consent-overlay" class="hidden">
-        <div class="consent-box">
-            <h2 data-translate="true">☽ Συγκατάθεση Χρήστη ☾</h2>
-            <p data-translate="true" style="font-size:13px; line-height:1.6; color:var(--text-muted);">
-                Με την είσοδό σας, συμφωνείτε με τους <strong>Όρους Χρήσης</strong> και την <strong>Πολιτική Απορρήτου</strong>. Επιτρέπετε στην εφαρμογή να χρησιμοποιήσει την κάμερα για την ανάλυση της παλάμης. Η εικόνα σας μεταφέρεται με ασφάλεια και <strong>δεν αποθηκεύεται μόνιμα</strong>. Κατάλληλο αυστηρά για άτομα άνω των 18 ετών.
+    <canvas id="starfield"></canvas>
+
+    <div id="consent-overlay">
+        <div id="consent-modal">
+            <div class="consent-icon">🖐️</div>
+            <h2 data-translate="true">Καλώς ήρθατε στο LiFe LiNe!</h2>
+            <p data-translate="true">
+                Για να συνεχίσετε, πρέπει να επιβεβαιώσετε ότι είστε <strong>άνω των 18 ετών</strong> 
+                και ότι αποδέχεστε πως η εφαρμογή χρησιμοποιεί Τεχνητή Νοημοσύνη για να παράγει 
+                αποτελέσματα με καθαρά <strong>ψυχαγωγικό και μη κατευθυντικό χαρακτήρα</strong>.
             </p>
-            <button class="btn btn-purple" onclick="acceptConsent()" data-translate="true">👍 Συμφωνώ & Συνέχεια</button>
+            <p class="consent-email" data-translate="true">
+                📧 Επικοινωνία: <strong>info.franklydear@gmail.com</strong>
+            </p>
+            <button id="consent-btn" onclick="acceptConsent()" data-translate="true">Αποδέχομαι & Είμαι άνω των 18 ετών</button>
         </div>
     </div>
 
-    <div class="app-container">
-        
-        <header>
-            <div class="brand">
-                <span class="brand-logo">👁️</span>
-                <span class="brand-title">LiFe LiNe</span>
+    <div id="splash-page" class="page active">
+        <div class="splash-inner">
+            <div class="logo-container" onclick="goToScan()">
+                <div class="logo-circle"><span class="logo-hand">🖐️</span></div>
             </div>
-            <div id="rewards-bar">
-                <span class="points-icon">🌟</span>
-                <span class="points-count" id="user-points-display">0</span>
-            </div>
-        </header>
-
-        <div id="splash-page">
-            <div class="mystic-eye-container">
-                <div class="mystic-ring"></div>
-                <div class="mystic-eye">🔮</div>
-            </div>
-            <div class="splash-intro">
-                <h2 data-translate="true">Η Μοίρα στα Χέρια σου</h2>
-                <p data-translate="true">Άφησε την Aziram να αποκρυπτογραφήσει τα μυστικά που κρύβουν οι γραμμές της παλάμης σου με τη δύναμη της τεχνητής νοημοσύνης και της αστρολογίας.</p>
-            </div>
-            <button class="btn btn-purple" onclick="navigateToScanPage()" data-translate="true">✨ Έναρξη Χειρομαντείας</button>
-        </div>
-
-        <div id="scan-page" class="hidden">
+            <div class="splash-title">LiFe LiNe</div>
+            <div class="splash-subtitle" data-translate="true">Χειρομαντεία & Αστρολογία</div>
             
-            <div class="selectors-grid">
-                <div class="select-wrapper">
-                    <select id="gender-select">
-                        <option value="female" data-translate="true">♀️ Γυναίκα</option>
-                        <option value="male" data-translate="true">♂️ Άνδρας</option>
-                    </select>
-                </div>
-                
-                <div class="select-wrapper">
-                    <select id="zodiac-select">
-                        <option value="Κριός" data-translate="true">♈ Κριός</option>
-                        <option value="Ταύρος" data-translate="true">♉ Ταύρος</option>
-                        <option value="Δίδυμοι" data-translate="true">♊ Δίδυμοι</option>
-                        <option value="Καρκίνος" data-translate="true">♋ Καρκίνος</option>
-                        <option value="Λέων" data-translate="true">♌ Λέων</option>
-                        <option value="Παρθένος" data-translate="true">♍ Παρθένος</option>
-                        <option value="Ζυγός" data-translate="true">♎ Ζυγός</option>
-                        <option value="Σκορπιός" data-translate="true">♏ Σκορπιός</option>
-                        <option value="Τοξότης" data-translate="true">♐ Τοξότης</option>
-                        <option value="Αιγόκερως" data-translate="true">♑ Αιγόκερως</option>
-                        <option value="Υδροχόος" data-translate="true">♒ Υδροχόος</option>
-                        <option value="Ιχθύες" data-translate="true">♓ Ιχθύες</option>
-                    </select>
-                </div>
+            <div id="language-bar">
+                <span class="lang-label" id="lang-label" data-translate="true">🌐 Γλώσσα</span>
+                <select id="language-select">
+                    <option value="el">🇬🇷 Ελληνικά</option>
+                    <option value="en">🇬🇧 English</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr">🇫🇷 Français</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="it">🇮🇹 Italiano</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="zh-CN">🇨🇳 中文</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="tr">🇹🇷 Türkçe</option>
+                    <option value="nl">🇳🇱 Nederlands</option>
+                    <option value="pt">🇵🇹 Português</option>
+                    <option value="sv">🇸🇪 Svenska</option>
+                    <option value="no">🇳🇴 Norsk</option>
+                    <option value="da">🇩🇰 Dansk</option>
+                    <option value="fi">🇫🇮 Suomi</option>
+                    <option value="pl">🇵🇱 Polski</option>
+                    <option value="cs">🇨🇿 Čeština</option>
+                    <option value="ro">🇷🇴 Română</option>
+                    <option value="bg">🇧🇬 Български</option>
+                    <option value="uk">🇺🇦 Українська</option>
+                    <option value="ko">🇰🇷 한국어</option>
+                    <option value="hi">🇮🇳 हिन्दी</option>
+                    <option value="vi">🇻🇳 Tiếng Việt</option>
+                    <option value="th">🇹🇭 ไทย</option>
+                    <option value="id">🇮🇩 Indonesia</option>
+                    <option value="iw">🇮🇱 עברית</option>
+                </select>
+                <button id="translate-btn" onclick="startTranslation()" title="Μετάφραση">▶</button>
+                <button id="reset-lang-btn" onclick="resetToGreek()" title="Επιστροφή στα Ελληνικά">↺</button>
+            </div>
+            
+            <button class="btn-mystic" onclick="goToScan()" data-translate="true">🔮 Ανακάλυψε το Πεπρωμένο σου</button>
+        </div>
+        <div id="kafemanteia-container">
+            <a href="https://t.me/lifeline2026_bot?profile" target="_blank" class="kafemanteia-comet" id="kafemanteia-comet">
+                <span class="comet-icon">🪐</span>
+                <span class="comet-text" data-translate="true">Omen-Καφεμαντεία☕️ - Κλικ Εδώ 🆕</span>
+            </a>
+        </div>
+    </div>
 
-                <div class="select-wrapper full-width-select">
-                    <select id="topic-select">
-                        <option value="Έρωτας & Σχέσεις" data-translate="true">❤️ Έρωτας & Σχέσεις</option>
-                        <option value="Καριέρα & Οικονομικά" data-translate="true">💰 Καριέρα & Οικονομικά</option>
-                        <option value="Υγεία & Ευεξία" data-translate="true">🌱 Υγεία & Ζωτικότητα</option>
-                        <option value="Γενική Πρόβλεψη Μέλλοντος" data-translate="true">🔮 Γενικό Μέλλον & Πεπρωμένο</option>
-                    </select>
+    <div id="scan-page" class="page">
+        <button class="btn-back" onclick="goToSplash()">☽ <span data-translate="true">Επιστροφή</span></button>
+        <div class="selectors-row">
+            <div class="selector-item">
+                <span class="selector-label" data-translate="true">Φύλο</span>
+                <div class="gender-btns">
+                    <button class="gender-btn active" id="maleBtn" onclick="setGender('male')" data-translate="true">Άντρας</button>
+                    <button class="gender-btn" id="femaleBtn" onclick="setGender('female')" data-translate="true">Γυναίκα</button>
                 </div>
             </div>
-
-            <div id="scan-container">
-                <canvas id="camera-canvas" style="display:none;"></canvas>
-                <video id="camera-preview" autoplay playsinline muted></video>
-                <div id="scan-hand-overlay"></div>
-                <div id="scan-line"></div>
-            </div>
-
-            <div class="camera-controls">
-                <button class="btn btn-purple" id="start-camera-btn" onclick="initCamera()" data-translate="true">📷 Άνοιξε Κάμερα</button>
-                <button class="btn btn-purple" id="switch-camera-btn" onclick="switchCamera()" style="display: none; width: auto; padding: 14px;" title="Αλλαγή Κάμερας">🔄</button>
-                
-                <label for="file-upload" class="btn btn-purple" id="upload-label" style="flex:1;">
-                    <span>📁 Upload</span>
-                    <input type="file" id="file-upload" accept="image/*" style="display:none;" onchange="handleFileUpload(event)">
-                </label>
+            <div class="selector-item">
+                <span class="selector-label" data-translate="true">Ημ. Γέννησης</span>
+                <input type="date" id="birthdate-input" onchange="setBirthdate(this.value)">
             </div>
         </div>
-
+        <div class="topic-dropdown-container">
+            <span class="selector-label" data-translate="true">Θέμα Ανάλυσης</span>
+            <select id="topic-select" onchange="selectTopic(this.value)">
+                <option value="Έρωτας & Σχέσεις" data-translate="true">❤️ Έρωτας & Σχέσεις</option>
+                <option value="Καριέρα & Οικονομικά" data-translate="true">💼 Καριέρα & Οικονομικά</option>
+                <option value="Υγεία & Ζωτικότητα" data-translate="true">🌱 Υγεία & Ζωτικότητα</option>
+                <option value="Κρυφά Ταλέντα & Προσωπικότητα" data-translate="true">🧠 Κρυφά Ταλέντα</option>
+                <option value="Κάρμα & Μελλοντικές Προκλήσεις" data-translate="true">🌀 Κάρμα & Προκλήσεις</option>
+            </select>
+        </div>
+        <div id="rewards-bar">
+            <div class="points-badge">🪙 <span id="points-display">0</span> Πόντοι</div>
+            <button id="earn-points-btn" class="btn btn-purple btn-uniform" onclick="earnPoints()" data-translate="true">🎁 Κέρδισε Πόντους</button>
+        </div>
+        <div id="camera-wrapper">
+            <video id="webcam" playsinline autoplay></video>
+            <div class="scan-frame"></div>
+            <div class="scan-line"></div>
+        </div>
+        <div id="upload-preview-area">
+            <p style="color:var(--gold); font-size:0.8rem;" data-translate="true">✧ Η φωτογραφία είναι έτοιμη ✧</p>
+            <img id="upload-preview-img" src="" alt="Preview">
+        </div>
+        <div class="controls-row" id="controls-row">
+            <button class="btn btn-gold btn-uniform" id="camera-btn" onclick="toggleCamera()" data-translate="true">📷 Έναρξη</button>
+            <button class="btn btn-purple btn-uniform" onclick="document.getElementById('file-input').click()" data-translate="true">📁 Upload</button>
+            <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUpload(event)">
+            <button class="camera-toggle-btn btn-uniform active" id="selfie-btn" onclick="switchCamera('user')">🤳 <span data-translate="true">Selfie</span></button>
+            <button class="camera-toggle-btn btn-uniform" id="back-btn" onclick="switchCamera('environment')">📷 <span data-translate="true">Πίσω</span></button>
+        </div>
+        <div class="camera-instruction"><span data-translate="true">Τοποθέτησε την παλάμη σου μπροστά στην κάμερα. Η Aziram θα αποκαλύψει τα μυστικά των γραμμών σου.</span></div>
         <div class="analysis-actions">
             <button class="btn btn-green btn-uniform" id="analyze-btn" onclick="startAnalysisFlow(false)" style="display: none;" data-translate="true">🔮 Ανάλυση (με Διαφήμιση)</button>
             <button class="btn btn-vip btn-uniform" id="analyze-vip-btn" onclick="startAnalysisFlow(true)" style="display: none;" disabled>⚡ VIP (<span id="vip-cost">5</span> Πόντοι) - Έχεις <span id="vip-points">0</span></button>
@@ -506,22 +332,8 @@
 
     <div id="global-footer">
         <a onclick="showTerms('terms')" data-translate="true">Όροι Χρήσης</a>
-        <span class="footer-divider">|</span>
-        <a onclick="showTerms('privacy')" data-translate="true">Απόρρητο</a>
-        <span class="footer-divider">|</span>
-        <div id="lang-selector-container">
-            <span>🌐</span>
-            <select id="lang-select" onchange="changeLanguage(this.value)">
-                <option value="el">Ελληνικά</option>
-                <option value="en">English</option>
-                <option value="ru">Русский</option>
-                <option value="es">Español</option>
-                <option value="fr">Français</option>
-                <option value="de">Deutsch</option>
-                <option value="it">Italiano</option>
-                <option value="ar">العربية</option>
-            </select>
-        </div>
+        <span class="footer-sep">|</span>
+        <a onclick="showTerms('privacy')" data-translate="true">Πολιτική Απορρήτου</a>
     </div>
 
     <script src="script.js"></script>
