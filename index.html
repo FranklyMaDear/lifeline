@@ -19,7 +19,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700&family=Comfortaa:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Comfortaa:wght@400;600&display=swap" rel="stylesheet">
     
     <script src="https://jscolor.com/release/2.4.7/jscolor.js"></script>
     <script src="https://adsgram.org/sdk/v1/adsgram.js" async></script>
@@ -78,13 +78,12 @@
             position: relative;
         }
 
-        /* HEADER & NAVIGATION */
         header {
             width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 25px;
             z-index: 10;
         }
 
@@ -107,16 +106,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* REWARDS BAR & ADS BUTTON */
-        .rewards-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: flex-end;
-            margin-bottom: 25px;
-        }
-
         #rewards-bar {
             background: var(--bg-card);
             border: 1px solid rgba(155, 89, 182, 0.2);
@@ -124,7 +113,7 @@
             padding: 6px 12px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             font-size: 13px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
@@ -132,18 +121,6 @@
         .points-icon { color: var(--gold-glow); font-weight: bold; }
         .points-count { font-weight: 600; color: #fff; }
 
-        .btn-earn-ads {
-            background: linear-gradient(135deg, #16a085, #1abc9c);
-            font-size: 11px !important;
-            padding: 6px 12px !important;
-            border-radius: 8px !important;
-            width: auto !important;
-            font-family: 'Comfortaa', sans-serif;
-            font-weight: bold;
-            box-shadow: 0 2px 8px rgba(26, 188, 156, 0.3);
-        }
-
-        /* BUTTONS */
         .btn {
             font-family: 'Comfortaa', sans-serif;
             padding: 14px 24px;
@@ -165,24 +142,22 @@
         .btn:active { transform: scale(0.97); }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
-        .btn-purple {
-            background: linear-gradient(135deg, #8e44ad, #9b59b6);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+        .btn-purple { background: linear-gradient(135deg, #8e44ad, #9b59b6); border: 1px solid rgba(255,255,255,0.1); }
         .btn-purple:hover { box-shadow: 0 0 20px rgba(155, 89, 182, 0.6); }
 
-        .btn-green {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
-        }
+        .btn-green { background: linear-gradient(135deg, #27ae60, #2ecc71); }
         .btn-green:hover { box-shadow: 0 0 20px rgba(46, 204, 113, 0.6); }
 
-        .btn-vip {
-            background: linear-gradient(135deg, #d35400, #e67e22);
-            border: 1px solid rgba(241, 196, 15, 0.3);
-        }
+        .btn-vip { background: linear-gradient(135deg, #d35400, #e67e22); border: 1px solid rgba(241, 196, 15, 0.3); }
         .btn-vip:hover { box-shadow: 0 0 25px rgba(230, 126, 34, 0.7); }
 
-        /* SPLASH PAGE */
+        .btn-ad-earning {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            margin-top: 10px;
+            border: 1px solid rgba(52, 152, 219, 0.4);
+            animation: softPulse 2s infinite;
+        }
+
         #splash-page {
             display: flex;
             flex-direction: column;
@@ -190,20 +165,20 @@
             justify-content: center;
             text-align: center;
             flex: 1;
-            gap: 30px;
+            gap: 25px;
         }
 
         .mystic-eye-container {
             position: relative;
-            width: 140px;
-            height: 140px;
+            width: 130px;
+            height: 130px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: radial-gradient(circle, rgba(155,89,182,0.2) 0%, transparent 70%);
         }
 
-        .mystic-eye { font-size: 70px; animation: float 4s ease-in-out infinite; z-index: 2; }
+        .mystic-eye { font-size: 65px; animation: float 4s ease-in-out infinite; z-index: 2; }
         .mystic-ring {
             position: absolute;
             width: 100%;
@@ -213,17 +188,16 @@
             animation: rotate 20s linear infinite;
         }
 
-        .splash-intro h2 { font-size: 26px; margin-bottom: 12px; color: #fff; }
+        .splash-intro h2 { font-size: 24px; margin-bottom: 10px; color: #fff; }
         .splash-intro p { font-size: 14px; color: var(--text-muted); line-height: 1.6; max-width: 320px; }
 
-        /* SCAN PAGE */
         #scan-page {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            padding-bottom: 160px !important;
+            padding-bottom: 180px !important;
         }
 
         .selectors-grid {
@@ -267,17 +241,16 @@
 
         .full-width-select { grid-column: span 2; }
 
-        /* SCAN CONTAINER & LIVE PREVIEW */
         #scan-container {
-            width: 260px;
-            height: 260px;
+            width: 250px;
+            height: 250px;
             border-radius: 50%;
             border: 2px solid var(--purple-gold);
             position: relative;
             box-shadow: 0 0 30px rgba(155, 89, 182, 0.4), inset 0 0 20px rgba(0,0,0,0.8);
             overflow: hidden;
             background: #000;
-            margin: 10px 0;
+            margin: 5px 0;
         }
 
         #camera-preview {
@@ -315,7 +288,7 @@
             gap: 10px;
         }
 
-        /* ΚΑΡΦΩΜΕΝΑ ΚΟΥΜΠΙΑ ΣΤΟ ΚΑΤΩ ΜΕΡΟΣ (FIXED STICKY) */
+        /* STICKY BOTTOM ACTIONS */
         .analysis-actions {
             position: fixed !important;
             bottom: calc(20px + env(safe-area-inset-bottom)) !important;
@@ -336,7 +309,6 @@
             gap: 10px;
         }
 
-        /* LOADING BOX */
         #loading-box {
             display: none;
             flex-direction: column;
@@ -354,7 +326,6 @@
             animation: spin 1s linear infinite;
         }
 
-        /* RESULT POPUP */
         #result-popup-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(10,5,20,0.9);
@@ -371,34 +342,43 @@
             max-height: 80vh; overflow-y: auto;
             box-shadow: 0 0 40px rgba(155,89,182,0.4);
             display: flex; flex-direction: column; gap: 20px;
+            position: relative;
         }
 
         #result-popup h2 { font-size: 20px; text-align: center; color: var(--gold-glow); }
         #result-popup-text { font-size: 14px; line-height: 1.7; color: #ece5f5; }
 
-        /* MANDATORY CONSENT OVERLAY (GATEKEEPER) */
+        /* MANDATORY STARTUP MODAL */
         #consent-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-dark); z-index: 99999;
+            background: rgba(10, 5, 20, 0.98); z-index: 10001;
             display: flex; justify-content: center; align-items: center; padding: 20px;
         }
 
         .consent-box {
-            background: var(--bg-card); border: 1px solid rgba(155,89,182,0.3);
+            background: var(--bg-card); border: 1px solid rgba(155,89,182,0.4);
             border-radius: 20px; padding: 25px 20px; width: 100%; max-width: 420px;
-            max-height: 90vh; display: flex; flex-direction: column; gap: 15px;
-            box-shadow: 0 0 30px rgba(155,89,182,0.5);
+            text-align: center; display: flex; flex-direction: column; gap: 15px;
+            max-height: 90vh;
         }
 
-        .consent-scrollable {
-            overflow-y: auto; text-align: left; padding-right: 5px;
-            font-size: 12px; color: var(--text-muted); line-height: 1.6;
-            border-bottom: 1px solid rgba(155,89,182,0.15);
-            border-top: 1px solid rgba(155,89,182,0.15);
-            padding: 10px 0;
+        .consent-scrollable-terms {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            overflow-y: auto;
+            max-height: 45vh;
+            text-align: left;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #d1c9dc;
+            border: 1px solid rgba(155, 89, 182, 0.15);
         }
 
-        /* MODAL OVERLAY FOR FOOTER LINKS */
+        .consent-scrollable-terms h3 {
+            font-size: 14px; color: var(--purple-gold); margin: 12px 0 4px 0;
+        }
+
         #terms-modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(10,5,20,0.85); z-index: 10005;
@@ -411,26 +391,14 @@
             max-height: 75vh; overflow-y: auto; font-size: 13px; line-height: 1.6;
         }
 
-        /* LANGUAGE SELECTOR */
-        .lang-selector-inline {
-            background: var(--bg-dark);
-            border: 1px solid rgba(155, 89, 182, 0.3);
-            border-radius: 10px;
-            padding: 6px 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            width: fit-content;
-            margin: 0 auto;
+        #lang-selector-container {
+            background: var(--bg-card); border: 1px solid rgba(155, 89, 182, 0.2);
+            border-radius: 10px; padding: 4px 8px; display: flex; align-items: center; gap: 5px;
         }
-        
-        .lang-selector-inline select {
-            background: transparent; border: none; color: #fff;
-            font-family: inherit; font-size: 13px; outline: none; cursor: pointer;
+        #lang-select {
+            background: transparent; border: none; color: #fff; font-family: inherit; font-size: 12px; outline: none; cursor: pointer;
         }
-        .lang-selector-inline select option { background: var(--bg-card); color: #fff; }
 
-        /* FOOTER */
         #global-footer {
             width: 100%; max-width: 480px; text-align: center;
             padding: 15px 0; font-size: 11px; color: var(--text-muted);
@@ -438,67 +406,63 @@
         }
         #global-footer a { color: var(--text-muted); text-decoration: underline; cursor: pointer; }
 
-        /* ANIMATIONS */
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        .referral-stats-box {
+            background: rgba(155, 89, 182, 0.1);
+            border: 1px dashed rgba(155, 89, 182, 0.3);
+            border-radius: 10px;
+            padding: 10px;
+            width: 100%;
+            font-size: 12px;
+            text-align: center;
+            color: #dfcbe8;
+            margin-top: 5px;
+        }
+
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; filter: drop-shadow(0 0 8px var(--purple-gold)); } 100% { opacity: 0.8; } }
+        @keyframes pulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; filter: drop-shadow(0 0 8px var(--purple-gold)); } }
+        @keyframes softPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); box-shadow: 0 0 15px rgba(52, 152, 219, 0.4); } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes scanMove { 0% { top: 0%; } 50% { top: 100%; } 100% { top: 0%; } }
+        @keyframes scanMove { 0%, 100% { top: 0%; } 50% { top: 100%; } }
     </style>
 </head>
 <body>
 
-    <!-- MANDATORY OVERLAY WITH TRANSLATION & GATEKEEPER -->
-    <div id="consent-overlay" class="hidden">
+    <div id="consent-overlay">
         <div class="consent-box">
-            <h2 style="text-align: center; font-size: 18px;" data-translate="true">☽ Όροι Χρήσης & Πολιτική Απορρήτου ☾</h2>
+            <h2 data-translate="true">☽ Όροι Χρήσης & Απορρήτου ☾</h2>
             
-            <!-- Language Selector inside the gating popup -->
-            <div class="lang-selector-inline">
-                <span>🌐 Language:</span>
-                <select onchange="changeLanguage(this.value)">
-                    <option value="el">Ελληνικά</option>
-                    <option value="en">English</option>
-                    <option value="ru">Русский</option>
-                    <option value="es">Español</option>
-                    <option value="fr">Français</option>
-                    <option value="de">Deutsch</option>
-                    <option value="it">Italiano</option>
-                    <option value="ar">العربية</option>
-                </select>
-            </div>
-
-            <div class="consent-scrollable">
-                <p style="font-weight: bold; color: var(--gold-glow); margin-bottom: 8px;" data-translate="true">1. Όροι Χρήσης & Προϋποθέσεις</p>
-                <p style="margin-bottom: 12px;" data-translate="true">Η εφαρμογή παρέχει αναλύσεις χειρομαντείας και αστρολογίας με τη χρήση Τεχνητής Νοημοσύνης (AI) αποκλειστικά και μόνο για σκοπούς ψυχαγωγίας. Καμία πληροφορία ή πρόβλεψη δεν πρέπει να εκλαμβάνεται ως ιατρική, νομική, οικονομική ή επαγγελματική συμβουλή. Δεν φέρουμε καμία ευθύνη για τυχόν αποφάσεις ή πράξεις που βασίζονται στα αποτελέσματα των αναλύσεων.</p>
+            <div class="consent-scrollable-terms">
+                <strong>ΑΥΣΤΗΡΩΣ ΚΑΤΑΛΛΗΛΟ ΓΙΑ 18+</strong>
+                <p>Καλώς ήρθατε στο LiFe LiNe. Για να χρησιμοποιήσετε την εφαρμογή μας, πρέπει να αποδεχτείτε πλήρως τους παρακάτω όρους:</p>
                 
-                <p style="font-weight: bold; color: var(--gold-glow); margin-bottom: 8px;" data-translate="true">2. Πολιτική Απορρήτου & Βιομετρικά Δεδομένα</p>
-                <p data-translate="true">Η εφαρμογή ζητά πρόσβαση στην κάμερά σας αποκλειστικά για τη λήψη φωτογραφίας της παλάμης σας. Η επεξεργασία της εικόνας γίνεται σε πραγματικό χρόνο. Η φωτογραφία αποστέλλεται με ασφάλεια στο API μας και ΔΕΝ αποθηκεύεται μόνιμα στους διακομιστές μας. Διαγράφεται αμέσως μετά την έκδοση της πρόβλεψης. Αποθηκεύουμε το Telegram User ID σας αποκλειστικά για τη διαχείριση των πόντων σας.</p>
+                <h3>1. Ψυχαγωγικός & Χιουμοριστικός Χαρακτήρας</h3>
+                <p>Η εφαρμογή παρέχει αναλύσεις χειρομαντείας και αστρολογίας με τη χρήση Τεχνητής Νοημοσύνης (AI) αποκλειστικά για σκοπούς ψυχαγωγίας. Καμία πληροφορία ή πρόβλεψη δεν αποτελεί ιατρική, νομική, οικονομική, ψυχολογική ή επαγγελματική συμβουλή.</p>
+                
+                <h3>2. Διαχείριση Κάμερας & Σάρωσης Παλάμης</h3>
+                <p>Η εφαρμογή ζητά πρόσβαση στην κάμερά σας αποκλειστικά για τη λήψη φωτογραφίας της παλάμης σας. Η φωτογραφία μετατρέπεται σε προσωρινό κώδικα στη συσκευή σας και στέλνεται με ασφάλεια στο API μας για οπτική ανάλυση. ΔΕΝ αποθηκεύουμε μόνιμα τις φωτογραφίες σας, ούτε συλλέγουμε βιομετρικά δεδομένα. Διαγράφονται οριστικά αμέσως μετά την έκδοση της πρόβλεψης.</p>
+                
+                <h3>3. Περιορισμός Ευθύνης</h3>
+                <p>Δεν φέρουμε καμία απολύτως αστική ή ποινική ευθύνη για τυχόν αποφάσεις, πράξεις, ζημίες ή ψυχική αναστάτωση που βασίζονται στα αποτελέσματα των αναλύσεων της εφαρμογής στην πραγματική ζωή.</p>
             </div>
 
-            <button class="btn btn-purple" onclick="acceptConsent()" data-translate="true">✅ Αποδοχή & Είσοδος στο Παιχνίδι</button>
+            <button class="btn btn-purple" onclick="acceptConsent()" data-translate="true">👍 Συμφωνώ & Είσοδος</button>
         </div>
     </div>
 
     <div class="app-container">
         
-        <!-- GLOBAL HEADER -->
         <header>
             <div class="brand">
                 <span class="brand-logo">👁️</span>
                 <span class="brand-title">LiFe LiNe</span>
             </div>
-            <div class="rewards-container">
-                <div id="rewards-bar">
-                    <span class="points-icon">🌟</span>
-                    <span class="points-count" id="user-points-display">15</span>
-                </div>
-                <!-- ADSGRAM FREE POINTS BUTTON -->
-                <button class="btn btn-earn-ads" onclick="watchAdForPoints()" data-translate="true">📺 Δες διαφήμιση (+10 Πόντοι)</button>
+            <div id="rewards-bar">
+                <span class="points-icon">🌟</span>
+                <span class="points-count" id="user-points-display">15</span>
             </div>
         </header>
 
-        <!-- SPLASH PAGE -->
         <div id="splash-page">
             <div class="mystic-eye-container">
                 <div class="mystic-ring"></div>
@@ -511,10 +475,8 @@
             <button class="btn btn-purple" onclick="navigateToScanPage()" data-translate="true">✨ Έναρξη Χειρομαντείας</button>
         </div>
 
-        <!-- SCAN PAGE (MAIN WORKSPACE) -->
         <div id="scan-page" class="hidden">
             
-            <!-- SELECTORS GRID -->
             <div class="selectors-grid">
                 <div class="select-wrapper">
                     <select id="gender-select">
@@ -550,7 +512,6 @@
                 </div>
             </div>
 
-            <!-- SCAN WINDOW (LIVE PREVIEW VIDEO) -->
             <div id="scan-container">
                 <canvas id="camera-canvas" style="display:none;"></canvas>
                 <video id="camera-preview" autoplay playsinline muted></video>
@@ -558,7 +519,6 @@
                 <div id="scan-line"></div>
             </div>
 
-            <!-- CAMERA CONTROL BUTTONS -->
             <div class="camera-controls">
                 <button class="btn btn-purple" id="start-camera-btn" onclick="initCamera()" data-translate="true">📷 Άνοιξε Κάμερα</button>
                 <button class="btn btn-purple" id="switch-camera-btn" onclick="switchCamera()" style="display: none; width: auto; padding: 14px;" title="Αλλαγή Κάμερας">🔄</button>
@@ -569,19 +529,22 @@
                 </label>
             </div>
 
-            <!-- ΚΑΡΦΩΜΕΝΑ ΚΟΥΜΠΙΑ ΣΤΟ ΚΑΤΩ ΜΕΡΟΣ (FIXED) -->
-            <div class="analysis-actions">
-                <button class="btn btn-green btn-uniform" id="analyze-btn" onclick="startAnalysisFlow()" style="display: none;" data-translate="true">🔮 Ανάλυση Παλάμης (<span id="btn-cost-display">15</span> Πόντοι)</button>
+            <button class="btn btn-ad-earning" onclick="watchAdForPoints()">📺 Δες διαφήμιση & Κέρδισε +10 Πόντους</button>
+
+            <div class="referral-stats-box">
+                👥 Φίλοι: <span id="ref-count-text">0</span>/15 (Στους 15 φίλους κερδίζεις 🎁 100 Πόντους!)
             </div>
 
-            <!-- LOADING BOX -->
+            <div class="analysis-actions">
+                <button class="btn btn-green btn-uniform" id="analyze-btn" onclick="startAnalysisFlow()" style="display: none;"><span id="btn-text-cost">🔮 Ανάλυση Παλάμης (Κόστος: 15 Πόντοι)</span></button>
+            </div>
+
             <div id="loading-box">
-                <div class="loading-text" data-translate="true">🔮 Η Aziram διαβάζει τις γραμμές σου...</div>
+                <div class="loading-text" data-translate="true">🔮 Η Aziram διαβάζει τις γραμμές σου αντικειμενικά...</div>
                 <div class="loading-spinner"></div>
             </div>
         </div>
 
-        <!-- RESULT POPUP OVERLAY -->
         <div id="result-popup-overlay">
             <div id="result-popup">
                 <h2>☽ Η Αποκάλυψη της Aziram ☾</h2>
@@ -590,16 +553,28 @@
             </div>
         </div>
 
-        <!-- TERMS & PRIVACY MODAL FOR FOOTER -->
         <div id="terms-modal-overlay">
             <div id="terms-modal"></div>
         </div>
 
-        <!-- GLOBAL FOOTER -->
         <div id="global-footer">
             <a onclick="showTerms('terms')" data-translate="true">Όροι Χρήσης</a>
             <span class="footer-divider">|</span>
             <a onclick="showTerms('privacy')" data-translate="true">Απόρρητο</a>
+            <span class="footer-divider">|</span>
+            <div id="lang-selector-container">
+                <span>🌐</span>
+                <select id="lang-select" onchange="changeLanguage(this.value)">
+                    <option value="el">Ελληνικά</option>
+                    <option value="en">English</option>
+                    <option value="ru">Русский</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="it">Italiano</option>
+                    <option value="ar">العربية</option>
+                </select>
+            </div>
         </div>
 
     </div>
