@@ -234,7 +234,6 @@ function detectLanguage() {
     document.getElementById('language-select').value = mapped;
     currentLang = mapped;
     updateLangLabel();
-    // Αν είναι ξένη γλώσσα, αυτόματη μετάφραση
     if (mapped !== 'el') {
         setTimeout(function() { startTranslation(); }, 1000);
     }
@@ -330,16 +329,46 @@ function setBirthdate(date) {
 
 function selectTopic(topic) { userTopic = topic; }
 
-// ===== CAMERA (ΝΕΑ ΛΟΓΙΚΗ ΜΕ LIVE ΣΚΑΝΑΡΙΣΜΑ) =====
+// ===== CAMERA ΜΕ ΑΥΤΟΜΑΤΗ ΑΝΤΙΣΤΡΟΦΗ ΜΕΤΡΗΣΗ 8 ΔΕΥΤΕΡΟΛΕΠΤΩΝ =====
 var video = document.getElementById('webcam');
 var currentStream = null;
 var capturedImage = null;
 var isAnalyzing = false;
 var cameraActive = false;
 var currentFacingMode = 'user';
-var captureMode = false; // true μόλις ο χρήστης τραβήξει φωτογραφία
+var countdownInterval = null;
+var countdownTimeout = null;
+var countdownSeconds = 8;
+
+function showPalmGuideOverlay(show, customText) {
+    var overlay = document.getElementById('palm-guide-overlay');
+    if (!overlay) return;
+    if (show) {
+        overlay.className = 'palm-guide-visible';
+        var textElement = overlay.querySelector('p');
+        if (textElement && customText) {
+            textElement.textContent = customText;
+            textElement.removeAttribute('data-translate'); // αφαιρούμε το data-translate προσωρινά
+        } else if (textElement) {
+            textElement.textContent = 'Τοποθέτησε την παλάμη σου εδώ';
+            textElement.setAttribute('data-translate', 'true');
+            // επαναφορά μετάφρασης αν χρειαστεί
+            if (currentLang !== 'el') {
+                translateElements([textElement], currentLang);
+            }
+        }
+    } else {
+        overlay.className = 'palm-guide-hidden';
+    }
+}
 
 async function startCamera() {
+    // Έλεγχος πόντων πριν το άνοιγμα κάμερας
+    if (getUserPoints() < VIP_COST) {
+        alert('Χρειάζεσαι τουλάχιστον ' + VIP_COST + ' πόντους για ανάλυση. Κέρδισε πόντους βλέποντας διαφημίσεις.');
+        return;
+    }
+
     try {
         if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); }
         currentStream = await navigator.mediaDevices.getUserMedia({
@@ -347,13 +376,13 @@ async function startCamera() {
         });
         video.srcObject = currentStream;
         cameraActive = true;
-        captureMode = false;
 
-        // Εμφάνιση overlay παλάμης και κουμπιού λήψης
+        // Εμφάνιση οδηγού και έναρξη αντίστροφης μέτρησης
         showPalmGuideOverlay(true);
-        document.getElementById('capture-btn').style.display = 'inline-flex';
-        document.getElementById('camera-btn').innerText = '📷 Κάμερα Ενεργή';
-        document.getElementById('camera-btn').style.background = 'linear-gradient(145deg, #2ecc71, #1e8449)';
+        startCountdown();
+
+        document.getElementById('camera-btn').innerText = '📷 Κλείσιμο Κάμερας';
+        document.getElementById('camera-btn').style.background = 'linear-gradient(145deg, #e74c3c, #c0392b)';
         document.getElementById('selfie-btn').style.display = 'inline-flex';
         document.getElementById('back-btn').style.display = 'inline-flex';
         updateCameraToggleButtons();
@@ -362,21 +391,68 @@ async function startCamera() {
     }
 }
 
+function startCountdown() {
+    // Καθαρισμός τυχόν προηγούμενων timers
+    clearCountdown();
+
+    countdownSeconds = 8;
+    updateCountdownDisplay();
+
+    countdownInterval = setInterval(function() {
+        countdownSeconds--;
+        updateCountdownDisplay();
+        if (countdownSeconds <= 0) {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+        }
+    }, 1000);
+
+    countdownTimeout = setTimeout(function() {
+        autoCaptureAndAnalyze();
+    }, 8000);
+}
+
+function updateCountdownDisplay() {
+    var text = 'Σκανάρισμα σε: ' + countdownSeconds + '...';
+    showPalmGuideOverlay(true, text);
+}
+
+function clearCountdown() {
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+    }
+    if (countdownTimeout) {
+        clearTimeout(countdownTimeout);
+        countdownTimeout = null;
+    }
+}
+
+function autoCaptureAndAnalyze() {
+    if (!cameraActive) return; // ακυρώθηκε
+    capturePhotoFromCamera();
+    stopCamera();
+    // Ξεκίνησε ανάλυση αμέσως
+    performAnalysis();
+}
+
 function toggleCamera() {
     if (cameraActive) {
-        // Αν είναι ενεργή, τη σταματάμε
         stopCamera();
     } else {
-        // Ξεκινάμε την κάμερα
         startCamera();
     }
 }
 
-function showPalmGuideOverlay(show) {
-    var overlay = document.getElementById('palm-guide-overlay');
-    if (overlay) {
-        overlay.className = show ? 'palm-guide-visible' : 'palm-guide-hidden';
-    }
+function stopCamera() {
+    clearCountdown();
+    if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); currentStream = null; }
+    cameraActive = false;
+    showPalmGuideOverlay(false);
+    document.getElementById('selfie-btn').style.display = 'none';
+    document.getElementById('back-btn').style.display = 'none';
+    document.getElementById('camera-btn').innerText = '📷 Άνοιγμα Κάμερας';
+    document.getElementById('camera-btn').style.background = 'linear-gradient(145deg, #FFD700, #B8860B)';
 }
 
 async function switchCamera(facingMode) {
@@ -384,24 +460,13 @@ async function switchCamera(facingMode) {
     currentFacingMode = facingMode;
     if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); currentStream = null; }
     cameraActive = false;
-    await startCamera();
+    clearCountdown();
+    await startCamera(); // θα ξεκινήσει νέα αντίστροφη μέτρηση
 }
 
 function updateCameraToggleButtons() {
     document.getElementById('selfie-btn').classList.toggle('active', currentFacingMode === 'user');
     document.getElementById('back-btn').classList.toggle('active', currentFacingMode === 'environment');
-}
-
-function stopCamera() {
-    if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); currentStream = null; }
-    cameraActive = false;
-    captureMode = false;
-    showPalmGuideOverlay(false);
-    document.getElementById('selfie-btn').style.display = 'none';
-    document.getElementById('back-btn').style.display = 'none';
-    document.getElementById('capture-btn').style.display = 'none';
-    document.getElementById('camera-btn').innerText = '📷 Άνοιγμα Κάμερας';
-    document.getElementById('camera-btn').style.background = 'linear-gradient(145deg, #FFD700, #B8860B)';
 }
 
 function capturePhotoFromCamera() {
@@ -418,10 +483,7 @@ function capturePhotoFromCamera() {
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     }
     capturedImage = canvas.toDataURL('image/jpeg', 0.8);
-    captureMode = true;
     showPhotoPreview(capturedImage);
-    // Δεν κλείνουμε την κάμερα, απλά δείχνουμε την προεπισκόπηση
-    // Ο χρήστης μπορεί να συνεχίσει να βλέπει την κάμερα ή να πατήσει VIP
 }
 
 function handleUpload(event) {
@@ -430,7 +492,6 @@ function handleUpload(event) {
     var reader = new FileReader();
     reader.onload = function(e) {
         capturedImage = e.target.result;
-        captureMode = true;
         showPhotoPreview(capturedImage);
     };
     reader.readAsDataURL(file);
@@ -440,7 +501,6 @@ function showPhotoPreview(imageSrc) {
     document.getElementById('upload-preview-img').src = imageSrc;
     document.getElementById('upload-preview-area').style.display = 'block';
     document.getElementById('analyze-vip-btn').style.display = 'inline-flex';
-    // Ενημέρωση του VIP κουμπιού με τους τρέχοντες πόντους
     updatePointsDisplay();
 }
 
@@ -469,15 +529,16 @@ async function performAnalysis() {
         });
         var data = await response.json();
         if (data.success && data.reading) {
+            // Αφαίρεση πόντων μόνο μετά την επιτυχή ανάλυση
+            spendPoints(VIP_COST);
+
             var resultDiv = document.getElementById('result-popup-text');
-            // Καθαρισμός και εμφάνιση του κειμένου
             resultDiv.innerHTML = data.reading
                 .replace(/## (.*?)\n/g, '<h2>$1</h2>')
                 .replace(/### (.*?)\n/g, '<h3>$1</h3>')
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\n/g, '<br>');
 
-            // Μετάφραση αποτελέσματος αν η γλώσσα δεν είναι ελληνικά
             if (currentLang !== 'el') {
                 await translateResultText(resultDiv);
             }
@@ -492,20 +553,18 @@ async function performAnalysis() {
         alert('Σφάλμα σύνδεσης.');
     } finally {
         document.getElementById('loading-box').style.display = 'none';
-        document.getElementById('analyze-vip-btn').style.display = 'inline-flex';
         updatePointsDisplay();
         isAnalyzing = false;
+        resetScan();
     }
 }
 
 async function translateResultText(container) {
-    // Δημιουργία προσωρινού span για να πιάσουμε το κείμενο
     var tempSpan = document.createElement('span');
     tempSpan.textContent = container.innerText;
     container.innerHTML = '';
     container.appendChild(tempSpan);
     await translateElements([tempSpan], currentLang);
-    // Επαναφορά με διατήρηση των γραμμών (απλό κείμενο)
     container.innerHTML = container.innerText.replace(/\n/g, '<br>');
 }
 
@@ -537,7 +596,6 @@ function resetScan() {
     document.getElementById('camera-btn').innerText = '📷 Άνοιγμα Κάμερας';
     document.getElementById('camera-btn').style.background = 'linear-gradient(145deg, #FFD700, #B8860B)';
     capturedImage = null;
-    captureMode = false;
     isAnalyzing = false;
 }
 
@@ -578,14 +636,12 @@ function earnPoints() {
         .catch(function(err) { alert('Δεν ήταν δυνατή η προβολή διαφήμισης.'); });
 }
 
-// Η startAnalysisFlow αφαιρεί πόντους και ξεκινά ανάλυση
 function startAnalysisFlow() {
     if (!capturedImage) {
-        alert('Παρακαλώ τράβηξε ή ανέβασε φωτογραφία πριν την ανάλυση.');
+        alert('Παρακαλώ τράβηξε ή ανέβασε φωτογραφία.');
         return;
     }
-    if (spendPoints(VIP_COST)) {
-        // Απενεργοποίηση κουμπιού για αποφυγή διπλοπατήματος
+    if (getUserPoints() >= VIP_COST) {
         document.getElementById('analyze-vip-btn').disabled = true;
         document.getElementById('analyze-vip-btn').style.opacity = '0.5';
         performAnalysis();
@@ -652,7 +708,6 @@ async function createInviteModal() {
     `;
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-    // Αυτόματη μετάφραση αν η γλώσσα δεν είναι ελληνικά
     if (currentLang !== 'el') {
         var modalEl = document.getElementById('invite-modal');
         var translatable = modalEl.querySelectorAll('[data-translate="true"]');
@@ -707,14 +762,13 @@ function addInviteButton() {
     btn.onclick = showInviteModal;
     bar.appendChild(btn);
 
-    // Αν είναι ξένη γλώσσα, μετάφρασε το κουμπί
     if (currentLang !== 'el') {
         translateElements([btn], currentLang);
     }
 }
 
 // ===== INITIALIZE =====
-grantWelcomeBonus();   // Δώσε 15 πόντους καλωσορίσματος
+grantWelcomeBonus();
 updatePointsDisplay();
 addInviteButton();
 detectReferral();
