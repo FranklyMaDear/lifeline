@@ -51,93 +51,85 @@ function grantWelcomeBonus() {
     }
 }
 
-// ===== CUSTOM MODAL ΓΙΑ ΣΦΑΛΜΑ ΠΟΝΤΩΝ (μεταφράζεται) =====
-function showPointsErrorModal(customMessageKey) {
-    var existing = document.getElementById('points-error-modal');
-    if (existing) existing.remove();
+// ===== MODAL ΑΝΕΠΑΡΚΩΝ ΠΟΝΤΩΝ (χρησιμοποιεί το #insufficient-modal-overlay) =====
+function showPointsErrorModal(messageKey) {
+    const overlay = document.getElementById('insufficient-modal-overlay');
+    const messageEl = document.getElementById('insufficient-message');
+    if (!overlay || !messageEl) return;
 
-    var defaultTitle = 'Ανεπαρκή Διαμάντια!';
-    var defaultBody = 'Χρειάζεσαι 15 διαμάντια για μία VIP ανάλυση. Πάτα "Κέρδισε Πόντους" για να δεις μία διαφήμιση (+10).';
-    var title = defaultTitle;
-    var body = defaultBody;
+    const messages = {
+        el: {
+            title: '💎 Ανεπαρκή Διαμάντια!',
+            body: 'Χρειάζεσαι 15 διαμάντια για μία VIP ανάλυση. Πάτα "Κέρδισε Πόντους" για να δεις μία διαφήμιση (+10).',
+            upload: '💎 Δεν έχεις αρκετά διαμάντια! Μάζεψε 15 διαμάντια από τις διαφημίσεις πριν ανεβάσεις φωτογραφία.'
+        },
+        en: {
+            title: '💎 Insufficient Diamonds!',
+            body: 'You need 15 diamonds for a VIP analysis. Tap "Earn Points" to watch an ad (+10).',
+            upload: '💎 Not enough diamonds! Earn 15 diamonds from ads before uploading your photo.'
+        }
+    };
 
-    // Επιλέγουμε το σωστό μήνυμα ανάλογα με το κλειδί (upload ή default)
-    if (customMessageKey === 'upload') {
-        body = 'Δεν έχεις αρκετά διαμάντια! Μάζεψε 15 διαμάντια από τις διαφημίσεις πριν ανεβάσεις φωτογραφία.';
-    }
+    const lang = currentLang || 'el';
+    const text = (messages[lang] && messages[lang][messageKey]) ? messages[lang][messageKey] : (messages['en'][messageKey] || messages['el'][messageKey] || messages['el']['body']);
+    const title = messages[lang] ? messages[lang].title : messages['en'].title;
 
-    var modalHTML = `
-        <div id="points-error-modal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:10002;display:flex;align-items:center;justify-content:center;padding:20px;">
-            <div style="background:linear-gradient(145deg,#1a0e2a,#2a1a3a);border:3px solid #FFD700;border-radius:25px;padding:25px 20px;max-width:420px;width:100%;text-align:center;box-shadow:0 0 60px rgba(255,215,0,0.4);animation:modalFadeIn 0.5s ease;">
-                <div style="font-size:3rem;margin-bottom:10px;">💎</div>
-                <h2 style="color:#FFD700;font-size:1.2rem;margin-bottom:12px;" data-translate="true">${title}</h2>
-                <p style="color:#d5c8e8;font-size:0.85rem;line-height:1.6;margin-bottom:20px;" data-translate="true">${body}</p>
-                <button onclick="closePointsErrorModal()" style="background:linear-gradient(145deg,#FFD700,#B8860B);color:#1a0033;padding:12px 25px;border:none;border-radius:30px;font-size:0.9rem;font-weight:700;cursor:pointer;box-shadow:0 0 20px rgba(255,215,0,0.3);letter-spacing:1px;width:100%;" data-translate="true">Κατάλαβα, πάω για διαφημίσεις!</button>
-            </div>
-        </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    messageEl.innerHTML = `<strong>${title}</strong><br><br>${text}`;
+    overlay.classList.add('active');
 
-    // Άμεση μετάφραση αν η γλώσσα δεν είναι Ελληνικά
-    if (currentLang !== 'el') {
-        var modalEl = document.getElementById('points-error-modal');
-        var translatable = modalEl.querySelectorAll('[data-translate="true"]');
-        translateElements(translatable, currentLang);
+    // Μετάφραση του κουμπιού αν χρειαστεί
+    const btn = overlay.querySelector('button');
+    if (btn && currentLang !== 'el') {
+        translateElements([btn], currentLang);
     }
 }
 
-function closePointsErrorModal() {
-    var modal = document.getElementById('points-error-modal');
-    if (modal) modal.remove();
+function closeInsufficientModal() {
+    const overlay = document.getElementById('insufficient-modal-overlay');
+    if (overlay) overlay.classList.remove('active');
 }
 
-// ===== ΔΗΜΙΟΥΡΓΙΑ OVERLAY ΓΙΑ ΤΗΝ ΠΑΛΑΜΗ / COUNTDOWN =====
+// ===== OVERLAY ΠΑΛΑΜΗΣ / COUNTDOWN (δυναμική δημιουργία) =====
 function createPalmGuideOverlay() {
     if (document.getElementById('palm-guide-overlay')) return;
-    var overlay = document.createElement('div');
+    const overlay = document.createElement('div');
     overlay.id = 'palm-guide-overlay';
     overlay.style.cssText = `
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        display: flex; align-items: center; justify-content: center;
+        display: none; align-items: center; justify-content: center;
         pointer-events: none; z-index: 20;
         background: rgba(0,0,0,0.4); border-radius: 24px;
         transition: opacity 0.4s;
     `;
-    var p = document.createElement('p');
+    const p = document.createElement('p');
     p.style.cssText = 'color:#FFD700;font-size:1.3rem;font-weight:bold;text-shadow:0 0 20px black;text-align:center;padding:10px;';
     p.textContent = 'Τοποθέτησε την παλάμη σου εδώ';
     overlay.appendChild(p);
-    var wrapper = document.getElementById('camera-wrapper');
+    const wrapper = document.getElementById('camera-wrapper');
     if (wrapper) wrapper.appendChild(overlay);
     return overlay;
 }
 
-// Ενημέρωση εμφάνισης / απόκρυψης του οδηγού παλάμης
 function showPalmGuideOverlay(show, customText) {
-    var overlay = document.getElementById('palm-guide-overlay');
-    if (!overlay) overlay = createPalmGuideOverlay();
-    if (show) {
-        overlay.style.display = 'flex';
-        var textElement = overlay.querySelector('p');
-        if (textElement && customText) {
-            textElement.textContent = customText;
-        } else if (textElement) {
-            textElement.textContent = 'Τοποθέτησε την παλάμη σου εδώ';
-        }
+    const overlay = document.getElementById('palm-guide-overlay') || createPalmGuideOverlay();
+    overlay.style.display = show ? 'flex' : 'none';
+    if (show && customText) {
+        const textElement = overlay.querySelector('p');
+        if (textElement) textElement.textContent = customText;
     } else {
-        overlay.style.display = 'none';
+        const textElement = overlay.querySelector('p');
+        if (textElement) textElement.textContent = 'Τοποθέτησε την παλάμη σου εδώ';
     }
 }
 
-// ===== ΜΕΤΑΦΡΑΣΗ ΤΟΥ COUNTDOWN PREFIX =====
-var countdownPrefix = 'Σκανάρισμα σε:';
+// ===== ΜΕΤΑΦΡΑΣΗ COUNTDOWN PREFIX =====
+let countdownPrefix = 'Σκανάρισμα σε:';
 async function updateCountdownPrefix() {
     if (currentLang === 'el') {
         countdownPrefix = 'Σκανάρισμα σε:';
         return;
     }
-    // Μεταφράζουμε μόνο το prefix
-    var dummy = document.createElement('span');
+    const dummy = document.createElement('span');
     dummy.textContent = 'Σκανάρισμα σε:';
     await translateElements([dummy], currentLang);
     countdownPrefix = dummy.textContent.trim() + ' ';
@@ -168,12 +160,12 @@ const TERMS_STRUCTURE = {
 };
 
 async function showTerms(type) {
-    var modal = document.getElementById('terms-modal');
-    var structure = TERMS_STRUCTURE[type];
+    const modal = document.getElementById('terms-modal');
+    const structure = TERMS_STRUCTURE[type];
     if (!structure) return;
 
-    var html = `<h2 data-translate="true">${structure.title}</h2>`;
-    structure.sections.forEach(function(sec) {
+    let html = `<h2 data-translate="true">${structure.title}</h2>`;
+    structure.sections.forEach(sec => {
         html += `<h3 data-translate="true">${sec.heading}</h3>`;
         html += `<p data-translate="true">${sec.body}</p>`;
     });
@@ -184,7 +176,7 @@ async function showTerms(type) {
     document.getElementById('terms-modal-overlay').classList.add('active');
 
     if (currentLang !== 'el') {
-        var elements = modal.querySelectorAll('[data-translate="true"]');
+        const elements = modal.querySelectorAll('[data-translate="true"]');
         await translateElements(elements, currentLang);
     }
 }
@@ -198,24 +190,23 @@ document.getElementById('terms-modal-overlay').addEventListener('click', functio
 });
 
 // ===== ΜΕΤΑΦΡΑΣΗ =====
-var originalTexts = {};
-var currentLang = 'el';
-var translationsCache = {};
+const originalTexts = {};
+let currentLang = 'el';
+const translationsCache = {};
 
-// Για το popup αποτελέσματος
-var originalResultText = '';
-var resultTranslationLang = '';
+let originalResultText = '';
+let resultTranslationLang = '';
 
 function saveOriginalTexts() {
-    document.querySelectorAll('[data-translate="true"]').forEach(function(el) {
-        var key = el.outerHTML;
+    document.querySelectorAll('[data-translate="true"]').forEach(el => {
+        const key = el.outerHTML;
         if (!originalTexts[key]) originalTexts[key] = el.textContent.trim();
     });
 }
 saveOriginalTexts();
 
 function updateLangLabel() {
-    var labelMap = {
+    const labelMap = {
         'el': '🌐 Γλώσσα', 'en': '🌐 Language', 'de': '🌐 Sprache', 'fr': '🌐 Langue',
         'es': '🌐 Idioma', 'it': '🌐 Lingua', 'ar': '🌐 اللغة', 'zh-CN': '🌐 语言',
         'ja': '🌐 言語', 'ru': '🌐 Язык', 'tr': '🌐 Dil', 'nl': '🌐 Taal',
@@ -224,28 +215,28 @@ function updateLangLabel() {
         'bg': '🌐 Език', 'uk': '🌐 Мова', 'ko': '🌐 언어', 'hi': '🌐 भाषा',
         'vi': '🌐 Ngôn ngữ', 'th': '🌐 ภาษา', 'id': '🌐 Bahasa', 'iw': '🌐 שפה'
     };
-    var label = document.getElementById('lang-label');
+    const label = document.getElementById('lang-label');
     if (label) label.textContent = labelMap[currentLang] || '🌐 Language';
 }
 
 async function translateElements(elements, targetLang) {
-    var textsToTranslate = [];
-    var elementsToUpdate = [];
-    elements.forEach(function(el) {
-        var text = el.textContent.trim();
+    const textsToTranslate = [];
+    const elementsToUpdate = [];
+    elements.forEach(el => {
+        const text = el.textContent.trim();
         if (text.length > 0 && text.length < 1500) {
             textsToTranslate.push(text);
             elementsToUpdate.push(el);
         }
     });
     if (textsToTranslate.length === 0) return;
-    var batchSize = 10;
-    for (var i = 0; i < textsToTranslate.length; i += batchSize) {
-        var batch = textsToTranslate.slice(i, i + batchSize);
-        var batchElements = elementsToUpdate.slice(i, i + batchSize);
+    const batchSize = 10;
+    for (let i = 0; i < textsToTranslate.length; i += batchSize) {
+        const batch = textsToTranslate.slice(i, i + batchSize);
+        const batchElements = elementsToUpdate.slice(i, i + batchSize);
         try {
-            var translatedTexts = await translateBatch(batch, targetLang);
-            for (var j = 0; j < batchElements.length; j++) {
+            const translatedTexts = await translateBatch(batch, targetLang);
+            for (let j = 0; j < batchElements.length; j++) {
                 if (translatedTexts[j]) batchElements[j].textContent = translatedTexts[j];
             }
         } catch (e) { console.log('Translation error:', e); }
@@ -253,7 +244,7 @@ async function translateElements(elements, targetLang) {
 }
 
 function startTranslation() {
-    var lang = document.getElementById('language-select').value;
+    const lang = document.getElementById('language-select').value;
     if (lang === 'el') {
         restoreOriginalTexts();
         currentLang = 'el';
@@ -262,7 +253,7 @@ function startTranslation() {
         updatePointsDisplay();
         return;
     }
-    var btn = document.getElementById('translate-btn');
+    const btn = document.getElementById('translate-btn');
     btn.classList.add('translating');
     btn.textContent = '⟳';
     btn.disabled = true;
@@ -270,18 +261,17 @@ function startTranslation() {
 }
 
 async function translatePage(targetLang) {
-    var elements = document.querySelectorAll('[data-translate="true"]');
+    const elements = document.querySelectorAll('[data-translate="true"]');
     await translateElements(elements, targetLang);
     currentLang = targetLang;
     finishTranslation();
     updateLangLabel();
     updatePointsDisplay();
-    // Ενημέρωση και του countdown prefix
     await updateCountdownPrefix();
 }
 
 function finishTranslation() {
-    var btn = document.getElementById('translate-btn');
+    const btn = document.getElementById('translate-btn');
     btn.classList.remove('translating');
     btn.textContent = '▶';
     btn.disabled = false;
@@ -289,23 +279,23 @@ function finishTranslation() {
 }
 
 async function translateBatch(texts, targetLang) {
-    var cacheKey = targetLang + '|||' + texts.join('|||');
+    const cacheKey = targetLang + '|||' + texts.join('|||');
     if (translationsCache[cacheKey]) return translationsCache[cacheKey].split('|||');
-    var url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=el&tl=' + targetLang + '&dt=t&q=' + encodeURIComponent(texts.join('|||'));
-    var response = await fetch(url);
-    var data = await response.json();
-    var translatedText = '';
+    const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=el&tl=' + targetLang + '&dt=t&q=' + encodeURIComponent(texts.join('|||'));
+    const response = await fetch(url);
+    const data = await response.json();
+    let translatedText = '';
     if (data && data[0]) {
-        for (var i = 0; i < data[0].length; i++) { if (data[0][i][0]) translatedText += data[0][i][0]; }
+        for (let i = 0; i < data[0].length; i++) { if (data[0][i][0]) translatedText += data[0][i][0]; }
     }
-    var translations = translatedText.split('|||');
+    const translations = translatedText.split('|||');
     translationsCache[cacheKey] = translations.join('|||');
     return translations;
 }
 
 function restoreOriginalTexts() {
-    document.querySelectorAll('[data-translate="true"]').forEach(function(el) {
-        var key = el.outerHTML;
+    document.querySelectorAll('[data-translate="true"]').forEach(el => {
+        const key = el.outerHTML;
         if (originalTexts[key]) el.textContent = originalTexts[key];
     });
 }
@@ -319,36 +309,35 @@ function resetToGreek() {
     updatePointsDisplay();
 }
 
-// ===== ΑΥΤΟΜΑΤΗ ΑΝΙΧΝΕΥΣΗ ΓΛΩΣΣΑΣ ΣΥΣΚΕΥΗΣ =====
+// ===== ΑΥΤΟΜΑΤΗ ΑΝΙΧΝΕΥΣΗ ΓΛΩΣΣΑΣ =====
 function detectLanguage() {
-    var userLang = (navigator.language || navigator.userLanguage).split('-')[0];
-    var langMap = {
+    const userLang = (navigator.language || navigator.userLanguage).split('-')[0];
+    const langMap = {
         'el':'el','en':'en','de':'de','fr':'fr','es':'es','it':'it','ar':'ar','zh':'zh-CN',
         'ja':'ja','ru':'ru','tr':'tr','nl':'nl','pt':'pt','sv':'sv','no':'no','da':'da',
         'fi':'fi','pl':'pl','cs':'cs','ro':'ro','bg':'bg','uk':'uk','ko':'ko','hi':'hi',
         'vi':'vi','th':'th','id':'id','he':'iw','iw':'iw'
     };
-    var mapped = langMap[userLang] || 'el';
+    const mapped = langMap[userLang] || 'el';
     document.getElementById('language-select').value = mapped;
     currentLang = mapped;
     updateLangLabel();
     if (mapped !== 'el') {
-        setTimeout(function() { startTranslation(); }, 1000);
+        setTimeout(() => { startTranslation(); }, 1000);
     }
 }
 detectLanguage();
 
 // ===== STARFIELD =====
-var starCanvas = document.getElementById('starfield');
-var starCtx = starCanvas.getContext('2d');
-var stars = [];
+const starCanvas = document.getElementById('starfield');
+const starCtx = starCanvas.getContext('2d');
+let stars = [];
 function resizeStarfield() { starCanvas.width = window.innerWidth; starCanvas.height = window.innerHeight; }
 window.addEventListener('resize', resizeStarfield);
 resizeStarfield();
-function createStars(count) {
-    count = count || 150;
+function createStars(count = 150) {
     stars = [];
-    for (var i = 0; i < count; i++) {
+    for (let i = 0; i < count; i++) {
         stars.push({
             x: Math.random() * starCanvas.width, y: Math.random() * starCanvas.height,
             r: Math.random() * 2 + 0.5,
@@ -361,14 +350,14 @@ function createStars(count) {
 createStars();
 function drawStars() {
     starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
-    stars.forEach(function(s) {
+    stars.forEach(s => {
         s.x += s.dx; s.y += s.dy;
         if (s.x < 0 || s.x > starCanvas.width) s.dx *= -1;
         if (s.y < 0 || s.y > starCanvas.height) s.dy *= -1;
         starCtx.beginPath();
         starCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        var rgb = s.color === '#FFD700' ? '255,215,0' : '201,160,220';
-        starCtx.fillStyle = 'rgba(' + rgb + ', ' + (s.alpha * 0.6) + ')';
+        const rgb = s.color === '#FFD700' ? '255,215,0' : '201,160,220';
+        starCtx.fillStyle = `rgba(${rgb}, ${s.alpha * 0.6})`;
         starCtx.fill();
     });
     requestAnimationFrame(drawStars);
@@ -377,7 +366,7 @@ drawStars();
 
 // ===== NAVIGATION =====
 function goToScan() {
-    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('scan-page').classList.add('active');
     updatePointsDisplay();
     if (capturedImage || cameraActive) {
@@ -386,17 +375,17 @@ function goToScan() {
 }
 
 function goToSplash() {
-    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('splash-page').classList.add('active');
     stopCamera();
     resetScan();
 }
 
 // ===== USER PREFERENCES =====
-var userGender = 'male';
-var userZodiac = 'Κριός';
-var userBirthdate = '';
-var userTopic = 'Έρωτας & Σχέσεις';
+let userGender = 'male';
+let userZodiac = 'Κριός';
+let userBirthdate = '';
+let userTopic = 'Έρωτας & Σχέσεις';
 
 function setGender(gender) {
     userGender = gender;
@@ -407,9 +396,9 @@ function setGender(gender) {
 function setBirthdate(date) {
     userBirthdate = date;
     if (date) {
-        var dt = new Date(date);
-        var day = dt.getDate();
-        var m = dt.getMonth() + 1;
+        const dt = new Date(date);
+        const day = dt.getDate();
+        const m = dt.getMonth() + 1;
         if ((m===3&&day>=21)||(m===4&&day<=19)) userZodiac='Κριός';
         else if ((m===4&&day>=20)||(m===5&&day<=20)) userZodiac='Ταύρος';
         else if ((m===5&&day>=21)||(m===6&&day<=20)) userZodiac='Δίδυμοι';
@@ -428,15 +417,14 @@ function setBirthdate(date) {
 function selectTopic(topic) { userTopic = topic; }
 
 // ===== CAMERA ΜΕ ΑΥΤΟΜΑΤΗ ΑΝΤΙΣΤΡΟΦΗ ΜΕΤΡΗΣΗ 8 ΔΕΥΤΕΡΟΛΕΠΤΩΝ =====
-var video = document.getElementById('webcam');
-var currentStream = null;
-var capturedImage = null;
-var isAnalyzing = false;
-var cameraActive = false;
-var currentFacingMode = 'user';
-var countdownInterval = null;
-var countdownTimeout = null;
-var countdownSeconds = 8;
+const video = document.getElementById('webcam');
+let currentStream = null;
+let capturedImage = null;
+let isAnalyzing = false;
+let cameraActive = false;
+let currentFacingMode = 'user';
+let countdownInterval = null;
+let countdownTimeout = null;
 
 async function startCamera() {
     if (getUserPoints() < VIP_COST) {
@@ -445,16 +433,16 @@ async function startCamera() {
     }
 
     try {
-        if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); }
+        if (currentStream) { currentStream.getTracks().forEach(t => t.stop()); }
         currentStream = await navigator.mediaDevices.getUserMedia({
             video: { facingMode: currentFacingMode, width: { ideal: 640 }, height: { ideal: 480 } }
         });
         video.srcObject = currentStream;
         cameraActive = true;
 
-        createPalmGuideOverlay(); // εξασφαλίζει ότι υπάρχει
+        createPalmGuideOverlay();
         showPalmGuideOverlay(true);
-        startCountdown();
+        initiateCountdown();
 
         document.getElementById('camera-btn').innerText = '📷 Κλείσιμο Κάμερας';
         document.getElementById('camera-btn').style.background = 'linear-gradient(145deg, #e74c3c, #c0392b)';
@@ -466,37 +454,44 @@ async function startCamera() {
     }
 }
 
-function startCountdown() {
+function initiateCountdown() {
     clearCountdown();
 
-    // Βεβαιωνόμαστε ότι το prefix είναι μεταφρασμένο
-    updateCountdownPrefix().then(() => {
-        countdownSeconds = 8;
-        updateCountdownDisplay();
+    // Ενεργοποίηση γρήγορου laser εφέ
+    const scanLine = document.getElementById('scan-line');
+    if (scanLine) scanLine.classList.add('fast');
 
-        countdownInterval = setInterval(function() {
-            countdownSeconds--;
-            updateCountdownDisplay();
-            if (countdownSeconds <= 0) {
-                clearInterval(countdownInterval);
-                countdownInterval = null;
-                autoCaptureAndAnalyze();
-            }
-        }, 1000);
+    const timerOverlay = document.getElementById('camera-timer-overlay');
+    if (timerOverlay) {
+        timerOverlay.style.display = 'block';
+        timerOverlay.textContent = `${countdownPrefix}8`;
+    }
 
-        countdownTimeout = setTimeout(function() {
-            if (countdownInterval) {
-                clearInterval(countdownInterval);
-                countdownInterval = null;
-            }
+    let secondsLeft = 8;
+
+    countdownInterval = setInterval(() => {
+        secondsLeft--;
+        if (timerOverlay) {
+            timerOverlay.textContent = `${countdownPrefix}${secondsLeft}`;
+        }
+        if (secondsLeft <= 0) {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+            if (timerOverlay) timerOverlay.style.display = 'none';
+            if (scanLine) scanLine.classList.remove('fast');
             autoCaptureAndAnalyze();
-        }, 8000);
-    });
-}
+        }
+    }, 1000);
 
-function updateCountdownDisplay() {
-    var text = countdownPrefix + countdownSeconds + '...';
-    showPalmGuideOverlay(true, text);
+    countdownTimeout = setTimeout(() => {
+        if (countdownInterval) {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+        }
+        if (timerOverlay) timerOverlay.style.display = 'none';
+        if (scanLine) scanLine.classList.remove('fast');
+        autoCaptureAndAnalyze();
+    }, 8000);
 }
 
 function clearCountdown() {
@@ -508,6 +503,10 @@ function clearCountdown() {
         clearTimeout(countdownTimeout);
         countdownTimeout = null;
     }
+    const timerOverlay = document.getElementById('camera-timer-overlay');
+    if (timerOverlay) timerOverlay.style.display = 'none';
+    const scanLine = document.getElementById('scan-line');
+    if (scanLine) scanLine.classList.remove('fast');
 }
 
 function autoCaptureAndAnalyze() {
@@ -527,7 +526,7 @@ function toggleCamera() {
 
 function stopCamera() {
     clearCountdown();
-    if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); currentStream = null; }
+    if (currentStream) { currentStream.getTracks().forEach(t => t.stop()); currentStream = null; }
     cameraActive = false;
     showPalmGuideOverlay(false);
     document.getElementById('selfie-btn').style.display = 'none';
@@ -539,7 +538,7 @@ function stopCamera() {
 async function switchCamera(facingMode) {
     if (currentFacingMode === facingMode) return;
     currentFacingMode = facingMode;
-    if (currentStream) { currentStream.getTracks().forEach(function(t) { t.stop(); }); currentStream = null; }
+    if (currentStream) { currentStream.getTracks().forEach(t => t.stop()); currentStream = null; }
     cameraActive = false;
     clearCountdown();
     await startCamera();
@@ -552,10 +551,10 @@ function updateCameraToggleButtons() {
 
 function capturePhotoFromCamera() {
     if (!currentStream) return;
-    var canvas = document.createElement('canvas');
+    const canvas = document.createElement('canvas');
     canvas.width = video.videoWidth || 640;
     canvas.height = video.videoHeight || 480;
-    var ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
     if (currentFacingMode === 'user') {
         ctx.save(); ctx.scale(-1, 1);
         ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
@@ -567,17 +566,17 @@ function capturePhotoFromCamera() {
     showPhotoPreview(capturedImage);
 }
 
-// ===== UPLOAD ΜΕ ΕΛΕΓΧΟ ΠΟΝΤΩΝ (μπλοκάρει πριν το σκανάρισμα) =====
+// ===== UPLOAD ΜΕ ΕΛΕΓΧΟ ΠΟΝΤΩΝ =====
 function handleUpload(event) {
     if (getUserPoints() < VIP_COST) {
         event.target.value = '';
-        showPointsErrorModal('upload'); // custom μήνυμα για upload
+        showPointsErrorModal('upload');
         return;
     }
 
-    var file = event.target.files[0];
+    const file = event.target.files[0];
     if (!file) return;
-    var reader = new FileReader();
+    const reader = new FileReader();
     reader.onload = function(e) {
         capturedImage = e.target.result;
         showPhotoPreview(capturedImage);
@@ -593,7 +592,7 @@ function showPhotoPreview(imageSrc) {
 }
 
 // ===== API & ANALYSIS =====
-var API_URL = 'https://franklymadear-lifeline.hf.space/analyze';
+const API_URL = 'https://franklymadear-lifeline.hf.space/analyze';
 
 async function performAnalysis() {
     if (isAnalyzing) return;
@@ -603,7 +602,7 @@ async function performAnalysis() {
     document.getElementById('analyze-vip-btn').style.display = 'none';
     document.getElementById('upload-preview-area').style.display = 'none';
     try {
-        var response = await fetch(API_URL, {
+        const response = await fetch(API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -616,11 +615,11 @@ async function performAnalysis() {
                 user_id: getCurrentUserId()
             })
         });
-        var data = await response.json();
+        const data = await response.json();
         if (data.success && data.reading) {
             spendPoints(VIP_COST);
 
-            var resultDiv = document.getElementById('result-popup-text');
+            const resultDiv = document.getElementById('result-popup-text');
             originalResultText = data.reading;
             resultTranslationLang = '';
 
@@ -630,7 +629,7 @@ async function performAnalysis() {
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\n/g, '<br>');
 
-            var resultLangSelect = document.getElementById('result-lang-select');
+            const resultLangSelect = document.getElementById('result-lang-select');
             if (resultLangSelect) resultLangSelect.value = currentLang;
 
             if (currentLang !== 'el') {
@@ -653,12 +652,12 @@ async function performAnalysis() {
     }
 }
 
-// ===== ΣΥΝΑΡΤΗΣΕΙΣ ΜΕΤΑΦΡΑΣΗΣ ΑΠΟΤΕΛΕΣΜΑΤΟΣ =====
+// ===== ΜΕΤΑΦΡΑΣΗ ΑΠΟΤΕΛΕΣΜΑΤΟΣ =====
 async function translateResultTo(targetLang) {
     if (!originalResultText) return;
-    var resultDiv = document.getElementById('result-popup-text');
+    const resultDiv = document.getElementById('result-popup-text');
     
-    var tempSpan = document.createElement('span');
+    const tempSpan = document.createElement('span');
     tempSpan.textContent = resultDiv.innerText;
     resultDiv.innerHTML = '';
     resultDiv.appendChild(tempSpan);
@@ -670,21 +669,21 @@ async function translateResultTo(targetLang) {
     
     resultDiv.innerHTML = resultDiv.innerText.replace(/\n/g, '<br>');
     
-    var selectEl = document.getElementById('result-lang-select');
+    const selectEl = document.getElementById('result-lang-select');
     if (selectEl) selectEl.value = targetLang;
 }
 
 function translateResultFromPopup() {
-    var lang = document.getElementById('result-lang-select').value;
+    const lang = document.getElementById('result-lang-select').value;
     translateResultTo(lang);
 }
 
 function addStarsToPopup() {
-    var popup = document.getElementById('result-popup');
-    popup.querySelectorAll('.popup-star').forEach(function(s) { s.remove(); });
-    var emojis = ['✨', '⭐', '💫', '🌟', '🔮', '💖', '🌙'];
-    for (var i = 0; i < 15; i++) {
-        var star = document.createElement('span');
+    const popup = document.getElementById('result-popup');
+    popup.querySelectorAll('.popup-star').forEach(s => s.remove());
+    const emojis = ['✨', '⭐', '💫', '🌟', '🔮', '💖', '🌙'];
+    for (let i = 0; i < 15; i++) {
+        const star = document.createElement('span');
         star.className = 'popup-star';
         star.textContent = emojis[Math.floor(Math.random() * emojis.length)];
         star.style.left = Math.random() * 85 + '%';
@@ -696,7 +695,7 @@ function addStarsToPopup() {
 
 function closeResultPopup() {
     document.getElementById('result-popup-overlay').classList.remove('active');
-    document.querySelectorAll('.popup-star').forEach(function(s) { s.remove(); });
+    document.querySelectorAll('.popup-star').forEach(s => s.remove());
     resetScan();
 }
 
@@ -711,13 +710,13 @@ function resetScan() {
 }
 
 // ===== POINTS SYSTEM =====
-const POINTS_KEY = 'lifeline_user_points';
+const POINTS_KEY = 'userPoints';
 const VIP_COST = 15;
 
 function getUserPoints() { return parseInt(localStorage.getItem(POINTS_KEY) || '0', 10); }
 function addPoints(amount) { localStorage.setItem(POINTS_KEY, (getUserPoints() + amount).toString()); updatePointsDisplay(); }
 function spendPoints(amount) {
-    var c = getUserPoints();
+    const c = getUserPoints();
     if (c >= amount) {
         localStorage.setItem(POINTS_KEY, (c - amount).toString());
         updatePointsDisplay();
@@ -726,36 +725,32 @@ function spendPoints(amount) {
     return false;
 }
 
-// ===== ΔΥΝΑΜΙΚΗ ΔΙΑΜΟΡΦΩΣΗ BADGE ΠΟΝΤΩΝ (💎 + data-translate) =====
 function setupPointsBadge() {
-    var badge = document.querySelector('.points-badge');
+    const badge = document.querySelector('.points-badge');
     if (!badge) return;
-    // Αντικατάσταση περιεχομένου ώστε να έχει 💎, span για αριθμό, και span για λέξη με data-translate
-    var pointsSpan = badge.querySelector('#points-display');
+    const pointsSpan = badge.querySelector('#points-display');
     if (pointsSpan) {
-        var points = pointsSpan.textContent;
+        const points = pointsSpan.textContent;
         badge.innerHTML = '💎 <span id="points-display">' + points + '</span> <span data-translate="true">Πόντοι</span>';
     } else {
-        // Αν δεν υπάρχει το span, δημιουργούμε από την αρχή
-        var pts = getUserPoints();
+        const pts = getUserPoints();
         badge.innerHTML = '💎 <span id="points-display">' + pts + '</span> <span data-translate="true">Πόντοι</span>';
     }
 }
 
 function updatePointsDisplay() {
-    var display = document.getElementById('points-display');
-    var pts = getUserPoints();
+    const display = document.getElementById('points-display');
+    const pts = getUserPoints();
     if (display) display.textContent = pts;
-    var vipBtn = document.getElementById('analyze-vip-btn');
+    const vipBtn = document.getElementById('analyze-vip-btn');
     if (vipBtn) {
-        var vipCostEl = document.getElementById('vip-cost');
-        var vipPointsEl = document.getElementById('vip-points');
+        const vipCostEl = document.getElementById('vip-cost');
+        const vipPointsEl = document.getElementById('vip-points');
         if (vipCostEl) vipCostEl.textContent = VIP_COST;
         if (vipPointsEl) vipPointsEl.textContent = pts;
         vipBtn.disabled = pts < VIP_COST;
         vipBtn.style.opacity = pts < VIP_COST ? '0.5' : '1';
     }
-    // Αν δεν έχει γίνει ακόμα setup του badge (πρώτη φορά), το κάνουμε
     if (!document.querySelector('.points-badge span[data-translate="true"]')) {
         setupPointsBadge();
     }
@@ -763,8 +758,8 @@ function updatePointsDisplay() {
 
 function earnPoints() {
     showRewardedAd()
-        .then(function(result) { if (result.done) { addPoints(10); alert('🎉 Κέρδισες 10 πόντους!'); } })
-        .catch(function(err) { alert('Δεν ήταν δυνατή η προβολή διαφήμισης.'); });
+        .then(result => { if (result.done) { addPoints(10); alert('🎉 Κέρδισες 10 πόντους!'); } })
+        .catch(err => { alert('Δεν ήταν δυνατή η προβολή διαφήμισης.'); });
 }
 
 function startAnalysisFlow() {
@@ -787,8 +782,8 @@ const REFERRAL_REWARD = 20;
 const MAX_INVITES = 10;
 
 function detectReferral() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var startParam = urlParams.get('start');
+    const urlParams = new URLSearchParams(window.location.search);
+    const startParam = urlParams.get('start');
     if (startParam) {
         localStorage.setItem('lifeline_referrer', startParam);
     }
@@ -798,7 +793,7 @@ function getCurrentUserId() {
     if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
         return window.Telegram.WebApp.initDataUnsafe.user.id.toString();
     }
-    var testId = localStorage.getItem('lifeline_test_user_id');
+    let testId = localStorage.getItem('lifeline_test_user_id');
     if (!testId) {
         testId = 'test_' + Date.now();
         localStorage.setItem('lifeline_test_user_id', testId);
@@ -811,14 +806,14 @@ function getReferralLink() {
 }
 
 async function createInviteModal() {
-    var existing = document.getElementById('invite-modal');
+    const existing = document.getElementById('invite-modal');
     if (existing) existing.remove();
 
-    var referralLink = getReferralLink();
-    var invites = parseInt(localStorage.getItem('lifeline_invites_count') || '0');
-    var maxInvites = MAX_INVITES;
+    const referralLink = getReferralLink();
+    const invites = parseInt(localStorage.getItem('lifeline_invites_count') || '0');
+    const maxInvites = MAX_INVITES;
 
-    var modalHTML = `
+    const modalHTML = `
         <div id="invite-modal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;display:flex;align-items:center;justify-content:center;">
             <div style="background:linear-gradient(145deg,#1a0e2a,#2a1a3a);border:2px solid #FFD700;border-radius:20px;padding:25px;max-width:450px;width:90%;text-align:center;">
                 <button onclick="closeInviteModal()" style="float:right;background:rgba(255,215,0,0.2);border:none;color:#FFD700;font-size:1.2rem;cursor:pointer;border-radius:50%;width:30px;height:30px;">✕</button>
@@ -840,23 +835,23 @@ async function createInviteModal() {
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
     if (currentLang !== 'el') {
-        var modalEl = document.getElementById('invite-modal');
-        var translatable = modalEl.querySelectorAll('[data-translate="true"]');
+        const modalEl = document.getElementById('invite-modal');
+        const translatable = modalEl.querySelectorAll('[data-translate="true"]');
         await translateElements(translatable, currentLang);
     }
 }
 
 function showInviteModal() { createInviteModal(); }
-function closeInviteModal() { var m = document.getElementById('invite-modal'); if (m) m.remove(); }
+function closeInviteModal() { const m = document.getElementById('invite-modal'); if (m) m.remove(); }
 
 function copyReferralLink() {
-    var link = getReferralLink();
-    navigator.clipboard.writeText(link).then(function() { alert('✅ Αντιγράφηκε!'); });
+    const link = getReferralLink();
+    navigator.clipboard.writeText(link).then(() => alert('✅ Αντιγράφηκε!'));
 }
 
 function shareViaTelegram() {
-    var link = getReferralLink();
-    var text = encodeURIComponent('🖐️ Χειρομαντεία με AI! Δες την παλάμη σου: ' + link);
+    const link = getReferralLink();
+    const text = encodeURIComponent('🖐️ Χειρομαντεία με AI! Δες την παλάμη σου: ' + link);
     if (window.Telegram && window.Telegram.WebApp) {
         window.Telegram.WebApp.openTelegramLink('https://t.me/share/url?url=' + encodeURIComponent(link) + '&text=' + text);
     } else {
@@ -865,13 +860,13 @@ function shareViaTelegram() {
 }
 
 function shareViaWhatsApp() {
-    var link = getReferralLink();
-    var text = encodeURIComponent('🖐️ Χειρομαντεία με AI! Δες την παλάμη σου: ' + link);
+    const link = getReferralLink();
+    const text = encodeURIComponent('🖐️ Χειρομαντεία με AI! Δες την παλάμη σου: ' + link);
     window.open('https://wa.me/?text=' + text, '_blank');
 }
 
 async function rewardReferrerIfFirstAnalysis() {
-    var userId = getCurrentUserId();
+    const userId = getCurrentUserId();
     try {
         await fetch('/api/referral/reward', {
             method: 'POST',
@@ -882,9 +877,9 @@ async function rewardReferrerIfFirstAnalysis() {
 }
 
 function addInviteButton() {
-    var bar = document.getElementById('rewards-bar');
+    const bar = document.getElementById('rewards-bar');
     if (!bar || document.getElementById('invite-friends-btn')) return;
-    var btn = document.createElement('button');
+    const btn = document.createElement('button');
     btn.id = 'invite-friends-btn';
     btn.className = 'btn btn-purple btn-uniform';
     btn.style.marginLeft = '8px';
@@ -900,13 +895,16 @@ function addInviteButton() {
 
 // ===== INITIALIZE =====
 function initApp() {
-    createPalmGuideOverlay(); // δημιουργία overlay παλάμης
-    setupPointsBadge();       // διαμόρφωση badge με 💎 και data-translate
+    createPalmGuideOverlay();
+    setupPointsBadge();
     grantWelcomeBonus();
     updatePointsDisplay();
     addInviteButton();
     detectReferral();
-    updateCountdownPrefix();  // προετοιμασία translated prefix
+    updateCountdownPrefix();
+
+    const modal = document.getElementById('insufficient-modal-overlay');
+    if (modal) modal.classList.remove('active');
 }
 
 window.addEventListener('DOMContentLoaded', initApp);
