@@ -124,6 +124,8 @@
         @keyframes framePulse { 0%,100% { border-color: rgba(255,215,0,0.5); } 50% { border-color: rgba(255,215,0,0.9); } }
         .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: scanMove 3s infinite ease-in-out; pointer-events: none; }
         @keyframes scanMove { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        .scan-line.fast { animation: scanMoveFast 0.8s infinite ease-in-out; }
+        @keyframes scanMoveFast { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
         .camera-instruction { text-align: center; color: #d5c8e8; font-size: clamp(0.73rem,1.6vw,0.82rem); padding: 0 15px; width: 100%; max-width: 480px; line-height: 1.5; font-weight: 500; flex-shrink: 0; }
         .btn-uniform { padding: 10px 16px; font-size: 0.8rem; font-weight: 600; border-radius: 30px; border: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); letter-spacing: 0.5px; white-space: nowrap; min-width: 80px; height: 42px; }
         .btn-gold { background: linear-gradient(145deg, #FFD700, #B8860B); color: #1a0033; }
@@ -143,6 +145,69 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .loading-text { font-size: 0.85rem; color: #c9a0dc; letter-spacing: 2px; animation: mysticPulse 2s infinite ease-in-out; }
         @keyframes mysticPulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+        /* CAMERA TIMER OVERLAY */
+        #camera-timer-overlay {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #FFD700;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 0 0 20px black, 0 0 30px rgba(255,215,0,0.8);
+            background: rgba(0,0,0,0.7);
+            padding: 12px 24px;
+            border-radius: 30px;
+            z-index: 25;
+            letter-spacing: 2px;
+            animation: pulseText 0.8s infinite;
+            white-space: nowrap;
+        }
+        @keyframes pulseText {
+            0%,100% { transform: translate(-50%,-50%) scale(1); }
+            50% { transform: translate(-50%,-50%) scale(1.05); }
+        }
+
+        /* INSUFFICIENT POINTS MODAL */
+        #insufficient-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.88);
+            backdrop-filter: blur(10px);
+            z-index: 10002;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        #insufficient-modal-overlay.active { display: flex; }
+        #insufficient-modal-box {
+            background: linear-gradient(145deg, #1a0e2a, #2a1a3a);
+            border: 2px solid #FFD700;
+            border-radius: 25px;
+            padding: 30px 20px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(255,215,0,0.5);
+            animation: modalFadeIn 0.4s ease;
+        }
+        #insufficient-modal-box .modal-icon { font-size: 2.5rem; margin-bottom: 8px; }
+        #insufficient-modal-box p { color: #e6d5f5; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px; }
+        #insufficient-modal-box button {
+            background: linear-gradient(145deg, #FFD700, #B8860B);
+            color: #1a0033;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+        }
 
         /* RESULT POPUP */
         #result-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(15px); z-index: 10000; align-items: center; justify-content: center; padding: 15px; }
@@ -288,33 +353,43 @@
             </select>
         </div>
         <div id="rewards-bar">
-            <div class="points-badge">🪙 <span id="points-display">0</span> Πόντοι</div>
+            <div class="points-badge">💎 <span id="points-display">0</span> <span data-translate="true">Πόντοι</span></div>
             <button id="earn-points-btn" class="btn btn-purple btn-uniform" onclick="earnPoints()" data-translate="true">🎁 Κέρδισε Πόντους</button>
         </div>
         <div id="camera-wrapper">
             <video id="webcam" playsinline autoplay></video>
             <div class="scan-frame"></div>
-            <div class="scan-line"></div>
+            <div class="scan-line" id="scan-line"></div>
+            <div id="camera-timer-overlay">Σκανάρισμα σε: 8</div>
         </div>
         <div id="upload-preview-area">
             <p style="color:var(--gold); font-size:0.8rem;" data-translate="true">✧ Η φωτογραφία είναι έτοιμη ✧</p>
             <img id="upload-preview-img" src="" alt="Preview">
         </div>
         <div class="controls-row" id="controls-row">
-            <button class="btn btn-gold btn-uniform" id="camera-btn" onclick="toggleCamera()" data-translate="true">📷 Έναρξη</button>
+            <button class="btn btn-gold btn-uniform" id="camera-btn" onclick="startCameraCountdown()" data-translate="true">📷 Έναρξη</button>
             <button class="btn btn-purple btn-uniform" onclick="document.getElementById('file-input').click()" data-translate="true">📁 Upload</button>
-            <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUpload(event)">
+            <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleUploadWithCheck(event)">
             <button class="camera-toggle-btn btn-uniform active" id="selfie-btn" onclick="switchCamera('user')">🤳 <span data-translate="true">Selfie</span></button>
             <button class="camera-toggle-btn btn-uniform" id="back-btn" onclick="switchCamera('environment')">📷 <span data-translate="true">Πίσω</span></button>
         </div>
         <div class="camera-instruction"><span data-translate="true">Τοποθέτησε την παλάμη σου μπροστά στην κάμερα. Η Aziram θα αποκαλύψει τα μυστικά των γραμμών σου.</span></div>
         <div class="analysis-actions">
             <button class="btn btn-green btn-uniform" id="analyze-btn" onclick="startAnalysisFlow(false)" style="display: none;" data-translate="true">🔮 Ανάλυση (με Διαφήμιση)</button>
-            <button class="btn btn-vip btn-uniform" id="analyze-vip-btn" onclick="startAnalysisFlow(true)" style="display: none;" disabled>⚡ VIP (<span id="vip-cost">5</span> Πόντοι) - Έχεις <span id="vip-points">0</span></button>
+            <button class="btn btn-vip btn-uniform" id="analyze-vip-btn" onclick="startAnalysisFlow(true)" style="display: none;" disabled>⚡ VIP (<span id="vip-cost">15</span> <span data-translate="true">Πόντοι</span>) - <span data-translate="true">Έχεις</span> <span id="vip-points">0</span></button>
         </div>
         <div id="loading-box">
             <div class="loading-text" data-translate="true">🔮 Η Aziram διαβάζει τις γραμμές σου...</div>
             <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <!-- INSUFFICIENT POINTS MODAL -->
+    <div id="insufficient-modal-overlay">
+        <div id="insufficient-modal-box">
+            <div class="modal-icon">💎</div>
+            <p id="insufficient-message"></p>
+            <button onclick="closeInsufficientModal()" data-translate="true">Κλείσιμο</button>
         </div>
     </div>
 
@@ -337,5 +412,472 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // ========== ΝΕΕΣ ΛΕΙΤΟΥΡΓΙΕΣ & ΜΕΤΑΦΡΑΣΕΙΣ ==========
+
+        // Αποθήκευση του timer για δυνατότητα ακύρωσης
+        let cameraCountdownTimer = null;
+        let cameraCountdownInterval = null;
+
+        // Μεταφράσεις για τα νέα μηνύματα
+        const insufficientTranslations = {
+            el: {
+                title: "💎 Ανεπαρκείς Πόντοι!",
+                body: "Χρειάζεσαι 15 πόντους για ανάλυση VIP. Πάτησε 'Κέρδισε Πόντους' για να δεις διαφήμιση (+10).",
+                uploadBlock: "💎 Δεν έχεις αρκετούς πόντους! Μάζεψε 15 πόντους από τις διαφημίσεις πριν ανεβάσεις φωτογραφία.",
+                scanning: "Σκανάρισμα σε:"
+            },
+            en: {
+                title: "💎 Insufficient Diamonds!",
+                body: "You need 15 diamonds for a VIP analysis. Tap 'Earn Points' to watch an ad (+10).",
+                uploadBlock: "💎 Not enough diamonds! Earn 15 diamonds from ads before uploading your photo.",
+                scanning: "Scanning in:"
+            },
+            de: {
+                title: "💎 Nicht genug Diamanten!",
+                body: "Du benötigst 15 Diamanten für eine VIP-Analyse. Tippe auf 'Punkte verdienen', um eine Anzeige anzusehen (+10).",
+                uploadBlock: "💎 Nicht genug Diamanten! Sammle 15 Diamanten durch Anzeigen, bevor du ein Foto hochlädst.",
+                scanning: "Scannen in:"
+            },
+            fr: {
+                title: "💎 Diamants insuffisants !",
+                body: "Vous avez besoin de 15 diamants pour une analyse VIP. Appuyez sur 'Gagner des points' pour regarder une pub (+10).",
+                uploadBlock: "💎 Pas assez de diamants ! Gagnez 15 diamants avec les pubs avant de télécharger une photo.",
+                scanning: "Scan dans :"
+            },
+            es: {
+                title: "💎 ¡Diamantes insuficientes!",
+                body: "Necesitas 15 diamantes para un análisis VIP. Toca 'Ganar Puntos' para ver un anuncio (+10).",
+                uploadBlock: "💎 ¡No tienes suficientes diamantes! Consigue 15 diamantes con anuncios antes de subir una foto.",
+                scanning: "Escaneando en:"
+            },
+            it: {
+                title: "💎 Diamanti insufficienti!",
+                body: "Hai bisogno di 15 diamanti per un'analisi VIP. Tocca 'Guadagna Punti' per guardare una pubblicità (+10).",
+                uploadBlock: "💎 Diamanti insufficienti! Raccogli 15 diamanti dagli annunci prima di caricare una foto.",
+                scanning: "Scansione in:"
+            }
+        };
+
+        // Λήψη τρέχουσας γλώσσας από το selector ή από localStorage
+        function getCurrentLanguage() {
+            const savedLang = localStorage.getItem('selectedLanguage');
+            if (savedLang) return savedLang;
+            const select = document.getElementById('language-select');
+            return select ? select.value : 'el';
+        }
+
+        // Μετάφραση συγκεκριμένου μηνύματος
+        function translateMessage(key) {
+            const lang = getCurrentLanguage();
+            if (insufficientTranslations[lang] && insufficientTranslations[lang][key]) {
+                return insufficientTranslations[lang][key];
+            }
+            // fallback σε αγγλικά αν δεν υπάρχει η γλώσσα
+            if (insufficientTranslations['en'] && insufficientTranslations['en'][key]) {
+                return insufficientTranslations['en'][key];
+            }
+            // ultimate fallback
+            return insufficientTranslations['el'][key] || key;
+        }
+
+        // Συνάρτηση για εμφάνιση modal ανεπαρκών πόντων
+        function showInsufficientPointsModal(messageKey) {
+            const overlay = document.getElementById('insufficient-modal-overlay');
+            const messageEl = document.getElementById('insufficient-message');
+            if (overlay && messageEl) {
+                const translatedTitle = translateMessage('title');
+                const translatedBody = translateMessage(messageKey);
+                messageEl.innerHTML = `<strong>${translatedTitle}</strong><br><br>${translatedBody}`;
+                overlay.classList.add('active');
+            }
+        }
+
+        function closeInsufficientModal() {
+            const overlay = document.getElementById('insufficient-modal-overlay');
+            if (overlay) overlay.classList.remove('active');
+        }
+
+        // Έλεγχος αν ο χρήστης έχει τουλάχιστον 15 πόντους
+        function hasEnoughPointsForVIP() {
+            const points = parseInt(localStorage.getItem('userPoints') || '0', 10);
+            return points >= 15;
+        }
+
+        // Ενημέρωση του VIP κουμπιού με τους τρέχοντες πόντους
+        function updateVIPButton() {
+            const points = parseInt(localStorage.getItem('userPoints') || '0', 10);
+            const vipCostEl = document.getElementById('vip-cost');
+            const vipPointsEl = document.getElementById('vip-points');
+            const vipBtn = document.getElementById('analyze-vip-btn');
+            if (vipCostEl) vipCostEl.textContent = '15';
+            if (vipPointsEl) vipPointsEl.textContent = points;
+            if (vipBtn) {
+                if (points >= 15) {
+                    vipBtn.disabled = false;
+                } else {
+                    vipBtn.disabled = true;
+                }
+            }
+        }
+
+        // Παρακολούθηση αλλαγών στο localStorage για πόντους
+        function updatePointsDisplay() {
+            const points = parseInt(localStorage.getItem('userPoints') || '0', 10);
+            const displayEl = document.getElementById('points-display');
+            if (displayEl) displayEl.textContent = points;
+            updateVIPButton();
+        }
+
+        // Κάθε φορά που αλλάζουν οι πόντοι, καλούμε αυτή τη συνάρτηση
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'userPoints') {
+                updatePointsDisplay();
+            }
+        });
+
+        // Επίσης, μετά από δικές μας αλλαγές, καλούμε updatePointsDisplay
+        // Θα επεκτείνουμε την earnPoints και αφαίρεση πόντων.
+
+        // ---------- ΝΕΑ ΡΟΗ ΚΑΜΕΡΑΣ ΜΕ ΑΝΤΙΣΤΡΟΦΗ ΜΕΤΡΗΣΗ 8 ΔΕΥΤΕΡΟΛΕΠΤΩΝ ----------
+        function startCameraCountdown() {
+            // Ελέγχουμε αν έχει ήδη ξεκινήσει η κάμερα (το webcam stream ενεργό)
+            const video = document.getElementById('webcam');
+            if (!video || !video.srcObject) {
+                // Αν δεν είναι ανοιχτή η κάμερα, την ανοίγουμε πρώτα (καλούμε την υπάρχουσα toggleCamera)
+                if (typeof toggleCamera === 'function') {
+                    toggleCamera(); // υποθέτουμε ότι ανοίγει την κάμερα και την εμφανίζει
+                } else {
+                    alert('Παρακαλώ ενεργοποιήστε την κάμερα πρώτα.');
+                    return;
+                }
+                // Μικρή καθυστέρηση για να ανοίξει η κάμερα και μετά ξεκινάμε το countdown
+                setTimeout(() => {
+                    if (video && video.srcObject) {
+                        initiateCountdown();
+                    } else {
+                        alert('Η κάμερα δεν είναι διαθέσιμη. Δοκιμάστε ξανά.');
+                    }
+                }, 500);
+            } else {
+                // Η κάμερα είναι ήδη ανοιχτή
+                initiateCountdown();
+            }
+        }
+
+        function initiateCountdown() {
+            // Καθαρίζουμε τυχόν προηγούμενο timer
+            clearCameraTimer();
+
+            const video = document.getElementById('webcam');
+            const scanLine = document.getElementById('scan-line');
+            const timerOverlay = document.getElementById('camera-timer-overlay');
+            const cameraBtn = document.getElementById('camera-btn');
+
+            if (!video || !video.srcObject) {
+                alert('Παρακαλώ ενεργοποιήστε την κάμερα.');
+                return;
+            }
+
+            // Απενεργοποιούμε το κουμπί έναρξης κατά τη διάρκεια της αντίστροφης μέτρησης
+            if (cameraBtn) cameraBtn.disabled = true;
+
+            // Ενεργοποιούμε το γρήγορο laser effect
+            if (scanLine) scanLine.classList.add('fast');
+
+            // Εμφανίζουμε το overlay
+            if (timerOverlay) {
+                timerOverlay.style.display = 'block';
+                const scanningText = translateMessage('scanning');
+                timerOverlay.textContent = `${scanningText} 8`;
+            }
+
+            let secondsLeft = 8;
+
+            // Ενημέρωση κάθε δευτερόλεπτο
+            cameraCountdownInterval = setInterval(() => {
+                secondsLeft--;
+                if (timerOverlay) {
+                    const scanningText = translateMessage('scanning');
+                    timerOverlay.textContent = `${scanningText} ${secondsLeft}`;
+                }
+                if (secondsLeft <= 0) {
+                    clearInterval(cameraCountdownInterval);
+                    cameraCountdownInterval = null;
+                    // Λήψη snapshot και αποστολή
+                    captureAndSendSnapshot();
+                }
+            }, 1000);
+
+            // Ασφαλής χρονισμός: αν για κάποιο λόγο δεν έχει ολοκληρωθεί σε 9 δευτερόλεπτα, προχωράμε
+            cameraCountdownTimer = setTimeout(() => {
+                if (cameraCountdownInterval) {
+                    clearInterval(cameraCountdownInterval);
+                    cameraCountdownInterval = null;
+                }
+                captureAndSendSnapshot();
+            }, 9000);
+        }
+
+        function clearCameraTimer() {
+            if (cameraCountdownTimer) {
+                clearTimeout(cameraCountdownTimer);
+                cameraCountdownTimer = null;
+            }
+            if (cameraCountdownInterval) {
+                clearInterval(cameraCountdownInterval);
+                cameraCountdownInterval = null;
+            }
+            const scanLine = document.getElementById('scan-line');
+            const timerOverlay = document.getElementById('camera-timer-overlay');
+            const cameraBtn = document.getElementById('camera-btn');
+            if (scanLine) scanLine.classList.remove('fast');
+            if (timerOverlay) timerOverlay.style.display = 'none';
+            if (cameraBtn) cameraBtn.disabled = false;
+        }
+
+        function captureAndSendSnapshot() {
+            clearCameraTimer(); // Καθαρίζουμε timers και UI
+
+            const video = document.getElementById('webcam');
+            if (!video || !video.srcObject) {
+                alert('Η κάμερα έκλεισε. Δοκιμάστε ξανά.');
+                return;
+            }
+
+            // Τραβάμε snapshot από το video
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Μετατροπή σε data URL
+            const imageDataURL = canvas.toDataURL('image/jpeg', 0.9);
+
+            // Κλείνουμε την κάμερα (σταματάμε το stream)
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+            }
+
+            // Εμφανίζουμε την εικόνα στο preview area
+            const previewArea = document.getElementById('upload-preview-area');
+            const previewImg = document.getElementById('upload-preview-img');
+            if (previewArea && previewImg) {
+                previewImg.src = imageDataURL;
+                previewArea.style.display = 'block';
+            }
+
+            // Ελέγχουμε αν υπάρχει η συνάρτηση processImageForAnalysis (από το script.js)
+            // και την καλούμε με την εικόνα και vip = true για να αφαιρεθούν 15 πόντοι μετά την επιτυχία
+            if (typeof processImageForAnalysis === 'function') {
+                processImageForAnalysis(imageDataURL, true); // true για VIP ανάλυση
+            } else {
+                // Fallback: αν δεν υπάρχει, προσπαθούμε να καλέσουμε το API μόνοι μας
+                sendImageToAPI(imageDataURL, true);
+            }
+        }
+
+        // Απλή υλοποίηση αποστολής αν δεν υπάρχει η processImageForAnalysis
+        function sendImageToAPI(imageDataURL, isVIP) {
+            // Δείχνουμε το loading box
+            const loadingBox = document.getElementById('loading-box');
+            if (loadingBox) loadingBox.style.display = 'block';
+
+            // Προετοιμασία δεδομένων
+            const gender = localStorage.getItem('selectedGender') || 'male';
+            const birthdate = localStorage.getItem('selectedBirthdate') || '';
+            const topic = localStorage.getItem('selectedTopic') || 'Έρωτας & Σχέσεις';
+
+            // Υποθέτουμε ότι το endpoint είναι το /api/analyze
+            fetch('/api/analyze', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    image: imageDataURL,
+                    gender: gender,
+                    birthdate: birthdate,
+                    topic: topic,
+                    vip: isVIP
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (loadingBox) loadingBox.style.display = 'none';
+                if (data.success) {
+                    // Αφαίρεση 15 πόντων ΜΟΝΟ αν είναι VIP και επιτυχία
+                    if (isVIP) {
+                        const currentPoints = parseInt(localStorage.getItem('userPoints') || '0', 10);
+                        const newPoints = Math.max(0, currentPoints - 15);
+                        localStorage.setItem('userPoints', newPoints);
+                        updatePointsDisplay();
+                    }
+                    // Εμφάνιση αποτελέσματος
+                    showResultPopup(data.analysis);
+                } else {
+                    alert(data.error || 'Σφάλμα ανάλυσης.');
+                }
+            })
+            .catch(error => {
+                if (loadingBox) loadingBox.style.display = 'none';
+                alert('Σφάλμα δικτύου: ' + error.message);
+            });
+        }
+
+        function showResultPopup(text) {
+            const overlay = document.getElementById('result-popup-overlay');
+            const textEl = document.getElementById('result-popup-text');
+            if (overlay && textEl) {
+                textEl.textContent = text;
+                overlay.classList.add('active');
+            }
+        }
+
+        // ---------- ΝΕΟ UPLOAD ΜΕ ΕΛΕΓΧΟ ΠΟΝΤΩΝ ----------
+        function handleUploadWithCheck(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Έλεγχος πόντων ΠΡΙΝ το σκανάρισμα
+            if (!hasEnoughPointsForVIP()) {
+                // Διακοπή της διαδικασίας, εμφάνιση translated μηνύματος
+                showInsufficientPointsModal('uploadBlock');
+                // Καθαρισμός του input ώστε να μπορεί να επιλεγεί ξανά το ίδιο αρχείο
+                event.target.value = '';
+                return;
+            }
+
+            // Αν έχει πόντους, συνεχίζουμε κανονικά με την υπάρχουσα ροή
+            if (typeof handleUpload === 'function') {
+                // Καλούμε την αρχική handleUpload του script.js
+                handleUpload(event);
+            } else {
+                // Fallback αν δεν υπάρχει
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewArea = document.getElementById('upload-preview-area');
+                    const previewImg = document.getElementById('upload-preview-img');
+                    if (previewArea && previewImg) {
+                        previewImg.src = e.target.result;
+                        previewArea.style.display = 'block';
+                    }
+                    // Αυτόματα καλούμε ανάλυση VIP
+                    if (typeof processImageForAnalysis === 'function') {
+                        processImageForAnalysis(e.target.result, true);
+                    } else {
+                        sendImageToAPI(e.target.result, true);
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // ---------- ΕΠΕΚΤΑΣΗ ΤΗΣ ΣΥΝΑΡΤΗΣΗΣ ΚΛΕΙΣΙΜΑΤΟΣ ΚΑΜΕΡΑΣ ----------
+        // Όταν ο χρήστης κλείνει την κάμερα (π.χ. πατώντας το κουμπί απενεργοποίησης),
+        // πρέπει να καθαρίζουμε τον timer. Υποθέτουμε ότι η toggleCamera μπορεί να κλείσει την κάμερα.
+        // Θα προσθέσουμε έναν event listener ή θα αντικαταστήσουμε τη συμπεριφορά.
+        // Επειδή δεν έχουμε πλήρη πρόσβαση, θα κάνουμε monkey-patch στην toggleCamera αν υπάρχει.
+        window.addEventListener('load', function() {
+            if (typeof toggleCamera === 'function') {
+                const originalToggleCamera = toggleCamera;
+                window.toggleCamera = function() {
+                    // Ελέγχουμε αν η κάμερα είναι ενεργή πριν την κλήση
+                    const video = document.getElementById('webcam');
+                    const wasActive = video && video.srcObject;
+                    originalToggleCamera.apply(this, arguments);
+                    // Μετά την κλήση, αν η κάμερα ήταν ενεργή και τώρα έκλεισε, καθαρίζουμε timer
+                    if (wasActive && (!video || !video.srcObject)) {
+                        clearCameraTimer();
+                    }
+                };
+            }
+
+            // Αρχική ενημέρωση πόντων
+            updatePointsDisplay();
+
+            // Παρακολούθηση για αλλαγές πόντων που γίνονται από το script.js
+            const observer = new MutationObserver(updatePointsDisplay);
+            const pointsDisplayEl = document.getElementById('points-display');
+            if (pointsDisplayEl) {
+                observer.observe(pointsDisplayEl, { childList: true, characterData: true, subtree: true });
+            }
+
+            // Επίσης, όταν γίνεται earnPoints, ενημερώνουμε
+            const earnBtn = document.getElementById('earn-points-btn');
+            if (earnBtn) {
+                earnBtn.addEventListener('click', function() {
+                    setTimeout(updatePointsDisplay, 2000); // μετά από 2 δευτ. περίπου ολοκληρώνεται η διαφήμιση
+                });
+            }
+        });
+
+        // Αντικατάσταση της processImageForAnalysis για να αφαιρεί πόντους ΜΟΝΟ μετά από επιτυχία
+        // (Αν υπάρχει ήδη, την κάνουμε wrap)
+        window.addEventListener('load', function() {
+            if (typeof processImageForAnalysis === 'function') {
+                const originalProcess = processImageForAnalysis;
+                window.processImageForAnalysis = function(imageData, isVIP) {
+                    // Καλούμε την αρχική, αλλά μετά την επιτυχία θα αφαιρέσουμε πόντους
+                    // Η αρχική υποθέτουμε ότι δείχνει το αποτέλεσμα. Θα προσπαθήσουμε να
+                    // ανιχνεύσουμε την επιτυχία μέσω του result popup.
+                    // Για ασφάλεια, μπορούμε να αφαιρέσουμε πόντους εδώ και αν αποτύχει,
+                    // να τους επαναφέρουμε. Αλλά η οδηγία λέει "ΜΟΝΟ μετά την επιτυχή απάντηση".
+                    // Θα βασιστούμε στην παραδοχή ότι η originalProcess χειρίζεται το API
+                    // και καλεί μια callback. Επειδή δεν έχουμε τον κώδικα, θα προσθέσουμε
+                    // έναν ακροατή στο αποτέλεσμα.
+                    
+                    // Προσωρινή αποθήκευση πόντων για πιθανή επαναφορά
+                    const currentPoints = parseInt(localStorage.getItem('userPoints') || '0', 10);
+                    
+                    // Αποθήκευση της κατάστασης για χρήση στο close popup
+                    window._pendingVIPDeduction = isVIP ? 15 : 0;
+                    window._pointsBeforeAnalysis = currentPoints;
+                    
+                    // Καλούμε την αρχική διαδικασία
+                    return originalProcess(imageData, isVIP);
+                };
+            }
+        });
+
+        // Όταν κλείνει το αποτέλεσμα, αφαιρούμε πόντους αν ήταν VIP
+        const originalCloseResultPopup = window.closeResultPopup;
+        window.closeResultPopup = function() {
+            if (window._pendingVIPDeduction > 0) {
+                const currentPoints = parseInt(localStorage.getItem('userPoints') || '0', 10);
+                const newPoints = Math.max(0, currentPoints - window._pendingVIPDeduction);
+                localStorage.setItem('userPoints', newPoints);
+                updatePointsDisplay();
+                window._pendingVIPDeduction = 0;
+            }
+            if (typeof originalCloseResultPopup === 'function') {
+                originalCloseResultPopup();
+            } else {
+                const overlay = document.getElementById('result-popup-overlay');
+                if (overlay) overlay.classList.remove('active');
+            }
+        };
+
+        // Ανανέωση του DOM όταν αλλάζει η γλώσσα (για το scanning text)
+        function updateTimerOverlayLanguage() {
+            const timerOverlay = document.getElementById('camera-timer-overlay');
+            if (timerOverlay && timerOverlay.style.display !== 'none') {
+                const secondsMatch = timerOverlay.textContent.match(/\d+/);
+                const seconds = secondsMatch ? secondsMatch[0] : '8';
+                const scanningText = translateMessage('scanning');
+                timerOverlay.textContent = `${scanningText} ${seconds}`;
+            }
+        }
+
+        // Σύνδεση με το κουμπί μετάφρασης για να ενημερώνει και τα νέα στοιχεία
+        const translateBtn = document.getElementById('translate-btn');
+        if (translateBtn) {
+            translateBtn.addEventListener('click', function() {
+                setTimeout(updateTimerOverlayLanguage, 500);
+            });
+        }
+
+        console.log('✅ Νέες λειτουργίες ενεργές: κάμερα 8sec, 💎 πόντοι, upload έλεγχος');
+    </script>
 </body>
 </html>
