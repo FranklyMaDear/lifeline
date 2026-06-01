@@ -51,23 +51,34 @@ function grantWelcomeBonus() {
     }
 }
 
-// ===== CUSTOM MODAL ΓΙΑ ΣΦΑΛΜΑ ΠΟΝΤΩΝ =====
-function showPointsErrorModal() {
+// ===== CUSTOM MODAL ΓΙΑ ΣΦΑΛΜΑ ΠΟΝΤΩΝ (μεταφράζεται) =====
+function showPointsErrorModal(customMessageKey) {
     var existing = document.getElementById('points-error-modal');
     if (existing) existing.remove();
+
+    var defaultTitle = 'Ανεπαρκή Διαμάντια!';
+    var defaultBody = 'Χρειάζεσαι 15 διαμάντια για μία VIP ανάλυση. Πάτα "Κέρδισε Πόντους" για να δεις μία διαφήμιση (+10).';
+    var title = defaultTitle;
+    var body = defaultBody;
+
+    // Επιλέγουμε το σωστό μήνυμα ανάλογα με το κλειδί (upload ή default)
+    if (customMessageKey === 'upload') {
+        body = 'Δεν έχεις αρκετά διαμάντια! Μάζεψε 15 διαμάντια από τις διαφημίσεις πριν ανεβάσεις φωτογραφία.';
+    }
 
     var modalHTML = `
         <div id="points-error-modal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:10002;display:flex;align-items:center;justify-content:center;padding:20px;">
             <div style="background:linear-gradient(145deg,#1a0e2a,#2a1a3a);border:3px solid #FFD700;border-radius:25px;padding:25px 20px;max-width:420px;width:100%;text-align:center;box-shadow:0 0 60px rgba(255,215,0,0.4);animation:modalFadeIn 0.5s ease;">
                 <div style="font-size:3rem;margin-bottom:10px;">💎</div>
-                <h2 style="color:#FFD700;font-size:1.2rem;margin-bottom:12px;" data-translate="true">Ανεπαρκή Διαμάντια!</h2>
-                <p style="color:#d5c8e8;font-size:0.85rem;line-height:1.6;margin-bottom:20px;" data-translate="true">Χρειάζεσαι 15 διαμάντια για μία VIP ανάλυση. Πάτα "Κέρδισε Πόντους" για να δεις μία διαφήμιση (+10).</p>
+                <h2 style="color:#FFD700;font-size:1.2rem;margin-bottom:12px;" data-translate="true">${title}</h2>
+                <p style="color:#d5c8e8;font-size:0.85rem;line-height:1.6;margin-bottom:20px;" data-translate="true">${body}</p>
                 <button onclick="closePointsErrorModal()" style="background:linear-gradient(145deg,#FFD700,#B8860B);color:#1a0033;padding:12px 25px;border:none;border-radius:30px;font-size:0.9rem;font-weight:700;cursor:pointer;box-shadow:0 0 20px rgba(255,215,0,0.3);letter-spacing:1px;width:100%;" data-translate="true">Κατάλαβα, πάω για διαφημίσεις!</button>
             </div>
         </div>
     `;
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
+    // Άμεση μετάφραση αν η γλώσσα δεν είναι Ελληνικά
     if (currentLang !== 'el') {
         var modalEl = document.getElementById('points-error-modal');
         var translatable = modalEl.querySelectorAll('[data-translate="true"]');
@@ -78,6 +89,58 @@ function showPointsErrorModal() {
 function closePointsErrorModal() {
     var modal = document.getElementById('points-error-modal');
     if (modal) modal.remove();
+}
+
+// ===== ΔΗΜΙΟΥΡΓΙΑ OVERLAY ΓΙΑ ΤΗΝ ΠΑΛΑΜΗ / COUNTDOWN =====
+function createPalmGuideOverlay() {
+    if (document.getElementById('palm-guide-overlay')) return;
+    var overlay = document.createElement('div');
+    overlay.id = 'palm-guide-overlay';
+    overlay.style.cssText = `
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        display: flex; align-items: center; justify-content: center;
+        pointer-events: none; z-index: 20;
+        background: rgba(0,0,0,0.4); border-radius: 24px;
+        transition: opacity 0.4s;
+    `;
+    var p = document.createElement('p');
+    p.style.cssText = 'color:#FFD700;font-size:1.3rem;font-weight:bold;text-shadow:0 0 20px black;text-align:center;padding:10px;';
+    p.textContent = 'Τοποθέτησε την παλάμη σου εδώ';
+    overlay.appendChild(p);
+    var wrapper = document.getElementById('camera-wrapper');
+    if (wrapper) wrapper.appendChild(overlay);
+    return overlay;
+}
+
+// Ενημέρωση εμφάνισης / απόκρυψης του οδηγού παλάμης
+function showPalmGuideOverlay(show, customText) {
+    var overlay = document.getElementById('palm-guide-overlay');
+    if (!overlay) overlay = createPalmGuideOverlay();
+    if (show) {
+        overlay.style.display = 'flex';
+        var textElement = overlay.querySelector('p');
+        if (textElement && customText) {
+            textElement.textContent = customText;
+        } else if (textElement) {
+            textElement.textContent = 'Τοποθέτησε την παλάμη σου εδώ';
+        }
+    } else {
+        overlay.style.display = 'none';
+    }
+}
+
+// ===== ΜΕΤΑΦΡΑΣΗ ΤΟΥ COUNTDOWN PREFIX =====
+var countdownPrefix = 'Σκανάρισμα σε:';
+async function updateCountdownPrefix() {
+    if (currentLang === 'el') {
+        countdownPrefix = 'Σκανάρισμα σε:';
+        return;
+    }
+    // Μεταφράζουμε μόνο το prefix
+    var dummy = document.createElement('span');
+    dummy.textContent = 'Σκανάρισμα σε:';
+    await translateElements([dummy], currentLang);
+    countdownPrefix = dummy.textContent.trim() + ' ';
 }
 
 // ===== TERMS & PRIVACY ΔΟΜΗ =====
@@ -213,6 +276,8 @@ async function translatePage(targetLang) {
     finishTranslation();
     updateLangLabel();
     updatePointsDisplay();
+    // Ενημέρωση και του countdown prefix
+    await updateCountdownPrefix();
 }
 
 function finishTranslation() {
@@ -373,27 +438,6 @@ var countdownInterval = null;
 var countdownTimeout = null;
 var countdownSeconds = 8;
 
-function showPalmGuideOverlay(show, customText) {
-    var overlay = document.getElementById('palm-guide-overlay');
-    if (!overlay) return;
-    if (show) {
-        overlay.className = 'palm-guide-visible';
-        var textElement = overlay.querySelector('p');
-        if (textElement && customText) {
-            textElement.textContent = customText;
-            textElement.removeAttribute('data-translate');
-        } else if (textElement) {
-            textElement.textContent = 'Τοποθέτησε την παλάμη σου εδώ';
-            textElement.setAttribute('data-translate', 'true');
-            if (currentLang !== 'el') {
-                translateElements([textElement], currentLang);
-            }
-        }
-    } else {
-        overlay.className = 'palm-guide-hidden';
-    }
-}
-
 async function startCamera() {
     if (getUserPoints() < VIP_COST) {
         showPointsErrorModal();
@@ -408,6 +452,7 @@ async function startCamera() {
         video.srcObject = currentStream;
         cameraActive = true;
 
+        createPalmGuideOverlay(); // εξασφαλίζει ότι υπάρχει
         showPalmGuideOverlay(true);
         startCountdown();
 
@@ -424,25 +469,33 @@ async function startCamera() {
 function startCountdown() {
     clearCountdown();
 
-    countdownSeconds = 8;
-    updateCountdownDisplay();
-
-    countdownInterval = setInterval(function() {
-        countdownSeconds--;
+    // Βεβαιωνόμαστε ότι το prefix είναι μεταφρασμένο
+    updateCountdownPrefix().then(() => {
+        countdownSeconds = 8;
         updateCountdownDisplay();
-        if (countdownSeconds <= 0) {
-            clearInterval(countdownInterval);
-            countdownInterval = null;
-        }
-    }, 1000);
 
-    countdownTimeout = setTimeout(function() {
-        autoCaptureAndAnalyze();
-    }, 8000);
+        countdownInterval = setInterval(function() {
+            countdownSeconds--;
+            updateCountdownDisplay();
+            if (countdownSeconds <= 0) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+                autoCaptureAndAnalyze();
+            }
+        }, 1000);
+
+        countdownTimeout = setTimeout(function() {
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+            }
+            autoCaptureAndAnalyze();
+        }, 8000);
+    });
 }
 
 function updateCountdownDisplay() {
-    var text = 'Σκανάρισμα σε: ' + countdownSeconds + '...';
+    var text = countdownPrefix + countdownSeconds + '...';
     showPalmGuideOverlay(true, text);
 }
 
@@ -514,11 +567,11 @@ function capturePhotoFromCamera() {
     showPhotoPreview(capturedImage);
 }
 
-// ===== UPLOAD ΜΕ ΕΛΕΓΧΟ ΠΟΝΤΩΝ =====
+// ===== UPLOAD ΜΕ ΕΛΕΓΧΟ ΠΟΝΤΩΝ (μπλοκάρει πριν το σκανάρισμα) =====
 function handleUpload(event) {
     if (getUserPoints() < VIP_COST) {
         event.target.value = '';
-        showPointsErrorModal();
+        showPointsErrorModal('upload'); // custom μήνυμα για upload
         return;
     }
 
@@ -577,11 +630,9 @@ async function performAnalysis() {
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\n/g, '<br>');
 
-            // Θέτουμε την αρχική τιμή του dropdown γλώσσας του popup
             var resultLangSelect = document.getElementById('result-lang-select');
             if (resultLangSelect) resultLangSelect.value = currentLang;
 
-            // Αυτόματη μετάφραση αν η συσκευή δεν είναι Ελληνικά
             if (currentLang !== 'el') {
                 await translateResultTo(currentLang);
             }
@@ -675,6 +726,22 @@ function spendPoints(amount) {
     return false;
 }
 
+// ===== ΔΥΝΑΜΙΚΗ ΔΙΑΜΟΡΦΩΣΗ BADGE ΠΟΝΤΩΝ (💎 + data-translate) =====
+function setupPointsBadge() {
+    var badge = document.querySelector('.points-badge');
+    if (!badge) return;
+    // Αντικατάσταση περιεχομένου ώστε να έχει 💎, span για αριθμό, και span για λέξη με data-translate
+    var pointsSpan = badge.querySelector('#points-display');
+    if (pointsSpan) {
+        var points = pointsSpan.textContent;
+        badge.innerHTML = '💎 <span id="points-display">' + points + '</span> <span data-translate="true">Πόντοι</span>';
+    } else {
+        // Αν δεν υπάρχει το span, δημιουργούμε από την αρχή
+        var pts = getUserPoints();
+        badge.innerHTML = '💎 <span id="points-display">' + pts + '</span> <span data-translate="true">Πόντοι</span>';
+    }
+}
+
 function updatePointsDisplay() {
     var display = document.getElementById('points-display');
     var pts = getUserPoints();
@@ -687,6 +754,10 @@ function updatePointsDisplay() {
         if (vipPointsEl) vipPointsEl.textContent = pts;
         vipBtn.disabled = pts < VIP_COST;
         vipBtn.style.opacity = pts < VIP_COST ? '0.5' : '1';
+    }
+    // Αν δεν έχει γίνει ακόμα setup του badge (πρώτη φορά), το κάνουμε
+    if (!document.querySelector('.points-badge span[data-translate="true"]')) {
+        setupPointsBadge();
     }
 }
 
@@ -828,7 +899,14 @@ function addInviteButton() {
 }
 
 // ===== INITIALIZE =====
-grantWelcomeBonus();
-updatePointsDisplay();
-addInviteButton();
-detectReferral();
+function initApp() {
+    createPalmGuideOverlay(); // δημιουργία overlay παλάμης
+    setupPointsBadge();       // διαμόρφωση badge με 💎 και data-translate
+    grantWelcomeBonus();
+    updatePointsDisplay();
+    addInviteButton();
+    detectReferral();
+    updateCountdownPrefix();  // προετοιμασία translated prefix
+}
+
+window.addEventListener('DOMContentLoaded', initApp);
